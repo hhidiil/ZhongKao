@@ -99,7 +99,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push, auth, getPageNames, updateCurrentPage}, dispatch) }
+    return { actions: bindActionCreators({push, auth, updateCurrentPage}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Door)
