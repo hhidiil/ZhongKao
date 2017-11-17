@@ -5,7 +5,6 @@
 import * as TYPES from '../types';
 import * as CONFIG from '../../config';
 import { request } from './request';
-import { bodyUrlencoded } from '../../mixins/helper'
 
 export function login(opt) {
     return (dispatch) => {
@@ -13,7 +12,7 @@ export function login(opt) {
         request(route, {}, dispatch, opt.success, opt.error,
             { method: 'POST',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                body: bodyUrlencoded(opt.body) })
+                body: opt.body })
     }
 }
 
@@ -23,6 +22,6 @@ export function changePassword(opt) {
         request(route, {}, dispatch, opt.success, opt.error,
             { method: 'POST',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                body: bodyUrlencoded(opt.body) })
+                body: opt.body })
     }
 }
