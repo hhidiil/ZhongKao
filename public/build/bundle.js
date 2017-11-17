@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "3c26734fee2eea9a18cf"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "7ce57adb8b21e0dc1035"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -99846,15 +99846,15 @@ var _components = {
     }
 };
 
-var _DGaojuMidexamNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
-    filename: 'D:/gaoju/Midexam/src/components/Alter/maskAlter/maskalter.js',
+var _DGaojuMyrepositoryReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
+    filename: 'D:/gaoju/Myrepository/React/src/components/Alter/maskAlter/maskalter.js',
     components: _components,
     locals: [module],
     imports: [_react3.default]
 });
 
-var _DGaojuMidexamNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
-    filename: 'D:/gaoju/Midexam/src/components/Alter/maskAlter/maskalter.js',
+var _DGaojuMyrepositoryReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
+    filename: 'D:/gaoju/Myrepository/React/src/components/Alter/maskAlter/maskalter.js',
     components: _components,
     locals: [],
     imports: [_react3.default, _index2.default]
@@ -99862,7 +99862,7 @@ var _DGaojuMidexamNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4
 
 function _wrapComponent(id) {
     return function (Component) {
-        return _DGaojuMidexamNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
+        return _DGaojuMyrepositoryReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMyrepositoryReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
     };
 } /**
    * Created by gaoju on 2017/11/16.
@@ -100017,6 +100017,14 @@ __webpack_require__("./node_modules/antd/lib/icon/style/css.js");
 
 __webpack_require__("./node_modules/antd/lib/form/style/css.js");
 
+var _redux = __webpack_require__("./node_modules/redux/es/index.js");
+
+var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
+
+var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
+
+var _user = __webpack_require__("./src/redux/actions/user.js");
+
 __webpack_require__("./src/components/login/style.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -100033,15 +100041,15 @@ var _components = {
     }
 };
 
-var _DGaojuMidexamNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
-    filename: 'D:/gaoju/Midexam/src/components/login/login.js',
+var _DGaojuMyrepositoryReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
+    filename: 'D:/gaoju/Myrepository/React/src/components/login/login.js',
     components: _components,
     locals: [module],
     imports: [_react3.default]
 });
 
-var _DGaojuMidexamNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
-    filename: 'D:/gaoju/Midexam/src/components/login/login.js',
+var _DGaojuMyrepositoryReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
+    filename: 'D:/gaoju/Myrepository/React/src/components/login/login.js',
     components: _components,
     locals: [],
     imports: [_react3.default, _index2.default]
@@ -100049,11 +100057,13 @@ var _DGaojuMidexamNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4
 
 function _wrapComponent(id) {
     return function (Component) {
-        return _DGaojuMidexamNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
+        return _DGaojuMyrepositoryReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMyrepositoryReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
     };
 } /**
    * Created by gaoju on 2017/11/16.
    */
+
+// redux
 
 
 var FormItem = _form2.default.Item;
@@ -100088,6 +100098,8 @@ var NormalLoginForm = _wrapComponent('NormalLoginForm')(function (_Component) {
 
     _createClass(NormalLoginForm, [{
         key: 'checkPass2',
+
+        //密码校验
         value: function checkPass2(rule, value, callback) {
             console.log('checkPass2: ', value);
             //const { getFieldValue } = this.props.form;
@@ -100109,14 +100121,6 @@ var NormalLoginForm = _wrapComponent('NormalLoginForm')(function (_Component) {
                 labelCol: { span: 5 },
                 wrapperCol: { span: 15 }
             };
-            var rePasswdProps = getFieldDecorator('password', {
-                rules: [{
-                    required: true,
-                    message: '请输入密码!'
-                }, {
-                    validator: this.checkPass2.bind(this)
-                }]
-            });
             return _react3.default.createElement(
                 _form2.default,
                 { onSubmit: this.handleSubmit, className: 'login-form margin-auto' },
@@ -100130,7 +100134,14 @@ var NormalLoginForm = _wrapComponent('NormalLoginForm')(function (_Component) {
                 _react3.default.createElement(
                     FormItem,
                     _extends({}, formItemLayout, { label: '\u5BC6\u7801' }),
-                    _react3.default.createElement(_input2.default, _extends({}, rePasswdProps, { prefix: _react3.default.createElement(_icon2.default, { type: 'lock', style: { fontSize: 13 } }), type: 'password', placeholder: '\u8BF7\u8F93\u5165\u5BC6\u7801' }))
+                    getFieldDecorator('password', {
+                        rules: [{
+                            required: true,
+                            message: '请输入密码!'
+                        }, {
+                            validator: this.checkPass2.bind(this)
+                        }]
+                    })(_react3.default.createElement(_input2.default, { prefix: _react3.default.createElement(_icon2.default, { type: 'lock', style: { fontSize: 13 } }), type: 'password', placeholder: '\u8BF7\u8F93\u5165\u5BC6\u7801' }))
                 ),
                 _react3.default.createElement(
                     FormItem,
@@ -100167,7 +100178,17 @@ var NormalLoginForm = _wrapComponent('NormalLoginForm')(function (_Component) {
 }(_react2.Component));
 
 var Login = _form2.default.create()(NormalLoginForm);
-exports.default = Login;
+function mapStateToProps(state) {
+    return {};
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: (0, _redux.bindActionCreators)({ replace: _reactRouterRedux.replace, login: _user.login, changePassword: _user.changePassword }, dispatch)
+    };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Login);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
@@ -100300,15 +100321,15 @@ var _components = {
     }
 };
 
-var _DGaojuMidexamNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
-    filename: 'D:/gaoju/Midexam/src/container/front/door.js',
+var _DGaojuMyrepositoryReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
+    filename: 'D:/gaoju/Myrepository/React/src/container/front/door.js',
     components: _components,
     locals: [module],
     imports: [_react3.default]
 });
 
-var _DGaojuMidexamNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
-    filename: 'D:/gaoju/Midexam/src/container/front/door.js',
+var _DGaojuMyrepositoryReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
+    filename: 'D:/gaoju/Myrepository/React/src/container/front/door.js',
     components: _components,
     locals: [],
     imports: [_react3.default, _index2.default]
@@ -100316,7 +100337,7 @@ var _DGaojuMidexamNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4
 
 function _wrapComponent(id) {
     return function (Component) {
-        return _DGaojuMidexamNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
+        return _DGaojuMyrepositoryReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMyrepositoryReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
     };
 } /**
    * Created by gaoju on 2017/11/15.
@@ -100336,11 +100357,6 @@ var Door = _wrapComponent('Door')(function (_Component) {
     }
 
     _createClass(Door, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.props.actions.getPageNames({});
-        }
-    }, {
         key: 'render',
         value: function render() {
             var pageNames = this.props.pageNames;
@@ -100491,7 +100507,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, auth: _page.auth, getPageNames: _page.getPageNames, updateCurrentPage: _page.updateCurrentPage }, dispatch) };
+    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, auth: _page.auth, updateCurrentPage: _page.updateCurrentPage }, dispatch) };
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Door);
@@ -100503,10 +100519,261 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/**
- * Created by gaoju on 2017/11/15.
- */
+/* WEBPACK VAR INJECTION */(function(module) {
 
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _icon = __webpack_require__("./node_modules/antd/lib/icon/index.js");
+
+var _icon2 = _interopRequireDefault(_icon);
+
+var _menu = __webpack_require__("./node_modules/antd/lib/menu/index.js");
+
+var _menu2 = _interopRequireDefault(_menu);
+
+var _index = __webpack_require__("./node_modules/redbox-react/lib/index.js");
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = __webpack_require__("./node_modules/react-transform-catch-errors/lib/index.js");
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _react2 = __webpack_require__("./node_modules/react/react.js");
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index5 = __webpack_require__("./node_modules/react-transform-hmr/lib/index.js");
+
+var _index6 = _interopRequireDefault(_index5);
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+__webpack_require__("./node_modules/antd/lib/icon/style/css.js");
+
+__webpack_require__("./node_modules/antd/lib/menu/style/css.js");
+
+var _redux = __webpack_require__("./node_modules/redux/es/index.js");
+
+var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
+
+var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
+
+var _page = __webpack_require__("./src/redux/actions/page.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+    Home: {
+        displayName: 'Home'
+    }
+};
+
+var _DGaojuMyrepositoryReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
+    filename: 'D:/gaoju/Myrepository/React/src/container/front/home.js',
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+});
+
+var _DGaojuMyrepositoryReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
+    filename: 'D:/gaoju/Myrepository/React/src/container/front/home.js',
+    components: _components,
+    locals: [],
+    imports: [_react3.default, _index2.default]
+});
+
+function _wrapComponent(id) {
+    return function (Component) {
+        return _DGaojuMyrepositoryReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMyrepositoryReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
+    };
+} /**
+   * Created by gaoju on 2017/11/15.
+   */
+
+
+var SubMenu = _menu2.default.SubMenu;
+
+var Home = _wrapComponent('Home')(function (_Component) {
+    _inherits(Home, _Component);
+
+    function Home(props) {
+        _classCallCheck(this, Home);
+
+        var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+
+        _this.state = {
+            current: '1',
+            openKeys: []
+        };
+        return _this;
+    }
+
+    _createClass(Home, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {}
+    }, {
+        key: 'handleClick',
+        value: function handleClick(e) {
+            console.log('click ', e);
+            this.setState({
+                current: e.key,
+                openKeys: e.keyPath.slice(1)
+            });
+        }
+    }, {
+        key: 'onToggle',
+        value: function onToggle(info) {
+            this.setState({
+                openKeys: info.open ? info.keyPath : info.keyPath.slice(1)
+            });
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react3.default.createElement(
+                'div',
+                null,
+                _react3.default.createElement(
+                    _menu2.default,
+                    { onClick: this.handleClick,
+                        style: { width: 240 },
+                        openKeys: this.state.openKeys,
+                        onOpen: this.onToggle,
+                        onClose: this.onToggle,
+                        selectedKeys: [this.state.current],
+                        mode: 'inline' },
+                    _react3.default.createElement(
+                        SubMenu,
+                        { key: 'sub1', title: _react3.default.createElement(
+                                'span',
+                                null,
+                                _react3.default.createElement(_icon2.default, { type: 'mail' }),
+                                _react3.default.createElement(
+                                    'span',
+                                    null,
+                                    '\u5BFC\u822A\u4E00'
+                                )
+                            ) },
+                        _react3.default.createElement(
+                            _menu2.default.Item,
+                            { key: '1' },
+                            '\u9009\u98791'
+                        ),
+                        _react3.default.createElement(
+                            _menu2.default.Item,
+                            { key: '2' },
+                            '\u9009\u98792'
+                        ),
+                        _react3.default.createElement(
+                            _menu2.default.Item,
+                            { key: '3' },
+                            '\u9009\u98793'
+                        ),
+                        _react3.default.createElement(
+                            _menu2.default.Item,
+                            { key: '4' },
+                            '\u9009\u98794'
+                        )
+                    ),
+                    _react3.default.createElement(
+                        SubMenu,
+                        { key: 'sub2', title: _react3.default.createElement(
+                                'span',
+                                null,
+                                _react3.default.createElement(_icon2.default, { type: 'appstore' }),
+                                _react3.default.createElement(
+                                    'span',
+                                    null,
+                                    '\u5BFC\u822A\u4E8C'
+                                )
+                            ) },
+                        _react3.default.createElement(
+                            _menu2.default.Item,
+                            { key: '5' },
+                            '\u9009\u98795'
+                        ),
+                        _react3.default.createElement(
+                            _menu2.default.Item,
+                            { key: '6' },
+                            '\u9009\u98796'
+                        ),
+                        _react3.default.createElement(
+                            SubMenu,
+                            { key: 'sub3', title: '\u4E09\u7EA7\u5BFC\u822A' },
+                            _react3.default.createElement(
+                                _menu2.default.Item,
+                                { key: '7' },
+                                '\u9009\u98797'
+                            ),
+                            _react3.default.createElement(
+                                _menu2.default.Item,
+                                { key: '8' },
+                                '\u9009\u98798'
+                            )
+                        )
+                    ),
+                    _react3.default.createElement(
+                        SubMenu,
+                        { key: 'sub4', title: _react3.default.createElement(
+                                'span',
+                                null,
+                                _react3.default.createElement(_icon2.default, { type: 'setting' }),
+                                _react3.default.createElement(
+                                    'span',
+                                    null,
+                                    '\u5BFC\u822A\u4E09'
+                                )
+                            ) },
+                        _react3.default.createElement(
+                            _menu2.default.Item,
+                            { key: '9' },
+                            '\u9009\u98799'
+                        ),
+                        _react3.default.createElement(
+                            _menu2.default.Item,
+                            { key: '10' },
+                            '\u9009\u987910'
+                        ),
+                        _react3.default.createElement(
+                            _menu2.default.Item,
+                            { key: '11' },
+                            '\u9009\u987911'
+                        ),
+                        _react3.default.createElement(
+                            _menu2.default.Item,
+                            { key: '12' },
+                            '\u9009\u987912'
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Home;
+}(_react2.Component));
+
+function mapStateToProps(state, ownProps) {
+    return {
+        pageNames: state.pageNames
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, auth: _page.auth, getPageNames: _page.getPageNames, updateCurrentPage: _page.updateCurrentPage }, dispatch) };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Home);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
 
@@ -100795,6 +101062,52 @@ function request(route, params, dispatch) {
 
 function requestClean() {
     return { type: TYPES.REQUEST_CLEAN };
+}
+
+/***/ }),
+
+/***/ "./src/redux/actions/user.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.login = login;
+exports.changePassword = changePassword;
+
+var _types = __webpack_require__("./src/redux/types.js");
+
+var TYPES = _interopRequireWildcard(_types);
+
+var _config = __webpack_require__("./src/config.js");
+
+var CONFIG = _interopRequireWildcard(_config);
+
+var _request = __webpack_require__("./src/redux/actions/request.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function login(opt) {
+    return function (dispatch) {
+        var route = '/api/user/token';
+        (0, _request.request)(route, {}, dispatch, opt.success, opt.error, { method: 'POST',
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: opt.body });
+    };
+} /**
+   * 用户信息模块action
+   * Created by gaoju on 2017/11/15.
+   */
+function changePassword(opt) {
+    return function (dispatch) {
+        var route = '/api/user/password';
+        (0, _request.request)(route, {}, dispatch, opt.success, opt.error, { method: 'POST',
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: opt.body });
+    };
 }
 
 /***/ }),
