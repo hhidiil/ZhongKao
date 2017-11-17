@@ -6,7 +6,7 @@ import React ,{Component} from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { replace } from 'react-router-redux'
-import { login, changePassword } from '../../redux/actions/user'
+import {login, changePassword } from '../../redux/actions/user'
 
 import { Form, Icon, Input, Button, Checkbox } from 'antd'
 import './style.css'
@@ -14,20 +14,34 @@ const FormItem = Form.Item;
 class NormalLoginForm extends Component {
     constructor(props) {
         super(props)
+        const { getFieldDecorator, getFieldsError, getFieldError} = this.props.form
+        this.state={
+            checkPass:true
+        }
     }
     handleSubmit = (e) => {
         e.preventDefault();
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                //fetch('http://localhost:3000/post/api/1.0/query',
-                //    {
-                //        method: "POST",
-                //        body: JSON.stringify(values),
-                //        headers: {
-                //            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-                //        }
-                //    });
+                this.props.actions.login({
+                    body: {
+                        phone: values.userName,
+                        password: values.password
+                    },
+                    success: () => {
+                        this.props.actions.replace('/m/page')
+                    },
+                    error: (message) => {
+                        this.props.form.setFields({
+                            password: {
+                                value: values.password,
+                                errors: [new Error('密码错误')],
+                            }
+                        });
+
+                    }
+                })
             }
         });
     }
@@ -36,7 +50,7 @@ class NormalLoginForm extends Component {
         console.log('checkPass2: ', value);
         //const { getFieldValue } = this.props.form;
         if (value && value !== "123456") {
-            callback('密码错误');
+            ;
         } else {
             callback();
         }
@@ -61,9 +75,7 @@ class NormalLoginForm extends Component {
                         rules: [{
                             required: true,
                             message: '请输入密码!'
-                        }, {
-                            validator: this.checkPass2.bind(this),
-                        }],
+                        }]
                     })(
                         <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码" />
                     )}
@@ -84,6 +96,7 @@ class NormalLoginForm extends Component {
             </Form>
         );
     }
+
 }
 const Login = Form.create()(NormalLoginForm);
 function mapStateToProps(state) {

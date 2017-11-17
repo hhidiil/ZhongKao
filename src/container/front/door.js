@@ -5,13 +5,7 @@ import React, { Component } from 'react'
 import { Menu, Dropdown, Icon } from 'antd'
 import './style.css'
 
-// redux
-import { bindActionCreators } from 'redux'
-import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
-import { auth, updateCurrentPage } from '../../redux/actions/page'
 import MaskAlter from '../../components/Alter/maskAlter/maskalter'
-
 
 class Door extends Component {
 
@@ -65,41 +59,6 @@ class Door extends Component {
             </div>
         )
     }
-
-    toHome() {
-        let { actions } = this.props;
-        actions.auth({
-            body: {
-                name: this.refs.company.value,
-                code: this.refs.code.value,
-            },
-            success: (data) => {
-                if (data.page_name) {
-                    actions.updateCurrentPage({
-                        data: {
-                            id: data.page_id,
-                            name: data.page_name,
-                            color: data.page_color,
-                            code: data.page_code,
-                        }
-                    })
-                    actions.push('home')
-                }
-            },
-            error: (data) => {
-                window.alert('邀请码不正确！')
-            }
-        })
-    }
-}
-function mapStateToProps(state, ownProps) {
-    return {
-        pageNames: state.pageNames
-    }
 }
 
-function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push, auth, updateCurrentPage}, dispatch) }
-}
-
-export default connect(mapStateToProps, mapDispatchToProps)(Door)
+export default Door

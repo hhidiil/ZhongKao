@@ -15,7 +15,6 @@ export function login(opt) {
                 body: opt.body })
     }
 }
-
 export function changePassword(opt) {
     return (dispatch) => {
         const route = '/api/user/password';
