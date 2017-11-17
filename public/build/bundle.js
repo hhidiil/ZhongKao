@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7ce57adb8b21e0dc1035"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "08595c9453687104e9ef"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -100081,18 +100081,35 @@ var NormalLoginForm = _wrapComponent('NormalLoginForm')(function (_Component) {
             _this.props.form.validateFields(function (err, values) {
                 if (!err) {
                     console.log('Received values of form: ', values);
-                    //fetch('http://localhost:3000/post/api/1.0/query',
-                    //    {
-                    //        method: "POST",
-                    //        body: JSON.stringify(values),
-                    //        headers: {
-                    //            "Content-type": "application/x-www-form-urlencoded; charset=UTF-8"
-                    //        }
-                    //    });
+                    _this.props.actions.login({
+                        body: {
+                            phone: values.userName,
+                            password: values.password
+                        },
+                        success: function success() {
+                            _this.props.actions.replace('/m/page');
+                        },
+                        error: function error(message) {
+                            _this.props.form.setFields({
+                                password: {
+                                    value: values.password,
+                                    errors: [new Error('密码错误')]
+                                }
+                            });
+                        }
+                    });
                 }
             });
         };
 
+        var _this$props$form = _this.props.form,
+            getFieldDecorator = _this$props$form.getFieldDecorator,
+            getFieldsError = _this$props$form.getFieldsError,
+            getFieldError = _this$props$form.getFieldError;
+
+        _this.state = {
+            checkPass: true
+        };
         return _this;
     }
 
@@ -100104,7 +100121,7 @@ var NormalLoginForm = _wrapComponent('NormalLoginForm')(function (_Component) {
             console.log('checkPass2: ', value);
             //const { getFieldValue } = this.props.form;
             if (value && value !== "123456") {
-                callback('密码错误');
+                ;
             } else {
                 callback();
             }
@@ -100138,8 +100155,6 @@ var NormalLoginForm = _wrapComponent('NormalLoginForm')(function (_Component) {
                         rules: [{
                             required: true,
                             message: '请输入密码!'
-                        }, {
-                            validator: this.checkPass2.bind(this)
                         }]
                     })(_react3.default.createElement(_input2.default, { prefix: _react3.default.createElement(_icon2.default, { type: 'lock', style: { fontSize: 13 } }), type: 'password', placeholder: '\u8BF7\u8F93\u5165\u5BC6\u7801' }))
                 ),
@@ -100295,14 +100310,6 @@ __webpack_require__("./node_modules/antd/lib/menu/style/css.js");
 
 __webpack_require__("./src/container/front/style.css");
 
-var _redux = __webpack_require__("./node_modules/redux/es/index.js");
-
-var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
-
-var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
-
-var _page = __webpack_require__("./src/redux/actions/page.js");
-
 var _maskalter = __webpack_require__("./src/components/Alter/maskAlter/maskalter.js");
 
 var _maskalter2 = _interopRequireDefault(_maskalter);
@@ -100342,9 +100349,6 @@ function _wrapComponent(id) {
 } /**
    * Created by gaoju on 2017/11/15.
    */
-
-
-// redux
 
 
 var Door = _wrapComponent('Door')(function (_Component) {
@@ -100467,50 +100471,12 @@ var Door = _wrapComponent('Door')(function (_Component) {
                 )
             );
         }
-    }, {
-        key: 'toHome',
-        value: function toHome() {
-            var actions = this.props.actions;
-
-            actions.auth({
-                body: {
-                    name: this.refs.company.value,
-                    code: this.refs.code.value
-                },
-                success: function success(data) {
-                    if (data.page_name) {
-                        actions.updateCurrentPage({
-                            data: {
-                                id: data.page_id,
-                                name: data.page_name,
-                                color: data.page_color,
-                                code: data.page_code
-                            }
-                        });
-                        actions.push('home');
-                    }
-                },
-                error: function error(data) {
-                    window.alert('邀请码不正确！');
-                }
-            });
-        }
     }]);
 
     return Door;
 }(_react2.Component));
 
-function mapStateToProps(state, ownProps) {
-    return {
-        pageNames: state.pageNames
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, auth: _page.auth, updateCurrentPage: _page.updateCurrentPage }, dispatch) };
-}
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Door);
+exports.default = Door;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
