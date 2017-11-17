@@ -1,0 +1,107 @@
+.header{
+    position: fixed;
+    height: 80px;
+    min-height: 72px;
+    padding: 0 48px;
+    margin: 0px;
+    width: 100%;
+    z-index: 999;
+    background: #49516F;
+    color: #fff;
+    border-bottom: 1px solid transparent;
+    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.box-align-center {
+    align-items: center;
+}
+.justify-center {
+    justify-content: center;
+}
+.flex-box{
+    display: flex;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+}
+.width-max-xxlarge {
+    max-width: 1200px;
+}
+.width-min-xxlarge {
+    min-width: 450px;
+}
+.color-white{
+    color: #ffffff !important;
+}
+.position-relative{
+    position: relative;
+}
+.full-width{
+    width: 100%;
+}
+.logolay{
+    position: relative;
+    width: 120px;
+    float: left;
+    height: auto;
+}
+.logolay .logo{
+    position: relative;
+    overflow: hidden;
+    background: url("/public/images/uu14.png") no-repeat center center;
+    width: 120px;
+    background-size: cover;
+}
+.header-check-btn{
+    position: absolute;
+    right: 10px;
+    bottom: 15px;
+}
+.mainWapper{
+    position: relative;
+    top: 80px;
+    background: transparent;
+    width: auto;
+    margin: 0;
+    border-radius: 0;
+    padding: 0;
+    min-height: 500px;
+}
+.banner-wapper1{
+    position: relative;
+    overflow: hidden;
+    background: url("/public/images/marquee.jpg") center center / cover no-repeat;
+    width: 100%;
+}
+.banner-wapper1 .content{
+    position: absolute;
+    padding: 50px;
+    height: 50%;
+    width: 50%;
+    top: 25%;
+    right: 0;
+    max-width: 600px;
+}
+.banner-wapper2{
+    height: 300px;
+    width: 100%;
+}
+.banner-wapper2 .content{
+    align-items: center;
+    text-align: center;
+    max-width: 960px;
+    padding: 30px;
+    box-sizing: inherit;
+    font-size: 1em;
+    line-height: 1.5;
+}
+.banner-wapper3{
+    height: 500px;
+    width: 100%;
+    background-color: #f5f5f5
+}
+.page{
+    min-height: 500px;
+    height: 80vh;
+}
+.Door-Login{
+}

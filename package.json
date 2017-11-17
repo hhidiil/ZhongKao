@@ -1,0 +1,52 @@
+{
+  "name": "midexam",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "webpack --config webpack.config.js && node server.js",
+    "begin": "node ./bin/www",
+    "build": "webpack --config webpack.config.js && node server.js"
+  },
+  "dependencies": {
+    "body-parser": "~1.15.1",
+    "cookie-parser": "~1.4.3",
+    "debug": "~2.6.9",
+    "ejs": "~2.5.7",
+    "express": "~4.15.5",
+    "immutable": "^3.8.1",
+    "morgan": "~1.9.0",
+    "serve-favicon": "~2.4.5"
+  },
+  "devDependencies": {
+    "antd": "^2.13.10",
+    "babel-core": "^6.18.2",
+    "babel-loader": "^6.2.8",
+    "babel-plugin-import": "^1.6.2",
+    "babel-polyfill": "^6.26.0",
+    "babel-preset-es2015": "^6.18.0",
+    "babel-preset-react": "^6.16.0",
+    "babel-preset-react-hmre": "^1.1.1",
+    "babel-preset-stage-0": "^6.24.1",
+    "css-loader": "^0.26.0",
+    "file-loader": "^0.9.0",
+    "img-loader": "^1.3.1",
+    "jquery": "^3.2.1",
+    "jsx-loader": "^0.13.2",
+    "mocha": "^3.1.2",
+    "react": "^15.6.2",
+    "react-dom": "^15.4.1",
+    "react-hot-loader": "^3.0.0-beta.6",
+    "react-redux": "^4.4.6",
+    "react-redux-spinner": "^0.4.0",
+    "react-router": "^3.0.0",
+    "react-router-redux": "^4.0.7",
+    "redux": "^3.7.2",
+    "redux-immutablejs": "0.0.8",
+    "redux-logger": "^2.7.4",
+    "redux-thunk": "^2.1.0",
+    "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "webpack": "^2.2.1",
+    "webpack-dev-server": "^2.4.1"
+  }
+}
