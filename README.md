@@ -1,3 +1,3 @@
 # React
 React+redux+ant_design
-参照 jafenry/tms
+参照 "https://github.com/Jafeney/tms"
