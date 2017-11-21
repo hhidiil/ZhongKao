@@ -15,6 +15,7 @@ module.exports = {
     ],
     output: {
         path: path.join(__dirname, 'public/build'),//打包输出文件地址
+        publicPath:'/public/build/',
         filename: 'bundle.js'//打包输出文件名
     },
     module: {

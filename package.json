@@ -4,8 +4,7 @@
   "private": true,
   "scripts": {
     "start": "webpack --config webpack.config.js && node server.js",
-    "begin": "node ./bin/www",
-    "build": "webpack --config webpack.config.js && node server.js"
+    "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
@@ -15,6 +14,7 @@
     "express": "~4.15.5",
     "immutable": "^3.8.1",
     "morgan": "~1.9.0",
+    "mysql": "^2.15.0",
     "serve-favicon": "~2.4.5"
   },
   "devDependencies": {

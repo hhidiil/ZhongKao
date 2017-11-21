@@ -5,7 +5,7 @@ import React ,{Component} from 'react'
 // redux
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { replace } from 'react-router-redux'
+import { push } from 'react-router-redux'
 import {login, changePassword } from '../../redux/actions/user'
 
 import { Form, Icon, Input, Button, Checkbox } from 'antd'
@@ -30,7 +30,7 @@ class NormalLoginForm extends Component {
                         password: values.password
                     },
                     success: () => {
-                        this.props.actions.replace('/m/page')
+                        this.props.actions.push('home')
                     },
                     error: (message) => {
                         this.props.form.setFields({
@@ -49,11 +49,6 @@ class NormalLoginForm extends Component {
     checkPass2(rule, value, callback) {
         console.log('checkPass2: ', value);
         //const { getFieldValue } = this.props.form;
-        if (value && value !== "123456") {
-            ;
-        } else {
-            callback();
-        }
     }
     render() {
         const { getFieldDecorator, getFieldsError, getFieldError} = this.props.form;
@@ -105,7 +100,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ replace, login, changePassword }, dispatch)
+        actions: bindActionCreators({ push, login, changePassword }, dispatch)
     }
 }
 

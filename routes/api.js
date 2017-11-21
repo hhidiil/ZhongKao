@@ -2,8 +2,8 @@ var express = require('express');
 var router = express.Router();
 var fs = require('fs');
 
-var FS_PATH_SERVICES = './routes/services/';
-var REQUIRE_PATH_SERVICES = './services/';
+var FS_PATH_SERVICES = './routes/servicers/';
+var REQUIRE_PATH_SERVICES = './servicers/';
 
 router.options('*', function (req, res, next) {
     next();

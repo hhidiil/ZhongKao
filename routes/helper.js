@@ -2,6 +2,7 @@
  * 服务端 工具
  * Created by gaoju on 2017/11/15.
  */
+var crypto = require('crypto');
 var helper = {
 
     // 获取本地时间字符串
@@ -9,6 +10,12 @@ var helper = {
         return date.getFullYear() + '-' + (date.getMonth() + 1) + '-' +
             date.getDate() + ' ' + date.getHours() + ':' + date.getMinutes() +
             ':' + date.getSeconds();
+    },
+    // MD5加密
+    getMD5: function(str) {
+        var md5 = crypto.createHash('md5');
+        md5.update(str);
+        return md5.digest('hex');
     },
     // 执行sql语句
     db_query: function(opt) {
