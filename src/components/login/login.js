@@ -29,14 +29,14 @@ class NormalLoginForm extends Component {
                         phone: values.userName,
                         password: values.password
                     },
-                    success: () => {
+                    success: (data) => {
+                        console.log("login success:"+data)
                         this.props.actions.push('home')
                     },
                     error: (message) => {
                         this.props.form.setFields({
                             password: {
-                                value: values.password,
-                                errors: [new Error('密码错误')],
+                                errors: [new Error(message)]
                             }
                         });
 
@@ -44,11 +44,6 @@ class NormalLoginForm extends Component {
                 })
             }
         });
-    }
-    //密码校验
-    checkPass2(rule, value, callback) {
-        console.log('checkPass2: ', value);
-        //const { getFieldValue } = this.props.form;
     }
     render() {
         const { getFieldDecorator, getFieldsError, getFieldError} = this.props.form;
