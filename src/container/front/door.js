@@ -2,13 +2,12 @@
  * Created by gaoju on 2017/11/15.
  */
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 import { Menu, Dropdown, Icon } from 'antd'
 import './style.css'
-
-import MaskAlter from '../../components/Alter/maskAlter/maskalter'
+import Login from '../../components/login/login'
 
 class Door extends Component {
-
     constructor(props) {
         super(props)
     }
@@ -17,10 +16,10 @@ class Door extends Component {
         const menu = (
             <Menu>
                 <Menu.Item key="0">
-                    <MaskAlter title="登录"></MaskAlter>
+                    <Login title="登录"></Login>
                 </Menu.Item>
                 <Menu.Item key="1">
-                    <a href="http://www.baidu.com/">注册</a>
+                    <Link to="/register">注册</Link>
                 </Menu.Item>
                 <Menu.Divider />
                 <Menu.Item key="3">退出</Menu.Item>
@@ -60,5 +59,4 @@ class Door extends Component {
         )
     }
 }
-
 export default Door

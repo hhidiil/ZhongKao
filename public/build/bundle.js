@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "e1564f340541b52dd3e1"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ababd0b4eb58db7dcac6"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -2176,6 +2176,35 @@ if(true) {
 
 /***/ }),
 
+/***/ "./node_modules/antd/lib/col/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _grid = __webpack_require__("./node_modules/antd/lib/grid/index.js");
+
+exports['default'] = _grid.Col;
+module.exports = exports['default'];
+
+/***/ }),
+
+/***/ "./node_modules/antd/lib/col/style/css.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__("./node_modules/antd/lib/style/index.css");
+
+__webpack_require__("./node_modules/antd/lib/grid/style/index.css");
+
+/***/ }),
+
 /***/ "./node_modules/antd/lib/dropdown/dropdown-button.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3262,6 +3291,32 @@ Col.propTypes = {
     xl: objectOrNumber
 };
 module.exports = exports['default'];
+
+/***/ }),
+
+/***/ "./node_modules/antd/lib/grid/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.Col = exports.Row = undefined;
+
+var _row = __webpack_require__("./node_modules/antd/lib/grid/row.js");
+
+var _row2 = _interopRequireDefault(_row);
+
+var _col = __webpack_require__("./node_modules/antd/lib/grid/col.js");
+
+var _col2 = _interopRequireDefault(_col);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { 'default': obj }; }
+
+exports.Row = _row2['default'];
+exports.Col = _col2['default'];
 
 /***/ }),
 
@@ -5159,6 +5214,35 @@ if(true) {
 	// When the module is disposed, remove the <style> tags
 	module.hot.dispose(function() { update(); });
 }
+
+/***/ }),
+
+/***/ "./node_modules/antd/lib/row/index.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _grid = __webpack_require__("./node_modules/antd/lib/grid/index.js");
+
+exports['default'] = _grid.Row;
+module.exports = exports['default'];
+
+/***/ }),
+
+/***/ "./node_modules/antd/lib/row/style/css.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+__webpack_require__("./node_modules/antd/lib/style/index.css");
+
+__webpack_require__("./node_modules/antd/lib/grid/style/index.css");
 
 /***/ }),
 
@@ -19860,21 +19944,6 @@ exports.push([module.i, "/* stylelint-disable at-rule-empty-line-before,at-rule-
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./src/components/Alter/maskAlter/style.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")();
-// imports
-
-
-// module
-exports.push([module.i, "", ""]);
-
-// exports
-
-
-/***/ }),
-
 /***/ "./node_modules/css-loader/index.js!./src/components/login/style.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19913,7 +19982,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".header{\r\n    position: fixed;\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #49516F;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.box-align-center {\r\n    align-items: center;\r\n}\r\n.justify-center {\r\n    justify-content: center;\r\n}\r\n.flex-box{\r\n    display: flex;\r\n    background-position: center center;\r\n    background-size: cover;\r\n    background-repeat: no-repeat;\r\n}\r\n.width-max-xxlarge {\r\n    max-width: 1200px;\r\n}\r\n.width-min-xxlarge {\r\n    min-width: 450px;\r\n}\r\n.color-white{\r\n    color: #ffffff !important;\r\n}\r\n.position-relative{\r\n    position: relative;\r\n}\r\n.full-width{\r\n    width: 100%;\r\n}\r\n.logolay{\r\n    position: relative;\r\n    width: 120px;\r\n    float: left;\r\n    height: auto;\r\n}\r\n.logolay .logo{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/uu14.png\") no-repeat center center;\r\n    width: 120px;\r\n    background-size: cover;\r\n}\r\n.header-check-btn{\r\n    position: absolute;\r\n    right: 10px;\r\n    bottom: 15px;\r\n}\r\n.mainWapper{\r\n    position: relative;\r\n    top: 80px;\r\n    background: transparent;\r\n    width: auto;\r\n    margin: 0;\r\n    border-radius: 0;\r\n    padding: 0;\r\n    min-height: 500px;\r\n}\r\n.banner-wapper1{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/marquee.jpg\") center center / cover no-repeat;\r\n    width: 100%;\r\n}\r\n.banner-wapper1 .content{\r\n    position: absolute;\r\n    padding: 50px;\r\n    height: 50%;\r\n    width: 50%;\r\n    top: 25%;\r\n    right: 0;\r\n    max-width: 600px;\r\n}\r\n.banner-wapper2{\r\n    height: 300px;\r\n    width: 100%;\r\n}\r\n.banner-wapper2 .content{\r\n    align-items: center;\r\n    text-align: center;\r\n    max-width: 960px;\r\n    padding: 30px;\r\n    box-sizing: inherit;\r\n    font-size: 1em;\r\n    line-height: 1.5;\r\n}\r\n.banner-wapper3{\r\n    height: 500px;\r\n    width: 100%;\r\n    background-color: #f5f5f5\r\n}\r\n.page{\r\n    min-height: 500px;\r\n    height: 80vh;\r\n}\r\n#header-home{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #64B5F6;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.home .menu-css{\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n    margin: 0px 10px;\r\n    min-height: 650px;\r\n    background-color: white;\r\n}\r\n.home .section-all{\r\n    margin: 20px;\r\n}\r\n.home .section-left{\r\n    background-color: white;\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n}", ""]);
+exports.push([module.i, ".header{\r\n    position: fixed;\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #49516F;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.box-align-center {\r\n    align-items: center;\r\n}\r\n.justify-center {\r\n    justify-content: center;\r\n}\r\n.flex-box{\r\n    display: flex;\r\n    background-position: center center;\r\n    background-size: cover;\r\n    background-repeat: no-repeat;\r\n}\r\n.width-max-xxlarge {\r\n    max-width: 1600px;\r\n}\r\n.width-min-xxlarge {\r\n    min-width: 450px;\r\n}\r\n.color-white{\r\n    color: #ffffff !important;\r\n}\r\n.position-relative{\r\n    position: relative;\r\n}\r\n.full-width{\r\n    width: 100%;\r\n}\r\n.logolay{\r\n    position: relative;\r\n    width: 120px;\r\n    float: left;\r\n    height: auto;\r\n}\r\n.logolay .logo{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/uu14.png\") no-repeat center center;\r\n    width: 120px;\r\n    background-size: cover;\r\n}\r\n.header-check-btn{\r\n    position: absolute;\r\n    right: 10px;\r\n    bottom: 15px;\r\n}\r\n.mainWapper{\r\n    position: relative;\r\n    top: 80px;\r\n    background: transparent;\r\n    width: auto;\r\n    margin: 0;\r\n    border-radius: 0;\r\n    padding: 0;\r\n    min-height: 500px;\r\n}\r\n.banner-wapper1{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/marquee.jpg\") center center / cover no-repeat;\r\n    width: 100%;\r\n}\r\n.banner-wapper1 .content{\r\n    position: absolute;\r\n    padding: 50px;\r\n    height: 50%;\r\n    width: 50%;\r\n    top: 25%;\r\n    right: 0;\r\n    max-width: 600px;\r\n}\r\n.banner-wapper2{\r\n    height: 300px;\r\n    width: 100%;\r\n}\r\n.banner-wapper2 .content{\r\n    align-items: center;\r\n    text-align: center;\r\n    max-width: 960px;\r\n    padding: 30px;\r\n    box-sizing: inherit;\r\n    font-size: 1em;\r\n    line-height: 1.5;\r\n}\r\n.banner-wapper3{\r\n    height: 500px;\r\n    width: 100%;\r\n    background-color: #f5f5f5\r\n}\r\n.page{\r\n    min-height: 500px;\r\n    height: 80vh;\r\n}\r\n#header-home{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #64B5F6;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.home .menu-css{\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n    margin: 0px 10px;\r\n    min-height: 650px;\r\n    background-color: white;\r\n}\r\n.home .section-all{\r\n    margin: 20px;\r\n}\r\n.home .section-left{\r\n    background-color: white;\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n}\r\n.register header{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: white;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    box-shadow: 0 0 5px 0 #d9d9d9;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.register .header-left-font{\r\n    font-size: 16px;\r\n    color: #333;\r\n}\r\n.header-left-font span{\r\n    color: #999;\r\n}\r\n.register section{\r\n    margin: 50px;\r\n    min-height: 500px;\r\n}\r\n.register footer{\r\n    position: fixed;\r\n    width: 100%;\r\n    bottom: 0;\r\n    min-height: 100px;\r\n    padding: 20px;\r\n}\r\n.register footer .content{\r\n    display: flex;\r\n    font-size: 12px;\r\n    text-align: center;\r\n    border-top: solid 1px #e6e6e6;\r\n    color: #999;\r\n}\r\n.content .content-left{\r\n    width: 50%;\r\n    margin-top: 40px;\r\n}\r\n.content .content-right{\r\n    width: 50%;\r\n    margin-top: 5px;\r\n}", ""]);
 
 // exports
 
@@ -99807,7 +99876,7 @@ if(true) {
 
 /***/ }),
 
-/***/ "./src/components/Alter/maskAlter/maskalter.js":
+/***/ "./src/components/login/login.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -99820,167 +99889,6 @@ Object.defineProperty(exports, "__esModule", {
 var _modal = __webpack_require__("./node_modules/antd/lib/modal/index.js");
 
 var _modal2 = _interopRequireDefault(_modal);
-
-var _index = __webpack_require__("./node_modules/redbox-react/lib/index.js");
-
-var _index2 = _interopRequireDefault(_index);
-
-var _index3 = __webpack_require__("./node_modules/react-transform-catch-errors/lib/index.js");
-
-var _index4 = _interopRequireDefault(_index3);
-
-var _react2 = __webpack_require__("./node_modules/react/react.js");
-
-var _react3 = _interopRequireDefault(_react2);
-
-var _index5 = __webpack_require__("./node_modules/react-transform-hmr/lib/index.js");
-
-var _index6 = _interopRequireDefault(_index5);
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-__webpack_require__("./node_modules/antd/lib/modal/style/css.js");
-
-var _login = __webpack_require__("./src/components/login/login.js");
-
-var _login2 = _interopRequireDefault(_login);
-
-__webpack_require__("./src/components/Alter/maskAlter/style.css");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _components = {
-    MaskAlter: {
-        displayName: 'MaskAlter'
-    }
-};
-
-var _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
-    filename: 'D:/gaoju/Midexam/React/src/components/Alter/maskAlter/maskalter.js',
-    components: _components,
-    locals: [module],
-    imports: [_react3.default]
-});
-
-var _DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
-    filename: 'D:/gaoju/Midexam/React/src/components/Alter/maskAlter/maskalter.js',
-    components: _components,
-    locals: [],
-    imports: [_react3.default, _index2.default]
-});
-
-function _wrapComponent(id) {
-    return function (Component) {
-        return _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
-    };
-} /**
-   * Created by gaoju on 2017/11/16.
-   */
-
-
-var MaskAlter = _wrapComponent('MaskAlter')(function (_React$Component) {
-    _inherits(MaskAlter, _React$Component);
-
-    function MaskAlter(props) {
-        _classCallCheck(this, MaskAlter);
-
-        var _this = _possibleConstructorReturn(this, (MaskAlter.__proto__ || Object.getPrototypeOf(MaskAlter)).call(this, props));
-
-        _this.state = {
-            modalVisible: false,
-            title: props.title
-        };
-        return _this;
-    }
-
-    _createClass(MaskAlter, [{
-        key: 'setModalVisible',
-        value: function setModalVisible(modalVisible) {
-            this.setState({ modalVisible: modalVisible });
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            return _react3.default.createElement(
-                'div',
-                null,
-                _react3.default.createElement(
-                    'a',
-                    { type: 'primary', onClick: function onClick() {
-                            return _this2.setModalVisible(true);
-                        } },
-                    this.state.title
-                ),
-                _react3.default.createElement(
-                    _modal2.default,
-                    {
-                        title: 'Login',
-                        footer: '',
-                        maskClosable: false,
-                        wrapClassName: 'vertical-center-modal',
-                        visible: this.state.modalVisible,
-                        onCancel: function onCancel() {
-                            return _this2.setModalVisible(false);
-                        }
-                    },
-                    _react3.default.createElement(_login2.default, null)
-                )
-            );
-        }
-    }]);
-
-    return MaskAlter;
-}(_react3.default.Component));
-
-exports.default = MaskAlter;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
-
-/***/ }),
-
-/***/ "./src/components/Alter/maskAlter/style.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js!./src/components/Alter/maskAlter/style.css");
-if(typeof content === 'string') content = [[module.i, content, '']];
-// add the styles to the DOM
-var update = __webpack_require__("./node_modules/style-loader/addStyles.js")(content, {});
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(true) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("./node_modules/css-loader/index.js!./src/components/Alter/maskAlter/style.css", function() {
-			var newContent = __webpack_require__("./node_modules/css-loader/index.js!./src/components/Alter/maskAlter/style.css");
-			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ "./src/components/login/login.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
 
 var _button = __webpack_require__("./node_modules/antd/lib/button/index.js");
 
@@ -100022,6 +99930,8 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+__webpack_require__("./node_modules/antd/lib/modal/style/css.js");
+
 __webpack_require__("./node_modules/antd/lib/button/style/css.js");
 
 __webpack_require__("./node_modules/antd/lib/checkbox/style/css.js");
@@ -100031,6 +99941,8 @@ __webpack_require__("./node_modules/antd/lib/input/style/css.js");
 __webpack_require__("./node_modules/antd/lib/icon/style/css.js");
 
 __webpack_require__("./node_modules/antd/lib/form/style/css.js");
+
+var _reactRouter = __webpack_require__("./node_modules/react-router/es/index.js");
 
 var _redux = __webpack_require__("./node_modules/redux/es/index.js");
 
@@ -100051,8 +99963,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _components = {
-    NormalLoginForm: {
-        displayName: 'NormalLoginForm'
+    LoginForm: {
+        displayName: 'LoginForm'
     }
 };
 
@@ -100083,13 +99995,13 @@ function _wrapComponent(id) {
 
 var FormItem = _form2.default.Item;
 
-var NormalLoginForm = _wrapComponent('NormalLoginForm')(function (_Component) {
-    _inherits(NormalLoginForm, _Component);
+var LoginForm = _wrapComponent('LoginForm')(function (_Component) {
+    _inherits(LoginForm, _Component);
 
-    function NormalLoginForm(props) {
-        _classCallCheck(this, NormalLoginForm);
+    function LoginForm(props) {
+        _classCallCheck(this, LoginForm);
 
-        var _this = _possibleConstructorReturn(this, (NormalLoginForm.__proto__ || Object.getPrototypeOf(NormalLoginForm)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (LoginForm.__proto__ || Object.getPrototypeOf(LoginForm)).call(this, props));
 
         _this.handleSubmit = function (e) {
             e.preventDefault();
@@ -100108,7 +100020,7 @@ var NormalLoginForm = _wrapComponent('NormalLoginForm')(function (_Component) {
                         error: function error(message) {
                             _this.props.form.setFields({
                                 password: {
-                                    errors: [new Error(message)]
+                                    errors: [new Error(message || "密码错误")]
                                 }
                             });
                         }
@@ -100123,78 +100035,108 @@ var NormalLoginForm = _wrapComponent('NormalLoginForm')(function (_Component) {
             getFieldError = _this$props$form.getFieldError;
 
         _this.state = {
-            checkPass: true
+            checkPass: true,
+            modalVisible: false,
+            title: props.title
         };
         return _this;
     }
 
-    _createClass(NormalLoginForm, [{
+    _createClass(LoginForm, [{
+        key: 'setModalVisible',
+        value: function setModalVisible(modalVisible) {
+            this.setState({ modalVisible: modalVisible });
+        }
+    }, {
         key: 'render',
         value: function render() {
-            var _props$form = this.props.form,
-                getFieldDecorator = _props$form.getFieldDecorator,
-                getFieldsError = _props$form.getFieldsError,
-                getFieldError = _props$form.getFieldError;
+            var _this2 = this;
+
+            var getFieldDecorator = this.props.form.getFieldDecorator;
 
             var formItemLayout = {
                 labelCol: { span: 5 },
                 wrapperCol: { span: 15 }
             };
             return _react3.default.createElement(
-                _form2.default,
-                { onSubmit: this.handleSubmit, className: 'login-form margin-auto' },
+                'div',
+                null,
                 _react3.default.createElement(
-                    FormItem,
-                    _extends({}, formItemLayout, { label: '\u7528\u6237\u540D' }),
-                    getFieldDecorator('userName', {
-                        rules: [{ required: true, message: '请输入用户名!' }]
-                    })(_react3.default.createElement(_input2.default, { prefix: _react3.default.createElement(_icon2.default, { type: 'user', style: { fontSize: 13 } }), placeholder: '\u8BF7\u8F93\u5165\u7528\u6237\u540D' }))
+                    'a',
+                    { type: 'primary', onClick: function onClick() {
+                            return _this2.setModalVisible(true);
+                        } },
+                    this.state.title
                 ),
                 _react3.default.createElement(
-                    FormItem,
-                    _extends({}, formItemLayout, { label: '\u5BC6\u7801' }),
-                    getFieldDecorator('password', {
-                        rules: [{
-                            required: true,
-                            message: '请输入密码!'
-                        }]
-                    })(_react3.default.createElement(_input2.default, { prefix: _react3.default.createElement(_icon2.default, { type: 'lock', style: { fontSize: 13 } }), type: 'password', placeholder: '\u8BF7\u8F93\u5165\u5BC6\u7801' }))
-                ),
-                _react3.default.createElement(
-                    FormItem,
-                    { wrapperCol: { span: 15, offset: 5 } },
-                    getFieldDecorator('remember', {
-                        valuePropName: 'checked',
-                        initialValue: true
-                    })(_react3.default.createElement(
-                        _checkbox2.default,
-                        null,
-                        'Remember me'
-                    )),
+                    _modal2.default,
+                    {
+                        title: 'Login',
+                        footer: '',
+                        maskClosable: false,
+                        wrapClassName: 'vertical-center-modal',
+                        visible: this.state.modalVisible,
+                        onCancel: function onCancel() {
+                            return _this2.setModalVisible(false);
+                        }
+                    },
                     _react3.default.createElement(
-                        'a',
-                        { className: 'login-form-forgot', href: '#' },
-                        '\u5FD8\u8BB0\u5BC6\u7801'
-                    ),
-                    _react3.default.createElement(
-                        _button2.default,
-                        { type: 'primary', htmlType: 'submit', className: 'login-form-button' },
-                        '\u767B \u5F55'
-                    ),
-                    _react3.default.createElement(
-                        'a',
-                        { href: '#' },
-                        '\u7ACB\u5373\u6CE8\u518C!'
+                        _form2.default,
+                        { onSubmit: this.handleSubmit, className: 'login-form margin-auto' },
+                        _react3.default.createElement(
+                            FormItem,
+                            _extends({}, formItemLayout, { label: '\u7528\u6237\u540D' }),
+                            getFieldDecorator('userName', {
+                                rules: [{ required: true, message: '请输入用户名!' }]
+                            })(_react3.default.createElement(_input2.default, { prefix: _react3.default.createElement(_icon2.default, { type: 'user', style: { fontSize: 13 } }), placeholder: '\u8BF7\u8F93\u5165\u7528\u6237\u540D' }))
+                        ),
+                        _react3.default.createElement(
+                            FormItem,
+                            _extends({}, formItemLayout, { label: '\u5BC6\u7801' }),
+                            getFieldDecorator('password', {
+                                rules: [{
+                                    required: true,
+                                    message: '请输入密码!'
+                                }]
+                            })(_react3.default.createElement(_input2.default, { prefix: _react3.default.createElement(_icon2.default, { type: 'lock', style: { fontSize: 13 } }), type: 'password', placeholder: '\u8BF7\u8F93\u5165\u5BC6\u7801' }))
+                        ),
+                        _react3.default.createElement(
+                            FormItem,
+                            { wrapperCol: { span: 15, offset: 5 } },
+                            getFieldDecorator('remember', {
+                                valuePropName: 'checked',
+                                initialValue: true
+                            })(_react3.default.createElement(
+                                _checkbox2.default,
+                                null,
+                                'Remember me'
+                            )),
+                            _react3.default.createElement(
+                                'a',
+                                { className: 'login-form-forgot', href: '#' },
+                                '\u5FD8\u8BB0\u5BC6\u7801'
+                            ),
+                            _react3.default.createElement(
+                                _button2.default,
+                                { type: 'primary', htmlType: 'submit', className: 'login-form-button' },
+                                '\u767B \u5F55'
+                            ),
+                            _react3.default.createElement(
+                                _reactRouter.Link,
+                                { to: '/register' },
+                                '\u7ACB\u5373\u6CE8\u518C'
+                            )
+                        )
                     )
                 )
             );
         }
     }]);
 
-    return NormalLoginForm;
+    return LoginForm;
 }(_react2.Component));
 
-var Login = _form2.default.create()(NormalLoginForm);
+var Login = _form2.default.create()(LoginForm);
 function mapStateToProps(state) {
     return {};
 }
@@ -100310,11 +100252,13 @@ __webpack_require__("./node_modules/antd/lib/icon/style/css.js");
 
 __webpack_require__("./node_modules/antd/lib/menu/style/css.js");
 
+var _reactRouter = __webpack_require__("./node_modules/react-router/es/index.js");
+
 __webpack_require__("./src/container/front/style.css");
 
-var _maskalter = __webpack_require__("./src/components/Alter/maskAlter/maskalter.js");
+var _login = __webpack_require__("./src/components/login/login.js");
 
-var _maskalter2 = _interopRequireDefault(_maskalter);
+var _login2 = _interopRequireDefault(_login);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -100373,14 +100317,14 @@ var Door = _wrapComponent('Door')(function (_Component) {
                 _react3.default.createElement(
                     _menu2.default.Item,
                     { key: '0' },
-                    _react3.default.createElement(_maskalter2.default, { title: '\u767B\u5F55' })
+                    _react3.default.createElement(_login2.default, { title: '\u767B\u5F55' })
                 ),
                 _react3.default.createElement(
                     _menu2.default.Item,
                     { key: '1' },
                     _react3.default.createElement(
-                        'a',
-                        { href: 'http://www.baidu.com/' },
+                        _reactRouter.Link,
+                        { to: '/register' },
                         '\u6CE8\u518C'
                     )
                 ),
@@ -100597,22 +100541,9 @@ var Home = _wrapComponent('Home')(function (_Component) {
             _this.setState({
                 activeName: route
             });
-            //this.props.actions.push(`/m/page/editor`)
-            //this.props.actions.updateCurrentPage({
-            //    data: {
-            //        id: id,
-            //        name: route,
-            //        color: color,
-            //        code: code,
-            //    }
-            //})
-            //this.setState({
-            //    activeName: route
-            //})
         };
 
         _this.state = {
-            openKeys: ['basic'],
             activeName: window.location.hash.split('/')[window.location.hash.split('/').length - 1]
         };
         return _this;
@@ -101061,6 +100992,440 @@ if(true) {
 
 /***/ }),
 
+/***/ "./src/container/front/register.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _checkbox = __webpack_require__("./node_modules/antd/lib/checkbox/index.js");
+
+var _checkbox2 = _interopRequireDefault(_checkbox);
+
+var _row = __webpack_require__("./node_modules/antd/lib/row/index.js");
+
+var _row2 = _interopRequireDefault(_row);
+
+var _button = __webpack_require__("./node_modules/antd/lib/button/index.js");
+
+var _button2 = _interopRequireDefault(_button);
+
+var _col = __webpack_require__("./node_modules/antd/lib/col/index.js");
+
+var _col2 = _interopRequireDefault(_col);
+
+var _input = __webpack_require__("./node_modules/antd/lib/input/index.js");
+
+var _input2 = _interopRequireDefault(_input);
+
+var _form = __webpack_require__("./node_modules/antd/lib/form/index.js");
+
+var _form2 = _interopRequireDefault(_form);
+
+var _index = __webpack_require__("./node_modules/redbox-react/lib/index.js");
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = __webpack_require__("./node_modules/react-transform-catch-errors/lib/index.js");
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _react2 = __webpack_require__("./node_modules/react/react.js");
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index5 = __webpack_require__("./node_modules/react-transform-hmr/lib/index.js");
+
+var _index6 = _interopRequireDefault(_index5);
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+__webpack_require__("./node_modules/antd/lib/checkbox/style/css.js");
+
+__webpack_require__("./node_modules/antd/lib/row/style/css.js");
+
+__webpack_require__("./node_modules/antd/lib/button/style/css.js");
+
+__webpack_require__("./node_modules/antd/lib/col/style/css.js");
+
+__webpack_require__("./node_modules/antd/lib/input/style/css.js");
+
+__webpack_require__("./node_modules/antd/lib/form/style/css.js");
+
+var _redux = __webpack_require__("./node_modules/redux/es/index.js");
+
+var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
+
+var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
+
+var _user = __webpack_require__("./src/redux/actions/user.js");
+
+__webpack_require__("./src/container/front/style.css");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+    RegisterForm: {
+        displayName: 'RegisterForm'
+    }
+};
+
+var _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
+    filename: 'D:/gaoju/Midexam/React/src/container/front/register.js',
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+});
+
+var _DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
+    filename: 'D:/gaoju/Midexam/React/src/container/front/register.js',
+    components: _components,
+    locals: [],
+    imports: [_react3.default, _index2.default]
+});
+
+function _wrapComponent(id) {
+    return function (Component) {
+        return _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
+    };
+} /**
+   * Created by gaoju on 2017/11/16.
+   */
+
+// redux
+
+
+var FormItem = _form2.default.Item;
+
+var RegisterForm = _wrapComponent('RegisterForm')(function (_Component) {
+    _inherits(RegisterForm, _Component);
+
+    function RegisterForm(props) {
+        _classCallCheck(this, RegisterForm);
+
+        var _this = _possibleConstructorReturn(this, (RegisterForm.__proto__ || Object.getPrototypeOf(RegisterForm)).call(this, props));
+
+        _this.handleConfirmBlur = function (e) {
+            var value = e.target.value;
+            _this.setState({ confirmDirty: _this.state.confirmDirty || !!value });
+        };
+
+        _this.checkPassword = function (rule, value, callback) {
+            var form = _this.props.form;
+            if (value && value !== form.getFieldValue('password')) {
+                callback('请输入与上面密码相同的密码!');
+            } else {
+                callback();
+            }
+        };
+
+        _this.checkPhone = function (rule, value, callback) {
+            console.log("phone:" + value);
+            debugger;
+            if (value && value.length !== 11) {
+                callback('请输入正确手机号（11位数字）!');
+            } else {
+                callback();
+            }
+        };
+
+        _this.checkConfirm = function (rule, value, callback) {
+            var form = _this.props.form;
+            if (value && _this.state.confirmDirty) {
+                form.validateFields(['confirm'], { force: true });
+            }
+            callback();
+        };
+
+        _this.handleSubmit = function (e) {
+            e.preventDefault();
+            _this.props.form.validateFields(function (err, values) {
+                if (!err) {
+                    console.log('Received values of form: ', values);
+                    _this.props.actions.login({
+                        body: {
+                            phone: values.userName,
+                            password: values.password
+                        },
+                        success: function success(data) {
+                            console.log("login success:" + data);
+                            _this.props.actions.push('door');
+                        },
+                        error: function error(message) {
+                            _this.props.form.setFields({
+                                password: {
+                                    errors: [new Error(message)]
+                                }
+                            });
+                        }
+                    });
+                }
+            });
+        };
+
+        var _this$props$form = _this.props.form,
+            getFieldDecorator = _this$props$form.getFieldDecorator,
+            getFieldsError = _this$props$form.getFieldsError,
+            getFieldError = _this$props$form.getFieldError;
+
+        _this.state = {
+            confirmDirty: false,
+            checkPass: true
+        };
+        return _this;
+    }
+
+    _createClass(RegisterForm, [{
+        key: 'render',
+        value: function render() {
+            var getFieldDecorator = this.props.form.getFieldDecorator;
+
+            var formItemLayout = {
+                labelCol: {
+                    xs: { span: 24 },
+                    sm: { span: 8 }
+                },
+                wrapperCol: {
+                    xs: { span: 24 },
+                    sm: { span: 8 }
+                }
+            };
+            var tailFormItemLayout = {
+                wrapperCol: {
+                    xs: {
+                        span: 24,
+                        offset: 0
+                    },
+                    sm: {
+                        span: 8,
+                        offset: 8
+                    }
+                }
+            };
+            return _react3.default.createElement(
+                'div',
+                { className: 'register' },
+                _react3.default.createElement(
+                    'header',
+                    { className: 'flex-box box-align-center justify-center' },
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'full-width position-relative width-max-xxlarge' },
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'logolay' },
+                            _react3.default.createElement(
+                                'a',
+                                { href: 'http://www.idiil.com.cn/index.html' },
+                                _react3.default.createElement('img', { src: 'public/images/uu14.png' })
+                            )
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'header-check-btn header-left-font' },
+                            _react3.default.createElement(
+                                'span',
+                                null,
+                                '\u5DF2\u6709\u8D26\u53F7\uFF1F'
+                            ),
+                            _react3.default.createElement(
+                                'a',
+                                { href: 'http://www.idiil.com.cn/index.html', style: { color: "#333" } },
+                                '\u8BF7\u767B\u5F55'
+                            )
+                        )
+                    )
+                ),
+                _react3.default.createElement(
+                    'section',
+                    null,
+                    _react3.default.createElement(
+                        _form2.default,
+                        { onSubmit: this.handleSubmit },
+                        _react3.default.createElement(
+                            FormItem,
+                            _extends({}, formItemLayout, {
+                                label: '\u7528\u6237\u540D',
+                                hasFeedback: true
+                            }),
+                            getFieldDecorator('nickname', {
+                                rules: [{ required: true, message: '请输入用户名!', whitespace: true }]
+                            })(_react3.default.createElement(_input2.default, null))
+                        ),
+                        _react3.default.createElement(
+                            FormItem,
+                            _extends({}, formItemLayout, {
+                                label: 'E-mail',
+                                hasFeedback: true
+                            }),
+                            getFieldDecorator('email', {
+                                rules: [{
+                                    type: 'email', message: '无效的 E-mail!'
+                                }, {
+                                    required: true, message: '请输入你的 E-mail!'
+                                }]
+                            })(_react3.default.createElement(_input2.default, null))
+                        ),
+                        _react3.default.createElement(
+                            FormItem,
+                            _extends({}, formItemLayout, {
+                                label: '\u5BC6\u7801',
+                                hasFeedback: true
+                            }),
+                            getFieldDecorator('password', {
+                                rules: [{
+                                    required: true, message: '请输入密码!'
+                                }, {
+                                    validator: this.checkConfirm
+                                }]
+                            })(_react3.default.createElement(_input2.default, { type: 'password' }))
+                        ),
+                        _react3.default.createElement(
+                            FormItem,
+                            _extends({}, formItemLayout, {
+                                label: '\u786E\u8BA4\u5BC6\u7801',
+                                hasFeedback: true
+                            }),
+                            getFieldDecorator('confirm', {
+                                rules: [{
+                                    required: true, message: '请输入确认密码!'
+                                }, {
+                                    validator: this.checkPassword
+                                }]
+                            })(_react3.default.createElement(_input2.default, { type: 'password', onBlur: this.handleConfirmBlur }))
+                        ),
+                        _react3.default.createElement(
+                            FormItem,
+                            _extends({}, formItemLayout, {
+                                label: '\u624B\u673A\u53F7'
+                            }),
+                            getFieldDecorator('phone', {
+                                rules: [{ required: true, message: '请输入手机号!' }]
+                            }, {
+                                validator: this.checkPhone
+                            })(_react3.default.createElement(_input2.default, { type: 'number', style: { width: '100%' } }))
+                        ),
+                        _react3.default.createElement(
+                            FormItem,
+                            _extends({}, formItemLayout, {
+                                label: '\u9A8C\u8BC1',
+                                extra: '\u6211\u4EEC\u5FC5\u987B\u786E\u4FDD\u60A8\u4E0D\u662F\u4E00\u4E2A\u673A\u5668\u4EBA.'
+                            }),
+                            _react3.default.createElement(
+                                _row2.default,
+                                { gutter: 8 },
+                                _react3.default.createElement(
+                                    _col2.default,
+                                    { span: 12 },
+                                    getFieldDecorator('captcha', {
+                                        rules: [{ required: true, message: '请输入验证码!' }]
+                                    })(_react3.default.createElement(_input2.default, { size: 'large', maxLength: '6' }))
+                                ),
+                                _react3.default.createElement(
+                                    _col2.default,
+                                    { span: 12 },
+                                    _react3.default.createElement(
+                                        _button2.default,
+                                        { size: 'large' },
+                                        '\u83B7\u53D6\u9A8C\u8BC1\u7801'
+                                    )
+                                )
+                            )
+                        ),
+                        _react3.default.createElement(
+                            FormItem,
+                            _extends({}, tailFormItemLayout, { style: { marginBottom: 8 } }),
+                            getFieldDecorator('agreement', {
+                                valuePropName: 'checked'
+                            })(_react3.default.createElement(
+                                _checkbox2.default,
+                                null,
+                                '\u6211\u5DF2\u9605\u8BFB ',
+                                _react3.default.createElement(
+                                    'a',
+                                    { href: '' },
+                                    '\u534F\u8BAE'
+                                )
+                            ))
+                        ),
+                        _react3.default.createElement(
+                            FormItem,
+                            tailFormItemLayout,
+                            _react3.default.createElement(
+                                _button2.default,
+                                { className: 'full-width', type: 'primary', htmlType: 'submit' },
+                                '\u6CE8\u518C'
+                            )
+                        )
+                    )
+                ),
+                _react3.default.createElement(
+                    'footer',
+                    null,
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'content' },
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'content-left' },
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '\u603B\u516C\u53F8\u5730\u5740\uFF1A\u5317\u4EAC\u5E02\u6D77\u6DC0\u533A\u4FE1\u606F\u8DEF28\u53F7\u79D1\u5B9E\u5927\u53A6B-07A-1'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '\u8054\u7CFB\u7535\u8BDD\uFF1A010-62984888'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '\u7248\u6743\u6240\u6709:\u7F8E\u56FD\u7231\u8FEA\u4E50\u6559\u80B2\u7814\u7A76\u9662\u7231\u8FEA\u4E50\u5B66\u4E60\u4E2D\u5FC3 \u4EACICP\u590710015906\u53F7 \u4EAC\u516C\u7F51\u5B89\u590711010802021421\u53F7'
+                            )
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'content-right' },
+                            _react3.default.createElement('img', { src: 'public/images/u84.png' })
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return RegisterForm;
+}(_react2.Component));
+
+var Register = _form2.default.create()(RegisterForm);
+function mapStateToProps(state) {
+    return {};
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, register: _user.register, changePassword: _user.changePassword }, dispatch)
+    };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Register);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
 /***/ "./src/container/front/style.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -101396,6 +101761,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.login = login;
 exports.changePassword = changePassword;
+exports.register = register;
 
 var _types = __webpack_require__("./src/redux/types.js");
 
@@ -101424,6 +101790,14 @@ function login(opt) {
     };
 }
 function changePassword(opt) {
+    return function (dispatch) {
+        var route = '/api/user/password';
+        (0, _request.request)(route, {}, dispatch, opt.success, opt.error, { method: 'POST',
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: (0, _public.bodyUrlencoded)(opt.body) });
+    };
+}
+function register(opt) {
     return function (dispatch) {
         var route = '/api/user/password';
         (0, _request.request)(route, {}, dispatch, opt.success, opt.error, { method: 'POST',
@@ -101546,6 +101920,10 @@ var _home = __webpack_require__("./src/container/front/home.js");
 
 var _home2 = _interopRequireDefault(_home);
 
+var _register = __webpack_require__("./src/container/front/register.js");
+
+var _register2 = _interopRequireDefault(_register);
+
 var _basic = __webpack_require__("./src/container/front/page_modules/basic.js");
 
 var _basic2 = _interopRequireDefault(_basic);
@@ -101556,14 +101934,11 @@ var _math2 = _interopRequireDefault(_math);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-/**
- * 项目路由配置
- * Created by gaoju on 2017/11/15.
- */
 var routes = _react2.default.createElement(
     _reactRouter.Route,
     null,
     _react2.default.createElement(_reactRouter.Route, { path: '/', component: _door2.default }),
+    _react2.default.createElement(_reactRouter.Route, { path: '/register', component: _register2.default }),
     _react2.default.createElement(
         _reactRouter.Route,
         { path: '/home', component: _home2.default },
@@ -101571,8 +101946,10 @@ var routes = _react2.default.createElement(
         _react2.default.createElement(_reactRouter.Route, { path: 'math', component: _math2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'english', component: _math2.default })
     )
-);
-
+); /**
+    * 项目路由配置
+    * Created by gaoju on 2017/11/15.
+    */
 exports.default = routes;
 
 /***/ }),

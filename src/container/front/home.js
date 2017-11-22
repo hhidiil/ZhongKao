@@ -21,7 +21,6 @@ class Home extends Component {
         super(props)
         //this.pid = props.currentPage.get('id');
         this.state = {
-            openKeys: ['basic'],
             activeName:window.location.hash.split('/')[window.location.hash.split('/').length-1]
         };
     };
@@ -54,18 +53,6 @@ class Home extends Component {
         this.setState({
             activeName: route
         })
-        //this.props.actions.push(`/m/page/editor`)
-        //this.props.actions.updateCurrentPage({
-        //    data: {
-        //        id: id,
-        //        name: route,
-        //        color: color,
-        //        code: code,
-        //    }
-        //})
-        //this.setState({
-        //    activeName: route
-        //})
     };
     exit(){
         window.alert("exit!")

@@ -24,7 +24,7 @@
     background-repeat: no-repeat;
 }
 .width-max-xxlarge {
-    max-width: 1200px;
+    max-width: 1600px;
 }
 .width-min-xxlarge {
     min-width: 450px;
@@ -127,4 +127,50 @@
 .home .section-left{
     background-color: white;
     box-shadow: 0 2px 4px 0 #d9d9d9;
+}
+.register header{
+    height: 80px;
+    min-height: 72px;
+    padding: 0 48px;
+    margin: 0px;
+    width: 100%;
+    z-index: 999;
+    background: white;
+    color: #fff;
+    border-bottom: 1px solid transparent;
+    box-shadow: 0 0 5px 0 #d9d9d9;
+    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
+}
+.register .header-left-font{
+    font-size: 16px;
+    color: #333;
+}
+.header-left-font span{
+    color: #999;
+}
+.register section{
+    margin: 50px;
+    min-height: 500px;
+}
+.register footer{
+    position: fixed;
+    width: 100%;
+    bottom: 0;
+    min-height: 100px;
+    padding: 20px;
+}
+.register footer .content{
+    display: flex;
+    font-size: 12px;
+    text-align: center;
+    border-top: solid 1px #e6e6e6;
+    color: #999;
+}
+.content .content-left{
+    width: 50%;
+    margin-top: 40px;
+}
+.content .content-right{
+    width: 50%;
+    margin-top: 5px;
 }

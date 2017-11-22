@@ -7,12 +7,14 @@ import { Route } from 'react-router'
 
 import Door from '../container/front/door'
 import Home from '../container/front/home'
+import Register from '../container/front/register'
 import Basic from '../container/front/page_modules/basic'
 import Math from '../container/front/page_modules/math'
 
 const routes = (
     <Route>
         <Route path="/" component={Door} />
+        <Route path="/register" component={Register} />
         <Route path="/home" component={Home}>
             <Route path="basic" component={Basic} />
             <Route path="math" component={Math} />

@@ -25,3 +25,12 @@ export function changePassword(opt) {
                 body: bodyUrlencoded(opt.body) })
     }
 }
+export function register(opt) {
+    return (dispatch) => {
+        const route = '/api/user/password';
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
+    }
+}
