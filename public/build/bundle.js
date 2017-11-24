@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ababd0b4eb58db7dcac6"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "4659d064373ca1c58ef3"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -19959,6 +19959,21 @@ exports.push([module.i, ".margin-auto{\r\n    margin: 0 auto;\r\n}\r\n.login-for
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./src/container/front/page_modules/math/style.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")();
+// imports
+
+
+// module
+exports.push([module.i, ".questions{\r\n    position: absolute;\r\n    height: 100%;\r\n    width: 100%;\r\n    background-color: aliceblue;\r\n}\r\n.questions header{\r\n    text-align: center;\r\n    height:60px;\r\n}\r\n.question-item{\r\n    position: relative;\r\n    display: flex;\r\n    height: 75px;\r\n    line-height: 75px;\r\n    border-radius: 8px;\r\n    border: 1px solid darkgray;\r\n    margin-bottom: 5px;\r\n}\r\n.title{\r\n    padding-left:10px ;\r\n}\r\n.question-item .btn{\r\n    position: absolute;\r\n    text-align: center;\r\n    cursor: pointer;\r\n    width: 42px;\r\n    margin-top: 20px;\r\n    height: 32px;\r\n    line-height: 32px;\r\n    border: 1px dashed gray;\r\n}\r\n.looklook{\r\n    right: 80px;\r\n}\r\n.doexam{\r\n    right: 15px;\r\n}", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./src/container/front/page_modules/style.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -19967,7 +19982,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, "", ""]);
+exports.push([module.i, ".math-door{\r\n    position: absolute;\r\n    display: flex;\r\n    height: 100%;\r\n    width: 100%;\r\n    padding: 50px;\r\n    text-align: center;\r\n    background-color: #AED581;\r\n}\r\n.math-door .questions,.exam{\r\n    position: relative;\r\n    height: 100%;\r\n    width: 50%;\r\n}\r\n.enter-block{\r\n    border-radius: 20px;\r\n    position: absolute;\r\n    font-size: 50px;\r\n    height: 200px;\r\n    width: 200px;\r\n    padding-top: 50px;\r\n    margin: 0 auto;\r\n    left: 28%;\r\n    top: 30%;\r\n}\r\n.enter-block:hover{\r\n    cursor: pointer;\r\n    box-shadow: 4px 4px 2px;\r\n    transform: translate(-2px, -2px);\r\n}\r\n.question-block{\r\n    background-color: lightblue;\r\n}\r\n.exam-block{\r\n\r\n    background-color: burlywood;\r\n}", ""]);
 
 // exports
 
@@ -19982,7 +19997,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".header{\r\n    position: fixed;\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #49516F;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.box-align-center {\r\n    align-items: center;\r\n}\r\n.justify-center {\r\n    justify-content: center;\r\n}\r\n.flex-box{\r\n    display: flex;\r\n    background-position: center center;\r\n    background-size: cover;\r\n    background-repeat: no-repeat;\r\n}\r\n.width-max-xxlarge {\r\n    max-width: 1600px;\r\n}\r\n.width-min-xxlarge {\r\n    min-width: 450px;\r\n}\r\n.color-white{\r\n    color: #ffffff !important;\r\n}\r\n.position-relative{\r\n    position: relative;\r\n}\r\n.full-width{\r\n    width: 100%;\r\n}\r\n.logolay{\r\n    position: relative;\r\n    width: 120px;\r\n    float: left;\r\n    height: auto;\r\n}\r\n.logolay .logo{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/uu14.png\") no-repeat center center;\r\n    width: 120px;\r\n    background-size: cover;\r\n}\r\n.header-check-btn{\r\n    position: absolute;\r\n    right: 10px;\r\n    bottom: 15px;\r\n}\r\n.mainWapper{\r\n    position: relative;\r\n    top: 80px;\r\n    background: transparent;\r\n    width: auto;\r\n    margin: 0;\r\n    border-radius: 0;\r\n    padding: 0;\r\n    min-height: 500px;\r\n}\r\n.banner-wapper1{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/marquee.jpg\") center center / cover no-repeat;\r\n    width: 100%;\r\n}\r\n.banner-wapper1 .content{\r\n    position: absolute;\r\n    padding: 50px;\r\n    height: 50%;\r\n    width: 50%;\r\n    top: 25%;\r\n    right: 0;\r\n    max-width: 600px;\r\n}\r\n.banner-wapper2{\r\n    height: 300px;\r\n    width: 100%;\r\n}\r\n.banner-wapper2 .content{\r\n    align-items: center;\r\n    text-align: center;\r\n    max-width: 960px;\r\n    padding: 30px;\r\n    box-sizing: inherit;\r\n    font-size: 1em;\r\n    line-height: 1.5;\r\n}\r\n.banner-wapper3{\r\n    height: 500px;\r\n    width: 100%;\r\n    background-color: #f5f5f5\r\n}\r\n.page{\r\n    min-height: 500px;\r\n    height: 80vh;\r\n}\r\n#header-home{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #64B5F6;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.home .menu-css{\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n    margin: 0px 10px;\r\n    min-height: 650px;\r\n    background-color: white;\r\n}\r\n.home .section-all{\r\n    margin: 20px;\r\n}\r\n.home .section-left{\r\n    background-color: white;\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n}\r\n.register header{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: white;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    box-shadow: 0 0 5px 0 #d9d9d9;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.register .header-left-font{\r\n    font-size: 16px;\r\n    color: #333;\r\n}\r\n.header-left-font span{\r\n    color: #999;\r\n}\r\n.register section{\r\n    margin: 50px;\r\n    min-height: 500px;\r\n}\r\n.register footer{\r\n    position: fixed;\r\n    width: 100%;\r\n    bottom: 0;\r\n    min-height: 100px;\r\n    padding: 20px;\r\n}\r\n.register footer .content{\r\n    display: flex;\r\n    font-size: 12px;\r\n    text-align: center;\r\n    border-top: solid 1px #e6e6e6;\r\n    color: #999;\r\n}\r\n.content .content-left{\r\n    width: 50%;\r\n    margin-top: 40px;\r\n}\r\n.content .content-right{\r\n    width: 50%;\r\n    margin-top: 5px;\r\n}", ""]);
+exports.push([module.i, ".header{\r\n    position: fixed;\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #49516F;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.box-align-center {\r\n    align-items: center;\r\n}\r\n.justify-center {\r\n    justify-content: center;\r\n}\r\n.flex-box{\r\n    display: flex;\r\n    background-position: center center;\r\n    background-size: cover;\r\n    background-repeat: no-repeat;\r\n}\r\n.width-max-xxlarge {\r\n    max-width: 1600px;\r\n}\r\n.width-min-xxlarge {\r\n    min-width: 450px;\r\n}\r\n.color-white{\r\n    color: #ffffff !important;\r\n}\r\n.position-relative{\r\n    position: relative;\r\n}\r\n.full-width{\r\n    width: 100%;\r\n}\r\n.logolay{\r\n    position: relative;\r\n    width: 120px;\r\n    float: left;\r\n    height: auto;\r\n}\r\n.logolay .logo{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/uu14.png\") no-repeat center center;\r\n    width: 120px;\r\n    background-size: cover;\r\n}\r\n.header-check-btn{\r\n    position: absolute;\r\n    right: 10px;\r\n    bottom: 15px;\r\n}\r\n.mainWapper{\r\n    position: relative;\r\n    top: 80px;\r\n    background: transparent;\r\n    width: auto;\r\n    margin: 0;\r\n    border-radius: 0;\r\n    padding: 0;\r\n    min-height: 500px;\r\n}\r\n.banner-wapper1{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/marquee.jpg\") center center / cover no-repeat;\r\n    width: 100%;\r\n}\r\n.banner-wapper1 .content{\r\n    position: absolute;\r\n    padding: 50px;\r\n    height: 50%;\r\n    width: 50%;\r\n    top: 25%;\r\n    right: 0;\r\n    max-width: 600px;\r\n}\r\n.banner-wapper2{\r\n    height: 300px;\r\n    width: 100%;\r\n}\r\n.banner-wapper2 .content{\r\n    align-items: center;\r\n    text-align: center;\r\n    max-width: 960px;\r\n    padding: 30px;\r\n    box-sizing: inherit;\r\n    font-size: 1em;\r\n    line-height: 1.5;\r\n}\r\n.banner-wapper3{\r\n    height: 500px;\r\n    width: 100%;\r\n    background-color: #f5f5f5\r\n}\r\n.page{\r\n    min-height: 500px;\r\n    height: 80vh;\r\n}\r\n#header-home{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #64B5F6;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.home .menu-css{\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n    margin: 0px 10px;\r\n    min-height: 850px;\r\n    background-color: white;\r\n}\r\n.home .section-all{\r\n    margin: 20px;\r\n}\r\n.home .section-left{\r\n    position: relative;\r\n    background-color: white;\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n}\r\n.register header{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: white;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    box-shadow: 0 0 5px 0 #d9d9d9;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.register .header-left-font{\r\n    font-size: 16px;\r\n    color: #333;\r\n}\r\n.header-left-font span{\r\n    color: #999;\r\n}\r\n.register section{\r\n    margin: 50px;\r\n    min-height: 500px;\r\n}\r\n.register footer{\r\n    position: fixed;\r\n    width: 100%;\r\n    bottom: 0;\r\n    min-height: 100px;\r\n    padding: 20px;\r\n}\r\n.register footer .content{\r\n    display: flex;\r\n    font-size: 12px;\r\n    text-align: center;\r\n    border-top: solid 1px #e6e6e6;\r\n    color: #999;\r\n}\r\n.content .content-left{\r\n    width: 50%;\r\n    margin-top: 40px;\r\n}\r\n.content .content-right{\r\n    width: 50%;\r\n    margin-top: 5px;\r\n}", ""]);
 
 // exports
 
@@ -100008,23 +100023,46 @@ var LoginForm = _wrapComponent('LoginForm')(function (_Component) {
             _this.props.form.validateFields(function (err, values) {
                 if (!err) {
                     console.log('Received values of form: ', values);
-                    _this.props.actions.login({
-                        body: {
-                            phone: values.userName,
-                            password: values.password
-                        },
-                        success: function success(data) {
-                            console.log("login success:" + data);
-                            _this.props.actions.push('home');
-                        },
-                        error: function error(message) {
-                            _this.props.form.setFields({
-                                password: {
-                                    errors: [new Error(message || "密码错误")]
-                                }
-                            });
-                        }
-                    });
+                    _this.props.actions.push('home');
+                    //if(values.userName == this.state.loginData.username){
+                    //    if(values.password == this.state.loginData.password){
+                    //        sessionStorage.setItem('token', 'idiil')
+                    //        sessionStorage.setItem('username', values.userName)
+                    //        this.props.actions.push('home')
+                    //    }else{
+                    //        this.props.form.setFields({
+                    //            password: {
+                    //                errors: [new Error("密码错误！")]
+                    //            }
+                    //        });
+                    //    }
+                    //}else{
+                    //    this.props.form.setFields({
+                    //        userName: {
+                    //            errors: [new Error("用户不存在！")]
+                    //        }
+                    //    });
+                    //}
+                    //this.props.actions.login({
+                    //    body: {
+                    //        phone: values.userName,
+                    //        password: values.password
+                    //    },
+                    //    success: (data) => {
+                    //        console.log("login success:"+data)
+                    //        //sessionStorage.setItem('token', 'dupi')
+                    //        //sessionStorage.setItem('username', values.username)
+                    //        this.props.actions.push('home')
+                    //    },
+                    //    error: (message) => {
+                    //        this.props.form.setFields({
+                    //            password: {
+                    //                errors: [new Error(message || "密码错误")]
+                    //            }
+                    //        });
+                    //
+                    //    }
+                    //})
                 }
             });
         };
@@ -100037,7 +100075,11 @@ var LoginForm = _wrapComponent('LoginForm')(function (_Component) {
         _this.state = {
             checkPass: true,
             modalVisible: false,
-            title: props.title
+            title: props.title,
+            loginData: {
+                username: "admin",
+                password: "123456"
+            }
         };
         return _this;
     }
@@ -100521,7 +100563,6 @@ function _wrapComponent(id) {
 
 
 var SubMenu = _menu2.default.SubMenu;
-var MenuItemGroup = _menu2.default.ItemGroup;
 
 var Home = _wrapComponent('Home')(function (_Component) {
     _inherits(Home, _Component);
@@ -100544,12 +100585,26 @@ var Home = _wrapComponent('Home')(function (_Component) {
         };
 
         _this.state = {
+            route: 'basic',
             activeName: window.location.hash.split('/')[window.location.hash.split('/').length - 1]
         };
+        _this.exitOut = _this.exitOut.bind(_this);
         return _this;
     }
 
     _createClass(Home, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            //let token = sessionStorage.getItem('token');
+            //let username = sessionStorage.getItem('username');
+            //console.log("session username------>"+username)
+            //if(!username){
+            //    alert("请登录！")
+            //    this.props.actions.push('/')
+            //    return;
+            //}
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
             document.body.style.backgroundColor = '#F5F5F5';
@@ -100575,9 +100630,15 @@ var Home = _wrapComponent('Home')(function (_Component) {
             //}
         }
     }, {
-        key: 'exit',
-        value: function exit() {
-            window.alert("exit!");
+        key: 'exitOut',
+        value: function exitOut() {
+            console.log("exitOut");
+            if (window.confirm("确定要退出吗？")) {
+                sessionStorage.clear();
+                this.props.actions.push('/');
+            } else {
+                console.log("不想退出你点击干嘛？");
+            }
         }
     }, {
         key: 'render',
@@ -100608,7 +100669,7 @@ var Home = _wrapComponent('Home')(function (_Component) {
                         _react3.default.createElement(
                             'div',
                             { className: 'header-check-btn' },
-                            _react3.default.createElement(_icon2.default, { type: 'logout', style: { cursor: "pointer" }, onClick: this.exit })
+                            _react3.default.createElement(_icon2.default, { type: 'logout', style: { cursor: "pointer" }, onClick: this.exitOut })
                         )
                     )
                 ),
@@ -100640,103 +100701,21 @@ var Home = _wrapComponent('Home')(function (_Component) {
                                         )
                                     ) },
                                 _react3.default.createElement(
-                                    MenuItemGroup,
-                                    { key: 'g1', title: '\u82F1\u8BED' },
-                                    _react3.default.createElement(
-                                        _menu2.default.Item,
-                                        { key: '1' },
-                                        '\u8BD5\u9898 1'
-                                    ),
-                                    _react3.default.createElement(
-                                        _menu2.default.Item,
-                                        { key: '2' },
-                                        '\u8BD5\u9898 2'
-                                    )
+                                    _menu2.default.Item,
+                                    { key: '1' },
+                                    '\u57FA\u672C\u4FE1\u606F'
                                 ),
                                 _react3.default.createElement(
-                                    MenuItemGroup,
-                                    { key: 'g2', title: '\u6570\u5B66' },
-                                    _react3.default.createElement(
-                                        _menu2.default.Item,
-                                        { key: '3' },
-                                        '\u8BD5\u9898 3'
-                                    ),
-                                    _react3.default.createElement(
-                                        _menu2.default.Item,
-                                        { key: '4' },
-                                        '\u8BD5\u9898 4'
-                                    )
+                                    _menu2.default.Item,
+                                    { key: '2' },
+                                    '\u6211\u7684\u6536\u85CF'
                                 )
                             ),
                             _react3.default.createElement(
-                                SubMenu,
-                                { key: 'english', title: _react3.default.createElement(
-                                        'span',
-                                        null,
-                                        _react3.default.createElement(_icon2.default, { type: 'appstore' }),
-                                        _react3.default.createElement(
-                                            'span',
-                                            null,
-                                            '\u82F1\u8BED\u680F\u76EE'
-                                        )
-                                    ) },
-                                _react3.default.createElement(
-                                    _menu2.default.Item,
-                                    { key: '5' },
-                                    '\u53E3\u8BED\u7EC3\u4E60 5'
-                                ),
-                                _react3.default.createElement(
-                                    _menu2.default.Item,
-                                    { key: '6' },
-                                    '\u9605\u8BFB\u7EC3\u4E60 6'
-                                ),
-                                _react3.default.createElement(
-                                    SubMenu,
-                                    { key: 'sub3', title: '\u6D4B\u8BD5\u4E60\u9898' },
-                                    _react3.default.createElement(
-                                        _menu2.default.Item,
-                                        { key: '7' },
-                                        '\u7EC3\u4E60 7'
-                                    ),
-                                    _react3.default.createElement(
-                                        _menu2.default.Item,
-                                        { key: '8' },
-                                        '\u7EC3\u4E60 8'
-                                    )
-                                )
-                            ),
-                            _react3.default.createElement(
-                                SubMenu,
-                                { key: 'math', title: _react3.default.createElement(
-                                        'span',
-                                        null,
-                                        _react3.default.createElement(_icon2.default, { type: 'setting' }),
-                                        _react3.default.createElement(
-                                            'span',
-                                            null,
-                                            '\u6570\u5B66\u680F\u76EE 3'
-                                        )
-                                    ) },
-                                _react3.default.createElement(
-                                    _menu2.default.Item,
-                                    { key: '9' },
-                                    '\u57FA\u672C\u6982\u5FF5 9'
-                                ),
-                                _react3.default.createElement(
-                                    _menu2.default.Item,
-                                    { key: '10' },
-                                    '\u6D4B\u8BD5\u5355\u5143 10'
-                                ),
-                                _react3.default.createElement(
-                                    _menu2.default.Item,
-                                    { key: '11' },
-                                    '\u6D4B\u8BD5\u5355\u5143 11'
-                                ),
-                                _react3.default.createElement(
-                                    _menu2.default.Item,
-                                    { key: '12' },
-                                    '\u7EC3\u4E60 12'
-                                )
+                                _menu2.default.Item,
+                                { key: 'math' },
+                                _react3.default.createElement(_icon2.default, { type: 'mail' }),
+                                '\u6570\u5B66\u680F\u76EE'
                             )
                         )
                     ),
@@ -100898,6 +100877,14 @@ var _index6 = _interopRequireDefault(_index5);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _reactRouter = __webpack_require__("./node_modules/react-router/es/index.js");
+
+var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
+
+var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
+
+var _redux = __webpack_require__("./node_modules/redux/es/index.js");
+
 __webpack_require__("./src/container/front/page_modules/style.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -100943,16 +100930,44 @@ var Math = _wrapComponent('Math')(function (_Component) {
     function Math(props) {
         _classCallCheck(this, Math);
 
-        return _possibleConstructorReturn(this, (Math.__proto__ || Object.getPrototypeOf(Math)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Math.__proto__ || Object.getPrototypeOf(Math)).call(this, props));
+
+        _this.state = {};
+        return _this;
     }
 
     _createClass(Math, [{
+        key: 'goPage',
+        value: function goPage(data, event) {
+            console.log(data);
+            this.props.actions.push('/home/' + data);
+        }
+    }, {
         key: 'render',
         value: function render() {
+            //let { basic, english, math } = this.props;
+            //console.log(this.props)
             return _react3.default.createElement(
                 'div',
-                null,
-                'welcome Math'
+                { className: 'math-door' },
+                _react3.default.createElement(
+                    'div',
+                    { className: 'questions' },
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'enter-block question-block', onClick: this.goPage.bind(this, 'questions') },
+                        '\u771F\u9898'
+                    )
+                ),
+                _react3.default.createElement(
+                    'div',
+                    { className: 'exam' },
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'enter-block exam-block', onClick: this.goPage.bind(this, 'exam') },
+                        '\u6A21\u8003'
+                    )
+                )
             );
         }
     }]);
@@ -100960,8 +100975,302 @@ var Math = _wrapComponent('Math')(function (_Component) {
     return Math;
 }(_react2.Component));
 
-exports.default = Math;
+function mapStateToProps(state) {
+    return {};
+}
+
+function mapDispatchToProps(dispatch) {
+    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push }, dispatch) };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Math);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./src/container/front/page_modules/math/math-exam-all.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _index = __webpack_require__("./node_modules/redbox-react/lib/index.js");
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = __webpack_require__("./node_modules/react-transform-catch-errors/lib/index.js");
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _react2 = __webpack_require__("./node_modules/react/react.js");
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index5 = __webpack_require__("./node_modules/react-transform-hmr/lib/index.js");
+
+var _index6 = _interopRequireDefault(_index5);
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+    Exam: {
+        displayName: 'Exam'
+    }
+};
+
+var _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
+    filename: 'D:/gaoju/Midexam/React/src/container/front/page_modules/math/math-exam-all.js',
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+});
+
+var _DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
+    filename: 'D:/gaoju/Midexam/React/src/container/front/page_modules/math/math-exam-all.js',
+    components: _components,
+    locals: [],
+    imports: [_react3.default, _index2.default]
+});
+
+function _wrapComponent(id) {
+    return function (Component) {
+        return _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
+    };
+} /**
+   * Created by gaoju on 2017/11/23.
+   */
+
+
+var Exam = _wrapComponent('Exam')(function (_Component) {
+    _inherits(Exam, _Component);
+
+    function Exam(props) {
+        _classCallCheck(this, Exam);
+
+        return _possibleConstructorReturn(this, (Exam.__proto__ || Object.getPrototypeOf(Exam)).call(this, props));
+    }
+
+    _createClass(Exam, [{
+        key: 'render',
+        value: function render() {
+            return _react3.default.createElement(
+                'div',
+                null,
+                'ahsdjahksjdhakjsdhakjshdkajshd'
+            );
+        }
+    }]);
+
+    return Exam;
+}(_react2.Component));
+
+exports.default = Exam;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./src/container/front/page_modules/math/math-question-all.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _index = __webpack_require__("./node_modules/redbox-react/lib/index.js");
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = __webpack_require__("./node_modules/react-transform-catch-errors/lib/index.js");
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _react2 = __webpack_require__("./node_modules/react/react.js");
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index5 = __webpack_require__("./node_modules/react-transform-hmr/lib/index.js");
+
+var _index6 = _interopRequireDefault(_index5);
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
+
+__webpack_require__("./src/container/front/page_modules/math/style.css");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+    Question: {
+        displayName: 'Question'
+    }
+};
+
+var _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
+    filename: 'D:/gaoju/Midexam/React/src/container/front/page_modules/math/math-question-all.js',
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+});
+
+var _DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
+    filename: 'D:/gaoju/Midexam/React/src/container/front/page_modules/math/math-question-all.js',
+    components: _components,
+    locals: [],
+    imports: [_react3.default, _index2.default]
+});
+
+function _wrapComponent(id) {
+    return function (Component) {
+        return _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
+    };
+} /**
+   * Created by gaoju on 2017/11/23.
+   */
+
+
+var Question = _wrapComponent('Question')(function (_Component) {
+    _inherits(Question, _Component);
+
+    function Question(props) {
+        _classCallCheck(this, Question);
+
+        var _this = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
+
+        _this.state = {
+            itemData: [{
+                id: '001',
+                title: '2017年北京大学内部专家通宵熬夜出版中考考试真题',
+                url: 'https://www.baidu.com'
+
+            }, {
+                id: '002',
+                title: '2017年清华大学内部专家通宵熬夜出版中考考试真题',
+                url: 'https://www.baidu.com'
+            }, {
+                id: '002',
+                title: '2016年清华大学内部专家通宵熬夜出版中考考试真题',
+                url: 'https://www.baidu.com'
+            }, {
+                id: '002',
+                title: '2015年清华大学内部专家通宵熬夜出版中考考试真题',
+                url: 'https://www.baidu.com'
+            }]
+        };
+        return _this;
+    }
+
+    _createClass(Question, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {}
+    }, {
+        key: 'render',
+        value: function render() {
+            var items = this.state.itemData;
+            console.log(items);
+            var itemPage = items.map(function (item, index) {
+                return _react3.default.createElement(
+                    'div',
+                    { key: index, className: 'question-item' },
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'title' },
+                        _react3.default.createElement(
+                            'h2',
+                            null,
+                            _react3.default.createElement(
+                                'a',
+                                { href: item.url },
+                                item.title
+                            )
+                        )
+                    ),
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'btn looklook' },
+                        '\u67E5\u770B'
+                    ),
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'btn doexam' },
+                        '\u505A\u9898'
+                    )
+                );
+            });
+            return _react3.default.createElement(
+                'div',
+                { className: 'questions' },
+                _react3.default.createElement(
+                    'header',
+                    null,
+                    _react3.default.createElement(
+                        'h2',
+                        null,
+                        '\u771F\u9898'
+                    )
+                ),
+                _react3.default.createElement(
+                    'section',
+                    null,
+                    itemPage
+                )
+            );
+        }
+    }]);
+
+    return Question;
+}(_react2.Component));
+
+exports.default = Question;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./src/container/front/page_modules/math/style.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./src/container/front/page_modules/math/style.css");
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/style-loader/addStyles.js")(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(true) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("./node_modules/css-loader/index.js!./src/container/front/page_modules/math/style.css", function() {
+			var newContent = __webpack_require__("./node_modules/css-loader/index.js!./src/container/front/page_modules/math/style.css");
+			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 
@@ -101932,6 +102241,14 @@ var _math = __webpack_require__("./src/container/front/page_modules/math.js");
 
 var _math2 = _interopRequireDefault(_math);
 
+var _mathQuestionAll = __webpack_require__("./src/container/front/page_modules/math/math-question-all.js");
+
+var _mathQuestionAll2 = _interopRequireDefault(_mathQuestionAll);
+
+var _mathExamAll = __webpack_require__("./src/container/front/page_modules/math/math-exam-all.js");
+
+var _mathExamAll2 = _interopRequireDefault(_mathExamAll);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var routes = _react2.default.createElement(
@@ -101944,7 +102261,8 @@ var routes = _react2.default.createElement(
         { path: '/home', component: _home2.default },
         _react2.default.createElement(_reactRouter.Route, { path: 'basic', component: _basic2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'math', component: _math2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'english', component: _math2.default })
+        _react2.default.createElement(_reactRouter.Route, { path: 'questions', component: _mathQuestionAll2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'exam', component: _mathExamAll2.default })
     )
 ); /**
     * 项目路由配置

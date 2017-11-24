@@ -19,7 +19,11 @@ class LoginForm extends Component {
         this.state={
             checkPass:true,
             modalVisible: false,
-            title:props.title
+            title:props.title,
+            loginData:{
+                username:"admin",
+                password:"123456"
+            }
         }
     }
     setModalVisible(modalVisible) {
@@ -30,24 +34,46 @@ class LoginForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                this.props.actions.login({
-                    body: {
-                        phone: values.userName,
-                        password: values.password
-                    },
-                    success: (data) => {
-                        console.log("login success:"+data)
-                        this.props.actions.push('home')
-                    },
-                    error: (message) => {
-                        this.props.form.setFields({
-                            password: {
-                                errors: [new Error(message || "密码错误")]
-                            }
-                        });
-
-                    }
-                })
+                this.props.actions.push('home')
+                //if(values.userName == this.state.loginData.username){
+                //    if(values.password == this.state.loginData.password){
+                //        sessionStorage.setItem('token', 'idiil')
+                //        sessionStorage.setItem('username', values.userName)
+                //        this.props.actions.push('home')
+                //    }else{
+                //        this.props.form.setFields({
+                //            password: {
+                //                errors: [new Error("密码错误！")]
+                //            }
+                //        });
+                //    }
+                //}else{
+                //    this.props.form.setFields({
+                //        userName: {
+                //            errors: [new Error("用户不存在！")]
+                //        }
+                //    });
+                //}
+                //this.props.actions.login({
+                //    body: {
+                //        phone: values.userName,
+                //        password: values.password
+                //    },
+                //    success: (data) => {
+                //        console.log("login success:"+data)
+                //        //sessionStorage.setItem('token', 'dupi')
+                //        //sessionStorage.setItem('username', values.username)
+                //        this.props.actions.push('home')
+                //    },
+                //    error: (message) => {
+                //        this.props.form.setFields({
+                //            password: {
+                //                errors: [new Error(message || "密码错误")]
+                //            }
+                //        });
+                //
+                //    }
+                //})
             }
         });
     };

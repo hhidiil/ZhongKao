@@ -1,0 +1,38 @@
+.questionsAll{
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    background-color: aliceblue;
+}
+.questionsAll header{
+    text-align: center;
+    height:60px;
+}
+.questionsAll-item{
+    position: relative;
+    display: flex;
+    height: 75px;
+    line-height: 75px;
+    border-radius: 8px;
+    border: 1px solid darkgray;
+    margin-bottom: 5px;
+}
+.title{
+    padding-left:10px ;
+}
+.questionsAll-item .btn{
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    width: 42px;
+    margin-top: 20px;
+    height: 32px;
+    line-height: 32px;
+    border: 1px dashed gray;
+}
+.looklook{
+    right: 80px;
+}
+.doexam{
+    right: 15px;
+}

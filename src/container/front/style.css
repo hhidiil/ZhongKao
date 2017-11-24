@@ -118,13 +118,14 @@
 .home .menu-css{
     box-shadow: 0 2px 4px 0 #d9d9d9;
     margin: 0px 10px;
-    min-height: 650px;
-    background-color: white;
+    min-height: 850px;
+    background-color: honeydew;
 }
 .home .section-all{
     margin: 20px;
 }
 .home .section-left{
+    position: relative;
     background-color: white;
     box-shadow: 0 2px 4px 0 #d9d9d9;
 }
