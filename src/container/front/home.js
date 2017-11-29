@@ -17,7 +17,6 @@ const SubMenu = Menu.SubMenu;
 class Home extends Component {
     constructor(props) {
         super(props)
-        //this.pid = props.currentPage.get('id');
         this.state = {
             route:'basic',
             activeName:window.location.hash.split('/')[window.location.hash.split('/').length-1]
@@ -36,24 +35,12 @@ class Home extends Component {
     }
     componentDidMount(){
         document.body.style.backgroundColor = '#F5F5F5';
-    };
-    load(pid) {
-        if (pid) {
-            this.props.actions.getBasic({ params: {pid: pid }})
-            this.props.actions.getEnglish({ params: {pid: pid }})
-            this.props.actions.getMath({ params: {pid: pid }})
-            this.pid = pid;
-        }
-    }
+        let screenHeight = document.documentElement.clientHeight;
+        let screenWeight = document.documentElement.clientWidth;
+        console.log(screenWeight,screenHeight)
+        document.getElementById("section").style.height = (screenHeight-80-40)+'px';
 
-    componentWillReceiveProps(nextProps) {
-        //this.setState({
-        //    activeName: window.location.hash.split('/')[window.location.hash.split('/').length-1]
-        //})
-        //if (this.pid !== nextProps.currentPage.get('id')) {
-        //    this.load(nextProps.currentPage.get('id'))
-        //}
-    }
+    };
     handleClick = (e) => {
         console.log('click ', e);
         let item = e;
@@ -74,7 +61,6 @@ class Home extends Component {
         }
     };
     render() {
-        let { basic, english, math } = this.props;
         return (
             <div className="home">
                 <header id="header-home" className="flex-box box-align-center justify-center">
@@ -85,7 +71,7 @@ class Home extends Component {
                         </div>
                     </div>
                 </header>
-                <section className="flex-box section-all">
+                <section id="section" className="flex-box section-all">
                     <menu className="menu-css">
                         <Menu
                             onClick={this.handleClick}

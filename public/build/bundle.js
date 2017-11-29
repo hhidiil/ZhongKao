@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "4659d064373ca1c58ef3"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "cefbff7bed4fb7316c19"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -19944,7 +19944,7 @@ exports.push([module.i, "/* stylelint-disable at-rule-empty-line-before,at-rule-
 
 /***/ }),
 
-/***/ "./node_modules/css-loader/index.js!./src/components/login/style.css":
+/***/ "./node_modules/css-loader/index.js!./src/container/front/page_modules/math/question_style.css":
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")();
@@ -19952,7 +19952,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".margin-auto{\r\n    margin: 0 auto;\r\n}\r\n.login-form {\r\n    max-width: 350px;\r\n}\r\n.login-form-forgot {\r\n    float: right;\r\n}\r\n.login-form-button {\r\n    width: 100%;\r\n}", ""]);
+exports.push([module.i, ".mask{\r\n    position: fixed;\r\n    z-index: 100;\r\n    width: 100%;\r\n    height: 100%;\r\n    top: 0;\r\n    right: 0;\r\n    left: 0;\r\n    bottom: 0;\r\n    background-color: #1B5E20;;\r\n    border: 50px solid;\r\n    -webkit-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    -moz-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    -o-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n}\r\n.math-question-content{\r\n}\r\n.math-question-content header{\r\n    display: flex;\r\n}\r\n.math-question-content header .title{\r\n    width: 80%;\r\n    height: 48px;\r\n}\r\n.math-question-content header .exit{\r\n    position: absolute;\r\n    right: 10px;\r\n}", ""]);
 
 // exports
 
@@ -19967,7 +19967,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".questions{\r\n    position: absolute;\r\n    height: 100%;\r\n    width: 100%;\r\n    background-color: aliceblue;\r\n}\r\n.questions header{\r\n    text-align: center;\r\n    height:60px;\r\n}\r\n.question-item{\r\n    position: relative;\r\n    display: flex;\r\n    height: 75px;\r\n    line-height: 75px;\r\n    border-radius: 8px;\r\n    border: 1px solid darkgray;\r\n    margin-bottom: 5px;\r\n}\r\n.title{\r\n    padding-left:10px ;\r\n}\r\n.question-item .btn{\r\n    position: absolute;\r\n    text-align: center;\r\n    cursor: pointer;\r\n    width: 42px;\r\n    margin-top: 20px;\r\n    height: 32px;\r\n    line-height: 32px;\r\n    border: 1px dashed gray;\r\n}\r\n.looklook{\r\n    right: 80px;\r\n}\r\n.doexam{\r\n    right: 15px;\r\n}", ""]);
+exports.push([module.i, ".questionsAll{\r\n    position: absolute;\r\n    height: 100%;\r\n    width: 100%;\r\n    background-color: aliceblue;\r\n    overflow-y: scroll;\r\n}\r\n.questionsAll header{\r\n    text-align: center;\r\n    height:60px;\r\n}\r\n.questionsAll-item{\r\n    position: relative;\r\n    border-radius: 8px;\r\n    border: 1px solid darkgray;\r\n    margin-bottom: 5px;\r\n    background-color: lightyellow;\r\n}\r\n.questionsAll-item1{\r\n    position: relative;\r\n    display: flex;\r\n    height: 75px;\r\n    line-height: 75px;\r\n    border: 1px solid darkgray;\r\n}\r\n.questionsAll-item2{\r\n    position: relative;\r\n    display: flex;\r\n    margin: 10px;\r\n    border-radius: 10px;\r\n    height: 60px;\r\n    line-height: 60px;\r\n    font-size: 10px;\r\n    border: 1px solid darkgray;\r\n}\r\n.title{\r\n    padding-left:10px ;\r\n}\r\n.questionsAll-item .btn{\r\n    position: absolute;\r\n    text-align: center;\r\n    cursor: pointer;\r\n    margin-top: 20px;\r\n    height: 32px;\r\n    line-height: 32px;\r\n    border: 1px dashed gray;\r\n}\r\n.questionsAll-item2 .btn{\r\n    position: absolute;\r\n    text-align: center;\r\n    cursor: pointer;\r\n    margin-top: 15px;\r\n    height: 32px;\r\n    line-height: 32px;\r\n    border: 1px dashed gray;\r\n}\r\n.questionsAll-item .looklook{\r\n    width: 42px;\r\n    right: 145px;\r\n}\r\n.questionsAll-item .doexam{\r\n    width: 42px;\r\n    right: 90px;\r\n}\r\n.questionsAll-item .quiz_again{\r\n    width: 60px;\r\n    right: 15px;\r\n}\r\n.questionsAll-item2 .looklook{\r\n    width: 36px;\r\n    right: 80px;\r\n}\r\n.questionsAll-item2 .doexam{\r\n    width: 36px;\r\n    right: 27px;\r\n}\r\n.examAll-item{\r\n    position: relative;\r\n    border-radius: 8px;\r\n    border: 1px solid darkgray;\r\n    margin-bottom: 5px;\r\n    background-color: lightyellow;\r\n}\r\n.examAll-item1{\r\n    position: relative;\r\n    display: flex;\r\n    height: 75px;\r\n    line-height: 75px;\r\n    border: 1px solid darkgray;\r\n}\r\n\r\n.transtionBefore{\r\n    height: 0px;\r\n    overflow: hidden;\r\n    background-color: bisque;\r\n    transition: height .8s ease-out;\r\n}\r\n.transtionAfter{\r\n    height: 75px;\r\n    background-color: bisque;\r\n}\r\n.neibu{\r\n    margin-top: 3%;\r\n}", ""]);
 
 // exports
 
@@ -19982,7 +19982,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".math-door{\r\n    position: absolute;\r\n    display: flex;\r\n    height: 100%;\r\n    width: 100%;\r\n    padding: 50px;\r\n    text-align: center;\r\n    background-color: #AED581;\r\n}\r\n.math-door .questions,.exam{\r\n    position: relative;\r\n    height: 100%;\r\n    width: 50%;\r\n}\r\n.enter-block{\r\n    border-radius: 20px;\r\n    position: absolute;\r\n    font-size: 50px;\r\n    height: 200px;\r\n    width: 200px;\r\n    padding-top: 50px;\r\n    margin: 0 auto;\r\n    left: 28%;\r\n    top: 30%;\r\n}\r\n.enter-block:hover{\r\n    cursor: pointer;\r\n    box-shadow: 4px 4px 2px;\r\n    transform: translate(-2px, -2px);\r\n}\r\n.question-block{\r\n    background-color: lightblue;\r\n}\r\n.exam-block{\r\n\r\n    background-color: burlywood;\r\n}", ""]);
+exports.push([module.i, ".math-door{\r\n    position: absolute;\r\n    display: flex;\r\n    height: 100%;\r\n    width: 100%;\r\n    padding: 50px;\r\n    text-align: center;\r\n    background-color: #F3E5F5;\r\n}\r\n.math-door .questions,.exam{\r\n    position: relative;\r\n    height: 100%;\r\n    width: 50%;\r\n}\r\n.enter-block{\r\n    border-radius: 20px;\r\n    position: absolute;\r\n    font-size: 50px;\r\n    height: 200px;\r\n    width: 200px;\r\n    padding-top: 50px;\r\n    margin: 0 auto;\r\n    left: 28%;\r\n    top: 30%;\r\n}\r\n.enter-block:hover{\r\n    cursor: pointer;\r\n    box-shadow: 4px 4px 2px;\r\n    transform: translate(-2px, -2px);\r\n}\r\n.question-block{\r\n    background-color: lightblue;\r\n}\r\n.exam-block{\r\n    background-color: burlywood;\r\n}\r\n.basic_All_css{\r\n    padding: 20px;\r\n}\r\n.basic_title{\r\n    width: 60%;\r\n    background-color: whitesmoke;\r\n    border-top-left-radius: 4px;\r\n    border-top-right-radius: 48px;\r\n    font-size: 18px;\r\n    height: 48px;\r\n    line-height: 48px;\r\n}\r\n.user_head{\r\n    position: absolute;\r\n    right: 50px;\r\n    top: 20px;\r\n    width: 125px;\r\n    height: 155px;\r\n}\r\n.user_head img{\r\n    width: 100%;\r\n    height: 100%;\r\n}\r\n.table_basic table{\r\n    margin: 30px 0 10px 10px ;\r\n    width:500px;\r\n    border:2px solid #000;\r\n    border-collapse: collapse;\r\n}\r\n.table_basic table tr{\r\n    height: 48px;\r\n}\r\n.table_basic table td{\r\n    border:1px solid #000;\r\n}\r\n.table_basic table td:first-child{\r\n    text-align: center;\r\n}\r\n", ""]);
 
 // exports
 
@@ -19997,7 +19997,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".header{\r\n    position: fixed;\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #49516F;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.box-align-center {\r\n    align-items: center;\r\n}\r\n.justify-center {\r\n    justify-content: center;\r\n}\r\n.flex-box{\r\n    display: flex;\r\n    background-position: center center;\r\n    background-size: cover;\r\n    background-repeat: no-repeat;\r\n}\r\n.width-max-xxlarge {\r\n    max-width: 1600px;\r\n}\r\n.width-min-xxlarge {\r\n    min-width: 450px;\r\n}\r\n.color-white{\r\n    color: #ffffff !important;\r\n}\r\n.position-relative{\r\n    position: relative;\r\n}\r\n.full-width{\r\n    width: 100%;\r\n}\r\n.logolay{\r\n    position: relative;\r\n    width: 120px;\r\n    float: left;\r\n    height: auto;\r\n}\r\n.logolay .logo{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/uu14.png\") no-repeat center center;\r\n    width: 120px;\r\n    background-size: cover;\r\n}\r\n.header-check-btn{\r\n    position: absolute;\r\n    right: 10px;\r\n    bottom: 15px;\r\n}\r\n.mainWapper{\r\n    position: relative;\r\n    top: 80px;\r\n    background: transparent;\r\n    width: auto;\r\n    margin: 0;\r\n    border-radius: 0;\r\n    padding: 0;\r\n    min-height: 500px;\r\n}\r\n.banner-wapper1{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/marquee.jpg\") center center / cover no-repeat;\r\n    width: 100%;\r\n}\r\n.banner-wapper1 .content{\r\n    position: absolute;\r\n    padding: 50px;\r\n    height: 50%;\r\n    width: 50%;\r\n    top: 25%;\r\n    right: 0;\r\n    max-width: 600px;\r\n}\r\n.banner-wapper2{\r\n    height: 300px;\r\n    width: 100%;\r\n}\r\n.banner-wapper2 .content{\r\n    align-items: center;\r\n    text-align: center;\r\n    max-width: 960px;\r\n    padding: 30px;\r\n    box-sizing: inherit;\r\n    font-size: 1em;\r\n    line-height: 1.5;\r\n}\r\n.banner-wapper3{\r\n    height: 500px;\r\n    width: 100%;\r\n    background-color: #f5f5f5\r\n}\r\n.page{\r\n    min-height: 500px;\r\n    height: 80vh;\r\n}\r\n#header-home{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #64B5F6;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.home .menu-css{\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n    margin: 0px 10px;\r\n    min-height: 850px;\r\n    background-color: white;\r\n}\r\n.home .section-all{\r\n    margin: 20px;\r\n}\r\n.home .section-left{\r\n    position: relative;\r\n    background-color: white;\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n}\r\n.register header{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: white;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    box-shadow: 0 0 5px 0 #d9d9d9;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.register .header-left-font{\r\n    font-size: 16px;\r\n    color: #333;\r\n}\r\n.header-left-font span{\r\n    color: #999;\r\n}\r\n.register section{\r\n    margin: 50px;\r\n    min-height: 500px;\r\n}\r\n.register footer{\r\n    position: fixed;\r\n    width: 100%;\r\n    bottom: 0;\r\n    min-height: 100px;\r\n    padding: 20px;\r\n}\r\n.register footer .content{\r\n    display: flex;\r\n    font-size: 12px;\r\n    text-align: center;\r\n    border-top: solid 1px #e6e6e6;\r\n    color: #999;\r\n}\r\n.content .content-left{\r\n    width: 50%;\r\n    margin-top: 40px;\r\n}\r\n.content .content-right{\r\n    width: 50%;\r\n    margin-top: 5px;\r\n}", ""]);
+exports.push([module.i, ".header{\r\n    position: fixed;\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #49516F;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.box-align-center {\r\n    align-items: center;\r\n}\r\n.justify-center {\r\n    justify-content: center;\r\n}\r\n.flex-box{\r\n    display: flex;\r\n    background-position: center center;\r\n    background-size: cover;\r\n    background-repeat: no-repeat;\r\n}\r\n.width-max-xxlarge {\r\n    max-width: 1600px;\r\n}\r\n.width-min-xxlarge {\r\n    min-width: 450px;\r\n}\r\n.color-white{\r\n    color: #ffffff !important;\r\n}\r\n.position-relative{\r\n    position: relative;\r\n}\r\n.full-width{\r\n    width: 100%;\r\n}\r\n.logolay{\r\n    position: relative;\r\n    width: 120px;\r\n    float: left;\r\n    height: auto;\r\n}\r\n.logolay .logo{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/uu14.png\") no-repeat center center;\r\n    width: 120px;\r\n    background-size: cover;\r\n}\r\n.header-check-btn{\r\n    position: absolute;\r\n    right: 10px;\r\n    bottom: 15px;\r\n}\r\n.mainWapper{\r\n    position: relative;\r\n    top: 80px;\r\n    background: transparent;\r\n    width: auto;\r\n    margin: 0;\r\n    border-radius: 0;\r\n    padding: 0;\r\n    min-height: 500px;\r\n}\r\n.banner-wapper1{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/marquee.jpg\") center center / cover no-repeat;\r\n    width: 100%;\r\n}\r\n.banner-wapper1 .content{\r\n    position: absolute;\r\n    padding: 50px;\r\n    height: 50%;\r\n    width: 50%;\r\n    top: 25%;\r\n    right: 0;\r\n    max-width: 600px;\r\n}\r\n.banner-wapper2{\r\n    height: 300px;\r\n    width: 100%;\r\n}\r\n.banner-wapper2 .content{\r\n    align-items: center;\r\n    text-align: center;\r\n    max-width: 960px;\r\n    padding: 30px;\r\n    box-sizing: inherit;\r\n    font-size: 1em;\r\n    line-height: 1.5;\r\n}\r\n.banner-wapper3{\r\n    position: absolute;\r\n    min-height: 500px;\r\n    width: 100%;\r\n    background-color: #f5f5f5\r\n}\r\n.page{\r\n    min-height: 500px;\r\n    height: 80vh;\r\n}\r\n#header-home{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #64B5F6;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.home .menu-css{\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n    margin: 0px 10px;\r\n    min-height: 850px;\r\n    background-color: honeydew;\r\n}\r\n.home .section-all{\r\n    margin: 20px;\r\n}\r\n.home .section-left{\r\n    position: relative;\r\n    background-color: white;\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n}\r\n.margin-auto{\r\n    margin: 0 auto;\r\n}\r\n.login-form {\r\n    max-width: 350px;\r\n}\r\n.login-form-forgot {\r\n    float: right;\r\n}\r\n.login-form-button {\r\n    width: 100%;\r\n}\r\n.register header{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: white;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    box-shadow: 0 0 5px 0 #d9d9d9;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.register .header-left-font{\r\n    font-size: 16px;\r\n    color: #333;\r\n}\r\n.header-left-font span{\r\n    color: #999;\r\n}\r\n.register section{\r\n    margin: 50px;\r\n    min-height: 500px;\r\n}\r\n.register footer{\r\n    position: fixed;\r\n    width: 100%;\r\n    bottom: 0;\r\n    min-height: 100px;\r\n    padding: 20px;\r\n}\r\n.register footer .content{\r\n    display: flex;\r\n    font-size: 12px;\r\n    text-align: center;\r\n    border-top: solid 1px #e6e6e6;\r\n    color: #999;\r\n}\r\n.content .content-left{\r\n    width: 50%;\r\n    margin-top: 40px;\r\n}\r\n.content .content-right{\r\n    width: 50%;\r\n    margin-top: 5px;\r\n}\r\n.showListAll{\r\n    position: absolute;\r\n    align-items: center;\r\n    margin: 20px;\r\n    padding: 20px;\r\n    background-color: white;\r\n}\r\n.showListAll:nth-child(1){\r\n    left: 20%;\r\n}\r\n.showListAll:nth-child(2){\r\n    left: 60%;\r\n}\r\n.showListAll:nth-child(3){\r\n    top: 50%;\r\n    left: 20%;\r\n}\r\n.showListAll:nth-child(4){\r\n    top: 50%;\r\n    left: 60%;\r\n}\r\n.showlist{\r\n    position: relative;\r\n    text-align: center;\r\n    background-color: white;\r\n    width: 100%;\r\n}\r\n.showlist img{\r\n    width: 160px;\r\n    height: 180px;\r\n}", ""]);
 
 // exports
 
@@ -99891,7 +99891,582 @@ if(true) {
 
 /***/ }),
 
-/***/ "./src/components/login/login.js":
+/***/ "./src/config.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+/**
+ * 项目配置
+ * Created by gaoju on 2017/11/15.
+ */
+
+var API_URI = exports.API_URI = '';
+var USER_KEY = exports.USER_KEY = '@GAOJU:USER';
+
+var HEADERS = exports.HEADERS = {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json; charset=UTF-8',
+    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36',
+    'Host': API_URI,
+    'Referer': 'http://' + API_URI + '/'
+};
+
+/***/ }),
+
+/***/ "./src/container/front/door.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _dropdown = __webpack_require__("./node_modules/antd/lib/dropdown/index.js");
+
+var _dropdown2 = _interopRequireDefault(_dropdown);
+
+var _icon = __webpack_require__("./node_modules/antd/lib/icon/index.js");
+
+var _icon2 = _interopRequireDefault(_icon);
+
+var _menu = __webpack_require__("./node_modules/antd/lib/menu/index.js");
+
+var _menu2 = _interopRequireDefault(_menu);
+
+var _index = __webpack_require__("./node_modules/redbox-react/lib/index.js");
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = __webpack_require__("./node_modules/react-transform-catch-errors/lib/index.js");
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _react2 = __webpack_require__("./node_modules/react/react.js");
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index5 = __webpack_require__("./node_modules/react-transform-hmr/lib/index.js");
+
+var _index6 = _interopRequireDefault(_index5);
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+__webpack_require__("./node_modules/antd/lib/dropdown/style/css.js");
+
+__webpack_require__("./node_modules/antd/lib/icon/style/css.js");
+
+__webpack_require__("./node_modules/antd/lib/menu/style/css.js");
+
+var _reactRouter = __webpack_require__("./node_modules/react-router/es/index.js");
+
+__webpack_require__("./src/container/front/style.css");
+
+var _login = __webpack_require__("./src/container/front/login.js");
+
+var _login2 = _interopRequireDefault(_login);
+
+var _redux = __webpack_require__("./node_modules/redux/es/index.js");
+
+var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
+
+var _user = __webpack_require__("./src/redux/actions/user.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+    Door: {
+        displayName: 'Door'
+    }
+};
+
+var _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
+    filename: 'D:/gaoju/Midexam/React/src/container/front/door.js',
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+});
+
+var _DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
+    filename: 'D:/gaoju/Midexam/React/src/container/front/door.js',
+    components: _components,
+    locals: [],
+    imports: [_react3.default, _index2.default]
+});
+
+function _wrapComponent(id) {
+    return function (Component) {
+        return _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
+    };
+} /**
+   * Created by gaoju on 2017/11/15.
+   */
+
+
+var Door = _wrapComponent('Door')(function (_Component) {
+    _inherits(Door, _Component);
+
+    function Door(props) {
+        _classCallCheck(this, Door);
+
+        var _this = _possibleConstructorReturn(this, (Door.__proto__ || Object.getPrototypeOf(Door)).call(this, props));
+
+        _this.state = {
+            showList: []
+        };
+        return _this;
+    }
+
+    _createClass(Door, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            console.log(this.props);
+            console.log("getQuestionsList success-->:");
+            this.props.actions.getHomeShowList({
+                success: function success(data) {
+                    console.log("getQuestionsList success-->:" + data);
+                    _this2.setState({ showList: JSON.parse(data) });
+                },
+                error: function error(message) {
+                    _this2.props.form.setFields({
+                        password: {
+                            errors: [new Error(message || "数据错误")]
+                        }
+                    });
+                }
+            });
+        }
+    }, {
+        key: '_showListItem',
+        value: function _showListItem(showList) {
+            var showItem = showList.map(function (item, index) {
+                return _react3.default.createElement(
+                    'div',
+                    { key: index, className: 'showListAll' },
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'showlist' },
+                        _react3.default.createElement('img', { src: item.url_img })
+                    ),
+                    _react3.default.createElement(
+                        'div',
+                        null,
+                        '\u6211\u662F\u8C01'
+                    )
+                );
+            }, this);
+            return showItem;
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var showList = this.state.showList;
+            var menu = _react3.default.createElement(
+                _menu2.default,
+                null,
+                _react3.default.createElement(
+                    _menu2.default.Item,
+                    { key: '0' },
+                    _react3.default.createElement(_login2.default, { title: '\u767B\u5F55' })
+                ),
+                _react3.default.createElement(
+                    _menu2.default.Item,
+                    { key: '1' },
+                    _react3.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/register' },
+                        '\u6CE8\u518C'
+                    )
+                ),
+                _react3.default.createElement(_menu2.default.Divider, null),
+                _react3.default.createElement(
+                    _menu2.default.Item,
+                    { key: '3' },
+                    '\u9000\u51FA'
+                )
+            );
+            return _react3.default.createElement(
+                'div',
+                null,
+                _react3.default.createElement(
+                    'header',
+                    { id: 'header', className: 'header flex-box box-align-center justify-center' },
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'full-width position-relative width-max-xxlarge' },
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'logolay' },
+                            _react3.default.createElement(
+                                'a',
+                                { href: 'http://www.idiil.com.cn/index.html' },
+                                _react3.default.createElement('img', { src: 'public/images/uu14.png' })
+                            )
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'header-check-btn' },
+                            _react3.default.createElement(
+                                _dropdown2.default,
+                                { overlay: menu, trigger: ['click'] },
+                                _react3.default.createElement(
+                                    'a',
+                                    { className: 'ant-dropdown-link color-white', href: '#' },
+                                    'Click me ',
+                                    _react3.default.createElement(_icon2.default, { type: 'down' })
+                                )
+                            )
+                        )
+                    )
+                ),
+                _react3.default.createElement(
+                    'div',
+                    { className: 'mainWapper' },
+                    _react3.default.createElement(
+                        'section',
+                        { className: 'page banner-wapper1' },
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'content' },
+                            _react3.default.createElement(
+                                'label',
+                                { style: { fontSize: "1.18rem" } },
+                                'Title'
+                            ),
+                            _react3.default.createElement(
+                                'h1',
+                                { style: { fontSize: "3rem" } },
+                                'senior high school entrance examination'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                { style: { fontSize: "24px", lineHight: 1.5 } },
+                                'This system can help you !'
+                            )
+                        )
+                    ),
+                    _react3.default.createElement(
+                        'section',
+                        { className: 'banner-wapper2 flex-box box-align-center justify-center' },
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'content' },
+                            _react3.default.createElement(
+                                'h1',
+                                { style: { fontSize: "2.5rem" } },
+                                '\u4E2D\u8003(senior high school entrance examination)'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                { style: { fontSize: "24px", lineHight: 1.5 } },
+                                '\u4E2D\u8003\uFF0C\u5168\u79F0\u4E3A\u521D\u4E2D\u5B66\u4E1A\u6C34\u5E73\u8003\u8BD5\u3002\u662F\u68C0\u6D4B\u521D\u4E2D\u5728\u6821\u751F\u662F\u5426\u8FBE\u5230\u521D\u4E2D\u5B66\u4E1A\u6C34\u5E73\u7684\u6C34\u5E73\u6027\u8003\u8BD5\u548C\u5EFA\u7ACB\u5728\u4E5D\u5E74\u4E49\u52A1\u6559\u80B2\u57FA\u7840\u4E0A\u7684\u9AD8\u4E2D\u9009\u62D4\u6027\u8003\u8BD5\uFF1B\u662F\u521D\u4E2D\u6BD5\u4E1A\u8BC1\u53D1\u653E\u7684\u5FC5\u8981\u6761\u4EF6\uFF0C\u8003\u8BD5\u79D1\u76EE\u5C06\u56FD\u5BB6\u8BFE\u7A0B\u65B9\u6848\u6240\u89C4\u5B9A\u7684\u5B66\u79D1\u5168\u90E8\u5217\u5165\u521D\u4E2D\u5B66\u4E1A\u6C34\u5E73\u8003\u8BD5\u7684\u8303\u56F4\u3002\u5B66\u751F\u53EF\u6839\u636E\u4E2D\u8003\u6210\u7EE9\u62A5\u8003\u76F8\u5E94\u7684\u666E\u901A\u9AD8\u4E2D\u3001\u804C\u4E1A\u9AD8\u4E2D\u3001\u4E2D\u4E13\u3001\u4E2D\u6280\u3001\u4E2D\u804C\u7B49\u3002\u5176\u4E2D\u4EE5\u62A5\u8003\u666E\u901A\u9AD8\u4E2D\u4E3A\u4E3B'
+                            )
+                        )
+                    ),
+                    _react3.default.createElement(
+                        'section',
+                        { className: 'banner-wapper3' },
+                        this._showListItem(showList)
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Door;
+}(_react2.Component));
+
+function mapStateToProps(state) {
+    return {};
+}
+
+function mapDispatchToProps(dispatch) {
+    return { actions: (0, _redux.bindActionCreators)({ getHomeShowList: _user.getHomeShowList }, dispatch) };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Door);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./src/container/front/home.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _icon = __webpack_require__("./node_modules/antd/lib/icon/index.js");
+
+var _icon2 = _interopRequireDefault(_icon);
+
+var _menu = __webpack_require__("./node_modules/antd/lib/menu/index.js");
+
+var _menu2 = _interopRequireDefault(_menu);
+
+var _index = __webpack_require__("./node_modules/redbox-react/lib/index.js");
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = __webpack_require__("./node_modules/react-transform-catch-errors/lib/index.js");
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _react2 = __webpack_require__("./node_modules/react/react.js");
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index5 = __webpack_require__("./node_modules/react-transform-hmr/lib/index.js");
+
+var _index6 = _interopRequireDefault(_index5);
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+__webpack_require__("./node_modules/antd/lib/icon/style/css.js");
+
+__webpack_require__("./node_modules/antd/lib/menu/style/css.js");
+
+__webpack_require__("./src/container/front/style.css");
+
+var _redux = __webpack_require__("./node_modules/redux/es/index.js");
+
+var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
+
+var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
+
+var _basic = __webpack_require__("./src/redux/actions/basic.js");
+
+var _english = __webpack_require__("./src/redux/actions/english.js");
+
+var _math = __webpack_require__("./src/redux/actions/math.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+    Home: {
+        displayName: 'Home'
+    }
+};
+
+var _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
+    filename: 'D:/gaoju/Midexam/React/src/container/front/home.js',
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+});
+
+var _DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
+    filename: 'D:/gaoju/Midexam/React/src/container/front/home.js',
+    components: _components,
+    locals: [],
+    imports: [_react3.default, _index2.default]
+});
+
+function _wrapComponent(id) {
+    return function (Component) {
+        return _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
+    };
+} /**
+   * Created by gaoju on 2017/11/15.
+   */
+
+// redux
+
+
+var SubMenu = _menu2.default.SubMenu;
+
+var Home = _wrapComponent('Home')(function (_Component) {
+    _inherits(Home, _Component);
+
+    function Home(props) {
+        _classCallCheck(this, Home);
+
+        var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
+
+        _this.handleClick = function (e) {
+            console.log('click ', e);
+            var item = e;
+            var route = item.keyPath.pop();
+            console.log("item route-->" + route);
+            _this.props.actions.push('/home/' + route);
+            _this.setState({
+                activeName: route
+            });
+        };
+
+        _this.state = {
+            route: 'basic',
+            activeName: window.location.hash.split('/')[window.location.hash.split('/').length - 1]
+        };
+        _this.exitOut = _this.exitOut.bind(_this);
+        return _this;
+    }
+
+    _createClass(Home, [{
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            //let token = sessionStorage.getItem('token');
+            //let username = sessionStorage.getItem('username');
+            //console.log("session username------>"+username)
+            //if(!username){
+            //    alert("请登录！")
+            //    this.props.actions.push('/')
+            //    return;
+            //}
+        }
+    }, {
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            document.body.style.backgroundColor = '#F5F5F5';
+            var screenHeight = document.documentElement.clientHeight;
+            var screenWeight = document.documentElement.clientWidth;
+            console.log(screenWeight, screenHeight);
+            document.getElementById("section").style.height = screenHeight - 80 - 40 + 'px';
+        }
+    }, {
+        key: 'exitOut',
+        value: function exitOut() {
+            console.log("exitOut");
+            if (window.confirm("确定要退出吗？")) {
+                sessionStorage.clear();
+                this.props.actions.push('/');
+            } else {
+                console.log("不想退出你点击干嘛？");
+            }
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            return _react3.default.createElement(
+                'div',
+                { className: 'home' },
+                _react3.default.createElement(
+                    'header',
+                    { id: 'header-home', className: 'flex-box box-align-center justify-center' },
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'full-width position-relative width-max-xxlarge' },
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'logolay' },
+                            _react3.default.createElement(
+                                'a',
+                                { href: 'http://www.idiil.com.cn/index.html' },
+                                _react3.default.createElement('img', { src: 'public/images/uu14.png' })
+                            )
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'header-check-btn' },
+                            _react3.default.createElement(_icon2.default, { type: 'logout', style: { cursor: "pointer" }, onClick: this.exitOut })
+                        )
+                    )
+                ),
+                _react3.default.createElement(
+                    'section',
+                    { id: 'section', className: 'flex-box section-all' },
+                    _react3.default.createElement(
+                        'menu',
+                        { className: 'menu-css' },
+                        _react3.default.createElement(
+                            _menu2.default,
+                            {
+                                onClick: this.handleClick,
+                                style: { width: 240 },
+                                defaultSelectedKeys: ['1'],
+                                defaultOpenKeys: ['basic'],
+                                mode: 'inline'
+                            },
+                            _react3.default.createElement(
+                                SubMenu,
+                                { key: 'basic', title: _react3.default.createElement(
+                                        'span',
+                                        null,
+                                        _react3.default.createElement(_icon2.default, { type: 'mail' }),
+                                        _react3.default.createElement(
+                                            'span',
+                                            null,
+                                            '\u6211\u7684\u680F\u76EE'
+                                        )
+                                    ) },
+                                _react3.default.createElement(
+                                    _menu2.default.Item,
+                                    { key: '1' },
+                                    '\u57FA\u672C\u4FE1\u606F'
+                                ),
+                                _react3.default.createElement(
+                                    _menu2.default.Item,
+                                    { key: '2' },
+                                    '\u6211\u7684\u6536\u85CF'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                _menu2.default.Item,
+                                { key: 'math' },
+                                _react3.default.createElement(_icon2.default, { type: 'mail' }),
+                                '\u6570\u5B66\u680F\u76EE'
+                            )
+                        )
+                    ),
+                    _react3.default.createElement(
+                        'section',
+                        { className: 'full-width section-left' },
+                        _react3.default.createElement(
+                            'div',
+                            null,
+                            this.props.children
+                        )
+                    )
+                )
+            );
+        }
+    }]);
+
+    return Home;
+}(_react2.Component));
+
+function mapStateToProps(state, ownProps) {
+    return {
+        //currentPage: state.currentPage,
+        //basic: state.basic,
+        //english: state.english,
+        //math:state.math
+    };
+}
+
+function mapDispatchToProps(dispatch) {
+    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, getBasic: _basic.getBasic, getMath: _math.getMath, getEnglish: _english.getEnglish }, dispatch) };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Home);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./src/container/front/login.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -99967,7 +100542,7 @@ var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/l
 
 var _user = __webpack_require__("./src/redux/actions/user.js");
 
-__webpack_require__("./src/components/login/style.css");
+__webpack_require__("./src/container/front/style.css");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -99984,14 +100559,14 @@ var _components = {
 };
 
 var _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
-    filename: 'D:/gaoju/Midexam/React/src/components/login/login.js',
+    filename: 'D:/gaoju/Midexam/React/src/container/front/login.js',
     components: _components,
     locals: [module],
     imports: [_react3.default]
 });
 
 var _DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
-    filename: 'D:/gaoju/Midexam/React/src/components/login/login.js',
+    filename: 'D:/gaoju/Midexam/React/src/container/front/login.js',
     components: _components,
     locals: [],
     imports: [_react3.default, _index2.default]
@@ -100023,46 +100598,43 @@ var LoginForm = _wrapComponent('LoginForm')(function (_Component) {
             _this.props.form.validateFields(function (err, values) {
                 if (!err) {
                     console.log('Received values of form: ', values);
-                    _this.props.actions.push('home');
-                    //if(values.userName == this.state.loginData.username){
-                    //    if(values.password == this.state.loginData.password){
-                    //        sessionStorage.setItem('token', 'idiil')
-                    //        sessionStorage.setItem('username', values.userName)
-                    //        this.props.actions.push('home')
-                    //    }else{
-                    //        this.props.form.setFields({
-                    //            password: {
-                    //                errors: [new Error("密码错误！")]
-                    //            }
-                    //        });
-                    //    }
-                    //}else{
-                    //    this.props.form.setFields({
-                    //        userName: {
-                    //            errors: [new Error("用户不存在！")]
-                    //        }
-                    //    });
-                    //}
-                    //this.props.actions.login({
-                    //    body: {
-                    //        phone: values.userName,
-                    //        password: values.password
-                    //    },
-                    //    success: (data) => {
-                    //        console.log("login success:"+data)
-                    //        //sessionStorage.setItem('token', 'dupi')
-                    //        //sessionStorage.setItem('username', values.username)
-                    //        this.props.actions.push('home')
-                    //    },
-                    //    error: (message) => {
-                    //        this.props.form.setFields({
-                    //            password: {
-                    //                errors: [new Error(message || "密码错误")]
-                    //            }
-                    //        });
-                    //
-                    //    }
-                    //})
+                    _this.props.actions.login({
+                        body: {
+                            phone: values.userName,
+                            password: values.password
+                        },
+                        success: function success(data) {
+                            console.log("login success-->:" + JSON.parse(data));
+                            //真实数据的时候可以去掉此判断，判断已在后台执行
+                            var data1 = JSON.parse(data);
+                            if (values.userName == data1.UserName) {
+                                if (values.password == data1.Password) {
+                                    sessionStorage.setItem('token', 'idiil');
+                                    sessionStorage.setItem('username', values.userName);
+                                    _this.props.actions.push('home');
+                                } else {
+                                    _this.props.form.setFields({
+                                        password: {
+                                            errors: [new Error("密码错误！")]
+                                        }
+                                    });
+                                }
+                            } else {
+                                _this.props.form.setFields({
+                                    userName: {
+                                        errors: [new Error("用户不存在！")]
+                                    }
+                                });
+                            }
+                        },
+                        error: function error(message) {
+                            _this.props.form.setFields({
+                                password: {
+                                    errors: [new Error(message || "数据错误")]
+                                }
+                            });
+                        }
+                    });
                 }
             });
         };
@@ -100075,11 +100647,7 @@ var LoginForm = _wrapComponent('LoginForm')(function (_Component) {
         _this.state = {
             checkPass: true,
             modalVisible: false,
-            title: props.title,
-            loginData: {
-                username: "admin",
-                password: "123456"
-            }
+            title: props.title
         };
         return _this;
     }
@@ -100194,566 +100762,6 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 
 /***/ }),
 
-/***/ "./src/components/login/style.css":
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__("./node_modules/css-loader/index.js!./src/components/login/style.css");
-if(typeof content === 'string') content = [[module.i, content, '']];
-// add the styles to the DOM
-var update = __webpack_require__("./node_modules/style-loader/addStyles.js")(content, {});
-if(content.locals) module.exports = content.locals;
-// Hot Module Replacement
-if(true) {
-	// When the styles change, update the <style> tags
-	if(!content.locals) {
-		module.hot.accept("./node_modules/css-loader/index.js!./src/components/login/style.css", function() {
-			var newContent = __webpack_require__("./node_modules/css-loader/index.js!./src/components/login/style.css");
-			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
-			update(newContent);
-		});
-	}
-	// When the module is disposed, remove the <style> tags
-	module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-
-/***/ "./src/config.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-/**
- * 项目配置
- * Created by gaoju on 2017/11/15.
- */
-
-var API_URI = exports.API_URI = '';
-var USER_KEY = exports.USER_KEY = '@GAOJU:USER';
-
-var HEADERS = exports.HEADERS = {
-    'Accept': 'application/json',
-    'Content-Type': 'application/json; charset=UTF-8',
-    'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.106 Safari/537.36',
-    'Host': API_URI,
-    'Referer': 'http://' + API_URI + '/'
-};
-
-/***/ }),
-
-/***/ "./src/container/front/door.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _dropdown = __webpack_require__("./node_modules/antd/lib/dropdown/index.js");
-
-var _dropdown2 = _interopRequireDefault(_dropdown);
-
-var _icon = __webpack_require__("./node_modules/antd/lib/icon/index.js");
-
-var _icon2 = _interopRequireDefault(_icon);
-
-var _menu = __webpack_require__("./node_modules/antd/lib/menu/index.js");
-
-var _menu2 = _interopRequireDefault(_menu);
-
-var _index = __webpack_require__("./node_modules/redbox-react/lib/index.js");
-
-var _index2 = _interopRequireDefault(_index);
-
-var _index3 = __webpack_require__("./node_modules/react-transform-catch-errors/lib/index.js");
-
-var _index4 = _interopRequireDefault(_index3);
-
-var _react2 = __webpack_require__("./node_modules/react/react.js");
-
-var _react3 = _interopRequireDefault(_react2);
-
-var _index5 = __webpack_require__("./node_modules/react-transform-hmr/lib/index.js");
-
-var _index6 = _interopRequireDefault(_index5);
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-__webpack_require__("./node_modules/antd/lib/dropdown/style/css.js");
-
-__webpack_require__("./node_modules/antd/lib/icon/style/css.js");
-
-__webpack_require__("./node_modules/antd/lib/menu/style/css.js");
-
-var _reactRouter = __webpack_require__("./node_modules/react-router/es/index.js");
-
-__webpack_require__("./src/container/front/style.css");
-
-var _login = __webpack_require__("./src/components/login/login.js");
-
-var _login2 = _interopRequireDefault(_login);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _components = {
-    Door: {
-        displayName: 'Door'
-    }
-};
-
-var _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
-    filename: 'D:/gaoju/Midexam/React/src/container/front/door.js',
-    components: _components,
-    locals: [module],
-    imports: [_react3.default]
-});
-
-var _DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
-    filename: 'D:/gaoju/Midexam/React/src/container/front/door.js',
-    components: _components,
-    locals: [],
-    imports: [_react3.default, _index2.default]
-});
-
-function _wrapComponent(id) {
-    return function (Component) {
-        return _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
-    };
-} /**
-   * Created by gaoju on 2017/11/15.
-   */
-
-
-var Door = _wrapComponent('Door')(function (_Component) {
-    _inherits(Door, _Component);
-
-    function Door(props) {
-        _classCallCheck(this, Door);
-
-        return _possibleConstructorReturn(this, (Door.__proto__ || Object.getPrototypeOf(Door)).call(this, props));
-    }
-
-    _createClass(Door, [{
-        key: 'render',
-        value: function render() {
-            var pageNames = this.props.pageNames;
-
-            var menu = _react3.default.createElement(
-                _menu2.default,
-                null,
-                _react3.default.createElement(
-                    _menu2.default.Item,
-                    { key: '0' },
-                    _react3.default.createElement(_login2.default, { title: '\u767B\u5F55' })
-                ),
-                _react3.default.createElement(
-                    _menu2.default.Item,
-                    { key: '1' },
-                    _react3.default.createElement(
-                        _reactRouter.Link,
-                        { to: '/register' },
-                        '\u6CE8\u518C'
-                    )
-                ),
-                _react3.default.createElement(_menu2.default.Divider, null),
-                _react3.default.createElement(
-                    _menu2.default.Item,
-                    { key: '3' },
-                    '\u9000\u51FA'
-                )
-            );
-            return _react3.default.createElement(
-                'div',
-                null,
-                _react3.default.createElement(
-                    'header',
-                    { id: 'header', className: 'header flex-box box-align-center justify-center' },
-                    _react3.default.createElement(
-                        'div',
-                        { className: 'full-width position-relative width-max-xxlarge' },
-                        _react3.default.createElement(
-                            'div',
-                            { className: 'logolay' },
-                            _react3.default.createElement(
-                                'a',
-                                { href: 'http://www.idiil.com.cn/index.html' },
-                                _react3.default.createElement('img', { src: 'public/images/uu14.png' })
-                            )
-                        ),
-                        _react3.default.createElement(
-                            'div',
-                            { className: 'header-check-btn' },
-                            _react3.default.createElement(
-                                _dropdown2.default,
-                                { overlay: menu, trigger: ['click'] },
-                                _react3.default.createElement(
-                                    'a',
-                                    { className: 'ant-dropdown-link color-white', href: '#' },
-                                    'Click me ',
-                                    _react3.default.createElement(_icon2.default, { type: 'down' })
-                                )
-                            )
-                        )
-                    )
-                ),
-                _react3.default.createElement(
-                    'div',
-                    { className: 'mainWapper' },
-                    _react3.default.createElement(
-                        'section',
-                        { className: 'page banner-wapper1' },
-                        _react3.default.createElement(
-                            'div',
-                            { className: 'content' },
-                            _react3.default.createElement(
-                                'label',
-                                { style: { fontSize: "1.18rem" } },
-                                'Title'
-                            ),
-                            _react3.default.createElement(
-                                'h1',
-                                { style: { fontSize: "3rem" } },
-                                'senior high school entrance examination'
-                            ),
-                            _react3.default.createElement(
-                                'p',
-                                { style: { fontSize: "24px", lineHight: 1.5 } },
-                                'This system can help you !'
-                            )
-                        )
-                    ),
-                    _react3.default.createElement(
-                        'section',
-                        { className: 'banner-wapper2 flex-box box-align-center justify-center' },
-                        _react3.default.createElement(
-                            'div',
-                            { className: 'content' },
-                            _react3.default.createElement(
-                                'h1',
-                                { style: { fontSize: "2.5rem" } },
-                                '\u4E2D\u8003(senior high school entrance examination)'
-                            ),
-                            _react3.default.createElement(
-                                'p',
-                                { style: { fontSize: "24px", lineHight: 1.5 } },
-                                '\u4E2D\u8003\uFF0C\u5168\u79F0\u4E3A\u521D\u4E2D\u5B66\u4E1A\u6C34\u5E73\u8003\u8BD5\u3002\u662F\u68C0\u6D4B\u521D\u4E2D\u5728\u6821\u751F\u662F\u5426\u8FBE\u5230\u521D\u4E2D\u5B66\u4E1A\u6C34\u5E73\u7684\u6C34\u5E73\u6027\u8003\u8BD5\u548C\u5EFA\u7ACB\u5728\u4E5D\u5E74\u4E49\u52A1\u6559\u80B2\u57FA\u7840\u4E0A\u7684\u9AD8\u4E2D\u9009\u62D4\u6027\u8003\u8BD5\uFF1B\u662F\u521D\u4E2D\u6BD5\u4E1A\u8BC1\u53D1\u653E\u7684\u5FC5\u8981\u6761\u4EF6\uFF0C\u8003\u8BD5\u79D1\u76EE\u5C06\u56FD\u5BB6\u8BFE\u7A0B\u65B9\u6848\u6240\u89C4\u5B9A\u7684\u5B66\u79D1\u5168\u90E8\u5217\u5165\u521D\u4E2D\u5B66\u4E1A\u6C34\u5E73\u8003\u8BD5\u7684\u8303\u56F4\u3002\u5B66\u751F\u53EF\u6839\u636E\u4E2D\u8003\u6210\u7EE9\u62A5\u8003\u76F8\u5E94\u7684\u666E\u901A\u9AD8\u4E2D\u3001\u804C\u4E1A\u9AD8\u4E2D\u3001\u4E2D\u4E13\u3001\u4E2D\u6280\u3001\u4E2D\u804C\u7B49\u3002\u5176\u4E2D\u4EE5\u62A5\u8003\u666E\u901A\u9AD8\u4E2D\u4E3A\u4E3B'
-                            )
-                        )
-                    ),
-                    _react3.default.createElement('section', { className: ' banner-wapper3' })
-                )
-            );
-        }
-    }]);
-
-    return Door;
-}(_react2.Component));
-
-exports.default = Door;
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
-
-/***/ }),
-
-/***/ "./src/container/front/home.js":
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-/* WEBPACK VAR INJECTION */(function(module) {
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _icon = __webpack_require__("./node_modules/antd/lib/icon/index.js");
-
-var _icon2 = _interopRequireDefault(_icon);
-
-var _menu = __webpack_require__("./node_modules/antd/lib/menu/index.js");
-
-var _menu2 = _interopRequireDefault(_menu);
-
-var _index = __webpack_require__("./node_modules/redbox-react/lib/index.js");
-
-var _index2 = _interopRequireDefault(_index);
-
-var _index3 = __webpack_require__("./node_modules/react-transform-catch-errors/lib/index.js");
-
-var _index4 = _interopRequireDefault(_index3);
-
-var _react2 = __webpack_require__("./node_modules/react/react.js");
-
-var _react3 = _interopRequireDefault(_react2);
-
-var _index5 = __webpack_require__("./node_modules/react-transform-hmr/lib/index.js");
-
-var _index6 = _interopRequireDefault(_index5);
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-__webpack_require__("./node_modules/antd/lib/icon/style/css.js");
-
-__webpack_require__("./node_modules/antd/lib/menu/style/css.js");
-
-__webpack_require__("./src/container/front/style.css");
-
-var _redux = __webpack_require__("./node_modules/redux/es/index.js");
-
-var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
-
-var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
-
-var _basic = __webpack_require__("./src/redux/actions/basic.js");
-
-var _english = __webpack_require__("./src/redux/actions/english.js");
-
-var _math = __webpack_require__("./src/redux/actions/math.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var _components = {
-    Home: {
-        displayName: 'Home'
-    }
-};
-
-var _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
-    filename: 'D:/gaoju/Midexam/React/src/container/front/home.js',
-    components: _components,
-    locals: [module],
-    imports: [_react3.default]
-});
-
-var _DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
-    filename: 'D:/gaoju/Midexam/React/src/container/front/home.js',
-    components: _components,
-    locals: [],
-    imports: [_react3.default, _index2.default]
-});
-
-function _wrapComponent(id) {
-    return function (Component) {
-        return _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
-    };
-} /**
-   * Created by gaoju on 2017/11/15.
-   */
-
-// redux
-
-
-var SubMenu = _menu2.default.SubMenu;
-
-var Home = _wrapComponent('Home')(function (_Component) {
-    _inherits(Home, _Component);
-
-    function Home(props) {
-        _classCallCheck(this, Home);
-
-        //this.pid = props.currentPage.get('id');
-        var _this = _possibleConstructorReturn(this, (Home.__proto__ || Object.getPrototypeOf(Home)).call(this, props));
-
-        _this.handleClick = function (e) {
-            console.log('click ', e);
-            var item = e;
-            var route = item.keyPath.pop();
-            console.log("item route-->" + route);
-            _this.props.actions.push('/home/' + route);
-            _this.setState({
-                activeName: route
-            });
-        };
-
-        _this.state = {
-            route: 'basic',
-            activeName: window.location.hash.split('/')[window.location.hash.split('/').length - 1]
-        };
-        _this.exitOut = _this.exitOut.bind(_this);
-        return _this;
-    }
-
-    _createClass(Home, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            //let token = sessionStorage.getItem('token');
-            //let username = sessionStorage.getItem('username');
-            //console.log("session username------>"+username)
-            //if(!username){
-            //    alert("请登录！")
-            //    this.props.actions.push('/')
-            //    return;
-            //}
-        }
-    }, {
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            document.body.style.backgroundColor = '#F5F5F5';
-        }
-    }, {
-        key: 'load',
-        value: function load(pid) {
-            if (pid) {
-                this.props.actions.getBasic({ params: { pid: pid } });
-                this.props.actions.getEnglish({ params: { pid: pid } });
-                this.props.actions.getMath({ params: { pid: pid } });
-                this.pid = pid;
-            }
-        }
-    }, {
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(nextProps) {
-            //this.setState({
-            //    activeName: window.location.hash.split('/')[window.location.hash.split('/').length-1]
-            //})
-            //if (this.pid !== nextProps.currentPage.get('id')) {
-            //    this.load(nextProps.currentPage.get('id'))
-            //}
-        }
-    }, {
-        key: 'exitOut',
-        value: function exitOut() {
-            console.log("exitOut");
-            if (window.confirm("确定要退出吗？")) {
-                sessionStorage.clear();
-                this.props.actions.push('/');
-            } else {
-                console.log("不想退出你点击干嘛？");
-            }
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _props = this.props,
-                basic = _props.basic,
-                english = _props.english,
-                math = _props.math;
-
-            return _react3.default.createElement(
-                'div',
-                { className: 'home' },
-                _react3.default.createElement(
-                    'header',
-                    { id: 'header-home', className: 'flex-box box-align-center justify-center' },
-                    _react3.default.createElement(
-                        'div',
-                        { className: 'full-width position-relative width-max-xxlarge' },
-                        _react3.default.createElement(
-                            'div',
-                            { className: 'logolay' },
-                            _react3.default.createElement(
-                                'a',
-                                { href: 'http://www.idiil.com.cn/index.html' },
-                                _react3.default.createElement('img', { src: 'public/images/uu14.png' })
-                            )
-                        ),
-                        _react3.default.createElement(
-                            'div',
-                            { className: 'header-check-btn' },
-                            _react3.default.createElement(_icon2.default, { type: 'logout', style: { cursor: "pointer" }, onClick: this.exitOut })
-                        )
-                    )
-                ),
-                _react3.default.createElement(
-                    'section',
-                    { className: 'flex-box section-all' },
-                    _react3.default.createElement(
-                        'menu',
-                        { className: 'menu-css' },
-                        _react3.default.createElement(
-                            _menu2.default,
-                            {
-                                onClick: this.handleClick,
-                                style: { width: 240 },
-                                defaultSelectedKeys: ['1'],
-                                defaultOpenKeys: ['basic'],
-                                mode: 'inline'
-                            },
-                            _react3.default.createElement(
-                                SubMenu,
-                                { key: 'basic', title: _react3.default.createElement(
-                                        'span',
-                                        null,
-                                        _react3.default.createElement(_icon2.default, { type: 'mail' }),
-                                        _react3.default.createElement(
-                                            'span',
-                                            null,
-                                            '\u6211\u7684\u680F\u76EE'
-                                        )
-                                    ) },
-                                _react3.default.createElement(
-                                    _menu2.default.Item,
-                                    { key: '1' },
-                                    '\u57FA\u672C\u4FE1\u606F'
-                                ),
-                                _react3.default.createElement(
-                                    _menu2.default.Item,
-                                    { key: '2' },
-                                    '\u6211\u7684\u6536\u85CF'
-                                )
-                            ),
-                            _react3.default.createElement(
-                                _menu2.default.Item,
-                                { key: 'math' },
-                                _react3.default.createElement(_icon2.default, { type: 'mail' }),
-                                '\u6570\u5B66\u680F\u76EE'
-                            )
-                        )
-                    ),
-                    _react3.default.createElement(
-                        'section',
-                        { className: 'full-width section-left' },
-                        _react3.default.createElement(
-                            'div',
-                            null,
-                            this.props.children
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Home;
-}(_react2.Component));
-
-function mapStateToProps(state, ownProps) {
-    return {
-        //currentPage: state.currentPage,
-        //basic: state.basic,
-        //english: state.english,
-        //math:state.math
-    };
-}
-
-function mapDispatchToProps(dispatch) {
-    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, getBasic: _basic.getBasic, getMath: _math.getMath, getEnglish: _english.getEnglish }, dispatch) };
-}
-
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Home);
-/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
-
-/***/ }),
-
 /***/ "./src/container/front/page_modules/basic.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -100835,8 +100843,197 @@ var Basic = _wrapComponent('Basic')(function (_Component) {
         value: function render() {
             return _react3.default.createElement(
                 'div',
-                null,
-                'welcome basic'
+                { className: 'basic_All_css' },
+                _react3.default.createElement(
+                    'div',
+                    { className: 'user_head' },
+                    _react3.default.createElement('img', { src: 'public/images/user_head.jpg', alt: '\u5934\u50CF' }),
+                    _react3.default.createElement(
+                        'span',
+                        null,
+                        '\u5934\u50CF\u66F4\u6539'
+                    )
+                ),
+                _react3.default.createElement(
+                    'div',
+                    { className: 'basic_title' },
+                    '\u57FA\u672C\u4FE1\u606F\uFF1A'
+                ),
+                _react3.default.createElement(
+                    'div',
+                    { className: 'table_basic' },
+                    _react3.default.createElement(
+                        'table',
+                        { cellSpacing: '0', cellPadding: '0' },
+                        _react3.default.createElement(
+                            'tbody',
+                            null,
+                            _react3.default.createElement(
+                                'tr',
+                                null,
+                                _react3.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u59D3\u540D'
+                                ),
+                                _react3.default.createElement(
+                                    'td',
+                                    { width: '70%' },
+                                    '\u738B\u5C0F\u7C73'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'tr',
+                                null,
+                                _react3.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u6027\u522B'
+                                ),
+                                _react3.default.createElement(
+                                    'td',
+                                    { width: '70%' },
+                                    '\u7537'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'tr',
+                                null,
+                                _react3.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u751F\u65E5'
+                                ),
+                                _react3.default.createElement(
+                                    'td',
+                                    { width: '70%' },
+                                    '2005/5/5'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'tr',
+                                null,
+                                _react3.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u73B0\u5C45\u4F4F\u5730'
+                                ),
+                                _react3.default.createElement(
+                                    'td',
+                                    { width: '70%' },
+                                    '\u706B\u661Fvaster\u5E02wwwC3\u533A'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'tr',
+                                null,
+                                _react3.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u8D26\u53F7'
+                                ),
+                                _react3.default.createElement(
+                                    'td',
+                                    { width: '70%' },
+                                    '\u54C8\u54C8\u54C8\u54C8'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'tr',
+                                null,
+                                _react3.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u624B\u673A\u53F7'
+                                ),
+                                _react3.default.createElement(
+                                    'td',
+                                    { width: '70%' },
+                                    '88888888888'
+                                )
+                            )
+                        )
+                    )
+                ),
+                _react3.default.createElement(
+                    'div',
+                    { className: 'basic_title' },
+                    '\u9644\u52A0\u4FE1\u606F\uFF1A'
+                ),
+                _react3.default.createElement(
+                    'div',
+                    { className: 'table_basic' },
+                    _react3.default.createElement(
+                        'table',
+                        { cellSpacing: '0', cellPadding: '0' },
+                        _react3.default.createElement(
+                            'tbody',
+                            null,
+                            _react3.default.createElement(
+                                'tr',
+                                null,
+                                _react3.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u8D26\u53F7'
+                                ),
+                                _react3.default.createElement('td', { width: '70%' })
+                            ),
+                            _react3.default.createElement(
+                                'tr',
+                                null,
+                                _react3.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u90AE\u7F16'
+                                ),
+                                _react3.default.createElement('td', { width: '70%' })
+                            ),
+                            _react3.default.createElement(
+                                'tr',
+                                null,
+                                _react3.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u5730\u5740'
+                                ),
+                                _react3.default.createElement(
+                                    'td',
+                                    { width: '70%' },
+                                    '\u706B\u661Fvaster\u5E02wwwC3\u533A'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'tr',
+                                null,
+                                _react3.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u4E2A\u6027\u7B7E\u540D'
+                                ),
+                                _react3.default.createElement(
+                                    'td',
+                                    { width: '70%' },
+                                    '\u5929\u738B\u76D6\u5730\u864E'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'tr',
+                                null,
+                                _react3.default.createElement(
+                                    'td',
+                                    null,
+                                    '\u7231\u597D\u5174\u8DA3'
+                                ),
+                                _react3.default.createElement(
+                                    'td',
+                                    { width: '70%' },
+                                    '\u73A9\u3001\u800D\u3001\u5B66\u4E60\u3001\u770B\u7535\u5F71'
+                                )
+                            )
+                        )
+                    )
+                )
             );
         }
     }]);
@@ -100939,14 +101136,11 @@ var Math = _wrapComponent('Math')(function (_Component) {
     _createClass(Math, [{
         key: 'goPage',
         value: function goPage(data, event) {
-            console.log(data);
-            this.props.actions.push('/home/' + data);
+            this.props.actions.push('/home/math/' + data);
         }
     }, {
         key: 'render',
         value: function render() {
-            //let { basic, english, math } = this.props;
-            //console.log(this.props)
             return _react3.default.createElement(
                 'div',
                 { className: 'math-door' },
@@ -100964,7 +101158,7 @@ var Math = _wrapComponent('Math')(function (_Component) {
                     { className: 'exam' },
                     _react3.default.createElement(
                         'div',
-                        { className: 'enter-block exam-block', onClick: this.goPage.bind(this, 'exam') },
+                        { className: 'enter-block exam-block', onClick: this.goPage.bind(this, 'exams') },
                         '\u6A21\u8003'
                     )
                 )
@@ -100988,7 +101182,7 @@ exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(
 
 /***/ }),
 
-/***/ "./src/container/front/page_modules/math/math-exam-all.js":
+/***/ "./src/container/front/page_modules/math/exam.js":
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -101016,6 +101210,16 @@ var _index6 = _interopRequireDefault(_index5);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
+
+var _redux = __webpack_require__("./node_modules/redux/es/index.js");
+
+var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
+
+var _user = __webpack_require__("./src/redux/actions/user.js");
+
+__webpack_require__("./src/container/front/page_modules/math/question_style.css");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -101031,14 +101235,14 @@ var _components = {
 };
 
 var _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
-    filename: 'D:/gaoju/Midexam/React/src/container/front/page_modules/math/math-exam-all.js',
+    filename: 'D:/gaoju/Midexam/React/src/container/front/page_modules/math/exam.js',
     components: _components,
     locals: [module],
     imports: [_react3.default]
 });
 
 var _DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
-    filename: 'D:/gaoju/Midexam/React/src/container/front/page_modules/math/math-exam-all.js',
+    filename: 'D:/gaoju/Midexam/React/src/container/front/page_modules/math/exam.js',
     components: _components,
     locals: [],
     imports: [_react3.default, _index2.default]
@@ -101049,7 +101253,8 @@ function _wrapComponent(id) {
         return _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
     };
 } /**
-   * Created by gaoju on 2017/11/23.
+   * 模考试题
+   * Created by gaoju on 2017/11/29.
    */
 
 
@@ -101059,16 +101264,46 @@ var Exam = _wrapComponent('Exam')(function (_Component) {
     function Exam(props) {
         _classCallCheck(this, Exam);
 
-        return _possibleConstructorReturn(this, (Exam.__proto__ || Object.getPrototypeOf(Exam)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Exam.__proto__ || Object.getPrototypeOf(Exam)).call(this, props));
+
+        _this.state = {
+            dataAll: []
+
+        };
+        return _this;
     }
 
     _createClass(Exam, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            this.props.actions.getExamList({
+                success: function success(data) {
+                    console.log("getQuestionList success-->:" + data);
+                    _this2.setState({ dataAll: JSON.parse(data) });
+                },
+                error: function error(mes) {
+                    console.error('数据接收发生错误');
+                }
+            });
+        }
+    }, {
         key: 'render',
         value: function render() {
+            var dataAll = this.state.dataAll;
             return _react3.default.createElement(
                 'div',
                 null,
-                'ahsdjahksjdhakjsdhakjshdkajshd'
+                _react3.default.createElement(
+                    'header',
+                    null,
+                    _react3.default.createElement(
+                        'h2',
+                        null,
+                        'idiil\u6A21\u8003\u8BD5\u9898'
+                    )
+                )
             );
         }
     }]);
@@ -101076,7 +101311,15 @@ var Exam = _wrapComponent('Exam')(function (_Component) {
     return Exam;
 }(_react2.Component));
 
-exports.default = Exam;
+function mapStateToProps(state, ownProps) {
+    return {};
+}
+
+function mapDispatchToProps(dispatch) {
+    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, getExamList: _user.getExamList }, dispatch) };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Exam);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
@@ -101109,7 +101352,13 @@ var _index6 = _interopRequireDefault(_index5);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
+
+var _redux = __webpack_require__("./node_modules/redux/es/index.js");
+
 var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
+
+var _user = __webpack_require__("./src/redux/actions/user.js");
 
 __webpack_require__("./src/container/front/page_modules/math/style.css");
 
@@ -101122,8 +101371,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _components = {
-    Question: {
-        displayName: 'Question'
+    QuestionAll: {
+        displayName: 'QuestionAll'
     }
 };
 
@@ -101150,6 +101399,372 @@ function _wrapComponent(id) {
    */
 
 
+var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
+    _inherits(QuestionAll, _Component);
+
+    function QuestionAll(props) {
+        _classCallCheck(this, QuestionAll);
+
+        var _this = _possibleConstructorReturn(this, (QuestionAll.__proto__ || Object.getPrototypeOf(QuestionAll)).call(this, props));
+
+        _this.state = {
+            itemData: [],
+            quiz_again_status: false,
+            indexNum: 0,
+            showStatus: true
+        };
+        return _this;
+    }
+
+    _createClass(QuestionAll, [{
+        key: 'componentDidMount',
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            //用route的参数来判断是从那个页面进来，进而取对应页面数据和显示对应页面
+            console.log("this.props.params.quesParam-->" + this.props.params.quesParam);
+            if (this.props.params.quesParam == "questions") {
+                this.props.actions.getAllQuestionsList({
+                    body: {},
+                    success: function success(data) {
+                        console.log("getQuestionsList success-->:" + data);
+                        //真实数据的时候可以去掉此判断，判断已在后台执行
+                        var data1 = JSON.parse(data);
+                        _this2.setState({ itemData: data1,
+                            showStatus: true
+                        });
+                    },
+                    error: function error(message) {}
+                });
+            } else if (this.props.params.quesParam == "exams") {
+                this.props.actions.getAllExamList({
+                    body: {},
+                    success: function success(data) {
+                        console.log("getAllExamList success-->:" + data);
+                        //真实数据的时候可以去掉此判断，判断已在后台执行
+                        var data1 = JSON.parse(data);
+                        _this2.setState({
+                            itemData: data1,
+                            showStatus: false
+                        });
+                    },
+                    error: function error(message) {}
+                });
+            }
+        }
+    }, {
+        key: '_renderQuestionPage',
+        value: function _renderQuestionPage(items) {
+            return items.map(function (item, index) {
+                var _this3 = this;
+
+                return _react3.default.createElement(
+                    'div',
+                    { key: index, className: 'questionsAll-item' },
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'questionsAll-item1' },
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'title' },
+                            _react3.default.createElement(
+                                'h2',
+                                null,
+                                _react3.default.createElement(
+                                    'a',
+                                    { href: item.url },
+                                    item.title
+                                )
+                            )
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'btn looklook', onClick: function onClick() {
+                                    return _this3.lookView(item.url);
+                                } },
+                            '\u67E5\u770B'
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'btn doexam', onClick: function onClick() {
+                                    return _this3.doExam(item.url);
+                                } },
+                            '\u505A\u9898'
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'btn quiz_again', onClick: function onClick() {
+                                    return _this3.quizAgain(item, index);
+                                } },
+                            '\u4E8C\u6D4B\u5DE9\u56FA'
+                        )
+                    ),
+                    _react3.default.createElement(
+                        'div',
+                        { id: "quizAgin" + index, className: this.state.indexNum == index && this.state.quiz_again_status ? "transtionBefore transtionAfter" : "transtionBefore" },
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'questionsAll-item2' },
+                            _react3.default.createElement(
+                                'div',
+                                { className: 'title' },
+                                _react3.default.createElement(
+                                    'h2',
+                                    null,
+                                    _react3.default.createElement(
+                                        'a',
+                                        { href: item.expand_practice.url },
+                                        item.expand_practice.title
+                                    )
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'div',
+                                { className: 'btn looklook', onClick: function onClick() {
+                                        return _this3.lookAgainView(item.expand_practice.url);
+                                    } },
+                                '\u67E5\u770B'
+                            ),
+                            _react3.default.createElement(
+                                'div',
+                                { className: 'btn doexam', onClick: function onClick() {
+                                        return _this3.doAgainExam(item.expand_practice.url);
+                                    } },
+                                '\u505A\u9898'
+                            )
+                        )
+                    )
+                );
+            }, this);
+        }
+    }, {
+        key: '_renderExamPage',
+        value: function _renderExamPage(items) {
+            return items.map(function (item, index) {
+                var _this4 = this;
+
+                return _react3.default.createElement(
+                    'div',
+                    { key: index, className: 'examAll-item' },
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'examAll-item1' },
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'title' },
+                            _react3.default.createElement(
+                                'h2',
+                                null,
+                                _react3.default.createElement(
+                                    'a',
+                                    { href: item.url },
+                                    item.title
+                                )
+                            )
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'btn looklook', onClick: function onClick() {
+                                    return _this4.lookView2(item.url);
+                                } },
+                            '\u67E5\u770B'
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'btn doexam', onClick: function onClick() {
+                                    return _this4.doExam2(item.url);
+                                } },
+                            '\u505A\u9898'
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'btn quiz_again', onClick: function onClick() {
+                                    return _this4.quizAgain2(item, index);
+                                } },
+                            '\u67E5\u770B\u7ED3\u679C'
+                        )
+                    ),
+                    _react3.default.createElement(
+                        'div',
+                        { id: "quizAgin" + index, className: this.state.quiz_again_status ? "transtionBefore transtionAfter" : "transtionBefore" },
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'neibu' },
+                            _react3.default.createElement(
+                                'div',
+                                { className: 'title' },
+                                _react3.default.createElement(
+                                    'h2',
+                                    null,
+                                    _react3.default.createElement(
+                                        'a',
+                                        {
+                                            href: item.expand_practice.url },
+                                        item.expand_practice.title
+                                    )
+                                )
+                            )
+                        )
+                    )
+                );
+            }, this);
+        }
+    }, {
+        key: 'lookView',
+        value: function lookView(data) {
+            alert("lookView");
+        }
+    }, {
+        key: 'doExam',
+        value: function doExam(data) {
+            alert("doExam");
+        }
+    }, {
+        key: 'quizAgain',
+        value: function quizAgain(data, index) {
+            console.log(this.state.quiz_again_status, index);
+            var domqiuz = "quizAgin" + index;
+            if (data.practice_status == "1") {
+                this.setState({
+                    quiz_again_status: !this.state.quiz_again_status,
+                    indexNum: index
+                });
+            } else {
+                alert("你还没有做完本套试题一测，请先做完一测！");
+            }
+        }
+    }, {
+        key: 'lookAgainView',
+        value: function lookAgainView() {
+            alert("二测lookView");
+        }
+    }, {
+        key: 'doAgainExam',
+        value: function doAgainExam(param) {
+            var url = 'question';
+            console.log(url);
+            this.props.actions.push('/home/math/questions/' + url);
+            //this.props.actions.push('home/math');
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var items = this.state.itemData;
+            return _react3.default.createElement(
+                'div',
+                { className: 'questionsAll' },
+                _react3.default.createElement(
+                    'header',
+                    null,
+                    _react3.default.createElement(
+                        'h2',
+                        null,
+                        this.state.showStatus ? '往年真题' : '模考'
+                    )
+                ),
+                _react3.default.createElement(
+                    'section',
+                    null,
+                    this.state.showStatus ? this._renderQuestionPage(items) : this._renderExamPage(items)
+                )
+            );
+        }
+    }]);
+
+    return QuestionAll;
+}(_react2.Component));
+
+function mapStateToProps(state) {
+    return {};
+}
+
+function mapDispatchToProps(dispatch) {
+    return {
+        actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, getAllQuestionsList: _user.getAllQuestionsList, getAllExamList: _user.getAllExamList }, dispatch)
+    };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(QuestionAll);
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./src/container/front/page_modules/math/question.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _index = __webpack_require__("./node_modules/redbox-react/lib/index.js");
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = __webpack_require__("./node_modules/react-transform-catch-errors/lib/index.js");
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _react2 = __webpack_require__("./node_modules/react/react.js");
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index5 = __webpack_require__("./node_modules/react-transform-hmr/lib/index.js");
+
+var _index6 = _interopRequireDefault(_index5);
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
+
+var _redux = __webpack_require__("./node_modules/redux/es/index.js");
+
+var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
+
+var _user = __webpack_require__("./src/redux/actions/user.js");
+
+__webpack_require__("./src/container/front/page_modules/math/question_style.css");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+    Question: {
+        displayName: 'Question'
+    }
+};
+
+var _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
+    filename: 'D:/gaoju/Midexam/React/src/container/front/page_modules/math/question.js',
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+});
+
+var _DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
+    filename: 'D:/gaoju/Midexam/React/src/container/front/page_modules/math/question.js',
+    components: _components,
+    locals: [],
+    imports: [_react3.default, _index2.default]
+});
+
+function _wrapComponent(id) {
+    return function (Component) {
+        return _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
+    };
+} /**
+   * 试题
+   * Created by gaoju on 2017/11/29.
+   */
+
+
 var Question = _wrapComponent('Question')(function (_Component) {
     _inherits(Question, _Component);
 
@@ -101159,81 +101774,61 @@ var Question = _wrapComponent('Question')(function (_Component) {
         var _this = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
 
         _this.state = {
-            itemData: [{
-                id: '001',
-                title: '2017年北京大学内部专家通宵熬夜出版中考考试真题',
-                url: 'https://www.baidu.com'
+            dataAll: []
 
-            }, {
-                id: '002',
-                title: '2017年清华大学内部专家通宵熬夜出版中考考试真题',
-                url: 'https://www.baidu.com'
-            }, {
-                id: '002',
-                title: '2016年清华大学内部专家通宵熬夜出版中考考试真题',
-                url: 'https://www.baidu.com'
-            }, {
-                id: '002',
-                title: '2015年清华大学内部专家通宵熬夜出版中考考试真题',
-                url: 'https://www.baidu.com'
-            }]
         };
         return _this;
     }
 
     _createClass(Question, [{
         key: 'componentDidMount',
-        value: function componentDidMount() {}
+        value: function componentDidMount() {
+            var _this2 = this;
+
+            this.props.actions.getQuestionList({
+                success: function success(data) {
+                    console.log("getQuestionList success-->:" + data);
+                    _this2.setState({ dataAll: JSON.parse(data) });
+                },
+                error: function error(mes) {
+                    console.error('数据接收发生错误');
+                }
+            });
+        }
+    }, {
+        key: 'exitBack',
+        value: function exitBack() {
+            this.props.actions.push("/home/math/questions");
+        }
     }, {
         key: 'render',
         value: function render() {
-            var items = this.state.itemData;
-            console.log(items);
-            var itemPage = items.map(function (item, index) {
-                return _react3.default.createElement(
-                    'div',
-                    { key: index, className: 'question-item' },
-                    _react3.default.createElement(
-                        'div',
-                        { className: 'title' },
-                        _react3.default.createElement(
-                            'h2',
-                            null,
-                            _react3.default.createElement(
-                                'a',
-                                { href: item.url },
-                                item.title
-                            )
-                        )
-                    ),
-                    _react3.default.createElement(
-                        'div',
-                        { className: 'btn looklook' },
-                        '\u67E5\u770B'
-                    ),
-                    _react3.default.createElement(
-                        'div',
-                        { className: 'btn doexam' },
-                        '\u505A\u9898'
-                    )
-                );
-            });
+            var _this3 = this;
+
+            var dataAll = this.state.dataAll;
             return _react3.default.createElement(
                 'div',
-                { className: 'questions' },
+                { className: 'mask' },
                 _react3.default.createElement(
-                    'header',
-                    null,
+                    'div',
+                    { className: 'math-question-content' },
                     _react3.default.createElement(
-                        'h2',
+                        'header',
                         null,
-                        '\u771F\u9898'
-                    )
-                ),
-                _react3.default.createElement(
-                    'section',
-                    null,
-                    itemPage
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'title' },
+                            '2017\u5E74\u5168\u56FD\u7EDF\u4E00\u8003\u8BD5\u5377'
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'exit', onClick: function onClick() {
+                                    _this3.exitBack;
+                                } },
+                            '\u9000\u51FA'
+                        )
+                    ),
+                    _react3.default.createElement('section', null)
                 )
             );
         }
@@ -101242,8 +101837,43 @@ var Question = _wrapComponent('Question')(function (_Component) {
     return Question;
 }(_react2.Component));
 
-exports.default = Question;
+function mapStateToProps(state, ownProps) {
+    return {};
+}
+
+function mapDispatchToProps(dispatch) {
+    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, getQuestionList: _user.getQuestionList }, dispatch) };
+}
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Question);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./src/container/front/page_modules/math/question_style.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./src/container/front/page_modules/math/question_style.css");
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/style-loader/addStyles.js")(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(true) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("./node_modules/css-loader/index.js!./src/container/front/page_modules/math/question_style.css", function() {
+			var newContent = __webpack_require__("./node_modules/css-loader/index.js!./src/container/front/page_modules/math/question_style.css");
+			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
 
 /***/ }),
 
@@ -102016,8 +102646,6 @@ function request(route, params, dispatch) {
         _ref$body = _ref.body,
         body = _ref$body === undefined ? null : _ref$body;
 
-    // dispatch({ type: TYPES.REQUEST_PEDDING, [pendingTasks]: begin })
-    // if (method !== 'GET') dispatch({ type: TYPES.REQUEST_LOADING })
     // 处理query
     var p = params ? '?' + Object.entries(params).map(function (i) {
         return i[0] + '=' + encodeURI(i[1]);
@@ -102071,6 +102699,11 @@ Object.defineProperty(exports, "__esModule", {
 exports.login = login;
 exports.changePassword = changePassword;
 exports.register = register;
+exports.getHomeShowList = getHomeShowList;
+exports.getAllQuestionsList = getAllQuestionsList;
+exports.getQuestionList = getQuestionList;
+exports.getAllExamList = getAllExamList;
+exports.getExamList = getExamList;
 
 var _types = __webpack_require__("./src/redux/types.js");
 
@@ -102084,20 +102717,30 @@ var _request = __webpack_require__("./src/redux/actions/request.js");
 
 var _public = __webpack_require__("./src/method_public/public.js");
 
+var _isomorphicFetch = __webpack_require__("./node_modules/isomorphic-fetch/fetch-npm-browserify.js");
+
+var _isomorphicFetch2 = _interopRequireDefault(_isomorphicFetch);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
-/**
- * 用户信息模块action
- * Created by gaoju on 2017/11/15.
- */
 function login(opt) {
+    //return (dispatch) => {
+    //    const route = '/api/user/token';//服务端数据
+    //    request(route, {}, dispatch, opt.success, opt.error,
+    //        { method: 'POST',
+    //            headers: {"Content-Type": "application/x-www-form-urlencoded"},
+    //            body: bodyUrlencoded(opt.body) })
+    //}
     return function (dispatch) {
-        var route = '/api/user/token';
-        (0, _request.request)(route, {}, dispatch, opt.success, opt.error, { method: 'POST',
-            headers: { "Content-Type": "application/x-www-form-urlencoded" },
-            body: (0, _public.bodyUrlencoded)(opt.body) });
+        var route = '../src/data/userInfo.json'; //本地数据
+        requestData(route, opt.success, opt.error);
     };
-}
+} /**
+   * 用户信息模块action
+   * Created by gaoju on 2017/11/15.
+   */
 function changePassword(opt) {
     return function (dispatch) {
         var route = '/api/user/password';
@@ -102113,6 +102756,56 @@ function register(opt) {
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: (0, _public.bodyUrlencoded)(opt.body) });
     };
+}
+//数据获取方法目前先写在这里，在后面再把用户和页面数据分开写
+function getHomeShowList(opt) {
+    return function (dispatch) {
+        var route = '../src/data/home.json'; //本地数据
+        requestData(route, opt.success, opt.error);
+    };
+}
+//获取所有练习试题
+function getAllQuestionsList(opt) {
+    return function (dispatch) {
+        var route = '../src/data/questions.json'; //本地数据
+        requestData(route, opt.success, opt.error);
+    };
+}
+//获取某套练习试题
+function getQuestionList(opt) {
+    getExamList;
+    return function (dispatch) {
+        var route = '../src/data/home.json'; //本地数据
+        requestData(route, opt.success, opt.error);
+    };
+}
+//获取所有模考试题
+function getAllExamList(opt) {
+    return function (dispatch) {
+        var route = '../src/data/exam.json'; //本地数据
+        requestData(route, opt.success, opt.error);
+    };
+}
+//获取某套模考试题
+function getExamList(opt) {
+    return function (dispatch) {
+        var route = '../src/data/home.json'; //本地数据
+        requestData(route, opt.success, opt.error);
+    };
+}
+function requestData(url) {
+    var success = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+    var error = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : null;
+
+    console.log("url:-->" + url);
+    (0, _isomorphicFetch2.default)(url).then(function (res) {
+        return res.json();
+    }).then(function (json) {
+        success && success(JSON.stringify(json));
+    }).catch(function (err) {
+        console.warn(err);
+        error(err);
+    });
 }
 
 /***/ }),
@@ -102245,12 +102938,20 @@ var _mathQuestionAll = __webpack_require__("./src/container/front/page_modules/m
 
 var _mathQuestionAll2 = _interopRequireDefault(_mathQuestionAll);
 
-var _mathExamAll = __webpack_require__("./src/container/front/page_modules/math/math-exam-all.js");
+var _question = __webpack_require__("./src/container/front/page_modules/math/question.js");
 
-var _mathExamAll2 = _interopRequireDefault(_mathExamAll);
+var _question2 = _interopRequireDefault(_question);
+
+var _exam = __webpack_require__("./src/container/front/page_modules/math/exam.js");
+
+var _exam2 = _interopRequireDefault(_exam);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * 项目路由配置
+ * Created by gaoju on 2017/11/15.
+ */
 var routes = _react2.default.createElement(
     _reactRouter.Route,
     null,
@@ -102261,13 +102962,12 @@ var routes = _react2.default.createElement(
         { path: '/home', component: _home2.default },
         _react2.default.createElement(_reactRouter.Route, { path: 'basic', component: _basic2.default }),
         _react2.default.createElement(_reactRouter.Route, { path: 'math', component: _math2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'questions', component: _mathQuestionAll2.default }),
-        _react2.default.createElement(_reactRouter.Route, { path: 'exam', component: _mathExamAll2.default })
+        _react2.default.createElement(_reactRouter.Route, { path: 'math/:quesParam', component: _mathQuestionAll2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'math/questions/question', component: _question2.default }),
+        _react2.default.createElement(_reactRouter.Route, { path: 'math/exams/exam', component: _exam2.default })
     )
-); /**
-    * 项目路由配置
-    * Created by gaoju on 2017/11/15.
-    */
+);
+
 exports.default = routes;
 
 /***/ }),

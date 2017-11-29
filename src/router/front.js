@@ -10,8 +10,9 @@ import Home from '../container/front/home'
 import Register from '../container/front/register'
 import Basic from '../container/front/page_modules/basic'
 import Math from '../container/front/page_modules/math'
-import Question from '../container/front/page_modules/math/math-question-all'
-import Exam from '../container/front/page_modules/math/math-exam-all'
+import QuestionAll from '../container/front/page_modules/math/math-question-all'
+import Question from '../container/front/page_modules/math/question'
+import Exam from '../container/front/page_modules/math/exam'
 
 const routes = (
     <Route>
@@ -20,9 +21,9 @@ const routes = (
         <Route path="/home" component={Home}>
             <Route path="basic" component={Basic} />
             <Route path="math" component={Math}/>
-                <Route path="questions" component={Question} />
-                <Route path="exam" component={Exam} />
-
+            <Route path="math/:quesParam" component={QuestionAll}/>
+            <Route path="math/questions/question" component={Question} />
+            <Route path="math/exams/exam" component={Exam} />
         </Route>
     </Route>
 );

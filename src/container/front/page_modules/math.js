@@ -15,19 +15,16 @@ class Math extends Component{
         }
     }
     goPage(data,event){
-        console.log(data)
-        this.props.actions.push(`/home/${data}`)
+        this.props.actions.push(`/home/math/${data}`)
     }
     render(){
-        //let { basic, english, math } = this.props;
-        //console.log(this.props)
         return (
             <div className="math-door">
                 <div className="questions">
                     <div className="enter-block question-block" onClick={this.goPage.bind(this,'questions')}>真题</div>
                 </div>
                 <div className="exam">
-                    <div className="enter-block exam-block" onClick={this.goPage.bind(this,'exam')}>模考</div>
+                    <div className="enter-block exam-block" onClick={this.goPage.bind(this,'exams')}>模考</div>
                 </div>
             </div>
         )

@@ -3,6 +3,7 @@
     height: 100%;
     width: 100%;
     background-color: aliceblue;
+    overflow-y: scroll;
 }
 .questionsAll header{
     text-align: center;
@@ -10,12 +11,27 @@
 }
 .questionsAll-item{
     position: relative;
-    display: flex;
-    height: 75px;
-    line-height: 75px;
     border-radius: 8px;
     border: 1px solid darkgray;
     margin-bottom: 5px;
+    background-color: lightyellow;
+}
+.questionsAll-item1{
+    position: relative;
+    display: flex;
+    height: 75px;
+    line-height: 75px;
+    border: 1px solid darkgray;
+}
+.questionsAll-item2{
+    position: relative;
+    display: flex;
+    margin: 10px;
+    border-radius: 10px;
+    height: 60px;
+    line-height: 60px;
+    font-size: 10px;
+    border: 1px solid darkgray;
 }
 .title{
     padding-left:10px ;
@@ -24,15 +40,65 @@
     position: absolute;
     text-align: center;
     cursor: pointer;
-    width: 42px;
     margin-top: 20px;
     height: 32px;
     line-height: 32px;
     border: 1px dashed gray;
 }
-.looklook{
+.questionsAll-item2 .btn{
+    position: absolute;
+    text-align: center;
+    cursor: pointer;
+    margin-top: 15px;
+    height: 32px;
+    line-height: 32px;
+    border: 1px dashed gray;
+}
+.questionsAll-item .looklook{
+    width: 42px;
+    right: 145px;
+}
+.questionsAll-item .doexam{
+    width: 42px;
+    right: 90px;
+}
+.questionsAll-item .quiz_again{
+    width: 60px;
+    right: 15px;
+}
+.questionsAll-item2 .looklook{
+    width: 36px;
     right: 80px;
 }
-.doexam{
-    right: 15px;
+.questionsAll-item2 .doexam{
+    width: 36px;
+    right: 27px;
+}
+.examAll-item{
+    position: relative;
+    border-radius: 8px;
+    border: 1px solid darkgray;
+    margin-bottom: 5px;
+    background-color: lightyellow;
+}
+.examAll-item1{
+    position: relative;
+    display: flex;
+    height: 75px;
+    line-height: 75px;
+    border: 1px solid darkgray;
+}
+
+.transtionBefore{
+    height: 0px;
+    overflow: hidden;
+    background-color: bisque;
+    transition: height .8s ease-out;
+}
+.transtionAfter{
+    height: 75px;
+    background-color: bisque;
+}
+.neibu{
+    margin-top: 3%;
 }

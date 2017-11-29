@@ -1,0 +1,74 @@
+[
+  {
+    "id":"M0001",
+    "title":"2017年北京大学内部专家通宵熬夜出版中考考试真题",
+    "url":"https://www.baidu.com",
+    "practice_status":"1",
+    "expand_practice":{
+      "id":"MP0001",
+      "title":"2017试题延伸拓展训练",
+      "url":"https://nw.idiil.com.cn/Function/Student/seniorExam/moni.html",
+      "practice_status":"1"
+    }
+
+  },{
+    "id":"M0002",
+    "title":"2016年北京大学内部专家通宵熬夜出版中考考试真题",
+    "url":"https://www.baidu.com",
+    "practice_status":"0",
+    "expand_practice":""
+
+  },{
+    "id":"M0003",
+    "title":"2015年北京大学内部专家出版中考考试真题",
+    "url":"https://www.baidu.com",
+    "practice_status":"1",
+    "expand_practice":{
+      "id":"MP0002",
+      "title":"2015试题延伸拓展训练",
+      "url":"https://www.baidu.com",
+      "practice_status":"1"
+    }
+
+  }
+,{
+  "id":"M0004",
+  "title":"2014年北京大学内部专家通宵熬夜出版中考考试真题",
+  "url":"https://www.baidu.com",
+  "practice_status":"0",
+  "expand_practice":""
+
+}
+,{
+  "id":"M0005",
+  "title":"2013年清华大学内部专家出版中考考试真题",
+  "url":"https://www.baidu.com",
+  "practice_status":"0",
+  "expand_practice":""
+
+}
+,{
+  "id":"M0006",
+  "title":"2012年北京大学内部专家通宵熬夜出版中考考试真题",
+  "url":"https://www.baidu.com",
+  "practice_status":"0",
+  "expand_practice":""
+
+}
+,{
+  "id":"M0007",
+  "title":"2011年北京大学内部专家通宵熬夜出版中考考试真题",
+  "url":"https://www.baidu.com",
+  "practice_status":"0",
+  "expand_practice":""
+
+}
+,{
+  "id":"M0008",
+  "title":"2010年北京大学内部专家通宵熬夜出版中考考试真题",
+  "url":"https://www.baidu.com",
+  "practice_status":"0",
+  "expand_practice":""
+
+}
+]

@@ -1,0 +1,34 @@
+.mask{
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: #1B5E20;;
+    border: 50px solid;
+    -webkit-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
+    -moz-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
+    -o-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
+    border-image: url("/public/images/1111.jpg") 40 40 round stretch;
+}
+.math-question-content{
+    color: white;
+}
+.math-question-content header{
+    display: flex;
+}
+.math-question-content header .title{
+    width: 80%;
+    height: 48px;
+    font-size: 22px;
+    text-align: center;
+}
+.math-question-content header .exit{
+    position: absolute;
+    right: 20px;
+    font-size: 16px;
+    cursor: pointer;
+}
