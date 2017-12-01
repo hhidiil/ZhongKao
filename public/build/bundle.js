@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "7b25b186ac424e5087de"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "017b171153c385546b6b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -20477,7 +20477,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".mask{\r\n    position: fixed;\r\n    z-index: 100;\r\n    width: 100%;\r\n    height: 100%;\r\n    top: 0;\r\n    right: 0;\r\n    left: 0;\r\n    bottom: 0;\r\n    background-color: aliceblue;;\r\n    border: 50px solid;\r\n    -webkit-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    -moz-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    -o-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n}\r\n.math-question-content{\r\n}\r\n.math-question-content header{\r\n    display: flex;\r\n}\r\n.math-question-content header .title{\r\n    width: 100%;\r\n    height: 55px;\r\n    line-height: 55px;\r\n    font-size: 22px;\r\n    text-align: center;\r\n}\r\n.math-question-content header .exit{\r\n    position: absolute;\r\n    right: 20px;\r\n    top: 10px;\r\n    font-size: 16px;\r\n    cursor: pointer;\r\n}\r\n.math-question-content .pagination_css{\r\n    display: flex;\r\n    height: 45px;\r\n    margin: 10px 0;\r\n    line-height: 40px;\r\n    text-align: center;\r\n}\r\n.math-question-content center hr{\r\n    border: 1px solid gainsboro;\r\n}\r\n.btnContainer button{\r\n    margin: 0 2px;\r\n}\r\n.pagination_content{\r\n    position: relative;\r\n    margin: 15px 0;\r\n    display: flex;\r\n    width: 100%;\r\n}\r\n.pagination_content .pagination_before{\r\n    position: relative;\r\n    width: 40%;\r\n    margin: 10px 5px 10px 30px;\r\n}\r\n.pagination_content .btnContainer{\r\n    position: relative;\r\n    right: 10px;\r\n    top: 5px;\r\n    width: 55%;\r\n    text-align: right;\r\n}\r\n.QtxtContent{\r\n    padding: 10px;\r\n}\r\n.QtxtContent .QContet{\r\n    margin-bottom: 10px;\r\n}\r\n.QtxtContent .QContet ul{\r\n    border: 1px solid #ddd;\r\n    padding: 20px 0px 10px 20px;\r\n}", ""]);
+exports.push([module.i, ".mask{\r\n    position: fixed;\r\n    z-index: 100;\r\n    width: 100%;\r\n    height: 100%;\r\n    top: 0;\r\n    right: 0;\r\n    left: 0;\r\n    bottom: 0;\r\n    background-color: aliceblue;;\r\n    border: 50px solid;\r\n    -webkit-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    -moz-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    -o-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n}\r\n.math-question-content{\r\n}\r\n.math-question-content header{\r\n    display: flex;\r\n}\r\n.math-question-content header .title{\r\n    width: 100%;\r\n    height: 55px;\r\n    line-height: 55px;\r\n    font-size: 22px;\r\n    text-align: center;\r\n}\r\n.math-question-content header .exit{\r\n    position: absolute;\r\n    right: 20px;\r\n    top: 10px;\r\n    font-size: 16px;\r\n    cursor: pointer;\r\n}\r\n.math-question-content .pagination_css{\r\n    display: flex;\r\n    height: 45px;\r\n    margin: 10px 0;\r\n    line-height: 40px;\r\n    text-align: center;\r\n}\r\n.math-question-content center hr{\r\n    border: 1px solid gainsboro;\r\n}\r\n.btnContainer button{\r\n    margin: 0 2px;\r\n}\r\n.pagination_content{\r\n    position: relative;\r\n    margin: 15px 0;\r\n    display: flex;\r\n    width: 100%;\r\n}\r\n.pagination_content .pagination_before{\r\n    position: relative;\r\n    width: 40%;\r\n    margin: 10px 5px 10px 30px;\r\n}\r\n.pagination_content .btnContainer{\r\n    position: relative;\r\n    right: 10px;\r\n    top: 5px;\r\n    width: 55%;\r\n    text-align: right;\r\n}\r\n.QtxtContent{\r\n    padding: 10px;\r\n}\r\n.QtxtContent .QContet{\r\n    margin-bottom: 10px;\r\n}\r\n.QtxtContent .QContet ul{\r\n    border: 1px solid #ddd;\r\n    padding: 20px 0px 10px 20px;\r\n    background-color: white;\r\n}\r\n.QtxtContent .QContet ul li:last-child{\r\n    margin: 10px 0 0 0;\r\n}", ""]);
 
 // exports
 
@@ -105233,19 +105233,28 @@ var Question = _wrapComponent('Question')(function (_Component) {
         var _this = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
 
         _this.onChange = function (page) {
-            console.log(page);
+            console.log(page - 1);
+            var newpage = page - 1;
+            var data_question = _this.state.dataAll.subquestions[newpage];
+            _this.requestQuestion(data_question, "Content");
             _this.setState({
-                current: page
+                questionParams: data_question,
+                current: page,
+                questionNum: newpage
             });
+            console.log(_this.state.questionParams);
         };
 
         _this.state = {
+            JSON_aLL: "Exam_19008687-3c57-4105-8b6c-18205a4616a3.json", //某套题的JSON串，可取到某套试题的所有数据
             dataAll: [],
             current: 1,
             total: 5,
             flag: false,
-            questionParams: {},
-            questions: {}
+            questionNum: 0, //当前题号
+            analysisFlag: false, //试题分析显示标志
+            questionParams: {}, //具体某道题所有数据,默认第一道题
+            analysisQuestions: {} //具体某道题的分析
         };
         return _this;
     }
@@ -105257,13 +105266,12 @@ var Question = _wrapComponent('Question')(function (_Component) {
 
             this.props.actions.getQuestionList({
                 body: {
-                    param: 'Exam_19008687-3c57-4105-8b6c-18205a4616a3.json'
+                    param: this.state.JSON_aLL
                 },
                 success: function success(data) {
-                    console.log("ALL success-->:" + data);
                     var new_data = JSON.parse(data); //解析JSON
                     var data_len = new_data.subquestions.length; //本套试题的所有题目数
-                    var data_question = new_data.subquestions[0]; //本套试题的第一道题,默认
+                    var data_question = new_data.subquestions[_this2.state.questionNum];
                     _this2.setState({
                         dataAll: new_data,
                         total: data_len,
@@ -105277,15 +105285,13 @@ var Question = _wrapComponent('Question')(function (_Component) {
             });
         }
     }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {}
-    }, {
         key: 'requestQuestion',
         value: function requestQuestion(data, type) {
             var _this3 = this;
 
             var dataitem = data;
             var content_json = "";
+            var content = dataitem.Content[0];
             console.log("content_json type---->" + type);
             switch (type) {
                 case 'Content':
@@ -105297,23 +105303,48 @@ var Question = _wrapComponent('Question')(function (_Component) {
                 case 'Explain':
                     content_json = dataitem.Explain[0];break;
                 case 'Exercise1':
-                    content_json = dataitem.Exercise1[0];break;
+                    content_json = dataitem.Exercise1;break;
                 case 'Exercise2':
-                    content_json = dataitem.Exercise2[0];break;
+                    content_json = dataitem.Exercise2;break;
                 default:
                     content_json = dataitem.Content[0];break;
             }
-            console.log(content_json);
+            console.log(content_json, content_json.length);
+            if (type == "Analysis") {
+                this.props.actions.getQuestionList({
+                    body: {
+                        param: "Question/" + content + ".json"
+                    },
+                    success: function success(data) {
+                        console.log("requestQuestion success-->:" + data);
+                        _this3.setState({
+                            questions: JSON.parse(data)
+                        });
+                    },
+                    error: function error(mes) {
+                        console.error('数据接收发生错误');
+                    }
+                });
+            }
             this.props.actions.getQuestionList({
                 body: {
                     param: "Question/" + content_json + ".json"
                 },
                 success: function success(data) {
                     console.log("requestQuestion success-->:" + data);
-                    _this3.setState({
-                        questions: JSON.parse(data),
-                        flag: true
-                    });
+                    if (type == "Analysis") {
+                        _this3.setState({
+                            analysisQuestions: JSON.parse(data),
+                            flag: true,
+                            analysisFlag: true
+                        });
+                    } else {
+                        _this3.setState({
+                            questions: JSON.parse(data),
+                            flag: true,
+                            analysisFlag: false
+                        });
+                    }
                 },
                 error: function error(mes) {
                     console.error('数据接收发生错误');
@@ -105324,89 +105355,96 @@ var Question = _wrapComponent('Question')(function (_Component) {
         key: '_contentQtxt',
         value: function _contentQtxt(data) {
             return _react3.default.createElement(
-                'ul',
+                'div',
                 null,
                 _react3.default.createElement(
-                    'li',
+                    'ul',
                     null,
-                    data.content
-                ),
-                _react3.default.createElement(
-                    'li',
-                    null,
+                    _react3.default.createElement('li', { dangerouslySetInnerHTML: { __html: data.content } }),
                     _react3.default.createElement(
-                        'p',
+                        'li',
                         null,
                         _react3.default.createElement(
-                            'label',
-                            { className: 'checkbox-inline' },
-                            _react3.default.createElement('input', { type: 'radio', title: 'A', name: 'Qopts_selects' }),
+                            'p',
+                            null,
                             _react3.default.createElement(
-                                'span',
-                                null,
-                                '(A)'
+                                'label',
+                                { className: 'checkbox-inline' },
+                                _react3.default.createElement('input', { type: 'radio', title: 'A', name: 'Qopts_selects' }),
+                                _react3.default.createElement(
+                                    'span',
+                                    null,
+                                    '(A)'
+                                ),
+                                _react3.default.createElement('span', { dangerouslySetInnerHTML: { __html: data.selectoptions[0] } })
                             ),
                             _react3.default.createElement(
-                                'span',
-                                null,
-                                data.selectoptions[0]
-                            )
-                        ),
-                        _react3.default.createElement(
-                            'label',
-                            { className: 'checkbox-inline' },
-                            _react3.default.createElement('input', { type: 'radio', title: 'A', name: 'Qopts_selects' }),
-                            _react3.default.createElement(
-                                'span',
-                                null,
-                                '(B)'
+                                'label',
+                                { className: 'checkbox-inline' },
+                                _react3.default.createElement('input', { type: 'radio', title: 'A', name: 'Qopts_selects' }),
+                                _react3.default.createElement(
+                                    'span',
+                                    null,
+                                    '(B)'
+                                ),
+                                _react3.default.createElement('span', { dangerouslySetInnerHTML: { __html: data.selectoptions[1] } })
                             ),
                             _react3.default.createElement(
-                                'span',
-                                null,
-                                data.selectoptions[1]
-                            )
-                        ),
-                        _react3.default.createElement(
-                            'label',
-                            { className: 'checkbox-inline' },
-                            _react3.default.createElement('input', { type: 'radio', title: 'A', name: 'Qopts_selects' }),
-                            _react3.default.createElement(
-                                'span',
-                                null,
-                                '(C)'
+                                'label',
+                                { className: 'checkbox-inline' },
+                                _react3.default.createElement('input', { type: 'radio', title: 'A', name: 'Qopts_selects' }),
+                                _react3.default.createElement(
+                                    'span',
+                                    null,
+                                    '(C)'
+                                ),
+                                _react3.default.createElement('span', { dangerouslySetInnerHTML: { __html: data.selectoptions[2] } })
                             ),
                             _react3.default.createElement(
-                                'span',
-                                null,
-                                data.selectoptions[2]
-                            )
-                        ),
-                        _react3.default.createElement(
-                            'label',
-                            { className: 'checkbox-inline' },
-                            _react3.default.createElement('input', { type: 'radio', title: 'A', name: 'Qopts_selects' }),
-                            _react3.default.createElement(
-                                'span',
-                                null,
-                                '(D)'
-                            ),
-                            _react3.default.createElement(
-                                'span',
-                                null,
-                                data.selectoptions[3]
+                                'label',
+                                { className: 'checkbox-inline' },
+                                _react3.default.createElement('input', { type: 'radio', title: 'A', name: 'Qopts_selects' }),
+                                _react3.default.createElement(
+                                    'span',
+                                    null,
+                                    '(D)'
+                                ),
+                                _react3.default.createElement('span', { dangerouslySetInnerHTML: { __html: data.selectoptions[3] } })
                             )
                         )
-                    )
-                ),
-                _react3.default.createElement(
-                    'li',
-                    null,
-                    '\u8003\u70B9\uFF1A',
+                    ),
                     _react3.default.createElement(
-                        'b',
+                        'li',
                         null,
-                        data.knowledge
+                        _react3.default.createElement(
+                            'span',
+                            null,
+                            '\u8003\u70B9\uFF1A'
+                        ),
+                        _react3.default.createElement('span', { dangerouslySetInnerHTML: { __html: data.knowledge } })
+                    )
+                )
+            );
+        }
+    }, {
+        key: '_analysisQtxt',
+        value: function _analysisQtxt(data) {
+            return _react3.default.createElement(
+                'div',
+                null,
+                _react3.default.createElement(
+                    'ul',
+                    null,
+                    _react3.default.createElement('li', { dangerouslySetInnerHTML: { __html: data.content } }),
+                    _react3.default.createElement(
+                        'li',
+                        null,
+                        '\u8003\u70B9\uFF1A',
+                        _react3.default.createElement(
+                            'b',
+                            null,
+                            data.knowledge
+                        )
                     )
                 )
             );
@@ -105423,6 +105461,7 @@ var Question = _wrapComponent('Question')(function (_Component) {
 
             var dataAll = this.state.dataAll;
             var questions = this.state.questions;
+            var analysisQuestions = this.state.analysisQuestions;
             var params = this.state.questionParams;
             return _react3.default.createElement(
                 'div',
@@ -105494,7 +105533,7 @@ var Question = _wrapComponent('Question')(function (_Component) {
                                     onClick: function onClick() {
                                         return _this4.requestQuestion(params, "Explain");
                                     } },
-                                '\u7B80\u89E3\u5F15\u5BFC'
+                                '\u6269\u5C55\u7EC3\u4E60'
                             ),
                             _react3.default.createElement(
                                 'button',
@@ -105519,10 +105558,18 @@ var Question = _wrapComponent('Question')(function (_Component) {
                         { className: 'QtxtContent' },
                         _react3.default.createElement(
                             'div',
-                            { id: 'Content_Qtxt', className: 'QContet' },
-                            this.state.flag ? this._contentQtxt(questions) : ""
+                            null,
+                            _react3.default.createElement(
+                                'div',
+                                { id: 'Content_Qtxt', className: 'QContet' },
+                                this.state.flag ? this._contentQtxt(questions) : ""
+                            ),
+                            _react3.default.createElement(
+                                'div',
+                                { id: 'Analysis_Qtxt', className: 'QContet' },
+                                this.state.analysisFlag ? this._analysisQtxt(analysisQuestions) : ""
+                            )
                         ),
-                        _react3.default.createElement('div', { id: 'Analysis_Qtxt', className: 'QContet' }),
                         _react3.default.createElement('div', { id: 'Exercise1_Qtxt', className: 'QContet' }),
                         _react3.default.createElement('div', { id: 'Exercise2_Qtxt', className: 'QContet' })
                     )
