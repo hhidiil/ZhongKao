@@ -59,16 +59,16 @@ class QuestionAll extends Component{
             return(
                 <div key={index} className="questionsAll-item">
                     <div className="questionsAll-item1">
-                        <div className="title"><h2><a href ={item.url}>{item.title}</a></h2></div>
-                        <div className="btn looklook" onClick={()=>this.lookView(item.url)}>查看</div>
-                        <div className="btn doexam" onClick={()=>this.doExam(item.url)}>做题</div>
-                        <div className="btn quiz_again" onClick={()=>this.quizAgain(item,index)}>二测巩固</div>
+                        <div className="title"><h4><a href ={item.url}>{item.title}</a></h4></div>
+                        <div className="bttn looklook" onClick={()=>this.lookView(item.url)}>查看</div>
+                        <div className="bttn doexam" onClick={()=>this.doExam(item.url)}>做题</div>
+                        <div className="bttn quiz_again" onClick={()=>this.quizAgain(item,index)}>二测巩固</div>
                     </div>
                     <div id={"quizAgin"+index} className={(this.state.indexNum==index && this.state.quiz_again_status)?"transtionBefore transtionAfter":"transtionBefore"}>
                         <div className="questionsAll-item2">
-                            <div className="title"><h2><a href ={item.expand_practice.url}>{item.expand_practice.title}</a></h2></div>
-                            <div className="btn looklook" onClick={()=>this.lookAgainView(item.expand_practice.url)}>查看</div>
-                            <div className="btn doexam" onClick={()=>this.doAgainExam(item.expand_practice.url)}>做题</div>
+                            <div className="title"><h4><a href ={item.expand_practice.url}>{item.expand_practice.title}</a></h4></div>
+                            <div className="bttn looklook" onClick={()=>this.lookAgainView(item.expand_practice.url)}>查看</div>
+                            <div className="bttn doexam" onClick={()=>this.doAgainExam(item.expand_practice.url)}>做题</div>
                         </div>
                     </div>
                 </div>
@@ -80,10 +80,10 @@ class QuestionAll extends Component{
             return(
                 <div key={index} className="examAll-item">
                     <div className="examAll-item1">
-                        <div className="title"><h2><a href ={item.url}>{item.title}</a></h2></div>
-                        <div className="btn looklook" onClick={()=>this.lookView2(item.url)}>查看</div>
-                        <div className="btn doexam" onClick={()=>this.doExam2(item.url)}>做题</div>
-                        <div className="btn quiz_again" onClick={()=>this.quizAgain2(item,index)}>查看结果</div>
+                        <div className="title"><h4><a href ={item.url}>{item.title}</a></h4></div>
+                        <div className="bttn looklook" onClick={()=>this.lookView2(item.url)}>查看</div>
+                        <div className="bttn doexam" onClick={()=>this.doExam2(item.url)}>做题</div>
+                        <div className="bttn quiz_again" onClick={()=>this.quizAgain2(item,index)}>查看结果</div>
                     </div>
                     <div id={"quizAgin"+index} className={this.state.quiz_again_status?"transtionBefore transtionAfter":"transtionBefore"}>
                         <div className="neibu">

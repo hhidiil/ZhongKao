@@ -56,7 +56,7 @@ export function getAllQuestionsList(opt) {
 //获取某套练习试题
 export function getQuestionList(opt) {getExamList
     return (dispatch) => {
-        const route = '../src/data/home.json';//本地数据
+        const route = '../src/data/ExamsData/JSON/'+opt.body.param;//本地数据
         requestData(route,opt.success, opt.error)
     }
 }
