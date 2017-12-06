@@ -124,7 +124,6 @@
 .home .menu-css{
     box-shadow: 0 2px 4px 0 #d9d9d9;
     margin: 0px 10px;
-    min-height: 850px;
     background-color: honeydew;
 }
 .home .section-all{
@@ -132,6 +131,7 @@
 }
 .home .section-left{
     position: relative;
+    overflow: auto;
     background-color: white;
     box-shadow: 0 2px 4px 0 #d9d9d9;
 }

@@ -5,8 +5,8 @@ import React,{Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getAllQuestionsList} from '../../../../redux/actions/user'
-import {getAllExamList} from '../../../../redux/actions/user'
+import {getAllQuestionsList} from '../../../../redux/actions/math'
+import {getAllExamList} from '../../../../redux/actions/math'
 import './style.css'
 
 
@@ -17,7 +17,7 @@ class QuestionAll extends Component{
             itemData:[],
             quiz_again_status:false,
             indexNum:0,
-            showStatus:true
+            showStatus:true//测试为true,模考为false
         };
     }
     componentDidMount(){
@@ -60,15 +60,15 @@ class QuestionAll extends Component{
                 <div key={index} className="questionsAll-item">
                     <div className="questionsAll-item1">
                         <div className="title"><h4><a href ={item.url}>{item.title}</a></h4></div>
-                        <div className="bttn looklook" onClick={()=>this.lookView(item.url)}>查看</div>
-                        <div className="bttn doexam" onClick={()=>this.doExam(item.url)}>做题</div>
+                        <div className="bttn looklook" onClick={()=>this.question_goto('1')}>查看</div>
+                        <div className="bttn doexam" onClick={()=>this.question_goto('2')}>做题</div>
                         <div className="bttn quiz_again" onClick={()=>this.quizAgain(item,index)}>二测巩固</div>
                     </div>
                     <div id={"quizAgin"+index} className={(this.state.indexNum==index && this.state.quiz_again_status)?"transtionBefore transtionAfter":"transtionBefore"}>
                         <div className="questionsAll-item2">
-                            <div className="title"><h4><a href ={item.expand_practice.url}>{item.expand_practice.title}</a></h4></div>
-                            <div className="bttn looklook" onClick={()=>this.lookAgainView(item.expand_practice.url)}>查看</div>
-                            <div className="bttn doexam" onClick={()=>this.doAgainExam(item.expand_practice.url)}>做题</div>
+                            <div className="title"><h4>{item.expand_practice.title}</h4></div>
+                            <div className="bttn looklook" onClick={()=>this.expand_goto('1')}>查看</div>
+                            <div className="bttn doexam" onClick={()=>this.expand_goto('2')}>做题</div>
                         </div>
                     </div>
                 </div>
@@ -79,31 +79,23 @@ class QuestionAll extends Component{
         return items.map(function(item,index){
             return(
                 <div key={index} className="examAll-item">
-                    <div className="examAll-item1">
-                        <div className="title"><h4><a href ={item.url}>{item.title}</a></h4></div>
-                        <div className="bttn looklook" onClick={()=>this.lookView2(item.url)}>查看</div>
-                        <div className="bttn doexam" onClick={()=>this.doExam2(item.url)}>做题</div>
-                        <div className="bttn quiz_again" onClick={()=>this.quizAgain2(item,index)}>查看结果</div>
-                    </div>
-                    <div id={"quizAgin"+index} className={this.state.quiz_again_status?"transtionBefore transtionAfter":"transtionBefore"}>
-                        <div className="neibu">
-                            <div className="title"><h2><a
-                                href={item.expand_practice.url}>{item.expand_practice.title}</a></h2></div>
-                        </div>
+                    <div className="title">{item.title}</div>
+                    <div className="btnContainer">
+                        <button type="button" className="btn btn-primary" onClick={()=>this.exam_goto('1')}>查看</button>
+                        <button type="button" className="btn btn-primary" onClick={()=>this.exam_goto('2')}>做题</button>
+                        <button type="button" className="btn btn-primary" onClick={()=>this.exam_goto('3')}>查看结果</button>
                     </div>
                 </div>
             )
         },this);
     }
-    lookView(data){
-        alert("lookView")
-    }
-    doExam(data){
-        alert("doExam")
+    question_goto(data){
+        alert("question 试题")
     }
     quizAgain(data,index){
         console.log(this.state.quiz_again_status,index)
         let domqiuz = "quizAgin"+index;
+        //判断本套试题有没有测试完成过，只有一测完成了才能二测
         if(data.practice_status == "1"){
             this.setState({
                 quiz_again_status : !this.state.quiz_again_status,
@@ -113,14 +105,19 @@ class QuestionAll extends Component{
             alert("你还没有做完本套试题一测，请先做完一测！")
         }
     }
-    lookAgainView(){
-        alert("二测lookView")
-    }
-    doAgainExam(param){
+    expand_goto(param){
         let url = 'question';
         console.log(url)
-        this.props.actions.push(`/home/math/questions/${url}`);
-        //this.props.actions.push('home/math');
+        if(param){
+            this.props.actions.push(`/home/math/questions/${url}`);
+        }
+    }
+    exam_goto(param){
+        let url = 'exam';
+        console.log(url)
+        if(param){
+            this.props.actions.push(`/home/math/exams/${url}`);
+        }
     }
     render(){
         const items = this.state.itemData;

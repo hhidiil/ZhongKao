@@ -77,17 +77,25 @@
 }
 .examAll-item{
     position: relative;
+    display: flex;
+    height: 75px;
+    line-height: 75px;
     border-radius: 8px;
     border: 1px solid darkgray;
     margin-bottom: 5px;
     background-color: lightyellow;
 }
-.examAll-item1{
+.examAll-item .title{
+   width: 60%;
+}
+.examAll-item .btnContainer{
     position: relative;
-    display: flex;
-    height: 75px;
-    line-height: 75px;
-    border: 1px solid darkgray;
+    right: 10px;
+    width: 40%;
+    text-align: right;
+}
+.examAll-item .btnContainer button{
+    margin: 0 2px;
 }
 
 .transtionBefore{
@@ -99,7 +107,4 @@
 .transtionAfter{
     height: 75px;
     background-color: bisque;
-}
-.neibu{
-    margin-top: 3%;
 }

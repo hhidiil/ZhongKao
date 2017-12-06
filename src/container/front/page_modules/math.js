@@ -11,8 +11,6 @@ import './style.css'
 class Math extends Component{
     constructor(props) {
         super(props)
-        this.state = {
-        }
     }
     goPage(data,event){
         this.props.actions.push(`/home/math/${data}`)

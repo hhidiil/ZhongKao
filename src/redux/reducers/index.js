@@ -1,5 +1,7 @@
 /**
- * reducers入口
+ * reducers入口,组合reducer.
  * Created by gaoju on 2017/11/15.
  */
-//export { product } from './product'
+
+export { currentPage } from './page'
+export {basicInfo} from './user'

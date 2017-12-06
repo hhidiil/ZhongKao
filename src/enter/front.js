@@ -4,14 +4,14 @@
  */
 import React from 'react'
 import { render } from 'react-dom'
-
-// router
 import { Router, hashHistory } from 'react-router'
 import routes from '../router/front'
 // redux
 import { Provider } from 'react-redux'
 import { syncHistoryWithStore } from 'react-router-redux'
 import configureStore from '../redux/configureStore'
+
+
 const store = configureStore(hashHistory)
 const history = syncHistoryWithStore(hashHistory, store)
 

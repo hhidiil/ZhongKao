@@ -6,14 +6,14 @@
 import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
-import * as reducers from './reducers'
+import * as rootReducer from './reducers';
 import { routerReducer, routerMiddleware } from 'react-router-redux'
 import { pendingTasksReducer } from 'react-redux-spinner'
 
 export default function configureStore(history, initialState) {
 
     const reducer = combineReducers({
-        ...reducers,
+        ...rootReducer,
         routing: routerReducer,
         pendingTasks: pendingTasksReducer,
     })
@@ -26,7 +26,7 @@ export default function configureStore(history, initialState) {
         compose(
             applyMiddleware(
                 thunkMiddleware,
-                //loggerMiddleware,
+                loggerMiddleware,
                 routerMiddleware(history)
             )
         )

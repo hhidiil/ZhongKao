@@ -6,7 +6,7 @@ import React,{Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getQuestionList} from '../../../../redux/actions/user'
+import {getQuestionList} from '../../../../redux/actions/math'
 import './question_style.css'
 import { Pagination } from 'antd';
 
@@ -21,8 +21,8 @@ class Question extends Component{
             flag:false,
             questionNum:0,//当前题号
             questions:[],
-            analysisFlag:false,//试题分析显示标志
             questionParams:{},//具体某道题所有数据,默认第一道题
+            analysisFlag:false,//试题分析显示标志
             analysisQuestions:{}//具体某道题的分析
         }
     }
@@ -49,60 +49,69 @@ class Question extends Component{
     }
     requestQuestion(data,type){
         let dataitem = data;
-        let content_json = "";
-        let content = dataitem.Content[0];
+        let content_json = [];//取数据的参数
+
+        let content = dataitem.Content;
         console.log("content_json type---->"+type)
         switch (type){
-            case 'Content' : content_json = dataitem.Content[0]; break;
-            case 'Objective' :  content_json = dataitem.Objective[0]; break;
-            case 'Analysis' :   content_json = dataitem.Analysis[0]; break;
-            case 'Explain' :    content_json = dataitem.Explain[0]; break;
+            case 'Content' : content_json = dataitem.Content; break;
+            case 'Objective' :  content_json = dataitem.Objective; break;
+            case 'Analysis' :   content_json = dataitem.Analysis; break;
+            case 'Explain' :    content_json = dataitem.Explain; break;
             case 'Exercise1' :  content_json = dataitem.Exercise1; break;
             case 'Exercise2':   content_json = dataitem.Exercise2; break;
-            default:    content_json = dataitem.Content[0]; break;
+            default:    content_json = dataitem.Content; break;
         }
         console.log(content_json,content_json.length);
-        if(type == "Analysis"){
+        //判断每一部分题的长度，即：是否有多个题
+        for(let i=0;i<content_json.length;i++){
+            let json = content_json[i];
+            //var return_content=[];//返回的数据
             this.props.actions.getQuestionList({
                 body:{
-                    param:"Question/" + content + ".json"
+                    param:"Question/" + json + ".json"
                 },
                 success:(data)=>{
-                    console.log("requestQuestion success-->:"+data);
-                    this.setState({
-                        questions:JSON.parse(data),
-                    })
+                   return JSON.parse(data);
+                    //this.setState({
+                    //    questions:JSON.parse(data),
+                    //    flag:true,
+                    //    analysisFlag:false
+                    //})
                 },
                 error:(mes)=>{
                     console.error('数据接收发生错误');
                 }
             })
+            console.log(return_content)
         }
-        this.props.actions.getQuestionList({
-            body:{
-                param:"Question/" + content_json + ".json"
-            },
-            success:(data)=>{
-                console.log("requestQuestion success-->:"+data);
-                if(type == "Analysis"){
-                    this.setState({
-                        analysisQuestions:JSON.parse(data),
-                        flag:true,
-                        analysisFlag:true
-                    })
-                }else{
-                    this.setState({
-                        questions:JSON.parse(data),
-                        flag:true,
-                        analysisFlag:false
-                    })
-                }
+        //console.log(this.state.questions)
 
-            },
-            error:(mes)=>{
-                console.error('数据接收发生错误');
-            }
-        })
+        //this.props.actions.getQuestionList({
+        //    body:{
+        //        param:"Question/" + content_json + ".json"
+        //    },
+        //    success:(data)=>{
+        //        console.log("requestQuestion success-->:"+data);
+        //        if(type == "Analysis"){
+        //            this.setState({
+        //                analysisQuestions:JSON.parse(data),
+        //                flag:true,
+        //                analysisFlag:true
+        //            })
+        //        }else{
+        //            this.setState({
+        //                questions:JSON.parse(data),
+        //                flag:true,
+        //                analysisFlag:false
+        //            })
+        //        }
+        //
+        //    },
+        //    error:(mes)=>{
+        //        console.error('数据接收发生错误');
+        //    }
+        //})
     }
     _contentQtxt(data){
         return (
@@ -124,7 +133,6 @@ class Question extends Component{
                     <li><span>考点：</span><span dangerouslySetInnerHTML={{__html:data.knowledge}}></span></li>
                 </ul>
             </div>
-
         )
     }
     _analysisQtxt(data){
@@ -158,7 +166,7 @@ class Question extends Component{
         const dataAll = this.state.dataAll;
         const questions = this.state.questions;
         const analysisQuestions = this.state.analysisQuestions;
-         const params = this.state.questionParams;
+        const params = this.state.questionParams;
         return(
             <div className="mask">
                 <div className="math-question-content">

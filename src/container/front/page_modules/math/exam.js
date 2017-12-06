@@ -6,7 +6,7 @@ import React,{Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getExamList} from '../../../../redux/actions/user'
+import {getExamList} from '../../../../redux/actions/math'
 import './question_style.css'
 
 class Exam extends Component{

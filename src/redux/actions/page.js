@@ -3,46 +3,18 @@
  */
 
 import * as TYPES from '../types';
-import * as CONFIG from '../../config';
 import { request } from './request';
 import { bodyUrlencoded } from '../../method_public/public'
 
-export function addPage(opt) {
+//首页展示列表
+export function getHomeShowList(opt) {
     return (dispatch) => {
-        const route = `/api/page/add`;
-        request(route, {}, dispatch, opt.success, opt.error, { method: 'POST', headers: {"Content-Type": "application/x-www-form-urlencoded"}, body: bodyUrlencoded(opt.body) })
-    }
-}
-
-export function auth(opt) {
-    return (dispatch) => {
-        const route = `/api/page/auth`;
-        request(route, {}, dispatch, opt.success, opt.error, { method: 'POST', headers: {"Content-Type": "application/x-www-form-urlencoded"}, body: bodyUrlencoded(opt.body) })
-    }
-}
-
-export function getPageNames(opt) {
-    return (dispatch) => {
-        const route = '/api/page/name';
+        const route = '../src/data/home.json';//本地数据
         const success = (data) => {
-            dispatch({ type: TYPES.PAGE_UPDATE_NAMES, result: {items: data} })
+            dispatch({ type: TYPES.HOMESHOW_LIST_UPDATA, result: {items: data} })
             opt.success && opt.success(data)
         }
-        request(route, {}, dispatch, success, opt.error)
-    }
-}
-
-export function updatePageInfos(opt) {
-    return (dispatch) => {
-        const route = '/api/page/info';
-        request(route, {}, dispatch, opt.success, opt.error, { method: 'POST', headers: {"Content-Type": "application/x-www-form-urlencoded"}, body: bodyUrlencoded(opt.body) })
-    }
-}
-
-export function deletePageItem(opt) {
-    return (dispatch) => {
-        const route = `/api/page/del`;
-        request(route, {}, dispatch, opt.success, opt.error, { method: 'POST', headers: {"Content-Type": "application/x-www-form-urlencoded"}, body: bodyUrlencoded(opt.body) })
+        request(route,{},dispatch,success, opt.error)
     }
 }
 

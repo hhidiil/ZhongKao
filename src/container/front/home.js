@@ -6,12 +6,11 @@ import './style.css'
 import { Menu, Icon } from 'antd'
 // redux
 import { bindActionCreators } from 'redux'
+import PureRenderMixin from '../../method_public/pure-render'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { getBasic } from '../../redux/actions/basic'
-import { getEnglish } from '../../redux/actions/english'
-import { getMath } from '../../redux/actions/math'
-
+import {updateCurrentPage } from '../../redux/actions/page'
+import {getBasicInfo } from '../../redux/actions/user'
 
 const SubMenu = Menu.SubMenu;
 class Home extends Component {
@@ -81,8 +80,8 @@ class Home extends Component {
                             mode="inline"
                         >
                             <SubMenu key="basic" title={<span><Icon type="mail" /><span>我的栏目</span></span>}>
-                                <Menu.Item key="1">基本信息</Menu.Item>
-                                <Menu.Item key="2">我的收藏</Menu.Item>
+                                <Menu.Item key="basicInfo">基本信息</Menu.Item>
+                                <Menu.Item key="myCollection">我的收藏</Menu.Item>
                             </SubMenu>
                             <Menu.Item key="math"><Icon type="mail" />数学栏目</Menu.Item>
                         </Menu>
@@ -108,7 +107,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getBasic,getMath,getEnglish}, dispatch) }
+    return { actions: bindActionCreators({push,getBasicInfo}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

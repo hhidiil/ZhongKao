@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import {login, changePassword } from '../../redux/actions/user'
+import {updateCurrentPage} from '../../redux/actions/page'
 import { Form, Icon, Input, Button, Checkbox, Modal} from 'antd'
 import './style.css'
 
@@ -19,7 +20,7 @@ class LoginForm extends Component {
         this.state={
             checkPass:true,
             modalVisible: false,
-            title:props.title,
+            title:props.title || "登录"
         }
     }
     setModalVisible(modalVisible) {
@@ -37,6 +38,14 @@ class LoginForm extends Component {
                     },
                     success: (data) => {
                         console.log("login success-->:"+JSON.parse(data))
+                        //赋值。给state赋值，可以看做为this.setState()
+                        this.props.actions.updateCurrentPage({
+                            data: {
+                                id: data.page_id,
+                                name: data.page_name,
+                                code: data.page_code,
+                            }
+                        });
                         //真实数据的时候可以去掉此判断，判断已在后台执行
                         let data1 = JSON.parse(data);
                         if(values.userName == data1.UserName){
@@ -81,7 +90,7 @@ class LoginForm extends Component {
             <div>
                 <a type="primary" onClick={() => this.setModalVisible(true)}>{this.state.title}</a>
                 <Modal
-                    title="Login"
+                    title="登录"
                     footer=""
                     maskClosable={false}
                     wrapClassName="vertical-center-modal"
@@ -133,7 +142,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ push, login, changePassword }, dispatch)
+        actions: bindActionCreators({ push, login, changePassword, updateCurrentPage}, dispatch)
     }
 }
 

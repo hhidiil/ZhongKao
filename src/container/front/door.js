@@ -8,7 +8,7 @@ import './style.css'
 import Login from './login'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { getHomeShowList } from '../../redux/actions/user'
+import { getHomeShowList} from '../../redux/actions/page'
 
 class Door extends Component {
     constructor(props) {
@@ -26,12 +26,7 @@ class Door extends Component {
                 this.setState({showList : JSON.parse(data)})
             },
             error: (message) => {
-                this.props.form.setFields({
-                    password: {
-                        errors: [new Error(message || "数据错误")]
-                    }
-                });
-
+                console.error(message)
             }
         })
     };
@@ -40,7 +35,8 @@ class Door extends Component {
             return (
                 <div key={index} className="showListAll">
                     <div className="showlist"><img src={item.url_img} /></div>
-                    <div>我是谁</div>
+                    <div>{item.schoolName}</div>
+                    <p>{item.message}</p>
                 </div>
             )
         },this)
@@ -53,11 +49,10 @@ class Door extends Component {
                 <Menu.Item key="0">
                     <Login title="登录"></Login>
                 </Menu.Item>
+                <Menu.Divider />
                 <Menu.Item key="1">
                     <Link to="/register">注册</Link>
                 </Menu.Item>
-                <Menu.Divider />
-                <Menu.Item key="3">退出</Menu.Item>
             </Menu>
         );
         return (

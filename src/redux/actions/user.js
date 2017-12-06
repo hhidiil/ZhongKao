@@ -5,23 +5,38 @@
 import * as TYPES from '../types';
 import * as CONFIG from '../../config';
 import { request } from './request';
-import { bodyUrlencoded } from '../../method_public/public'
-import fetch from 'isomorphic-fetch'
+import { bodyUrlencoded,requestData } from '../../method_public/public'
 
-export function login(opt) {
-    //return (dispatch) => {
-    //    const route = '/api/user/token';//服务端数据
-    //    request(route, {}, dispatch, opt.success, opt.error,
-    //        { method: 'POST',
-    //            headers: {"Content-Type": "application/x-www-form-urlencoded"},
-    //            body: bodyUrlencoded(opt.body) })
-    //}
+//获取数据的方式先 全部使用 GET。用真实数据时使用POST方式----<<------看这里!!!------------
+export function auth(opt) {
     return (dispatch) => {
-        const route = '../src/data/userInfo.json';//本地数据
-        requestData(route,opt.success, opt.error)
+        const route = `/api/page/auth`;
+        request(route, {}, dispatch, opt.success, opt.error, { method: 'POST', headers: {"Content-Type": "application/x-www-form-urlencoded"}, body: bodyUrlencoded(opt.body) })
     }
 }
+export function login(opt) {
+    return (dispatch) => {
+        const route = '/api/user/token';//服务端数据
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
+    }
+    //return (dispatch) => {
+    //    const route = '../src/data/userInfo.json';//本地数据
+    //    requestData(route,opt.success, opt.error)
+    //}
+}
 export function changePassword(opt) {
+    return (dispatch) => {
+        const route = '/api/user/password';
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
+    }
+}
+export function forgetPassword(opt) {
     return (dispatch) => {
         const route = '/api/user/password';
         request(route, {}, dispatch, opt.success, opt.error,
@@ -39,49 +54,13 @@ export function register(opt) {
                 body: bodyUrlencoded(opt.body) })
     }
 }
-//数据获取方法目前先写在这里，在后面再把用户和页面数据分开写
-export function getHomeShowList(opt) {
+export function getBasicInfo(opt) {
     return (dispatch) => {
-        const route = '../src/data/home.json';//本地数据
-        requestData(route,opt.success, opt.error)
+        const route = '/api/carousel';
+        const success = (data) => {
+            dispatch({ type: TYPES.BASICINFO_UPDATA, result: {items: data} })
+            opt.success && opt.success(data)
+        }
+        request(route, opt.params || {}, dispatch, success, opt.error)
     }
-}
-//获取所有练习试题
-export function getAllQuestionsList(opt) {
-    return (dispatch) => {
-        const route = '../src/data/questions.json';//本地数据
-        requestData(route,opt.success, opt.error)
-    }
-}
-//获取某套练习试题
-export function getQuestionList(opt) {getExamList
-    return (dispatch) => {
-        const route = '../src/data/ExamsData/JSON/'+opt.body.param;//本地数据
-        requestData(route,opt.success, opt.error)
-    }
-}
-//获取所有模考试题
-export function getAllExamList(opt) {
-    return (dispatch) => {
-        const route = '../src/data/exam.json';//本地数据
-        requestData(route,opt.success, opt.error)
-    }
-}
-//获取某套模考试题
-export function getExamList(opt) {
-    return (dispatch) => {
-        const route = '../src/data/home.json';//本地数据
-        requestData(route,opt.success, opt.error)
-    }
-}
-function requestData(url,success=null, error=null){
-    console.log("url:-->"+url)
-    fetch(url).then(function (res) {
-                return res.json()
-             }).then(function (json) {
-                success && success(JSON.stringify(json))
-            }).catch((err) => {
-                console.warn(err)
-                error(err)
-            });
 }
