@@ -10,7 +10,7 @@ import PureRenderMixin from '../../method_public/pure-render'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import {updateCurrentPage } from '../../redux/actions/page'
-import {getBasicInfo } from '../../redux/actions/user'
+import {getUserBasicInfo } from '../../redux/actions/user'
 
 const SubMenu = Menu.SubMenu;
 class Home extends Component {
@@ -38,6 +38,11 @@ class Home extends Component {
         let screenWeight = document.documentElement.clientWidth;
         console.log(screenWeight,screenHeight)
         document.getElementById("section").style.height = (screenHeight-80-40)+'px';
+        this.props.actions.getUserBasicInfo({
+            body:{
+
+            }
+        })
 
     };
     handleClick = (e) => {
@@ -99,15 +104,12 @@ class Home extends Component {
 }
 function mapStateToProps(state, ownProps) {
     return {
-        //currentPage: state.currentPage,
-        //basic: state.basic,
-        //english: state.english,
-        //math:state.math
+        basicInfo: state.basicInfo,
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getBasicInfo}, dispatch) }
+    return { actions: bindActionCreators({push,getUserBasicInfo}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

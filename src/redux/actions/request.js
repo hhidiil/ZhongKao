@@ -23,22 +23,29 @@ export function request(route, params, dispatch, success=null, error=null, { met
     console.log(`[${method}]:${url}`)
     fetch(url, data)
         .then((response) => {
+            console.log('res---------->>1')
              dispatch({ type: TYPES.REQUEST_DONE, [ pendingTask ]: end})
-            if (response.status === 200) {
-                return response.json()
-            } else {
-                return { code: response.status }
-            }
+            //console.log('response---------->>')
+            //console.log(response)
+            //if (response.status === 200) {
+            //    return response.json()
+            //} else {
+            //    return { code: response.status }
+            //}
+            return response.json()
         })
         .then((res) => {
-            if (res.code === 200) {
-                 //if (method !== 'GET') dispatch({ type: TYPES.REQUEST_SUCCESS })
-                dispatch({ type: TYPES.REQUEST_SUCCESS })
-                success && success(res.data)
-            } else {
-                dispatch({ type: TYPES.REQUEST_ERROR, res })
-                error && error(res.message)
-            }
+            console.log('res---------->>2')
+            console.log(res)
+            //if (res.code === 200) {
+            //    if (method !== 'GET') dispatch({ type: TYPES.REQUEST_SUCCESS })
+            //    success && success(res.data)
+            //} else {
+            //    dispatch({ type: TYPES.REQUEST_ERROR, res })
+            //    error && error(res.message)
+            //}
+            dispatch({ type: TYPES.REQUEST_SUCCESS })
+            success && success(res)
         })
         .catch((err) => {
             console.warn(err)

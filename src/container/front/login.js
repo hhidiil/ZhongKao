@@ -7,7 +7,7 @@ import { Link } from 'react-router'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import {login, changePassword } from '../../redux/actions/user'
+import {login } from '../../redux/actions/user'
 import {updateCurrentPage} from '../../redux/actions/page'
 import { Form, Icon, Input, Button, Checkbox, Modal} from 'antd'
 import './style.css'
@@ -18,7 +18,6 @@ class LoginForm extends Component {
         super(props);
         const { getFieldDecorator, getFieldsError, getFieldError} = this.props.form;
         this.state={
-            checkPass:true,
             modalVisible: false,
             title:props.title || "登录"
         }
@@ -31,42 +30,42 @@ class LoginForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                console.log('this.props.actions.login: ');
                 this.props.actions.login({
                     body: {
                         phone: values.userName,
                         password: values.password
                     },
                     success: (data) => {
-                        console.log("login success-->:"+JSON.parse(data))
-                        //赋值。给state赋值，可以看做为this.setState()
+                        console.log("login success-->:"+data)
+                        console.log(data)
                         this.props.actions.updateCurrentPage({
                             data: {
-                                id: data.page_id,
-                                name: data.page_name,
-                                code: data.page_code,
+                                id: data[0].id,
+                                userName: data[0].name
                             }
-                        });
+                        })
                         //真实数据的时候可以去掉此判断，判断已在后台执行
                         let data1 = JSON.parse(data);
-                        if(values.userName == data1.UserName){
-                            if(values.password == data1.Password){
-                                sessionStorage.setItem('token', 'idiil')
-                                sessionStorage.setItem('username', values.userName)
-                                this.props.actions.push('home')
-                            }else{
-                                this.props.form.setFields({
-                                    password: {
-                                        errors: [new Error("密码错误！")]
-                                    }
-                                });
-                            }
-                        }else{
-                            this.props.form.setFields({
-                                userName: {
-                                    errors: [new Error("用户不存在！")]
-                                }
-                            });
-                        }
+                        //if(values.userName == data1.UserName){
+                        //    if(values.password == data1.Password){
+                        //        sessionStorage.setItem('token', 'idiil')
+                        //        sessionStorage.setItem('username', values.userName)
+                        //        this.props.actions.push('home')
+                        //    }else{
+                        //        this.props.form.setFields({
+                        //            password: {
+                        //                errors: [new Error("密码错误！")]
+                        //            }
+                        //        });
+                        //    }
+                        //}else{
+                        //    this.props.form.setFields({
+                        //        userName: {
+                        //            errors: [new Error("用户不存在！")]
+                        //        }
+                        //    });
+                        //}
                     },
                     error: (message) => {
                         this.props.form.setFields({
@@ -139,10 +138,9 @@ const Login = Form.create()(LoginForm);
 function mapStateToProps(state) {
     return {}
 }
-
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ push, login, changePassword, updateCurrentPage}, dispatch)
+        actions: bindActionCreators({ push, login, updateCurrentPage}, dispatch)
     }
 }
 

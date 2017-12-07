@@ -2,6 +2,7 @@
  * 优化渲染，用immutable来做深度比较state有没有发生变化，从而判断是否render
  * Created by gaoju on 2017/12/6.
  */
+import React from 'react'
 import Immutable from 'immutable'
 
 export default {

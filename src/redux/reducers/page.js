@@ -14,3 +14,11 @@ export const currentPage = createReducer(Immutable.fromJS({preload: false}), {
         return state.clear().set('preload', false)
     },
 })
+export const homeShowList = createReducer(Immutable.fromJS({preload: false}), {
+    [TYPES.HOMESHOW_LIST_UPDATA]: (state, action) => {
+        return state.set('preload', true).merge(Immutable.fromJS(action.result))
+    },
+    [TYPES.HOMESHOW_LIST_CLEAN]: (state, action) => {
+    return state.clear().set('preload', false)
+    }
+})

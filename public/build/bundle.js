@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1da29fff52c9b95899d7"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "58a3997f037532776ea8"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -20522,7 +20522,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".home{\r\n    overflow-x: hidden;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n.header{\r\n    position: fixed;\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #49516F;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.box-align-center {\r\n    align-items: center;\r\n}\r\n.justify-center {\r\n    justify-content: center;\r\n}\r\n.flex-box{\r\n    display: flex;\r\n    background-position: center center;\r\n    background-size: cover;\r\n    background-repeat: no-repeat;\r\n}\r\n.width-max-xxlarge {\r\n    max-width: 1600px;\r\n}\r\n.width-min-xxlarge {\r\n    min-width: 450px;\r\n}\r\n.color-white{\r\n    color: #ffffff !important;\r\n}\r\n.position-relative{\r\n    position: relative;\r\n}\r\n.full-width{\r\n    width: 100%;\r\n}\r\n.logolay{\r\n    position: relative;\r\n    width: 120px;\r\n    float: left;\r\n    height: auto;\r\n}\r\n.logolay .logo{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/uu14.png\") no-repeat center center;\r\n    width: 120px;\r\n    background-size: cover;\r\n}\r\n.header-check-btn{\r\n    position: absolute;\r\n    right: 10px;\r\n    bottom: 15px;\r\n}\r\n.mainWapper{\r\n    position: relative;\r\n    top: 80px;\r\n    background: transparent;\r\n    width: auto;\r\n    margin: 0;\r\n    border-radius: 0;\r\n    padding: 0;\r\n    min-height: 500px;\r\n}\r\n.banner-wapper1{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/marquee.jpg\") center center / cover no-repeat;\r\n    width: 100%;\r\n}\r\n.banner-wapper1 .content{\r\n    position: absolute;\r\n    padding: 50px;\r\n    height: 50%;\r\n    width: 50%;\r\n    top: 25%;\r\n    right: 0;\r\n    max-width: 600px;\r\n}\r\n.banner-wapper2{\r\n    height: 300px;\r\n    width: 100%;\r\n}\r\n.banner-wapper2 .content{\r\n    align-items: center;\r\n    text-align: center;\r\n    max-width: 960px;\r\n    padding: 30px;\r\n    box-sizing: inherit;\r\n    font-size: 1em;\r\n    line-height: 1.5;\r\n}\r\n.banner-wapper3{\r\n    position: absolute;\r\n    min-height: 500px;\r\n    width: 100%;\r\n    background-color: #f5f5f5\r\n}\r\n.page{\r\n    min-height: 500px;\r\n    height: 80vh;\r\n}\r\n#header-home{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #64B5F6;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.home .menu-css{\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n    margin: 0px 10px;\r\n    background-color: honeydew;\r\n}\r\n.home .section-all{\r\n    margin: 20px;\r\n}\r\n.home .section-left{\r\n    position: relative;\r\n    overflow: auto;\r\n    background-color: white;\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n}\r\n.margin-auto{\r\n    margin: 0 auto;\r\n}\r\n.login-form {\r\n    max-width: 350px;\r\n}\r\n.login-form-forgot {\r\n    float: right;\r\n}\r\n.login-form-button {\r\n    width: 100%;\r\n}\r\n.register header{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: white;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    box-shadow: 0 0 5px 0 #d9d9d9;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.register .header-left-font{\r\n    font-size: 16px;\r\n    color: #333;\r\n}\r\n.header-left-font span{\r\n    color: #999;\r\n}\r\n.register section{\r\n    margin: 50px;\r\n    min-height: 500px;\r\n}\r\n.register footer{\r\n    position: fixed;\r\n    width: 100%;\r\n    bottom: 0;\r\n    min-height: 100px;\r\n    padding: 20px;\r\n}\r\n.register footer .content{\r\n    display: flex;\r\n    font-size: 12px;\r\n    text-align: center;\r\n    border-top: solid 1px #e6e6e6;\r\n    color: #999;\r\n}\r\n.content .content-left{\r\n    width: 50%;\r\n    margin-top: 40px;\r\n}\r\n.content .content-right{\r\n    width: 50%;\r\n    margin-top: 5px;\r\n}\r\n.showListAll{\r\n    position: absolute;\r\n    align-items: center;\r\n    margin: 20px;\r\n    padding: 20px;\r\n    background-color: white;\r\n}\r\n.showListAll:nth-child(1){\r\n    left: 20%;\r\n}\r\n.showListAll:nth-child(2){\r\n    left: 60%;\r\n}\r\n.showListAll:nth-child(3){\r\n    top: 50%;\r\n    left: 20%;\r\n}\r\n.showListAll:nth-child(4){\r\n    top: 50%;\r\n    left: 60%;\r\n}\r\n.showlist{\r\n    position: relative;\r\n    text-align: center;\r\n    background-color: white;\r\n    width: 100%;\r\n}\r\n.showlist img{\r\n    width: 160px;\r\n    height: 180px;\r\n}", ""]);
+exports.push([module.i, ".home{\r\n    overflow-x: hidden;\r\n    margin: 0;\r\n    padding: 0;\r\n}\r\n.header{\r\n    position: fixed;\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #49516F;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.box-align-center {\r\n    align-items: center;\r\n}\r\n.justify-center {\r\n    justify-content: center;\r\n}\r\n.flex-box{\r\n    display: flex;\r\n    background-position: center center;\r\n    background-size: cover;\r\n    background-repeat: no-repeat;\r\n}\r\n.width-max-xxlarge {\r\n    max-width: 1600px;\r\n}\r\n.width-min-xxlarge {\r\n    min-width: 450px;\r\n}\r\n.color-white{\r\n    color: #ffffff !important;\r\n}\r\n.position-relative{\r\n    position: relative;\r\n}\r\n.full-width{\r\n    width: 100%;\r\n}\r\n.logolay{\r\n    position: relative;\r\n    width: 120px;\r\n    float: left;\r\n    height: auto;\r\n}\r\n.logolay .logo{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/uu14.png\") no-repeat center center;\r\n    width: 120px;\r\n    background-size: cover;\r\n}\r\n.header-check-btn{\r\n    position: absolute;\r\n    right: 10px;\r\n    bottom: 15px;\r\n}\r\n.mainWapper{\r\n    position: relative;\r\n    top: 80px;\r\n    background: transparent;\r\n    width: auto;\r\n    margin: 0;\r\n    border-radius: 0;\r\n    padding: 0;\r\n    min-height: 500px;\r\n}\r\n.banner-wapper1{\r\n    position: relative;\r\n    overflow: hidden;\r\n    background: url(\"/public/images/marquee.jpg\") center center / cover no-repeat;\r\n    width: 100%;\r\n}\r\n.banner-wapper1 .content{\r\n    position: absolute;\r\n    padding: 50px;\r\n    height: 50%;\r\n    width: 50%;\r\n    top: 25%;\r\n    right: 0;\r\n    max-width: 600px;\r\n}\r\n.banner-wapper2{\r\n    height: 300px;\r\n    width: 100%;\r\n}\r\n.banner-wapper2 .content{\r\n    align-items: center;\r\n    text-align: center;\r\n    max-width: 960px;\r\n    padding: 30px;\r\n    box-sizing: inherit;\r\n    font-size: 1em;\r\n    line-height: 1.5;\r\n}\r\n.banner-wapper3{\r\n    position: absolute;\r\n    min-height: 400px;\r\n    padding: 20px;\r\n    width: 100%;\r\n    background-color: #f5f5f5\r\n}\r\n.page{\r\n    min-height: 500px;\r\n    height: 80vh;\r\n}\r\n#header-home{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: #64B5F6;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.home .menu-css{\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n    margin: 0px 10px;\r\n    background-color: honeydew;\r\n}\r\n.home .section-all{\r\n    margin: 20px;\r\n}\r\n.home .section-left{\r\n    position: relative;\r\n    overflow: auto;\r\n    background-color: white;\r\n    box-shadow: 0 2px 4px 0 #d9d9d9;\r\n}\r\n.margin-auto{\r\n    margin: 0 auto;\r\n}\r\n.login-form {\r\n    max-width: 350px;\r\n}\r\n.login-form-forgot {\r\n    float: right;\r\n}\r\n.login-form-button {\r\n    width: 100%;\r\n}\r\n.register header{\r\n    height: 80px;\r\n    min-height: 72px;\r\n    padding: 0 48px;\r\n    margin: 0px;\r\n    width: 100%;\r\n    z-index: 999;\r\n    background: white;\r\n    color: #fff;\r\n    border-bottom: 1px solid transparent;\r\n    box-shadow: 0 0 5px 0 #d9d9d9;\r\n    transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);\r\n}\r\n.register .header-left-font{\r\n    font-size: 16px;\r\n    color: #333;\r\n}\r\n.header-left-font span{\r\n    color: #999;\r\n}\r\n.register section{\r\n    margin: 50px;\r\n    min-height: 500px;\r\n}\r\n.register footer{\r\n    position: fixed;\r\n    width: 100%;\r\n    bottom: 0;\r\n    min-height: 100px;\r\n    padding: 20px;\r\n}\r\n.register footer .content{\r\n    display: flex;\r\n    font-size: 12px;\r\n    text-align: center;\r\n    border-top: solid 1px #e6e6e6;\r\n    color: #999;\r\n}\r\n.content .content-left{\r\n    width: 50%;\r\n    margin-top: 40px;\r\n}\r\n.content .content-right{\r\n    width: 50%;\r\n    margin-top: 5px;\r\n}\r\n.showListAll{\r\n    position: absolute;\r\n    align-items: center;\r\n    margin: 20px;\r\n    padding: 20px;\r\n    background-color: white;\r\n}\r\n.showListAll:nth-child(1){\r\n    left: 20%;\r\n}\r\n.showListAll:nth-child(2){\r\n    left: 60%;\r\n}\r\n.showListAll:nth-child(3){\r\n    top: 50%;\r\n    left: 20%;\r\n}\r\n.showListAll:nth-child(4){\r\n    top: 50%;\r\n    left: 60%;\r\n}\r\n.showlist{\r\n    position: relative;\r\n    text-align: center;\r\n    background-color: white;\r\n    width: 100%;\r\n}\r\n.showlist img{\r\n    width: 160px;\r\n    height: 180px;\r\n}", ""]);
 
 // exports
 
@@ -108630,6 +108630,10 @@ var _redux = __webpack_require__("./node_modules/redux/es/index.js");
 
 var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
 
+var _pureRender = __webpack_require__("./src/method_public/pure-render.js");
+
+var _pureRender2 = _interopRequireDefault(_pureRender);
+
 var _page = __webpack_require__("./src/redux/actions/page.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -108675,61 +108679,54 @@ var Door = _wrapComponent('Door')(function (_Component) {
     function Door(props) {
         _classCallCheck(this, Door);
 
-        var _this = _possibleConstructorReturn(this, (Door.__proto__ || Object.getPrototypeOf(Door)).call(this, props));
-
-        _this.state = {
-            showList: []
-        };
-        return _this;
+        return _possibleConstructorReturn(this, (Door.__proto__ || Object.getPrototypeOf(Door)).call(this, props));
     }
 
     _createClass(Door, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this2 = this;
-
-            console.log(this.props);
-            console.log("getQuestionsList success-->:");
-            this.props.actions.getHomeShowList({
-                success: function success(data) {
-                    console.log("getQuestionsList success-->:" + data);
-                    _this2.setState({ showList: JSON.parse(data) });
-                },
-                error: function error(message) {
-                    console.error(message);
-                }
-            });
+            this.props.actions.getHomeShowList({});
         }
     }, {
         key: '_showListItem',
         value: function _showListItem(showList) {
-            var showItem = showList.map(function (item, index) {
-                return _react3.default.createElement(
-                    'div',
-                    { key: index, className: 'showListAll' },
-                    _react3.default.createElement(
+            var pageSize = showList.get('items').size;
+            if (pageSize > 0) {
+                var showItem = showList.get('items').map(function (item, index) {
+                    return _react3.default.createElement(
                         'div',
-                        { className: 'showlist' },
-                        _react3.default.createElement('img', { src: item.url_img })
-                    ),
-                    _react3.default.createElement(
-                        'div',
-                        null,
-                        item.schoolName
-                    ),
-                    _react3.default.createElement(
-                        'p',
-                        null,
-                        item.message
-                    )
-                );
-            }, this);
-            return showItem;
+                        { key: index, className: 'col-sm-6 col-md-3' },
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'thumbnail' },
+                            _react3.default.createElement('img', { src: item.get('url_img'), alt: '...' }),
+                            _react3.default.createElement(
+                                'div',
+                                { className: 'caption' },
+                                _react3.default.createElement(
+                                    'h3',
+                                    null,
+                                    item.get('schoolName')
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    item.get('message')
+                                )
+                            )
+                        )
+                    );
+                }, this);
+                return showItem;
+            }
         }
     }, {
         key: 'render',
         value: function render() {
-            var showList = this.state.showList;
+            var homeShowList = this.props.homeShowList;
+
+            var error = _pureRender2.default.loadDetection([homeShowList]); //深度比较如果两次state没有变化，则不用render
+            if (error) return error;
             var menu = _react3.default.createElement(
                 _menu2.default,
                 null,
@@ -108794,8 +108791,8 @@ var Door = _wrapComponent('Door')(function (_Component) {
                             { className: 'content' },
                             _react3.default.createElement(
                                 'label',
-                                { style: { fontSize: "1.18rem" } },
-                                'Title'
+                                { style: { fontSize: "1.38rem" } },
+                                'IDIIL'
                             ),
                             _react3.default.createElement(
                                 'h1',
@@ -108830,7 +108827,11 @@ var Door = _wrapComponent('Door')(function (_Component) {
                     _react3.default.createElement(
                         'section',
                         { className: 'banner-wapper3' },
-                        this._showListItem(showList)
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'row' },
+                            this._showListItem(homeShowList)
+                        )
                     )
                 )
             );
@@ -108839,11 +108840,15 @@ var Door = _wrapComponent('Door')(function (_Component) {
 
     return Door;
 }(_react2.Component));
+//将redux中state的对象与组件绑定起来。一一对应map对象
 
-function mapStateToProps(state) {
-    return {};
+
+function mapStateToProps(state, ownProps) {
+    return {
+        homeShowList: state.homeShowList
+    };
 }
-
+//使用bindActionCreators绑定action
 function mapDispatchToProps(dispatch) {
     return { actions: (0, _redux.bindActionCreators)({ getHomeShowList: _page.getHomeShowList }, dispatch) };
 }
@@ -108997,6 +109002,9 @@ var Home = _wrapComponent('Home')(function (_Component) {
             var screenWeight = document.documentElement.clientWidth;
             console.log(screenWeight, screenHeight);
             document.getElementById("section").style.height = screenHeight - 80 - 40 + 'px';
+            this.props.actions.getUserBasicInfo({
+                body: {}
+            });
         }
     }, {
         key: 'exitOut',
@@ -109102,15 +109110,12 @@ var Home = _wrapComponent('Home')(function (_Component) {
 
 function mapStateToProps(state, ownProps) {
     return {
-        //currentPage: state.currentPage,
-        //basic: state.basic,
-        //english: state.english,
-        //math:state.math
+        basicInfo: state.basicInfo
     };
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, getBasicInfo: _user.getBasicInfo }, dispatch) };
+    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, getUserBasicInfo: _user.getUserBasicInfo }, dispatch) };
 }
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Home);
@@ -109252,42 +109257,42 @@ var LoginForm = _wrapComponent('LoginForm')(function (_Component) {
             _this.props.form.validateFields(function (err, values) {
                 if (!err) {
                     console.log('Received values of form: ', values);
+                    console.log('this.props.actions.login: ');
                     _this.props.actions.login({
                         body: {
                             phone: values.userName,
                             password: values.password
                         },
                         success: function success(data) {
-                            console.log("login success-->:" + JSON.parse(data));
-                            //赋值。给state赋值，可以看做为this.setState()
+                            console.log("login success-->:" + data);
+                            console.log(data);
                             _this.props.actions.updateCurrentPage({
                                 data: {
-                                    id: data.page_id,
-                                    name: data.page_name,
-                                    code: data.page_code
+                                    id: data[0].id,
+                                    userName: data[0].name
                                 }
                             });
                             //真实数据的时候可以去掉此判断，判断已在后台执行
                             var data1 = JSON.parse(data);
-                            if (values.userName == data1.UserName) {
-                                if (values.password == data1.Password) {
-                                    sessionStorage.setItem('token', 'idiil');
-                                    sessionStorage.setItem('username', values.userName);
-                                    _this.props.actions.push('home');
-                                } else {
-                                    _this.props.form.setFields({
-                                        password: {
-                                            errors: [new Error("密码错误！")]
-                                        }
-                                    });
-                                }
-                            } else {
-                                _this.props.form.setFields({
-                                    userName: {
-                                        errors: [new Error("用户不存在！")]
-                                    }
-                                });
-                            }
+                            //if(values.userName == data1.UserName){
+                            //    if(values.password == data1.Password){
+                            //        sessionStorage.setItem('token', 'idiil')
+                            //        sessionStorage.setItem('username', values.userName)
+                            //        this.props.actions.push('home')
+                            //    }else{
+                            //        this.props.form.setFields({
+                            //            password: {
+                            //                errors: [new Error("密码错误！")]
+                            //            }
+                            //        });
+                            //    }
+                            //}else{
+                            //    this.props.form.setFields({
+                            //        userName: {
+                            //            errors: [new Error("用户不存在！")]
+                            //        }
+                            //    });
+                            //}
                         },
                         error: function error(message) {
                             _this.props.form.setFields({
@@ -109307,7 +109312,6 @@ var LoginForm = _wrapComponent('LoginForm')(function (_Component) {
             getFieldError = _this$props$form.getFieldError;
 
         _this.state = {
-            checkPass: true,
             modalVisible: false,
             title: props.title || "登录"
         };
@@ -109412,10 +109416,9 @@ var Login = _form2.default.create()(LoginForm);
 function mapStateToProps(state) {
     return {};
 }
-
 function mapDispatchToProps(dispatch) {
     return {
-        actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, login: _user.login, changePassword: _user.changePassword, updateCurrentPage: _page.updateCurrentPage }, dispatch)
+        actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, login: _user.login, updateCurrentPage: _page.updateCurrentPage }, dispatch)
     };
 }
 
@@ -110017,6 +110020,10 @@ var _redux = __webpack_require__("./node_modules/redux/es/index.js");
 
 var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
 
+var _pureRender = __webpack_require__("./src/method_public/pure-render.js");
+
+var _pureRender2 = _interopRequireDefault(_pureRender);
+
 var _math = __webpack_require__("./src/redux/actions/math.js");
 
 __webpack_require__("./src/container/front/page_modules/math/style.css");
@@ -110067,7 +110074,6 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
         var _this = _possibleConstructorReturn(this, (QuestionAll.__proto__ || Object.getPrototypeOf(QuestionAll)).call(this, props));
 
         _this.state = {
-            itemData: [],
             quiz_again_status: false,
             indexNum: 0,
             showStatus: true //测试为true,模考为false
@@ -110076,163 +110082,161 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
     }
 
     _createClass(QuestionAll, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(nextProps) {
+            //if (nextProps !== this.props) {
+            //    let _start = (this.page-1)*4, _end = this.page*4;
+            //    this.setState({
+            //        dataSource: nextProps.product.get('items').slice(_start, _end)
+            //    })
+            //}
+        }
+    }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
-            var _this2 = this;
-
             //用route的参数来判断是从那个页面进来，进而取对应页面数据和显示对应页面
             console.log("this.props.params.quesParam-->" + this.props.params.quesParam);
             if (this.props.params.quesParam == "questions") {
-                this.props.actions.getAllQuestionsList({
-                    body: {},
-                    success: function success(data) {
-                        console.log("getQuestionsList success-->:" + data);
-                        //真实数据的时候可以去掉此判断，判断已在后台执行
-                        var data1 = JSON.parse(data);
-                        _this2.setState({ itemData: data1,
-                            showStatus: true
-                        });
-                    },
-                    error: function error(message) {}
-                });
+                this.props.actions.getAllQuestionsList({});
             } else if (this.props.params.quesParam == "exams") {
-                this.props.actions.getAllExamList({
-                    body: {},
-                    success: function success(data) {
-                        console.log("getAllExamList success-->:" + data);
-                        //真实数据的时候可以去掉此判断，判断已在后台执行
-                        var data1 = JSON.parse(data);
-                        _this2.setState({
-                            itemData: data1,
-                            showStatus: false
-                        });
-                    },
-                    error: function error(message) {}
-                });
+                this.props.actions.getAllExamList({});
             }
         }
     }, {
-        key: '_renderQuestionPage',
-        value: function _renderQuestionPage(items) {
-            return items.map(function (item, index) {
-                var _this3 = this;
+        key: '_renderShowExplain',
+        value: function _renderShowExplain(data, index) {
+            var _this2 = this;
 
-                return _react3.default.createElement(
+            return _react3.default.createElement(
+                'div',
+                { id: "quizAgin" + index, className: this.state.indexNum == index && this.state.quiz_again_status ? "transtionBefore transtionAfter" : "transtionBefore" },
+                _react3.default.createElement(
                     'div',
-                    { key: index, className: 'questionsAll-item' },
+                    { className: 'questionsAll-item2' },
                     _react3.default.createElement(
                         'div',
-                        { className: 'questionsAll-item1' },
+                        { className: 'title' },
                         _react3.default.createElement(
-                            'div',
-                            { className: 'title' },
-                            _react3.default.createElement(
-                                'h4',
-                                null,
-                                _react3.default.createElement(
-                                    'a',
-                                    { href: item.url },
-                                    item.title
-                                )
-                            )
-                        ),
-                        _react3.default.createElement(
-                            'div',
-                            { className: 'bttn looklook', onClick: function onClick() {
-                                    return _this3.question_goto('1');
-                                } },
-                            '\u67E5\u770B'
-                        ),
-                        _react3.default.createElement(
-                            'div',
-                            { className: 'bttn doexam', onClick: function onClick() {
-                                    return _this3.question_goto('2');
-                                } },
-                            '\u505A\u9898'
-                        ),
-                        _react3.default.createElement(
-                            'div',
-                            { className: 'bttn quiz_again', onClick: function onClick() {
-                                    return _this3.quizAgain(item, index);
-                                } },
-                            '\u4E8C\u6D4B\u5DE9\u56FA'
+                            'h4',
+                            null,
+                            data.get('title')
                         )
                     ),
                     _react3.default.createElement(
                         'div',
-                        { id: "quizAgin" + index, className: this.state.indexNum == index && this.state.quiz_again_status ? "transtionBefore transtionAfter" : "transtionBefore" },
+                        { className: 'bttn looklook', onClick: function onClick() {
+                                return _this2.expand_goto('1');
+                            } },
+                        '\u67E5\u770B'
+                    ),
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'bttn doexam', onClick: function onClick() {
+                                return _this2.expand_goto('2');
+                            } },
+                        '\u505A\u9898'
+                    )
+                )
+            );
+        }
+    }, {
+        key: '_renderQuestionPage',
+        value: function _renderQuestionPage(data) {
+            var pageSize = data.get('items').size;
+            if (pageSize > 0) {
+                return data.get('items').map(function (item, index) {
+                    var _this3 = this;
+
+                    return _react3.default.createElement(
+                        'div',
+                        { key: index, className: 'questionsAll-item' },
                         _react3.default.createElement(
                             'div',
-                            { className: 'questionsAll-item2' },
+                            { className: 'questionsAll-item1' },
                             _react3.default.createElement(
                                 'div',
                                 { className: 'title' },
                                 _react3.default.createElement(
                                     'h4',
                                     null,
-                                    item.expand_practice.title
+                                    _react3.default.createElement(
+                                        'a',
+                                        { href: item.get('url') },
+                                        item.get('title')
+                                    )
                                 )
                             ),
                             _react3.default.createElement(
                                 'div',
                                 { className: 'bttn looklook', onClick: function onClick() {
-                                        return _this3.expand_goto('1');
+                                        return _this3.question_goto('1');
                                     } },
                                 '\u67E5\u770B'
                             ),
                             _react3.default.createElement(
                                 'div',
                                 { className: 'bttn doexam', onClick: function onClick() {
-                                        return _this3.expand_goto('2');
+                                        return _this3.question_goto('2');
                                     } },
                                 '\u505A\u9898'
+                            ),
+                            _react3.default.createElement(
+                                'div',
+                                { className: 'bttn quiz_again', onClick: function onClick() {
+                                        return _this3.quizAgain(item, index);
+                                    } },
+                                '\u4E8C\u6D4B\u5DE9\u56FA'
                             )
-                        )
-                    )
-                );
-            }, this);
+                        ),
+                        this._renderShowExplain(item, index)
+                    );
+                }, this);
+            }
         }
     }, {
         key: '_renderExamPage',
-        value: function _renderExamPage(items) {
-            return items.map(function (item, index) {
-                var _this4 = this;
+        value: function _renderExamPage(data) {
+            var pageSize = data.get('items').size;
+            if (pageSize > 0) {
+                return data.get('items').map(function (item, index) {
+                    var _this4 = this;
 
-                return _react3.default.createElement(
-                    'div',
-                    { key: index, className: 'examAll-item' },
-                    _react3.default.createElement(
+                    return _react3.default.createElement(
                         'div',
-                        { className: 'title' },
-                        item.title
-                    ),
-                    _react3.default.createElement(
-                        'div',
-                        { className: 'btnContainer' },
+                        { key: index, className: 'examAll-item' },
                         _react3.default.createElement(
-                            'button',
-                            { type: 'button', className: 'btn btn-primary', onClick: function onClick() {
-                                    return _this4.exam_goto('1');
-                                } },
-                            '\u67E5\u770B'
+                            'div',
+                            { className: 'title' },
+                            item.get('title')
                         ),
                         _react3.default.createElement(
-                            'button',
-                            { type: 'button', className: 'btn btn-primary', onClick: function onClick() {
-                                    return _this4.exam_goto('2');
-                                } },
-                            '\u505A\u9898'
-                        ),
-                        _react3.default.createElement(
-                            'button',
-                            { type: 'button', className: 'btn btn-primary', onClick: function onClick() {
-                                    return _this4.exam_goto('3');
-                                } },
-                            '\u67E5\u770B\u7ED3\u679C'
+                            'div',
+                            { className: 'btnContainer' },
+                            _react3.default.createElement(
+                                'button',
+                                { type: 'button', className: 'btn btn-primary', onClick: function onClick() {
+                                        return _this4.exam_goto('1');
+                                    } },
+                                '\u67E5\u770B'
+                            ),
+                            _react3.default.createElement(
+                                'button',
+                                { type: 'button', className: 'btn btn-primary', onClick: function onClick() {
+                                        return _this4.exam_goto('2');
+                                    } },
+                                '\u505A\u9898'
+                            ),
+                            _react3.default.createElement(
+                                'button',
+                                { type: 'button', className: 'btn btn-primary', onClick: function onClick() {
+                                        return _this4.exam_goto('3');
+                                    } },
+                                '\u67E5\u770B\u7ED3\u679C'
+                            )
                         )
-                    )
-                );
-            }, this);
+                    );
+                }, this);
+            }
         }
     }, {
         key: 'question_goto',
@@ -110245,7 +110249,7 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
             console.log(this.state.quiz_again_status, index);
             var domqiuz = "quizAgin" + index;
             //判断本套试题有没有测试完成过，只有一测完成了才能二测
-            if (data.practice_status == "1") {
+            if (data.get('practice_status') == "1") {
                 this.setState({
                     quiz_again_status: !this.state.quiz_again_status,
                     indexNum: index
@@ -110275,7 +110279,12 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var items = this.state.itemData;
+            var _props = this.props,
+                AllQuestionsList = _props.AllQuestionsList,
+                AllExamList = _props.AllExamList;
+            //let error = PureRenderMixin.loadDetection([AllQuestionsList,AllExamList]);//深度比较如果两次state没有变化，则不用render
+            //if (error) return error
+
             return _react3.default.createElement(
                 'div',
                 { className: 'questionsAll' },
@@ -110291,7 +110300,7 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
                 _react3.default.createElement(
                     'section',
                     null,
-                    this.state.showStatus ? this._renderQuestionPage(items) : this._renderExamPage(items)
+                    this.state.showStatus ? this._renderQuestionPage(AllQuestionsList) : this._renderExamPage(AllExamList)
                 )
             );
         }
@@ -110301,7 +110310,10 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
 }(_react2.Component));
 
 function mapStateToProps(state) {
-    return {};
+    return {
+        AllQuestionsList: state.AllQuestionsList,
+        AllExamList: state.AllExamList
+    };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -111433,12 +111445,20 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _react = __webpack_require__("./node_modules/react/react.js");
+
+var _react2 = _interopRequireDefault(_react);
+
 var _immutable = __webpack_require__("./node_modules/immutable/dist/immutable.js");
 
 var _immutable2 = _interopRequireDefault(_immutable);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/**
+ * 优化渲染，用immutable来做深度比较state有没有发生变化，从而判断是否render
+ * Created by gaoju on 2017/12/6.
+ */
 exports.default = {
     deepCompare: function deepCompare(self, nextProps, nextState) {
         return !_immutable2.default.is(self.props, nextProps) || !_immutable2.default.is(self.state, nextState);
@@ -111453,7 +111473,7 @@ exports.default = {
             for (var _iterator = reducers[Symbol.iterator](), _step; !(_iteratorNormalCompletion = (_step = _iterator.next()).done); _iteratorNormalCompletion = true) {
                 var ren = _step.value;
 
-                if (!ren.get('preload')) return React.createElement('div', null);
+                if (!ren.get('preload')) return _react2.default.createElement('div', null);
             }
         } catch (err) {
             _didIteratorError = true;
@@ -111470,10 +111490,7 @@ exports.default = {
             }
         }
     }
-}; /**
-    * 优化渲染，用immutable来做深度比较state有没有发生变化，从而判断是否render
-    * Created by gaoju on 2017/12/6.
-    */
+};
 
 /***/ }),
 
@@ -111493,36 +111510,58 @@ exports.getExamList = getExamList;
 
 var _request = __webpack_require__("./src/redux/actions/request.js");
 
+var _types = __webpack_require__("./src/redux/types.js");
+
+var TYPES = _interopRequireWildcard(_types);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
 //获取所有练习试题
-function getAllQuestionsList(opt) {
-    return function (dispatch) {
-        var route = '../src/data/questions.json'; //本地数据
-        (0, _request.request)(route, opt.success, opt.error);
-    };
-}
-//获取某套练习试题
 /**
  * Created by gaoju on 2017/11/21.
  */
+function getAllQuestionsList(opt) {
+    return function (dispatch) {
+        var route = '../src/data/questions.json'; //本地数据
+        var success = function success(data) {
+            dispatch({ type: TYPES.ALLQUESTIONSLIST_UPDATE, result: { items: data } });
+            opt.success && opt.success(data);
+        };
+        (0, _request.request)(route, {}, dispatch, success, opt.error);
+    };
+}
+//获取某套练习试题
 function getQuestionList(opt) {
     getExamList;
     return function (dispatch) {
         var route = '../src/data/ExamsData/JSON/' + opt.body.param; //本地数据
-        (0, _request.request)(route, opt.success, opt.error);
+        var success = function success(data) {
+            dispatch({ type: TYPES.QUESTIONSLIST_UPDATE, result: { items: data } });
+            opt.success && opt.success(data);
+        };
+        (0, _request.request)(route, {}, dispatch, success, opt.error);
     };
 }
 //获取所有模考试题
 function getAllExamList(opt) {
     return function (dispatch) {
         var route = '../src/data/exam.json'; //本地数据
-        (0, _request.request)(route, opt.success, opt.error);
+        var success = function success(data) {
+            dispatch({ type: TYPES.ALLEXAMLIST_UPDATE, result: { items: data } });
+            opt.success && opt.success(data);
+        };
+        (0, _request.request)(route, {}, dispatch, success, opt.error);
     };
 }
 //获取某套模考试题
 function getExamList(opt) {
     return function (dispatch) {
         var route = '../src/data/home.json'; //本地数据
-        (0, _request.request)(route, opt.success, opt.error);
+        var success = function success(data) {
+            dispatch({ type: TYPES.EXAMLIST_UPDATE, result: { items: data } });
+            opt.success && opt.success(data);
+        };
+        (0, _request.request)(route, {}, dispatch, success, opt.error);
     };
 }
 
@@ -111540,6 +111579,7 @@ Object.defineProperty(exports, "__esModule", {
 exports.getHomeShowList = getHomeShowList;
 exports.updateCurrentPage = updateCurrentPage;
 exports.cleanCurrentPage = cleanCurrentPage;
+exports.cleanHomeShowList = cleanHomeShowList;
 
 var _types = __webpack_require__("./src/redux/types.js");
 
@@ -111574,6 +111614,11 @@ function updateCurrentPage(opt) {
 function cleanCurrentPage(opt) {
     return function (dispatch) {
         dispatch({ type: TYPES.PAGE_CLEAN_CURRENT });
+    };
+}
+function cleanHomeShowList(opt) {
+    return function (dispatch) {
+        dispatch({ type: TYPES.HOMESHOW_LIST_CLEAN });
     };
 }
 
@@ -111643,21 +111688,28 @@ function request(route, params, dispatch) {
     if (method !== 'GET') data.body = body;
     console.log('[' + method + ']:' + url);
     (0, _isomorphicFetch2.default)(url, data).then(function (response) {
+        console.log('res---------->>1');
         dispatch(_defineProperty({ type: TYPES.REQUEST_DONE }, _reactReduxSpinner.pendingTask, _reactReduxSpinner.end));
-        if (response.status === 200) {
-            return response.json();
-        } else {
-            return { code: response.status };
-        }
+        //console.log('response---------->>')
+        //console.log(response)
+        //if (response.status === 200) {
+        //    return response.json()
+        //} else {
+        //    return { code: response.status }
+        //}
+        return response.json();
     }).then(function (res) {
-        if (res.code === 200) {
-            //if (method !== 'GET') dispatch({ type: TYPES.REQUEST_SUCCESS })
-            dispatch({ type: TYPES.REQUEST_SUCCESS });
-            success && success(res.data);
-        } else {
-            dispatch({ type: TYPES.REQUEST_ERROR, res: res });
-            error && error(res.message);
-        }
+        console.log('res---------->>2');
+        console.log(res);
+        //if (res.code === 200) {
+        //    if (method !== 'GET') dispatch({ type: TYPES.REQUEST_SUCCESS })
+        //    success && success(res.data)
+        //} else {
+        //    dispatch({ type: TYPES.REQUEST_ERROR, res })
+        //    error && error(res.message)
+        //}
+        dispatch({ type: TYPES.REQUEST_SUCCESS });
+        success && success(res);
     }).catch(function (err) {
         console.warn(err);
     });
@@ -111679,11 +111731,12 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 exports.auth = auth;
+exports.allUsers = allUsers;
 exports.login = login;
 exports.changePassword = changePassword;
 exports.forgetPassword = forgetPassword;
 exports.register = register;
-exports.getBasicInfo = getBasicInfo;
+exports.getUserBasicInfo = getUserBasicInfo;
 
 var _types = __webpack_require__("./src/redux/types.js");
 
@@ -111710,17 +111763,22 @@ function auth(opt) {
         (0, _request.request)(route, {}, dispatch, opt.success, opt.error, { method: 'POST', headers: { "Content-Type": "application/x-www-form-urlencoded" }, body: (0, _public.bodyUrlencoded)(opt.body) });
     };
 }
+function allUsers(opt) {
+    return function (dispatch) {
+        var route = '/api/user'; //服务端数据
+        (0, _request.request)(route, {}, dispatch, opt.success, opt.error, { method: 'GET',
+            headers: { "Content-Type": "application/x-www-form-urlencoded" },
+            body: (0, _public.bodyUrlencoded)(opt.body) });
+    };
+}
 function login(opt) {
     return function (dispatch) {
         var route = '/api/user/token'; //服务端数据
+        //const route = '../src/data/userInfo.json';//本地数据
         (0, _request.request)(route, {}, dispatch, opt.success, opt.error, { method: 'POST',
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: (0, _public.bodyUrlencoded)(opt.body) });
     };
-    //return (dispatch) => {
-    //    const route = '../src/data/userInfo.json';//本地数据
-    //    requestData(route,opt.success, opt.error)
-    //}
 }
 function changePassword(opt) {
     return function (dispatch) {
@@ -111746,11 +111804,11 @@ function register(opt) {
             body: (0, _public.bodyUrlencoded)(opt.body) });
     };
 }
-function getBasicInfo(opt) {
+function getUserBasicInfo(opt) {
     return function (dispatch) {
         var route = '/api/carousel';
         var success = function success(data) {
-            dispatch({ type: TYPES.BASICINFO_UPDATA, result: { items: data } });
+            dispatch({ type: TYPES.USERBASICINFO_UPDATA, result: { items: data } });
             opt.success && opt.success(data);
         };
         (0, _request.request)(route, opt.params || {}, dispatch, success, opt.error);
@@ -111832,6 +111890,12 @@ Object.defineProperty(exports, 'currentPage', {
     return _page.currentPage;
   }
 });
+Object.defineProperty(exports, 'homeShowList', {
+  enumerable: true,
+  get: function get() {
+    return _page.homeShowList;
+  }
+});
 
 var _user = __webpack_require__("./src/redux/reducers/user.js");
 
@@ -111841,6 +111905,82 @@ Object.defineProperty(exports, 'basicInfo', {
     return _user.basicInfo;
   }
 });
+
+var _math = __webpack_require__("./src/redux/reducers/math.js");
+
+Object.defineProperty(exports, 'AllQuestionsList', {
+  enumerable: true,
+  get: function get() {
+    return _math.AllQuestionsList;
+  }
+});
+Object.defineProperty(exports, 'QuestionList', {
+  enumerable: true,
+  get: function get() {
+    return _math.QuestionList;
+  }
+});
+Object.defineProperty(exports, 'AllExamList', {
+  enumerable: true,
+  get: function get() {
+    return _math.AllExamList;
+  }
+});
+Object.defineProperty(exports, 'ExamList', {
+  enumerable: true,
+  get: function get() {
+    return _math.ExamList;
+  }
+});
+
+/***/ }),
+
+/***/ "./src/redux/reducers/math.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.ExamList = exports.AllExamList = exports.QuestionList = exports.AllQuestionsList = undefined;
+
+var _createReducer;
+
+var _immutable = __webpack_require__("./node_modules/immutable/dist/immutable.js");
+
+var _immutable2 = _interopRequireDefault(_immutable);
+
+var _types = __webpack_require__("./src/redux/types.js");
+
+var TYPES = _interopRequireWildcard(_types);
+
+var _reduxImmutablejs = __webpack_require__("./node_modules/redux-immutablejs/lib/index.js");
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; } /**
+                                                                                                                                                                                                                   * Created by gaoju on 2017/12/7.
+                                                                                                                                                                                                                   */
+
+
+var AllQuestionsList = exports.AllQuestionsList = (0, _reduxImmutablejs.createReducer)(_immutable2.default.fromJS({ preload: false }), (_createReducer = {}, _defineProperty(_createReducer, TYPES.ALLQUESTIONSLIST_UPDATE, function (state, action) {
+    return state.set('preload', true).merge(_immutable2.default.fromJS(action.result));
+}), _defineProperty(_createReducer, TYPES.ALLQUESTIONSLIST_CLEAN, function (state, action) {
+    return state.clear().set('preload', false);
+}), _createReducer));
+var QuestionList = exports.QuestionList = (0, _reduxImmutablejs.createReducer)(_immutable2.default.fromJS({ preload: false }), _defineProperty({}, TYPES.QUESTIONSLIST_UPDATE, function (state, action) {
+    return state.set('preload', true).merge(_immutable2.default.fromJS(action.result));
+}));
+var AllExamList = exports.AllExamList = (0, _reduxImmutablejs.createReducer)(_immutable2.default.fromJS({ preload: false }), _defineProperty({}, TYPES.ALLEXAMLIST_UPDATE, function (state, action) {
+    return state.set('preload', true).merge(_immutable2.default.fromJS(action.result));
+}));
+var ExamList = exports.ExamList = (0, _reduxImmutablejs.createReducer)(_immutable2.default.fromJS({ preload: false }), _defineProperty({}, TYPES.EXAMLIST_UPDATE, function (state, action) {
+    return state.set('preload', true).merge(_immutable2.default.fromJS(action.result));
+}));
 
 /***/ }),
 
@@ -111853,9 +111993,9 @@ Object.defineProperty(exports, 'basicInfo', {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.currentPage = undefined;
+exports.homeShowList = exports.currentPage = undefined;
 
-var _createReducer;
+var _createReducer, _createReducer2;
 
 var _immutable = __webpack_require__("./node_modules/immutable/dist/immutable.js");
 
@@ -111882,6 +112022,11 @@ var currentPage = exports.currentPage = (0, _reduxImmutablejs.createReducer)(_im
 }), _defineProperty(_createReducer, TYPES.PAGE_CLEAN_CURRENT, function (state, action) {
     return state.clear().set('preload', false);
 }), _createReducer));
+var homeShowList = exports.homeShowList = (0, _reduxImmutablejs.createReducer)(_immutable2.default.fromJS({ preload: false }), (_createReducer2 = {}, _defineProperty(_createReducer2, TYPES.HOMESHOW_LIST_UPDATA, function (state, action) {
+    return state.set('preload', true).merge(_immutable2.default.fromJS(action.result));
+}), _defineProperty(_createReducer2, TYPES.HOMESHOW_LIST_CLEAN, function (state, action) {
+    return state.clear().set('preload', false);
+}), _createReducer2));
 
 /***/ }),
 
@@ -111918,9 +112063,9 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 //Immutable创建的对象数据是持久化，不变话的。只要新建的或者赋值都会产生新的数据对象
-var basicInfo = exports.basicInfo = (0, _reduxImmutablejs.createReducer)(_immutable2.default.fromJS({ preload: false }), (_createReducer = {}, _defineProperty(_createReducer, TYPES.BASICINFO_UPDATA, function (state, action) {
+var basicInfo = exports.basicInfo = (0, _reduxImmutablejs.createReducer)(_immutable2.default.fromJS({ preload: false }), (_createReducer = {}, _defineProperty(_createReducer, TYPES.USERBASICINFO_UPDATA, function (state, action) {
     return state.set('preload', true).merge(_immutable2.default.fromJS(action.result));
-}), _defineProperty(_createReducer, TYPES.BASICINFO_CLEAN, function (state, action) {
+}), _defineProperty(_createReducer, TYPES.USERBASICINFO_CLEAN, function (state, action) {
     return state.clear().set('preload', false);
 }), _createReducer));
 
@@ -111941,10 +112086,11 @@ Object.defineProperty(exports, "__esModule", {
  */
 // 用户
 var USER_INFO = exports.USER_INFO = 'USER_INFO';
-var BASICINFO_UPDATA = exports.BASICINFO_UPDATA = 'BASICINFO_UPDATA';
-var BASICINFO_CLEAN = exports.BASICINFO_CLEAN = 'BASICINFO_CLEAN';
+var USERBASICINFO_UPDATA = exports.USERBASICINFO_UPDATA = 'USERBASICINFO_UPDATA';
+var USERBASICINFO_CLEAN = exports.USERBASICINFO_CLEAN = 'USERBASICINFO_CLEAN';
 //首页
 var HOMESHOW_LIST_UPDATA = exports.HOMESHOW_LIST_UPDATA = 'HOMESHOW_LIST_UPDATA';
+var HOMESHOW_LIST_CLEAN = exports.HOMESHOW_LIST_CLEAN = 'HOMESHOW_LIST_CLEAN';
 //page
 var PAGE_UPDATE_CURRENT = exports.PAGE_UPDATE_CURRENT = 'PAGE_UPDATE_CURRENT';
 var PAGE_CLEAN_CURRENT = exports.PAGE_CLEAN_CURRENT = 'PAGE_CLEAN_CURRENT';
@@ -111956,6 +112102,11 @@ var REQUEST_ERROR = exports.REQUEST_ERROR = 'REQUEST_ERROR';
 var REQUEST_CLEAN = exports.REQUEST_CLEAN = 'REQUEST_CLEAN';
 
 //math
+var ALLQUESTIONSLIST_UPDATE = exports.ALLQUESTIONSLIST_UPDATE = 'ALLQUESTIONSLIST_UPDATE';
+var ALLQUESTIONSLIST_CLEAN = exports.ALLQUESTIONSLIST_CLEAN = 'ALLQUESTIONSLIST_CLEAN';
+var QUESTIONSLIST_UPDATE = exports.QUESTIONSLIST_UPDATE = 'QUESTIONSLIST_UPDATE';
+var ALLEXAMLIST_UPDATE = exports.ALLEXAMLIST_UPDATE = 'ALLEXAMLIST_UPDATE';
+var EXAMLIST_UPDATE = exports.EXAMLIST_UPDATE = 'EXAMLIST_UPDATE';
 
 /***/ }),
 

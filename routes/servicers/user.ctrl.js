@@ -34,6 +34,27 @@ module.exports = {
             }
         })
     },
+    // 用户登录
+    doGetUserItemByUserName: function(req, res) {
+        var props = req.body;
+        props.password = Helper.getMD5(req.body.password);
+        var user = new User({ props: props });
+        user.getUserItemByUserName(function(err, data) {
+            if (data.length) {
+                console.log(data)
+                return res.send({
+                    code: 200,
+                    data: data
+                })
+            } else {
+                console.log(err)
+                return res.send({
+                    code: 500,
+                    message: '用户名不存在'
+                })
+            }
+        })
+    },
 
     // 用户登录
     doGetUserItemByPhone: function(req, res) {

@@ -4,6 +4,7 @@
   "private": true,
   "scripts": {
     "start": "webpack --config webpack.config.js && node server.js",
+    "nodestart": "webpack --config webpack.config.js && node ./bin/www",
     "build": "webpack --config webpack.config.js"
   },
   "dependencies": {

@@ -29,3 +29,8 @@ export function cleanCurrentPage(opt) {
         dispatch({ type: TYPES.PAGE_CLEAN_CURRENT})
     }
 }
+export function cleanHomeShowList(opt) {
+    return (dispatch) => {
+        dispatch({ type: TYPES.HOMESHOW_LIST_CLEAN })
+    }
+}

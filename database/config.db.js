@@ -7,7 +7,6 @@ var config = {
     port: 3306,
     user: 'root',
     password: '123456',
-    database: 'tms',
+    database: 'midexam'
 };
-
 module.exports = config;

@@ -101,7 +101,8 @@
 }
 .banner-wapper3{
     position: absolute;
-    min-height: 500px;
+    min-height: 400px;
+    padding: 20px;
     width: 100%;
     background-color: #f5f5f5
 }

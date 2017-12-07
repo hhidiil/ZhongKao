@@ -1,87 +1,120 @@
-/**
- * Created by gaoju on 2017/11/23.
- */
-import React,{Component} from 'react'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
-import {getAllExamList} from '../../../../redux/actions/user'
-import './style.css'
+import { createForm, createFormField } from 'rc-form';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+import { combineReducers } from 'redux';
+import { createStore } from 'redux';
+import { Provider, connect } from 'react-redux';
+import ReactDOM from 'react-dom';
+import { regionStyle, errorStyle } from './styles';
 
-
-class ExamAll extends Component{
-    constructor(props){
-        super(props);
-        this.state={
-            itemData:[],
-            quiz_again_status:false
-        };
+function form(state = {
+    email: {
+        value: 'x@gmail.com',
+    },
+}, action) {
+    switch (action.type) {
+        case 'save_fields':
+            return {
+                ...state,
+                ...action.payload,
+            };
+        default:
+            return state;
     }
-    componentDidMount(){
-        this.props.actions.getAllExamList({
-            body: {
-            },
-            success: (data) => {
-                console.log("getQuestionsList success-->:"+data);
-                //真实数据的时候可以去掉此判断，判断已在后台执行
-                let data1 = JSON.parse(data);
-                this.setState({itemData:data1})
-            },
-            error: (message) => {}
-        })
+}
+
+class Form extends Component {
+    static propTypes = {
+        form: PropTypes.object,
+    }
+
+    render() {
+        const { getFieldProps, getFieldError } = this.props.form;
+        const errors = getFieldError('email');
+        return (<div style={ regionStyle }>
+            <div>email:</div>
+            <div>
+                <input {...getFieldProps('email', {
+                    rules: [{
+                        type: 'email',
+                    }],
+                })}
+                /></div>
+            <div style={errorStyle}>
+                {(errors) ? errors.join(',') : null}
+            </div>
+        </div>);
+    }
+}
+
+class Out extends React.Component {
+    static propTypes = {
+        email: PropTypes.object,
+        dispatch: PropTypes.func,
     };
-    _renderItemPage(items){
-        return items.map(function(item,index){
-            return(
-                <div key={index} className="examAll-item">
-                    <div className="examAll-item1">
-                        <div className="title"><h2><a href ={item.url}>{item.title}</a></h2></div>
-                        <div className="btn looklook" onClick={()=>this.lookView(item.url)}>查看</div>
-                        <div className="btn doexam" onClick={()=>this.doExam(item.url)}>做题</div>
-                        <div className="btn quiz_again" onClick={()=>this.quizAgain(item,index)}>查看结果</div>
-                    </div>
-                    <div id={"quizAgin"+index} className={this.state.quiz_again_status?"transtionBefore transtionAfter":"transtionBefore"}>
-                        <div className="neibu">
-                            <div className="title"><h2><a
-                                href={item.expand_practice.url}>{item.expand_practice.title}</a></h2></div>
-                        </div>
-                    </div>
-                </div>
-            )
-        },this);
-    }
-    lookView(data){
-        alert("lookView")
-    }
-    doExam(data){
-        alert("doExam")
-    }
-    quizAgain(data,index){
-        console.log(this.state.quiz_again_status)
-        this.setState({
-            quiz_again_status : !this.state.quiz_again_status
+    setEmail = () => {
+        this.props.dispatch({
+            type: 'save_fields',
+            payload: {
+                email: {
+                    value: 'yiminghe@gmail.com',
+                },
+            },
         });
     }
-    render(){
-        const items = this.state.itemData;
-        return(
-            <div className="questionsAll">
-                <header><h2>模考</h2></header>
-                <section>
-                    {this._renderItemPage(items)}
-                </section>
+    render() {
+        const { email } = this.props;
+        return (<div style={ regionStyle }>
+            <div>
+                email: {email && email.value}
             </div>
-        )
+            <button onClick={this.setEmail}>set</button>
+        </div>);
     }
 }
-function mapStateToProps(state) {
-    return {}
-}
 
-function mapDispatchToProps(dispatch) {
+Out = connect((state) => {
     return {
-        actions: bindActionCreators({ push,getAllExamList }, dispatch)
+        email: state.form.email,
+    };
+})(Out);
+
+const store = createStore(combineReducers({
+    form,
+}));
+
+const NewForm = connect((state) => {
+    return {
+        formState: {
+            email: state.form.email,
+        }
+    };
+})(createForm({
+    mapPropsToFields(props) {
+        console.log('mapPropsToFields', props);
+        return {
+            email: createFormField(props.formState.email),
+        };
+    },
+    onFieldsChange(props, fields) {
+        console.log('onFieldsChange', fields);
+        props.dispatch({
+            type: 'save_fields',
+            payload: fields,
+        });
+    },
+})(Form));
+
+class App extends React.Component {
+    render() {
+        return (<Provider store={store}>
+            <div>
+                <h2>integrate with redux</h2>
+                <NewForm />
+                <Out />
+            </div>
+        </Provider>);
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(ExamAll)
+ReactDOM.render(<App />, document.getElementById('__react-content'));

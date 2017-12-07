@@ -17,7 +17,7 @@ var User = function(user) {
 
 /*获取全部数据,正式上线时请关闭*/
 User.prototype.getUserAllItems = function(callback) {
-    var _sql = "select * from user where u_del=0";
+    var _sql = "select * from user where rank=0";
     helper.db_query({
         connect: con,
         sql: _sql,
@@ -25,10 +25,19 @@ User.prototype.getUserAllItems = function(callback) {
         callback: callback
     })
 }
-
-/*根据手机号码获取用户的信息*/
+/*根据用户名和密码匹配否正确*/
+User.prototype.getUserItemByUserName = function(callback) {
+    var _sql = `select * from user where name='${this.props.userName}' and password='${this.props.password}'`;
+    helper.db_query({
+        connect: con,
+        sql: _sql,
+        name: 'getUserItemByUserName',
+        callback: callback
+    })
+}
+/*根据用户手机号和密码匹配否正确*/
 User.prototype.getUserItemByPhone = function(callback) {
-    var _sql = `select u_id from user where u_del=0 and u_phone='${this.props.phone}' and u_password='${this.props.password}'`;
+    var _sql = `select * from user where phone='${this.props.phone}' and password='${this.props.password}'`;
     helper.db_query({
         connect: con,
         sql: _sql,
@@ -39,7 +48,7 @@ User.prototype.getUserItemByPhone = function(callback) {
 
 /*修改用户登录密码*/
 User.prototype.putUserPassword = function(callback) {
-    var _sql = `update user set u_password = '${this.props.new_password}' where u_id = ${this.props.id}`;
+    var _sql = `update user set password = '${this.props.new_password}' where id = ${this.props.id}`;
     console.log(_sql)
     helper.db_query({
         connect: con,

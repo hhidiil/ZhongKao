@@ -8,42 +8,39 @@ import './style.css'
 import Login from './login'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import PureRenderMixin from '../../method_public/pure-render'
 import { getHomeShowList} from '../../redux/actions/page'
 
 class Door extends Component {
     constructor(props) {
         super(props)
-        this.state={
-            showList:[]
-        }
     }
     componentDidMount(){
-        console.log(this.props)
-        console.log("getQuestionsList success-->:");
-        this.props.actions.getHomeShowList({
-            success: (data) => {
-                console.log("getQuestionsList success-->:"+data);
-                this.setState({showList : JSON.parse(data)})
-            },
-            error: (message) => {
-                console.error(message)
-            }
-        })
+        this.props.actions.getHomeShowList({})
     };
     _showListItem(showList){
-        const showItem = showList.map((item,index)=>{
-            return (
-                <div key={index} className="showListAll">
-                    <div className="showlist"><img src={item.url_img} /></div>
-                    <div>{item.schoolName}</div>
-                    <p>{item.message}</p>
-                </div>
-            )
-        },this)
-        return showItem
+        let pageSize = showList.get('items').size;
+        if (pageSize > 0) {
+            const showItem = showList.get('items').map((item,index)=>{
+                return (
+                    <div key={index} className="col-sm-6 col-md-3">
+                        <div className="thumbnail">
+                            <img src={item.get('url_img')} alt="..."/>
+                            <div className="caption">
+                                <h3>{item.get('schoolName')}</h3>
+                                <p>{item.get('message')}</p>
+                            </div>
+                        </div>
+                    </div>
+                )
+            },this)
+            return showItem
+        }
     }
     render() {
-        const showList = this.state.showList;
+        let { homeShowList } = this.props;
+        let error = PureRenderMixin.loadDetection([homeShowList]);//深度比较如果两次state没有变化，则不用render
+        if (error) return error
         const menu = (
             <Menu>
                 <Menu.Item key="0">
@@ -72,7 +69,7 @@ class Door extends Component {
                 <div className="mainWapper">
                     <section className="page banner-wapper1">
                         <div className="content">
-                            <label style={{fontSize:"1.18rem"}}>Title</label>
+                            <label style={{fontSize:"1.38rem"}}>IDIIL</label>
                             <h1 style={{fontSize:"3rem"}}>senior high school entrance examination</h1>
                             <p style={{fontSize:"24px",lineHight:1.5}}>This system can help you !</p>
                         </div>
@@ -84,17 +81,22 @@ class Door extends Component {
                         </div>
                     </section>
                     <section className="banner-wapper3">
-                        {this._showListItem(showList)}
+                        <div className="row">
+                            {this._showListItem(homeShowList)}
+                        </div>
                     </section>
                 </div>
             </div>
         )
     }
 }
-function mapStateToProps(state) {
-    return {}
+//将redux中state的对象与组件绑定起来。一一对应map对象
+function mapStateToProps(state,ownProps) {
+    return {
+        homeShowList: state.homeShowList
+    }
 }
-
+//使用bindActionCreators绑定action
 function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators({getHomeShowList}, dispatch) }
 }
