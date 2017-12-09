@@ -22,6 +22,7 @@ class Question extends Component{
             questionNum:0,//当前题号
             questions:[],
             questionParams:{},//具体某道题所有数据,默认第一道题
+            Objective:false,
             analysisFlag:false,//试题分析显示标志
             analysisQuestions:{}//具体某道题的分析
         }
@@ -32,7 +33,8 @@ class Question extends Component{
                 param : this.state.JSON_aLL
             },
             success:(data)=>{
-                let new_data = JSON.parse(data);//解析JSON
+                console.log("getQuestionList")
+                let new_data = data;//解析JSON
                 let data_len = new_data.subquestions.length;//本套试题的所有题目数
                 let data_question = new_data.subquestions[this.state.questionNum];
                 this.setState({
@@ -41,6 +43,8 @@ class Question extends Component{
                     questionParams:data_question
                 })
                 this.requestQuestion(this.state.questionParams,"Content")
+                this.requestQuestion(this.state.questionParams,"Objective")
+                this.requestQuestion(this.state.questionParams,"Analysis")
             },
             error:(mes)=>{
                 console.error('数据接收发生错误');
@@ -50,13 +54,15 @@ class Question extends Component{
     requestQuestion(data,type){
         let dataitem = data;
         let content_json = [];//取数据的参数
-
-        let content = dataitem.Content;
         console.log("content_json type---->"+type)
         switch (type){
-            case 'Content' : content_json = dataitem.Content; break;
-            case 'Objective' :  content_json = dataitem.Objective; break;
-            case 'Analysis' :   content_json = dataitem.Analysis; break;
+            case 'Content' :
+                content_json = dataitem.Content;
+                break;
+            case 'Objective' :  content_json = dataitem.Objective;
+                break;
+            case 'Analysis' :   content_json = dataitem.Analysis;
+                break;
             case 'Explain' :    content_json = dataitem.Explain; break;
             case 'Exercise1' :  content_json = dataitem.Exercise1; break;
             case 'Exercise2':   content_json = dataitem.Exercise2; break;
@@ -64,54 +70,26 @@ class Question extends Component{
         }
         console.log(content_json,content_json.length);
         //判断每一部分题的长度，即：是否有多个题
-        for(let i=0;i<content_json.length;i++){
-            let json = content_json[i];
-            //var return_content=[];//返回的数据
-            this.props.actions.getQuestionList({
-                body:{
-                    param:"Question/" + json + ".json"
-                },
-                success:(data)=>{
-                   return JSON.parse(data);
-                    //this.setState({
-                    //    questions:JSON.parse(data),
-                    //    flag:true,
-                    //    analysisFlag:false
-                    //})
-                },
-                error:(mes)=>{
-                    console.error('数据接收发生错误');
-                }
-            })
-            console.log(return_content)
-        }
-        //console.log(this.state.questions)
-
-        //this.props.actions.getQuestionList({
-        //    body:{
-        //        param:"Question/" + content_json + ".json"
-        //    },
-        //    success:(data)=>{
-        //        console.log("requestQuestion success-->:"+data);
-        //        if(type == "Analysis"){
+        //for(let i=0;i<content_json.length;i++){
+        //    let json = content_json[i];
+        //    //var return_content=[];//返回的数据
+        //    this.props.actions.getQuestionList({
+        //        body:{
+        //            param:"Question/" + json + ".json"
+        //        },
+        //        success:(data)=>{
+        //           //return data;
         //            this.setState({
-        //                analysisQuestions:JSON.parse(data),
-        //                flag:true,
-        //                analysisFlag:true
-        //            })
-        //        }else{
-        //            this.setState({
-        //                questions:JSON.parse(data),
+        //                questions:data,
         //                flag:true,
         //                analysisFlag:false
         //            })
+        //        },
+        //        error:(mes)=>{
+        //            console.error('数据接收发生错误');
         //        }
-        //
-        //    },
-        //    error:(mes)=>{
-        //        console.error('数据接收发生错误');
-        //    }
-        //})
+        //    })
+        //}
     }
     _contentQtxt(data){
         return (
@@ -167,6 +145,8 @@ class Question extends Component{
         const questions = this.state.questions;
         const analysisQuestions = this.state.analysisQuestions;
         const params = this.state.questionParams;
+        console.log("render-----")
+        console.log(dataAll,questions,analysisQuestions,params)
         return(
             <div className="mask">
                 <div className="math-question-content">
@@ -176,7 +156,7 @@ class Question extends Component{
                     </header>
                     <center><hr width="90%" size={2}  color="black"></hr></center>
                     <div className="pagination_content">
-                        <div className="pagination_before"><Pagination current={this.state.current} pageSize={1}  onChange={this.onChange} total={this.state.total} /></div>
+                        <div className="pagination_before"><Pagination current={this.state.current} pageSize={1} onChange={this.onChange} total={this.state.total} /></div>
                         <div className="btnContainer" id="btnContainer">
                             <button id="Content_exer" type="button" className="btn btn-primary"
                                     onClick={()=>this.requestQuestion(this.state.questionParams,"Content")}>
@@ -209,10 +189,12 @@ class Question extends Component{
                             <div id="Content_Qtxt" className="QContet">
                                 {this.state.flag ? this._contentQtxt(questions):""}
                             </div>
-                            <div id="Analysis_Qtxt" className="QContet">
-                                {this.state.analysisFlag ? this._analysisQtxt(analysisQuestions):""}
-                            </div>
                         </div>
+                        <diV>
+                            <div id="Analysis_Qtxt" className="QContet">
+                                {this._analysisQtxt(analysisQuestions)}
+                            </div>
+                        </diV>
                         <div id="Exercise1_Qtxt" className="QContet"></div>
                         <div id="Exercise2_Qtxt" className="QContet"></div>
                     </section>
@@ -222,7 +204,9 @@ class Question extends Component{
     }
 }
 function mapStateToProps(state, ownProps) {
-    return {}
+    return {
+        QuestionList:state.QuestionList
+    }
 }
 
 function mapDispatchToProps(dispatch) {

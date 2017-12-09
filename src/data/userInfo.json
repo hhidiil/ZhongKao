@@ -1,12 +1,19 @@
-{
-  "IdiilNumber": "IDL0000001",
-  "UserName": "admin",
-  "Password": "123456",
-  "ActualName": "王小明",
-  "PhoneNumber": "18888888888",
-  "Sex": "男",
-  "birthday": "2008/08/08",
-  "FamilyAddress": "北京市海淀区科技路28号",
-  "HeadImg": "public/images/user_head.jpg"
-}
-
+[
+  {
+    "id":1,
+    "idiilnumber": "IDL0000001",
+    "name": "admin",
+    "password": "123456",
+    "actualName": "王小明",
+    "phone": "18888888888",
+    "email":"",
+    "sex": "男",
+    "birthday": "2008/08/08",
+    "familyAddress": "北京市海淀区科技路28号",
+    "headimg": "public/images/user_head.jpg",
+    "rank":"0",
+    "grade":"",
+    "registerdate":"",
+    "updatetime":""
+  }
+]

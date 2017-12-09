@@ -25,10 +25,10 @@ export function allUsers(opt) {
 }
 export function login(opt) {
     return (dispatch) => {
-        const route = '/api/user/token';//服务端数据
-        //const route = '../src/data/userInfo.json';//本地数据
+        //const route = '/api/user/token';//服务端数据
+        const route = '../src/data/userInfo.json';//本地数据
         request(route, {}, dispatch, opt.success, opt.error,
-            { method: 'POST',
+            { method: 'GET',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
                 body: bodyUrlencoded(opt.body) })
     }
@@ -62,7 +62,7 @@ export function register(opt) {
 }
 export function getUserBasicInfo(opt) {
     return (dispatch) => {
-        const route = '/api/carousel';
+        const route = '../src/data/userInfo.json';
         const success = (data) => {
             dispatch({ type: TYPES.USERBASICINFO_UPDATA, result: {items: data} })
             opt.success && opt.success(data)

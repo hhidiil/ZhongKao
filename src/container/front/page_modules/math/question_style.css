@@ -69,14 +69,57 @@
 .QtxtContent{
     padding: 10px;
 }
+.QtxtContent .QtxtContent_main{
+    overflow: hidden;
+    margin: 10px 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
 .QtxtContent .QContet{
     margin-bottom: 10px;
 }
 .QtxtContent .QContet ul{
     border: 1px solid #ddd;
-    padding: 20px 0px 10px 20px;
+    padding: 10px 0px 10px 20px;
     background-color: white;
 }
 .QtxtContent .QContet ul li:last-child{
     margin: 10px 0 0 0;
+}
+.QtxtContent .content_three{
+    display: flex;
+}
+.QtxtContent .content_three_left{
+    min-width: 100px;
+    width: 10%;
+    border: 1px solid #ddd;
+    background-color: white;
+    margin-right: 3px;
+}
+.QtxtContent .content_three_right{
+    width: 100%;
+    overflow-y: auto;
+    max-height: 440px;
+    padding: 15px;
+    border: 1px solid darkgray;
+    background-color: white;
+}
+.QtxtContent .content_three_left ul{
+    width: 100%;
+}
+.QtxtContent .content_three_right ul li{
+    margin: 5px 0;
+}
+.displaynone{
+    display: none;
+}
+.input_blank{
+    border: 0px;
+    border-bottom: 1px solid #333;
+    text-align: center;
+}
+.skipText{
+    width: 30px;
+    height: 20px;
 }

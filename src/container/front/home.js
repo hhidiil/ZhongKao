@@ -38,11 +38,6 @@ class Home extends Component {
         let screenWeight = document.documentElement.clientWidth;
         console.log(screenWeight,screenHeight)
         document.getElementById("section").style.height = (screenHeight-80-40)+'px';
-        this.props.actions.getUserBasicInfo({
-            body:{
-
-            }
-        })
 
     };
     handleClick = (e) => {

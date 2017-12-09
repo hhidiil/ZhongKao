@@ -45,8 +45,8 @@ class LoginForm extends Component {
                                 userName: data[0].name
                             }
                         })
+                        this.props.actions.push('home')
                         //真实数据的时候可以去掉此判断，判断已在后台执行
-                        let data1 = JSON.parse(data);
                         //if(values.userName == data1.UserName){
                         //    if(values.password == data1.Password){
                         //        sessionStorage.setItem('token', 'idiil')

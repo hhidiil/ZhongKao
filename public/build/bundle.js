@@ -59,7 +59,7 @@
 /******/ 	
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "58a3997f037532776ea8"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "c302259d31c6fd5ea6df"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentChildModule; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
@@ -20469,6 +20469,21 @@ exports.push([module.i, "/* stylelint-disable at-rule-empty-line-before,at-rule-
 
 /***/ }),
 
+/***/ "./node_modules/css-loader/index.js!./src/components/selectMenu/style.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/css-base.js")();
+// imports
+
+
+// module
+exports.push([module.i, "", ""]);
+
+// exports
+
+
+/***/ }),
+
 /***/ "./node_modules/css-loader/index.js!./src/container/front/page_modules/math/question_style.css":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -20477,7 +20492,7 @@ exports = module.exports = __webpack_require__("./node_modules/css-loader/lib/cs
 
 
 // module
-exports.push([module.i, ".mask{\r\n    position: fixed;\r\n    z-index: 100;\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n    top: 0;\r\n    right: 0;\r\n    left: 0;\r\n    bottom: 0;\r\n    background-color: aliceblue;;\r\n    border: 50px solid;\r\n    -webkit-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    -moz-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    -o-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n}\r\n.math-question-content{\r\n}\r\n.math-question-content header{\r\n    display: flex;\r\n}\r\n.math-question-content header .title{\r\n    width: 100%;\r\n    height: 55px;\r\n    line-height: 55px;\r\n    font-size: 22px;\r\n    text-align: center;\r\n}\r\n.math-question-content header .exit{\r\n    position: absolute;\r\n    right: 20px;\r\n    top: 10px;\r\n    font-size: 16px;\r\n    cursor: pointer;\r\n}\r\n.math-question-content .pagination_css{\r\n    display: flex;\r\n    height: 45px;\r\n    margin: 10px 0;\r\n    line-height: 40px;\r\n    text-align: center;\r\n}\r\n.math-question-content center hr{\r\n    border: 1px solid gainsboro;\r\n}\r\n.btnContainer button{\r\n    margin: 0 2px;\r\n}\r\n.pagination_content{\r\n    position: relative;\r\n    margin: 15px 0;\r\n    display: flex;\r\n    width: 100%;\r\n}\r\n.pagination_content .pagination_before{\r\n    position: relative;\r\n    width: 40%;\r\n    margin: 10px 5px 10px 30px;\r\n}\r\n.pagination_content .btnContainer{\r\n    position: relative;\r\n    right: 10px;\r\n    top: 5px;\r\n    width: 55%;\r\n    text-align: right;\r\n}\r\n.QtxtContent{\r\n    padding: 10px;\r\n}\r\n.QtxtContent .QContet{\r\n    margin-bottom: 10px;\r\n}\r\n.QtxtContent .QContet ul{\r\n    border: 1px solid #ddd;\r\n    padding: 20px 0px 10px 20px;\r\n    background-color: white;\r\n}\r\n.QtxtContent .QContet ul li:last-child{\r\n    margin: 10px 0 0 0;\r\n}\r\n", ""]);
+exports.push([module.i, ".mask{\r\n    position: fixed;\r\n    z-index: 100;\r\n    width: 100%;\r\n    height: 100%;\r\n    overflow-y: auto;\r\n    overflow-x: hidden;\r\n    top: 0;\r\n    right: 0;\r\n    left: 0;\r\n    bottom: 0;\r\n    background-color: aliceblue;;\r\n    border: 50px solid;\r\n    -webkit-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    -moz-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    -o-border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n    border-image: url(\"/public/images/1111.jpg\") 40 40 round stretch;\r\n}\r\n.math-question-content{\r\n}\r\n.math-question-content header{\r\n    display: flex;\r\n}\r\n.math-question-content header .title{\r\n    width: 100%;\r\n    height: 55px;\r\n    line-height: 55px;\r\n    font-size: 22px;\r\n    text-align: center;\r\n}\r\n.math-question-content header .exit{\r\n    position: absolute;\r\n    right: 20px;\r\n    top: 10px;\r\n    font-size: 16px;\r\n    cursor: pointer;\r\n}\r\n.math-question-content .pagination_css{\r\n    display: flex;\r\n    height: 45px;\r\n    margin: 10px 0;\r\n    line-height: 40px;\r\n    text-align: center;\r\n}\r\n.math-question-content center hr{\r\n    border: 1px solid gainsboro;\r\n}\r\n.btnContainer button{\r\n    margin: 0 2px;\r\n}\r\n.pagination_content{\r\n    position: relative;\r\n    margin: 15px 0;\r\n    display: flex;\r\n    width: 100%;\r\n}\r\n.pagination_content .pagination_before{\r\n    position: relative;\r\n    width: 40%;\r\n    margin: 10px 5px 10px 30px;\r\n}\r\n.pagination_content .btnContainer{\r\n    position: relative;\r\n    right: 10px;\r\n    top: 5px;\r\n    width: 55%;\r\n    text-align: right;\r\n}\r\n.QtxtContent{\r\n    padding: 10px;\r\n}\r\n.QtxtContent .QContet{\r\n    margin-bottom: 10px;\r\n}\r\n.QtxtContent .QContet ul{\r\n    border: 1px solid #ddd;\r\n    padding: 10px 0px 10px 20px;\r\n    background-color: white;\r\n}\r\n.QtxtContent .QContet ul li:last-child{\r\n    margin: 10px 0 0 0;\r\n}\r\n.QtxtContent .content_three_left{\r\n    display: none;\r\n}\r\n.QtxtContent .content_three_left ul{\r\n    min-height:550px;\r\n    border: 1px solid #ddd;\r\n    text-align: center;\r\n    padding: 10px 0px 10px 20px;\r\n    background-color: white;\r\n}\r\n.QtxtContent .content_three_left ul li{\r\n    margin: 5px 0;\r\n}\r\n.QtxtContent .content_three_right ul li{\r\n    margin: 5px 0;\r\n}\r\n.QtxtContent .content_three_right{\r\n    overflow-y: auto;\r\n    height: 480px;\r\n    border: 1px solid gray;\r\n    margin: 0 16px;\r\n    background-color: white;\r\n}\r\n.displaynone{\r\n    display: none;\r\n}\r\n.input_blank{\r\n    border: 0px;\r\n    border-bottom: 1px solid #333;\r\n    text-align: center;\r\n}\r\n.skipText{\r\n    width: 20px;\r\n    border-radius: 10px;\r\n}", ""]);
 
 // exports
 
@@ -108545,6 +108560,179 @@ if(true) {
 
 /***/ }),
 
+/***/ "./src/components/selectMenu/selectMenu.js":
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+/* WEBPACK VAR INJECTION */(function(module) {
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _dropdown = __webpack_require__("./node_modules/antd/lib/dropdown/index.js");
+
+var _dropdown2 = _interopRequireDefault(_dropdown);
+
+var _menu = __webpack_require__("./node_modules/antd/lib/menu/index.js");
+
+var _menu2 = _interopRequireDefault(_menu);
+
+var _index = __webpack_require__("./node_modules/redbox-react/lib/index.js");
+
+var _index2 = _interopRequireDefault(_index);
+
+var _index3 = __webpack_require__("./node_modules/react-transform-catch-errors/lib/index.js");
+
+var _index4 = _interopRequireDefault(_index3);
+
+var _react2 = __webpack_require__("./node_modules/react/react.js");
+
+var _react3 = _interopRequireDefault(_react2);
+
+var _index5 = __webpack_require__("./node_modules/react-transform-hmr/lib/index.js");
+
+var _index6 = _interopRequireDefault(_index5);
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+__webpack_require__("./node_modules/antd/lib/dropdown/style/css.js");
+
+__webpack_require__("./node_modules/antd/lib/menu/style/css.js");
+
+var _reactRouter = __webpack_require__("./node_modules/react-router/es/index.js");
+
+__webpack_require__("./src/components/selectMenu/style.css");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var _components = {
+    SelectMenu: {
+        displayName: 'SelectMenu'
+    }
+};
+
+var _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2 = (0, _index6.default)({
+    filename: 'D:/gaoju/Midexam/React/src/components/selectMenu/selectMenu.js',
+    components: _components,
+    locals: [module],
+    imports: [_react3.default]
+});
+
+var _DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2 = (0, _index4.default)({
+    filename: 'D:/gaoju/Midexam/React/src/components/selectMenu/selectMenu.js',
+    components: _components,
+    locals: [],
+    imports: [_react3.default, _index2.default]
+});
+
+function _wrapComponent(id) {
+    return function (Component) {
+        return _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
+    };
+} /**
+   * Created by gaoju on 2017/12/9.
+   */
+/**
+ * Created by gaoju on 2017/11/16.
+ */
+
+
+var SelectMenu = _wrapComponent('SelectMenu')(function (_React$Component) {
+    _inherits(SelectMenu, _React$Component);
+
+    function SelectMenu(props) {
+        _classCallCheck(this, SelectMenu);
+
+        var _this = _possibleConstructorReturn(this, (SelectMenu.__proto__ || Object.getPrototypeOf(SelectMenu)).call(this, props));
+
+        _this.state = {
+            data: []
+        };
+        return _this;
+    }
+
+    _createClass(SelectMenu, [{
+        key: 'render',
+        value: function render() {
+            //let data = this.state.data;
+            var menu = _react3.default.createElement(
+                _menu2.default,
+                null,
+                _react3.default.createElement(
+                    _menu2.default.Item,
+                    { key: '0' },
+                    _react3.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/register' },
+                        '\u767B\u5F55'
+                    )
+                ),
+                _react3.default.createElement(_menu2.default.Divider, null),
+                _react3.default.createElement(
+                    _menu2.default.Item,
+                    { key: '1' },
+                    _react3.default.createElement(
+                        _reactRouter.Link,
+                        { to: '/register' },
+                        '\u6CE8\u518C'
+                    )
+                )
+            );
+            return _react3.default.createElement(
+                _dropdown2.default,
+                { overlay: menu, trigger: ['click'] },
+                _react3.default.createElement(
+                    'a',
+                    { className: 'ant-dropdown-link color-white', href: '#' },
+                    'Click me ',
+                    _react3.default.createElement(Icon, { type: 'down' })
+                )
+            );
+        }
+    }]);
+
+    return SelectMenu;
+}(_react3.default.Component));
+
+exports.default = SelectMenu;
+/* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
+
+/***/ }),
+
+/***/ "./src/components/selectMenu/style.css":
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__("./node_modules/css-loader/index.js!./src/components/selectMenu/style.css");
+if(typeof content === 'string') content = [[module.i, content, '']];
+// add the styles to the DOM
+var update = __webpack_require__("./node_modules/style-loader/addStyles.js")(content, {});
+if(content.locals) module.exports = content.locals;
+// Hot Module Replacement
+if(true) {
+	// When the styles change, update the <style> tags
+	if(!content.locals) {
+		module.hot.accept("./node_modules/css-loader/index.js!./src/components/selectMenu/style.css", function() {
+			var newContent = __webpack_require__("./node_modules/css-loader/index.js!./src/components/selectMenu/style.css");
+			if(typeof newContent === 'string') newContent = [[module.i, newContent, '']];
+			update(newContent);
+		});
+	}
+	// When the module is disposed, remove the <style> tags
+	module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+
 /***/ "./src/config.js":
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -109002,9 +109190,6 @@ var Home = _wrapComponent('Home')(function (_Component) {
             var screenWeight = document.documentElement.clientWidth;
             console.log(screenWeight, screenHeight);
             document.getElementById("section").style.height = screenHeight - 80 - 40 + 'px';
-            this.props.actions.getUserBasicInfo({
-                body: {}
-            });
         }
     }, {
         key: 'exitOut',
@@ -109272,8 +109457,8 @@ var LoginForm = _wrapComponent('LoginForm')(function (_Component) {
                                     userName: data[0].name
                                 }
                             });
+                            _this.props.actions.push('home');
                             //真实数据的时候可以去掉此判断，判断已在后台执行
-                            var data1 = JSON.parse(data);
                             //if(values.userName == data1.UserName){
                             //    if(values.password == data1.Password){
                             //        sessionStorage.setItem('token', 'idiil')
@@ -109854,6 +110039,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _pagination = __webpack_require__("./node_modules/antd/lib/pagination/index.js");
+
+var _pagination2 = _interopRequireDefault(_pagination);
+
 var _index = __webpack_require__("./node_modules/redbox-react/lib/index.js");
 
 var _index2 = _interopRequireDefault(_index);
@@ -109872,6 +110061,12 @@ var _index6 = _interopRequireDefault(_index5);
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+__webpack_require__("./node_modules/antd/lib/pagination/style/css.js");
+
+var _classnames = __webpack_require__("./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _reactRedux = __webpack_require__("./node_modules/react-redux/lib/index.js");
 
 var _redux = __webpack_require__("./node_modules/redux/es/index.js");
@@ -109879,6 +110074,10 @@ var _redux = __webpack_require__("./node_modules/redux/es/index.js");
 var _reactRouterRedux = __webpack_require__("./node_modules/react-router-redux/lib/index.js");
 
 var _math = __webpack_require__("./src/redux/actions/math.js");
+
+var _selectMenu = __webpack_require__("./src/components/selectMenu/selectMenu.js");
+
+var _selectMenu2 = _interopRequireDefault(_selectMenu);
 
 __webpack_require__("./src/container/front/page_modules/math/question_style.css");
 
@@ -109891,8 +110090,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
 var _components = {
-    Exam: {
-        displayName: 'Exam'
+    Question: {
+        displayName: 'Question'
     }
 };
 
@@ -109915,73 +110114,1111 @@ function _wrapComponent(id) {
         return _DGaojuMidexamReactNode_modulesReactTransformHmrLibIndexJs2(_DGaojuMidexamReactNode_modulesReactTransformCatchErrorsLibIndexJs2(Component, id), id);
     };
 } /**
-   * 模考试题
+   * 试题
    * Created by gaoju on 2017/11/29.
    */
 
 
-var Exam = _wrapComponent('Exam')(function (_Component) {
-    _inherits(Exam, _Component);
+var Question = _wrapComponent('Question')(function (_Component) {
+    _inherits(Question, _Component);
 
-    function Exam(props) {
-        _classCallCheck(this, Exam);
+    function Question(props) {
+        _classCallCheck(this, Question);
 
-        var _this = _possibleConstructorReturn(this, (Exam.__proto__ || Object.getPrototypeOf(Exam)).call(this, props));
+        var _this = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
+
+        _this.onChange = function (page) {
+            console.log(page);
+            _this.setState({
+                current: page
+            });
+        };
 
         _this.state = {
-            dataAll: []
-
+            JSON_aLL: "Exam_19008687-3c57-4105-8b6c-18205a4616a3.json", //某套题的JSON串，可取到某套试题的所有数据
+            current: 1,
+            AnalysisFlag: true,
+            AnswerFlag: false,
+            Exercise1Flag: false,
+            Exercise2Flag: false
         };
         return _this;
     }
 
-    _createClass(Exam, [{
+    _createClass(Question, [{
         key: 'componentDidMount',
-        value: function componentDidMount() {
-            var _this2 = this;
-
-            this.props.actions.getExamList({
-                success: function success(data) {
-                    console.log("getQuestionList success-->:" + data);
-                    _this2.setState({ dataAll: JSON.parse(data) });
-                },
-                error: function error(mes) {
-                    console.error('数据接收发生错误');
-                }
-            });
+        value: function componentDidMount() {}
+    }, {
+        key: 'requestQuestion',
+        value: function requestQuestion(type) {
+            console.log(type);
+            switch (type) {
+                case 'Analysis':
+                    this.setState({ AnalysisFlag: true, AnswerFlag: false, Exercise1Flag: false, Exercise2Flag: false });
+                    break;
+                case 'Answer':
+                    this.setState({ AnalysisFlag: false, AnswerFlag: true, Exercise1Flag: false, Exercise2Flag: false });
+                    break;
+                case 'Exercise1':
+                    this.setState({ AnalysisFlag: false, AnswerFlag: false, Exercise1Flag: true, Exercise2Flag: false });
+                    break;
+                case 'Exercise2':
+                    this.setState({ AnalysisFlag: false, AnswerFlag: false, Exercise1Flag: false, Exercise2Flag: true });
+                    break;
+                default:
+                    break;
+            }
         }
     }, {
-        key: 'render',
-        value: function render() {
-            var dataAll = this.state.dataAll;
+        key: 'handleSkip',
+        value: function handleSkip() {
+            alert("skip");
+        }
+    }, {
+        key: '_contentQtxt',
+        value: function _contentQtxt() {
             return _react3.default.createElement(
                 'div',
                 null,
                 _react3.default.createElement(
-                    'header',
+                    'ul',
                     null,
                     _react3.default.createElement(
-                        'h2',
+                        'li',
                         null,
-                        'idiil\u6A21\u8003\u8BD5\u9898'
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '24\uFF0E\u5982\u56FE\uFF0C\u77E9\u5F62ABCD\u7684\u5BF9\u89D2\u7EBFAC\u3001BD\u76F8\u4EA4\u4E8E\u70B9O\uFF0C\u25B3COD\u5173\u4E8ECD\u7684\u5BF9\u79F0\u56FE\u5F62\u4E3A\u25B3CED\u3002'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            _react3.default.createElement('img', { src: 'public/images/img/01.png' })
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '1\uFF09\u6C42\u8BC1\uFF1A\u56DB\u8FB9\u5F62OCED\u662F\u83F1\u5F62\uFF1B'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '2\uFF09\u8FDE\u63A5AE\uFF0C\u82E5AB = 6cm\uFF0CBC = cm\u3002'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u6C42sin\u2220EAD\u7684\u503C\uFF1B'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            ' \u82E5\u70B9P\u4E3A\u7EBF\u6BB5AE\u4E0A\u4E00\u52A8\u70B9\uFF08\u4E0D\u4E0E\u70B9A\u91CD\u5408\uFF09\uFF0C\u8FDE\u63A5OP\uFF0C\u4E00\u52A8\u70B9Q\u4ECE\u70B9O\u51FA\u53D1\uFF0C\u4EE51cm/s\u7684\u901F\u5EA6\u6CBF\u7EBF\u6BB5OP\u5300\u901F\u8FD0\u52A8\u5230\u70B9P\uFF0C\u518D\u4EE51.5cm/s\u7684\u901F\u5EA6\u6CBF\u7EBF\u6BB5PA\u5300\u901F\u8FD0\u52A8\u5230\u70B9A\uFF0C\u5230\u8FBE\u70B9A\u540E\u505C\u6B62\u8FD0\u52A8\u3002\u5F53\u70B9Q\u6CBF\u4E0A\u8FF0\u8DEF\u7EBF\u8FD0\u52A8\u5230\u70B9A\u6240\u9700\u8981\u7684\u65F6\u95F4\u6700\u77ED\u65F6\uFF0C\u6C42AP\u7684\u957F\u548C\u70B9Q\u8D70\u5B8C\u5168\u7A0B\u6240\u9700\u7684\u65F6\u95F4\u3002'
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: '_analysisQtxt',
+        value: function _analysisQtxt(data) {
+
+            return _react3.default.createElement(
+                'div',
+                null,
+                _react3.default.createElement(
+                    'div',
+                    { id: 'observer' },
+                    _react3.default.createElement(
+                        'ul',
+                        null,
+                        _react3.default.createElement(
+                            'li',
+                            null,
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                _react3.default.createElement(
+                                    'b',
+                                    null,
+                                    '\u3010\u89C2\u5BDF\u60F3\u6CD5\u3011'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '[\u77E9\u5F62\u7EFC\u5408\u9898]'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '\u77E9\u5F62\u7684\u5BF9\u89D2\u7EBF\u76F8\u7B49\u4E14\u4E92\u76F8\u5E73\u5206\uFF0C\u5219CO = DO\uFF0C\u53C8\u25B3COD\u4E0E\u25B3CED\u5173\u4E8E\u76F4\u7EBFCD\u5BF9\u79F0\uFF0C\u6240\u4EE5\u56DB\u8FB9\u5F62OCED\u7684\u56DB\u6761\u8FB9\u90FD\u76F8\u7B49\u3002'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '\u8981\u6C42sin\u2220EAD\u7684\u503C\uFF0C\u5C31\u9700\u8981\u8003\u8651\u6216\u8005\u6784\u9020\u76F4\u89D2\u4E09\u89D2\u5F62\u3002\u82E5\u8BBEAE\u4E0ECD\u76F8\u4EA4\u4E8E\u70B9K\uFF0C\u8003\u8651Rt\u25B3ADK\uFF0C\u5219sin\u2220EAD =DK/AK  \uFF0C\u9700\u8BBE\u6CD5\u6C42\u51FADK\u4E0EAK\u7684\u957F\u3002\u6216\u8005\uFF0C\u8FC7\u70B9E\u4F5CAD\u7684\u5782\u7EBF\uFF0C\u4EA4AD\u7684\u5EF6\u957F\u7EBF\u4E8E\u70B9F\uFF0C\u8003\u8651Rt\u25B3AEF\uFF0C\u5219sin\u2220EAD =EF/AE \uFF0C \u4E0D\u96BE\u77E5\u9053EF = ',
+                                _react3.default.createElement('input', { type: 'text', className: 'input_blank' }),
+                                _react3.default.createElement(
+                                    'button',
+                                    { className: 'skipText', onClick: this.handleSkip },
+                                    '?'
+                                ),
+                                '\uFF0CAF=3/2 \uFF0C\u5229\u7528\u52FE\u80A1\u5B9A\u7406\u53EF\u6C42AE\u7684\u957F\uFF0C\u6240\u4EE5\uFF0C\u6B64\u79CD\u65B9\u6CD5\u4E5F\u884C\u7684\u901A\u3002'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                _react3.default.createElement('img', { src: 'public/images/img/04.png' })
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '\u6700\u540E\u7684\u52A8\u70B9\u95EE\u9898\u3002\u5982\u4E0B\u56FE\u6240\u793A\uFF0C\u70B9Q\u8FD0\u52A8\u6240\u9700\u7684\u65F6\u95F4t = OP/1 +AP/3 = OP + 2/3*AP\uFF08\u79D2\uFF09\uFF0C\u5982\u4F55\u6C42\u5176\u6700\u5C0F\u503C\u5462\uFF1F\u53EF\u80FD\u6709\u4E24\u4E2A\u65B9\u5411\uFF0C\u4E00\u4E2A\u662F\u5EFA\u7ACB\u76F4\u89D2\u5750\u6807\u7CFB\uFF0C \u6C42\u5173\u4E8Et\u7684\u51FD\u6570\u8868\u8FBE\u5F0F\uFF0C\u8FD9\u53EF\u80FD\u4F1A\u6709\u70B9\u7E41\u7410\uFF1B\u53E6\u4E00\u4E2A\u662F\u5229\u7528\u51E0\u4F55\u6027\u8D28\uFF0C\u5BFB\u6C42\u5C06OP\u6216\u8005AP\u7684\u8F6C\u5316\u4E3A\u66F4\u5BB9\u6613\u8BA1\u7B97\u7684\u67D0\u6761\u8FB9\uFF0C\u8FD9\u53EF\u80FD\u9700\u6C42\u7ED3\u5408\u524D\u8FF0\u7684\u6761\u4EF6\uFF0C\u6BD4\u5982sin\u2220EAD\u7684\u503C\u3002'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                _react3.default.createElement('img', { src: 'public/images/img/05.png' })
+                            )
+                        )
+                    )
+                ),
+                _react3.default.createElement(
+                    'div',
+                    { id: 'testSites', style: { border: "1px solid #ddd", backgroundColor: "white", margin: "5px 0" } },
+                    _react3.default.createElement(
+                        'div',
+                        { style: { padding: "10px" } },
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            _react3.default.createElement(
+                                'b',
+                                null,
+                                '\u3010\u8003\u70B9\uFF1A\u3011'
+                            )
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            { style: { marginLeft: "10px" } },
+                            _react3.default.createElement(
+                                'label',
+                                null,
+                                _react3.default.createElement('input', { type: 'checkbox' }),
+                                '\u77E9\u5F62\u7684\u6027\u8D28'
+                            ),
+                            _react3.default.createElement(
+                                'label',
+                                null,
+                                _react3.default.createElement('input', { type: 'checkbox' }),
+                                '\u8F74\u5BF9\u79F0'
+                            ),
+                            _react3.default.createElement(
+                                'label',
+                                null,
+                                _react3.default.createElement('input', { type: 'checkbox' }),
+                                '\u83F1\u5F62\u7684\u5224\u5B9A'
+                            ),
+                            _react3.default.createElement(
+                                'label',
+                                null,
+                                _react3.default.createElement('input', { type: 'checkbox' }),
+                                '\u4E09\u89D2\u51FD\u6570'
+                            ),
+                            _react3.default.createElement(
+                                'label',
+                                null,
+                                _react3.default.createElement('input', { type: 'checkbox' }),
+                                '\u52FE\u80A1\u5B9A\u7406'
+                            ),
+                            _react3.default.createElement(
+                                'label',
+                                null,
+                                _react3.default.createElement('input', { type: 'checkbox' }),
+                                '\u52A8\u70B9\u95EE\u9898'
+                            ),
+                            _react3.default.createElement(
+                                'label',
+                                null,
+                                _react3.default.createElement('input', { type: 'checkbox' }),
+                                '\u6700\u503C\u95EE\u9898'
+                            )
+                        )
+                    ),
+                    _react3.default.createElement(
+                        'div',
+                        null,
+                        _react3.default.createElement(
+                            'ul',
+                            null,
+                            _react3.default.createElement(
+                                'li',
+                                null,
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '1\uFF09\u77E9\u5F62\u7684\u6027\u8D28'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement(
+                                        'b',
+                                        null,
+                                        '\u77E9\u5F62\u7684\u6027\u8D28\u53CA\u5176\u5224\u5B9A'
+                                    )
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u5B9A\u4E49\uFF1A\u6709\u4E00\u4E2A\u89D2\u662F\u76F4\u89D2\u7684\u5E73\u884C\u56DB\u8FB9\u5F62\u662F\u77E9\u5F62\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement(
+                                        'b',
+                                        null,
+                                        '\u6027\u8D28\uFF1A'
+                                    )
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2460 \u77E9\u5F62\u6709\u5E73\u884C\u56DB\u8FB9\u5F62\u7684\u4E00\u5207\u6027\u8D28\uFF1B'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2461 \u77E9\u5F62\u7684\u56DB\u4E2A\u89D2\u90FD\u662F\u76F4\u89D2\uFF1B'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2462 \u77E9\u5F62\u7684\u5BF9\u89D2\u7EBF\u76F8\u7B49\u4E14\u4E92\u76F8\u5E73\u5206\uFF1B'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2463 \u77E9\u5F62\u65E2\u662F\u4E2D\u5FC3\u5BF9\u79F0\u56FE\u5F62\u53C8\u662F\u8F74\u5BF9\u79F0\u56FE\u5F62\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement(
+                                        'b',
+                                        null,
+                                        '\u5224\u5B9A\u5B9A\u7406\uFF1A'
+                                    )
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2460 \u6709\u4E00\u4E2A\u89D2\u662F\u76F4\u89D2\u7684\u5E73\u884C\u56DB\u8FB9\u5F62\u53EB\u505A\u77E9\u5F62\uFF08\u5B9A\u4E49\uFF09\uFF1B'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2461 \u5BF9\u89D2\u7EBF\u76F8\u7B49\u7684\u5E73\u884C\u56DB\u8FB9\u5F62\u662F\u77E9\u5F62\uFF1B'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2462 \u6709\u4E09\u4E2A\u89D2\u662F\u76F4\u89D2\u7684\u56DB\u8FB9\u5F62\u662F\u77E9\u5F62\u3002'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'li',
+                                null,
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement(
+                                        'b',
+                                        null,
+                                        '\u8F74\u5BF9\u79F0'
+                                    )
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u5B9A\u4E49\uFF1A\u628A\u4E00\u4E2A\u56FE\u5F62\u6CBF\u67D0\u4E00\u6761\u76F4\u7EBF\u6298\u53E0\uFF0C\u5982\u679C\u80FD\u591F\u4E0E\u53E6\u4E00\u4E2A\u56FE\u5F62\u5B8C\u5168\u91CD\u5408\uFF0C\u90A3\u4E48\u5C31\u8BF4\u8FD9\u4E24\u4E2A\u56FE\u5F62\u5173\u4E8E\u8FD9\u6761\u76F4\u7EBF\uFF08\u6210\u8F74\uFF09\u5BF9\u79F0\uFF0C\u8FD9\u6761\u76F4\u7EBF\u5C31\u662F\u5BF9\u79F0\u8F74\uFF0C\u4E24\u4E2A\u56FE\u5F62\u7684\u5BF9\u5E94\u70B9\u53EB\u505A\u5BF9\u79F0\u70B9\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement(
+                                        'b',
+                                        null,
+                                        '\u8F74\u5BF9\u79F0\u7684\u6027\u8D28\uFF1A'
+                                    )
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2460 \u5173\u4E8E\u67D0\u76F4\u7EBF\u5BF9\u79F0\u7684\u4E24\u4E2A\u56FE\u5F62\u662F\u5168\u7B49\u5F62\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2461 \u8F74\u5BF9\u79F0\u56FE\u5F62\u7684\u5BF9\u79F0\u8F74\uFF0C\u662F\u4EFB\u4F55\u4E00\u5BF9\u5BF9\u5E94\u70B9\u6240\u8FDE\u7EBF\u6BB5\u7684\u5782\u76F4\u5E73\u5206\u7EBF\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2462 \u6210\u8F74\u5BF9\u79F0\u7684\u4E24\u4E2A\u56FE\u5F62\uFF0C\u5B83\u4EEC\u7684\u5BF9\u5E94\u7EBF\u6BB5\u6216\u5EF6\u957F\u7EBF\u76F8\u4EA4\uFF0C\u4EA4\u70B9\u5728\u5BF9\u79F0\u8F74\u4E0A\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement(
+                                        'b',
+                                        null,
+                                        '\u4E3E\u4F8B\uFF1A'
+                                    )
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2460 '
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2461'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'li',
+                                null,
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement(
+                                        'b',
+                                        null,
+                                        '\u83F1\u5F62\u7684\u6027\u8D28\u53CA\u5176\u5224\u5B9A'
+                                    )
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u83F1\u5F62\uFF1A\u5728\u540C\u4E00\u5E73\u9762\u5185\uFF0C\u6709\u4E00\u7EC4\u90BB\u8FB9\u76F8\u7B49\u7684\u5E73\u884C\u56DB\u8FB9\u5F62\u662F\u83F1\u5F62\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u6027\u8D28\uFF1A\u2460 \u83F1\u5F62\u6709\u5E73\u884C\u56DB\u8FB9\u5F62\u7684\u4E00\u5207\u6027\u8D28\uFF1B \u2461\u83F1\u5F62\u7684\u56DB\u6761\u8FB9\u90FD\u76F8\u7B49\uFF1B\u2462\u83F1\u5F62\u7684\u4E24\u6761\u5BF9\u89D2\u7EBF\u4E92\u76F8\u5782\u76F4\u5E73\u5206\uFF0C\u5E76\u4E14\u6BCF\u4E00\u6761\u5BF9\u89D2\u7EBF\u5E73\u5206\u4E00\u7EC4\u5BF9\u89D2\u3002\u2462 \u77E9\u5F62\u65E2\u662F\u4E2D\u5FC3\u5BF9\u79F0\u56FE\u5F62\u53C8\u662F\u8F74\u5BF9\u79F0\u56FE\u5F62\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement(
+                                        'b',
+                                        null,
+                                        '\u5224\u5B9A\u5B9A\u7406\uFF1A'
+                                    )
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2460 \u4E00\u7EC4\u90BB\u8FB9\u76F8\u7B49\u7684\u5E73\u884C\u56DB\u8FB9\u5F62\u662F\u83F1\u5F62\uFF08\u5B9A\u4E49\uFF09\uFF1B'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2461 \u5BF9\u89D2\u7EBF\u4E92\u76F8\u5782\u76F4\u7684\u5E73\u884C\u56DB\u8FB9\u5F62\u662F\u83F1\u5F62\uFF1B '
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2462 \u56DB\u6761\u8FB9\u76F8\u7B49\u7684\u56DB\u8FB9\u5F62\u662F\u83F1\u5F62\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u9762\u79EF\u8BA1\u7B97\uFF1A\u2460\u8FB9\u957F\xD7\u9AD8\uFF1B\u2461 \u4E24\u6761\u5BF9\u89D2\u7EBF\u4E58\u79EF\u7684\u4E00\u534A\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u4E3E\u4F8B\uFF1A'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2460'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2461'
+                                )
+                            )
+                        ),
+                        _react3.default.createElement(
+                            'ul',
+                            null,
+                            _react3.default.createElement(
+                                'li',
+                                null,
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '2\uFF09\u4E09\u89D2\u51FD\u6570\uFF0C\u52FE\u80A1\u5B9A\u7406\uFF1B\u52A8\u70B9\u95EE\u9898\uFF0C\u6700\u503C\u95EE\u9898'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'li',
+                                null,
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement(
+                                        'b',
+                                        null,
+                                        '\u9510\u89D2\u4E09\u89D2\u51FD\u6570'
+                                    )
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u5982\u56FE\uFF0C\u5728Rt\u25B3ABC\u4E2D\uFF0C\u2220C=90\xB0\uFF0C\u2220A\u3001\u2220B\u3001\u2220C\u7684\u5BF9\u8FB9\u5206\u522B\u8BB0\u4F5Ca\u3001b\u3001c\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement('img', { src: 'public/images/img/02.png' })
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2220A\u7684\u6B63\u5F26\uFF0C\u8BB0\u4F5CsinA\uFF0C\u6709sinA= ',
+                                    _react3.default.createElement('input', { type: 'text', className: 'input_blank' }),
+                                    '  \uFF1B'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2220A\u7684\u4F59\u5F26\uFF0C\u8BB0\u4F5CcosA\uFF0C\u6709cosA= ',
+                                    _react3.default.createElement('input', { type: 'text', className: 'input_blank' }),
+                                    '  \uFF1B'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2220A\u7684\u6B63\u5207\uFF0C\u8BB0\u4F5CtanA\uFF0C\u6709 tanA= ',
+                                    _react3.default.createElement('input', { type: 'text', className: 'input_blank' }),
+                                    ' \uFF1B'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2220A\u7684\u4F59\u5207\uFF0C\u8BB0\u4F5CcotA\uFF0C\u6709 cotA= ',
+                                    _react3.default.createElement('input', { type: 'text', className: 'input_blank' }),
+                                    '  \u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2220A\u7684\u6B63\u5F26\u3001\u4F59\u5F26\u3001\u6B63\u5207\u3001\u4F59\u5207\u90FD\u662F\u2220A\u7684\u9510\u89D2\u4E09\u89D2\u51FD\u6570\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u6613\u77E5sin2A+cos2A =1\uFF0Ctan A= ',
+                                    _react3.default.createElement('input', { type: 'text', className: 'input_blank' }),
+                                    '\uFF0Ccot A= ',
+                                    _react3.default.createElement('input', { type: 'text', className: 'input_blank' }),
+                                    '\uFF0CtanA\xD7cotA = 1\u3002'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'li',
+                                null,
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement(
+                                        'b',
+                                        null,
+                                        '\u52FE\u80A1\u5B9A\u7406'
+                                    )
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u52FE\u80A1\u5B9A\u7406\uFF1A\u76F4\u89D2\u4E09\u89D2\u5F62\u7684\u4E24\u6761\u76F4\u89D2\u8FB9\u7684\u5E73\u65B9\u548C\u7B49\u4E8E\u659C\u8FB9\u7684\u5E73\u65B9\u3002 \u5982\u4E0B\u56FE\u6240\u793A\uFF0C\u76F4\u89D2\u4E09\u89D2\u5F62\u4E24\u76F4\u89D2\u8FB9\u5206\u522B\u4E3Aa\u3001b\uFF0C\u659C\u8FB9\u4E3Ac\uFF0C\u5219\u6709a2 + b2 = c2\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement('img', { src: 'public/images/img/03.png' })
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u52FE\u80A1\u6570\u5C31\u662F\u53EF\u4EE5\u6784\u6210\u4E00\u4E2A\u76F4\u89D2\u4E09\u89D2\u5F62\u4E09\u8FB9\u7684\u4E00\u7EC4\u6B63\u6574\u6570\u3002\u5E38\u89C1\u7684\u52FE\u80A1\u6570\uFF0C\u67093\u30014\u30015\uFF1B6\u30018\u300110\uFF1B5\u300112\u300113\u7B49\u7B49\u3002'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement(
+                                        'b',
+                                        null,
+                                        '\u4E3E\u4F8B\uFF1A'
+                                    )
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2460'
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u2461'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'li',
+                                null,
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    _react3.default.createElement(
+                                        'b',
+                                        null,
+                                        '\u52A8\u70B9\u95EE\u9898\u7684\u4E00\u822C\u601D\u8DEF'
+                                    )
+                                ),
+                                _react3.default.createElement(
+                                    'p',
+                                    null,
+                                    '\u4E00\u822C\u78B0\u5230\u52A8\u70B9\u95EE\u9898\uFF0C\u6211\u4EEC\u90FD\u9700\u8981\u627E\u51FA\u5176\u53D8\u91CF\u548C\u4E0D\u53D8\u91CF\uFF0C\u5BF9\u4E8E\u53D8\u91CF\uFF0C\u53EF\u4EE5\u89C2\u5BDF\u5176\u6781\u9650\u4F4D\u7F6E\u3001\u7279\u6B8A\u4F4D\u7F6E\u6216\u5176\u52A8\u6001\u53D8\u5316\u7684\u8FC7\u7A0B\uFF0C \u770B\u80FD\u5426\u627E\u5230\u7279\u6B8A\u503C\u6216\u8005\u5BF9\u5176\u8FDB\u884C\u8F6C\u5316\uFF1B\u5BF9\u4E8E\u4E0D\u53D8\u91CF\uFF0C\u9700\u8981\u8054\u60F3\u5230\u4E0E\u4E0D\u53D8\u91CF\u76F8\u5173\u7684\u7ED3\u8BBA\u6216\u5B9A\u7406\uFF0C\u770B\u662F\u5426\u80FD\u7528\u5F97\u4E0A\u3002'
+                                )
+                            )
+                        )
+                    )
+                ),
+                _react3.default.createElement(
+                    'div',
+                    { id: 'analysis' },
+                    _react3.default.createElement(
+                        'ul',
+                        null,
+                        _react3.default.createElement(
+                            'li',
+                            null,
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                _react3.default.createElement(
+                                    'b',
+                                    null,
+                                    '\u63D0\u793A\u5206\u6790'
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '1\uFF09\u7531\u77E9\u5F62\u7684\u6027\u8D28\uFF0CCO = DO\uFF0C\u518D\u7ED3\u5408\u25B3COD\u4E0E\u25B3CED\u7684\u5BF9\u79F0\u6027\uFF0C\u53EF\u77E5\u56DB\u8FB9\u5F62OCED\u7684\u56DB\u6761\u8FB9\u90FD\u76F8\u7B49\u3002'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '2\uFF09 \u2460 \u6C42sin\u2220EAD\u7684\u503C\uFF0C\u6709\u4E24\u79CD\u65B9\u6CD5\uFF0C\u5982\u4E0B\u56FE\u6240\u793A\uFF1A'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                _react3.default.createElement('img', { src: 'public/images/img/04.png' })
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '\u65B9\u6CD5\u4E00\uFF1A\u82E5\u8BBEAE\u4E0ECD\u76F8\u4EA4\u4E8E\u70B9K\uFF0C\u8003\u8651Rt\u25B3ADK\uFF0Csin\u2220EAD =  \uFF0C\u8BBE\u6CD5\u6C42\u51FADK\u4E0EAK\u7684\u957F\u3002\u83F1\u5F62\u7684\u5BF9\u8FB9\u5E73\u884C\uFF0C\u6240\u4EE5DE//AC\uFF0C\u4E8E\u662F = = \uFF0C\u53EF\u6C42\u5F97DK= ',
+                                _react3.default.createElement('input', { type: 'text', className: 'input_blank' }),
+                                ' \uFF0CAD\u5DF2\u77E5\uFF0C\u5229\u7528\u52FE\u80A1\u5B9A\u7406\u53EF\u6C42AK\u7684\u957F\u3002'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '\u65B9\u6CD5\u4E8C\uFF1A\u8FC7\u70B9E\u4F5CAD\u7684\u5782\u7EBF\uFF0C\u4EA4AD\u7684\u5EF6\u957F\u7EBF\u4E8E\u70B9F\uFF0C\u8003\u8651Rt\u25B3AEF\uFF0Csin\u2220EAD = \uFF0C\u4E0D\u96BE\u77E5\u9053EF = blank \uFF0CAF= \uFF0C\u5229\u7528\u52FE\u80A1\u5B9A\u7406\u53EF\u6C42AE\u7684\u957F\u3002'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '\u2461\u7531\u9898\u610F\uFF0C\u7ED3\u5408\u4E0B\u56FE\uFF0C\u70B9Q\u8FD0\u52A8\u6240\u9700\u7684\u65F6\u95F4t =  + = OP + AP\uFF08\u79D2\uFF09\u3002'
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                _react3.default.createElement('img', { src: 'public/images/img/05.png' })
+                            ),
+                            _react3.default.createElement(
+                                'p',
+                                null,
+                                '\u4F5CPG\u22A5AD\u4E8E\u70B9G\uFF0C\u5B9E\u9645\u4E0A\uFF0C\u7531 \u2460 \u7684\u7ED3\u8BBA\uFF0CPG = AP\xB7sin\u2220EAD =  AP\uFF0C\u6240\u4EE5t = OP + AP = OP +',
+                                _react3.default.createElement('input', { type: 'text', className: 'input_blank' }),
+                                '\uFF08\u79D2\uFF09\u3002\u4E0D\u96BE\u77E5\u9053\uFF0C\u5F53O\u3001P\u3001F\u4E09\u70B9\u5171\u7EBF\u65F6\uFF0COP+PF \u7684\u503C\u6700\u5C0F\u3002\u6B64\u65F6\u70B9F\u662FAD\u7684\u4E2D\u70B9\uFF0C\u4E0D\u96BE\u6C42\u5F97AP\u7684\u957F\u3002'
+                            )
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: '_answerQtxt',
+        value: function _answerQtxt() {
+            return _react3.default.createElement(
+                'div',
+                null,
+                _react3.default.createElement(
+                    'ul',
+                    null,
+                    _react3.default.createElement(
+                        'li',
+                        null,
+                        _react3.default.createElement(
+                            'h2',
+                            null,
+                            '\u6807\u51C6\u7B54\u6848'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            _react3.default.createElement(
+                                'b',
+                                null,
+                                '\u8BC1\u660E\uFF1A'
+                            )
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u2235ABCD\u662F\u77E9\u5F62\uFF0C'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u2234AO= BO = CO= DO\uFF0C'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u2235\u25B3COD\u4E0E\u25B3CED\u5173\u4E8ECD\u5BF9\u79F0\uFF0C'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u2234DE = DO\uFF0CCE = blank \uFF0C'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u2234DE = CE = DO = CO\uFF0C'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u2234\u56DB\u8FB9\u5F62OCED\u662F\u83F1\u5F62\u3002'
+                        )
+                    ),
+                    _react3.default.createElement(
+                        'li',
+                        null,
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '2\uFF09\u89E3\uFF1A'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u2460 \u6C42sin\u2220EAD\u7684\u503C\uFF0C\u6709\u4E24\u79CD\u65B9\u6CD5\uFF0C\u5982\u4E0B\u56FE\uFF1A'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            _react3.default.createElement('img', { src: 'public/images/img/04.png' })
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u65B9\u6CD5\u4E00\uFF1A\u8BBEAE\u4E0ECD\u76F8\u4EA4\u4E8E\u70B9K\uFF0C\u8003\u8651Rt\u25B3ADK\uFF0C\u5219sin\u2220EAD =  \u3002'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u2235\u56DB\u8FB9\u5F62OCED\u662F\u83F1\u5F62\uFF0C'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u2234 DE//AC\uFF0CDE = CO = AO\uFF0C'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u2234 DK/DF=DE/AC =1/2 \uFF0C'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u2235AB = CD=6\uFF0C'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u2234DK= blank \uFF0C'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u5728Rt\u25B3ADK\u4E2D\uFF0CAD = BC =  \uFF0C\u7531\u52FE\u80A1\u5B9A\u7406\uFF0C\u5F97AK=  = blank \uFF0C'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u6240\u4EE5\uFF0Csin\u2220EAD = = \u3002'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u65B9\u6CD5\u4E8C\uFF1A\u8FC7\u70B9E\u4F5CAD\u7684\u5782\u7EBF\uFF0C\u4EA4AD\u7684\u5EF6\u957F\u7EBF\u4E8E\u70B9F\uFF0C\u8003\u8651Rt\u25B3AEF\uFF0Csin\u2220EAD = \u3002\u6613\u77E5EF = 3\uFF0CAF= \uFF0C\u7531\u52FE\u80A1\u5B9A\u7406\uFF0CAE = =  \uFF0C\u4ECE\u800C\uFF0C\u6C42\u5F97sin\u2220EAD = = \u3002'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u4F5CPG\u22A5AD\u4E8E\u70B9G\uFF0C\u5982\u4E0B\u56FE\u6240\u793A\uFF1A'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            _react3.default.createElement('img', { src: 'public/images/img/05.png' })
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u7531 \u2460 \u7684\u7ED3\u8BBA\uFF0CPG = AP\xB7sin\u2220EAD =  AP\uFF0C\u6240\u4EE5\u70B9Q\u8FD0\u52A8\u6240\u9700\u7684\u65F6\u95F4t =  + = OP + AP = OP + blank \uFF08\u79D2\uFF09\u3002\u663E\u7136\uFF0C\u5F53O\u3001P\u3001F\u4E09\u70B9\u5171\u7EBF\u65F6\uFF0COP+PF \u7684\u503C\u6700\u5C0F\u3002\u6B64\u65F6\u70B9F\u662FAD\u7684\u4E2D\u70B9\uFF0C PF\u662F\u25B3ADK\u7684\u4E2D\u4F4D\u7EBF\uFF0COP+PF= OF =  CD = 3\uFF0C\u5373\u70B9Q\u8D70\u5B8C\u5168\u7A0B\u6240\u9700\u7684\u6700\u77ED\u65F6\u95F4\u4E3Ablank \u79D2\u3002\u800CAP = AK = \u3002'
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: '_exercise1Qtxt',
+        value: function _exercise1Qtxt() {
+            return _react3.default.createElement(
+                'div',
+                null,
+                _react3.default.createElement(
+                    'ul',
+                    null,
+                    _react3.default.createElement(
+                        'li',
+                        null,
+                        _react3.default.createElement(
+                            'h2',
+                            null,
+                            '\u5DE9\u56FA\u8BAD\u7EC3'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\uFF081\uFF09\u3001  \u5DF2\u77E5\uFF1A\u5982\u56FE\uFF0C\u77E9\u5F62ABCD\u7684\u5BF9\u89D2\u7EBFAB\u3001BD\u76F8\u4EA4\u4E8E\u70B9O\uFF0CDE//CA\uFF0CAE//BD\u3002\u6C42\u8BC1\uFF1A\u56DB\u8FB9\u5F62AODE\u662F\u83F1\u5F62\u3002 '
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            _react3.default.createElement('img', { src: 'public/images/img/10.png' })
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            ' [\u8003\u70B9]\uFF1A'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u77E9\u5F62\u7684\u6027\u8D28\u53CA\u5176\u5224\u5B9A\u3001\u83F1\u5F62\u7684\u6027\u8D28\u53CA\u5176\u5224\u5B9A\u3001\u5E73\u884C\u56DB\u8FB9\u5F62 '
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u8981\u6C42sin\u2220EAD\u7684\u503C\uFF0C\u5C31\u9700\u8981\u8003\u8651\u6216\u8005\u6784\u9020\u76F4\u89D2\u4E09\u89D2\u5F62\u3002\u82E5\u8BBEAE\u4E0ECD\u76F8\u4EA4\u4E8E\u70B9K\uFF0C\u8003\u8651Rt\u25B3ADK\uFF0C\u5219sin\u2220EAD =DK/AK  \uFF0C\u9700\u8BBE\u6CD5\u6C42\u51FADK\u4E0EAK\u7684\u957F\u3002\u6216\u8005\uFF0C\u8FC7\u70B9E\u4F5CAD\u7684\u5782\u7EBF\uFF0C\u4EA4AD\u7684\u5EF6\u957F\u7EBF\u4E8E\u70B9F\uFF0C\u8003\u8651Rt\u25B3AEF\uFF0C\u5219sin\u2220EAD =EF/AE \uFF0C\u4E0D\u96BE\u77E5\u9053EF = ___ \uFF0CAF=3/2 \uFF0C\u5229\u7528\u52FE\u80A1\u5B9A\u7406\u53EF\u6C42AE\u7684\u957F\uFF0C\u6240\u4EE5\uFF0C\u6B64\u79CD\u65B9\u6CD5\u4E5F\u884C\u7684\u901A\u3002'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            _react3.default.createElement('img', { src: 'public/images/img/04.png' })
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u6700\u540E\u7684\u52A8\u70B9\u95EE\u9898\u3002\u5982\u4E0B\u56FE\u6240\u793A\uFF0C\u70B9Q\u8FD0\u52A8\u6240\u9700\u7684\u65F6\u95F4t =  + = OP + AP\uFF08\u79D2\uFF09\uFF0C\u5982\u4F55\u6C42\u5176\u6700\u5C0F\u503C\u5462\uFF1F\u53EF\u80FD\u6709\u4E24\u4E2A\u65B9\u5411\uFF0C\u4E00\u4E2A\u662F\u5EFA\u7ACB\u76F4\u89D2\u5750\u6807\u7CFB\uFF0C\u6C42\u5173\u4E8Et\u7684\u51FD\u6570\u8868\u8FBE\u5F0F\uFF0C\u8FD9\u53EF\u80FD\u4F1A\u6709\u70B9\u7E41\u7410\uFF1B\u53E6\u4E00\u4E2A\u662F\u5229\u7528\u51E0\u4F55\u6027\u8D28\uFF0C\u5BFB\u6C42\u5C06OP\u6216\u8005AP\u7684\u8F6C\u5316\u4E3A\u66F4\u5BB9\u6613\u8BA1\u7B97\u7684\u67D0\u6761\u8FB9\uFF0C\u8FD9\u53EF\u80FD\u9700\u6C42\u7ED3\u5408\u524D\u8FF0\u7684\u6761\u4EF6\uFF0C\u6BD4\u5982sin\u2220EAD\u7684\u503C\u3002'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            _react3.default.createElement('img', { src: 'public/images/img/05.png' })
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: '_exercise2Qtxt',
+        value: function _exercise2Qtxt() {
+            return _react3.default.createElement(
+                'div',
+                null,
+                _react3.default.createElement(
+                    'ul',
+                    null,
+                    _react3.default.createElement(
+                        'li',
+                        null,
+                        _react3.default.createElement(
+                            'h2',
+                            null,
+                            '\u6269\u5C55\u7EC3\u4E60'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            _react3.default.createElement(
+                                'b',
+                                null,
+                                '\u3010\u89C2\u5BDF\u60F3\u6CD5\u3011'
+                            )
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '[\u77E9\u5F62\u7EFC\u5408\u9898]'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u77E9\u5F62\u7684\u5BF9\u89D2\u7EBF\u76F8\u7B49\u4E14\u4E92\u76F8\u5E73\u5206\uFF0C\u5219CO = DO\uFF0C\u53C8\u25B3COD\u4E0E\u25B3CED\u5173\u4E8E\u76F4\u7EBFCD\u5BF9\u79F0\uFF0C\u6240\u4EE5\u56DB\u8FB9\u5F62OCED\u7684\u56DB\u6761\u8FB9\u90FD\u76F8\u7B49\u3002'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u8981\u6C42sin\u2220EAD\u7684\u503C\uFF0C\u5C31\u9700\u8981\u8003\u8651\u6216\u8005\u6784\u9020\u76F4\u89D2\u4E09\u89D2\u5F62\u3002\u82E5\u8BBEAE\u4E0ECD\u76F8\u4EA4\u4E8E\u70B9K\uFF0C\u8003\u8651Rt\u25B3ADK\uFF0C\u5219sin\u2220EAD =DK/AK  \uFF0C\u9700\u8BBE\u6CD5\u6C42\u51FADK\u4E0EAK\u7684\u957F\u3002\u6216\u8005\uFF0C\u8FC7\u70B9E\u4F5CAD\u7684\u5782\u7EBF\uFF0C\u4EA4AD\u7684\u5EF6\u957F\u7EBF\u4E8E\u70B9F\uFF0C\u8003\u8651Rt\u25B3AEF\uFF0C\u5219sin\u2220EAD =EF/AE \uFF0C\u4E0D\u96BE\u77E5\u9053EF = ___ \uFF0CAF=3/2 \uFF0C\u5229\u7528\u52FE\u80A1\u5B9A\u7406\u53EF\u6C42AE\u7684\u957F\uFF0C\u6240\u4EE5\uFF0C\u6B64\u79CD\u65B9\u6CD5\u4E5F\u884C\u7684\u901A\u3002'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            _react3.default.createElement('img', { src: 'public/images/img/04.png' })
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            '\u6700\u540E\u7684\u52A8\u70B9\u95EE\u9898\u3002\u5982\u4E0B\u56FE\u6240\u793A\uFF0C\u70B9Q\u8FD0\u52A8\u6240\u9700\u7684\u65F6\u95F4t =  + = OP + AP\uFF08\u79D2\uFF09\uFF0C\u5982\u4F55\u6C42\u5176\u6700\u5C0F\u503C\u5462\uFF1F\u53EF\u80FD\u6709\u4E24\u4E2A\u65B9\u5411\uFF0C\u4E00\u4E2A\u662F\u5EFA\u7ACB\u76F4\u89D2\u5750\u6807\u7CFB\uFF0C\u6C42\u5173\u4E8Et\u7684\u51FD\u6570\u8868\u8FBE\u5F0F\uFF0C\u8FD9\u53EF\u80FD\u4F1A\u6709\u70B9\u7E41\u7410\uFF1B\u53E6\u4E00\u4E2A\u662F\u5229\u7528\u51E0\u4F55\u6027\u8D28\uFF0C\u5BFB\u6C42\u5C06OP\u6216\u8005AP\u7684\u8F6C\u5316\u4E3A\u66F4\u5BB9\u6613\u8BA1\u7B97\u7684\u67D0\u6761\u8FB9\uFF0C\u8FD9\u53EF\u80FD\u9700\u6C42\u7ED3\u5408\u524D\u8FF0\u7684\u6761\u4EF6\uFF0C\u6BD4\u5982sin\u2220EAD\u7684\u503C\u3002'
+                        ),
+                        _react3.default.createElement(
+                            'p',
+                            null,
+                            _react3.default.createElement('img', { src: 'public/images/img/05.png' })
+                        )
+                    )
+                )
+            );
+        }
+    }, {
+        key: 'exitBack',
+        value: function exitBack() {
+            this.props.actions.push("/home/math/questions");
+        }
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var classes1 = (0, _classnames2.default)({ 'row': true, 'displaynone': !this.state.AnalysisFlag });
+            var classes2 = (0, _classnames2.default)({ 'row': true, 'displaynone': !this.state.AnswerFlag });
+            var classes3 = (0, _classnames2.default)({ 'row': true, 'displaynone': !this.state.Exercise1Flag });
+            var classes4 = (0, _classnames2.default)({ 'row': true, 'displaynone': !this.state.Exercise2Flag });
+            console.log("this.state.current------" + this.state.current);
+            return _react3.default.createElement(
+                'div',
+                { className: 'mask' },
+                _react3.default.createElement(
+                    'div',
+                    { className: 'math-question-content' },
+                    _react3.default.createElement(
+                        'header',
+                        null,
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'title', id: 'title' },
+                            '2017\u5E74\u5317\u4EAC\u5927\u5B66\u5185\u90E8\u4E13\u5BB6\u901A\u5BB5\u71AC\u591C\u51FA\u7248\u4E2D\u8003\u8003\u8BD5\u771F\u9898'
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'exit', onClick: this.exitBack.bind(this) },
+                            _react3.default.createElement(
+                                'button',
+                                { type: 'button', className: 'btn btn-default' },
+                                '\u9000\u51FA'
+                            )
+                        )
+                    ),
+                    _react3.default.createElement(
+                        'center',
+                        null,
+                        _react3.default.createElement('hr', { width: '90%', size: 2, color: 'black' })
+                    ),
+                    _react3.default.createElement(
+                        'div',
+                        { className: 'pagination_content' },
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'pagination_before' },
+                            _react3.default.createElement(_pagination2.default, { current: this.state.current, pageSize: 1, onChange: this.onChange, total: 8 })
+                        ),
+                        _react3.default.createElement('selectMenu', null),
+                        _react3.default.createElement(
+                            'div',
+                            { className: 'btnContainer', id: 'btnContainer' },
+                            _react3.default.createElement(
+                                'button',
+                                { id: 'Explain_exer', type: 'button', className: 'btn btn-primary',
+                                    onClick: function onClick() {
+                                        return _this2.requestQuestion("Analysis");
+                                    } },
+                                '\u89E3\u7B54\u5206\u6790'
+                            ),
+                            _react3.default.createElement(
+                                'button',
+                                { id: 'Explain_exer', type: 'button', className: 'btn btn-primary',
+                                    onClick: function onClick() {
+                                        return _this2.requestQuestion("Answer");
+                                    } },
+                                '\u6807\u51C6\u7B54\u6848'
+                            ),
+                            _react3.default.createElement(
+                                'button',
+                                { id: 'Exercise1_exer', type: 'button', className: 'btn btn-primary',
+                                    onClick: function onClick() {
+                                        return _this2.requestQuestion("Exercise1");
+                                    } },
+                                '\u5DE9\u56FA\u7EC3\u4E60'
+                            ),
+                            _react3.default.createElement(
+                                'button',
+                                { id: 'Exercise2_exer', type: 'button', className: 'btn btn-primary',
+                                    onClick: function onClick() {
+                                        return _this2.requestQuestion("Exercise2");
+                                    } },
+                                '\u62D3\u5C55\u7EC3\u4E60'
+                            )
+                        )
+                    ),
+                    _react3.default.createElement(
+                        'section',
+                        { className: 'QtxtContent' },
+                        _react3.default.createElement(
+                            'div',
+                            null,
+                            _react3.default.createElement(
+                                'div',
+                                { id: 'Content_Qtxt', className: 'QContet' },
+                                this._contentQtxt()
+                            )
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { id: 'Analysis_Qtxt', className: classes1 },
+                            _react3.default.createElement(
+                                'div',
+                                { className: 'content_three_left' },
+                                _react3.default.createElement(
+                                    'div',
+                                    null,
+                                    _react3.default.createElement(
+                                        'ul',
+                                        null,
+                                        _react3.default.createElement(
+                                            'li',
+                                            null,
+                                            '\u89C2\u5BDF'
+                                        ),
+                                        _react3.default.createElement(
+                                            'li',
+                                            null,
+                                            '\u8003\u70B9'
+                                        ),
+                                        _react3.default.createElement(
+                                            'li',
+                                            null,
+                                            '\u5206\u6790'
+                                        )
+                                    )
+                                )
+                            ),
+                            _react3.default.createElement(
+                                'div',
+                                { className: 'QContet content_three_right' },
+                                this._analysisQtxt()
+                            ),
+                            _react3.default.createElement('div', { style: { clear: "both" } })
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { id: 'Answer_Qtxt', className: classes2 },
+                            _react3.default.createElement(
+                                'div',
+                                { className: 'QContet content_three_right' },
+                                this._answerQtxt()
+                            ),
+                            _react3.default.createElement('div', { style: { clear: "both" } })
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { id: 'Exercise1_Qtxt', className: classes3 },
+                            _react3.default.createElement(
+                                'div',
+                                { className: 'QContet content_three_right' },
+                                this._exercise1Qtxt()
+                            ),
+                            _react3.default.createElement('div', { style: { clear: "both" } })
+                        ),
+                        _react3.default.createElement(
+                            'div',
+                            { id: 'Exercise2_Qtxt', className: classes4 },
+                            _react3.default.createElement(
+                                'div',
+                                { className: 'QContet content_three_right' },
+                                this._exercise2Qtxt()
+                            ),
+                            _react3.default.createElement('div', { style: { clear: "both" } })
+                        )
                     )
                 )
             );
         }
     }]);
 
-    return Exam;
+    return Question;
 }(_react2.Component));
 
 function mapStateToProps(state, ownProps) {
-    return {};
+    return {
+        QuestionList: state.QuestionList
+    };
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, getExamList: _math.getExamList }, dispatch) };
+    return { actions: (0, _redux.bindActionCreators)({ push: _reactRouterRedux.push, getQuestionList: _math.getQuestionList }, dispatch) };
 }
 
-exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Exam);
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(Question);
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__("./node_modules/webpack/buildin/module.js")(module)))
 
 /***/ }),
@@ -110076,36 +111313,56 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
         _this.state = {
             quiz_again_status: false,
             indexNum: 0,
-            showStatus: true //测试为true,模考为false
+            showStatus: true, //测试为true,模考为false
+            allList: []
         };
         return _this;
     }
 
     _createClass(QuestionAll, [{
         key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(nextProps) {
-            //if (nextProps !== this.props) {
-            //    let _start = (this.page-1)*4, _end = this.page*4;
-            //    this.setState({
-            //        dataSource: nextProps.product.get('items').slice(_start, _end)
-            //    })
-            //}
+        value: function componentWillReceiveProps(self, nextProps, nextState) {
+            console.log('hello world componentWillReceiveProps');
         }
     }, {
         key: 'componentDidMount',
         value: function componentDidMount() {
+            var _this2 = this;
+
             //用route的参数来判断是从那个页面进来，进而取对应页面数据和显示对应页面
             console.log("this.props.params.quesParam-->" + this.props.params.quesParam);
             if (this.props.params.quesParam == "questions") {
-                this.props.actions.getAllQuestionsList({});
+                console.log("-----------questions-----------------");
+                this.props.actions.getAllQuestionsList({
+                    success: function success(data) {
+                        _this2.setState({
+                            showStatus: true,
+                            allList: data
+                        });
+                    },
+                    error: function error(message) {
+                        console.warn("数据错误");
+                    }
+                });
             } else if (this.props.params.quesParam == "exams") {
-                this.props.actions.getAllExamList({});
+                console.log("-----------exams-----------------");
+                this.props.actions.getAllExamList({
+                    success: function success(data) {
+                        _this2.setState({
+                            showStatus: false,
+                            allList: data
+                        });
+                    },
+                    error: function error(message) {
+                        console.warn("数据错误");
+                    }
+                });
             }
         }
     }, {
         key: '_renderShowExplain',
         value: function _renderShowExplain(data, index) {
-            var _this2 = this;
+            var _this3 = this;
 
             return _react3.default.createElement(
                 'div',
@@ -110119,20 +111376,20 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
                         _react3.default.createElement(
                             'h4',
                             null,
-                            data.get('title')
+                            data.title
                         )
                     ),
                     _react3.default.createElement(
                         'div',
                         { className: 'bttn looklook', onClick: function onClick() {
-                                return _this2.expand_goto('1');
+                                return _this3.expand_goto('1');
                             } },
                         '\u67E5\u770B'
                     ),
                     _react3.default.createElement(
                         'div',
                         { className: 'bttn doexam', onClick: function onClick() {
-                                return _this2.expand_goto('2');
+                                return _this3.expand_goto('2');
                             } },
                         '\u505A\u9898'
                     )
@@ -110142,10 +111399,10 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
     }, {
         key: '_renderQuestionPage',
         value: function _renderQuestionPage(data) {
-            var pageSize = data.get('items').size;
+            var pageSize = data.length;
             if (pageSize > 0) {
-                return data.get('items').map(function (item, index) {
-                    var _this3 = this;
+                return data.map(function (item, index) {
+                    var _this4 = this;
 
                     return _react3.default.createElement(
                         'div',
@@ -110161,29 +111418,29 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
                                     null,
                                     _react3.default.createElement(
                                         'a',
-                                        { href: item.get('url') },
-                                        item.get('title')
+                                        { href: item.url },
+                                        item.title
                                     )
                                 )
                             ),
                             _react3.default.createElement(
                                 'div',
                                 { className: 'bttn looklook', onClick: function onClick() {
-                                        return _this3.question_goto('1');
+                                        return _this4.question_goto('1');
                                     } },
                                 '\u67E5\u770B'
                             ),
                             _react3.default.createElement(
                                 'div',
                                 { className: 'bttn doexam', onClick: function onClick() {
-                                        return _this3.question_goto('2');
+                                        return _this4.question_goto('2');
                                     } },
                                 '\u505A\u9898'
                             ),
                             _react3.default.createElement(
                                 'div',
                                 { className: 'bttn quiz_again', onClick: function onClick() {
-                                        return _this3.quizAgain(item, index);
+                                        return _this4.quizAgain(item, index);
                                     } },
                                 '\u4E8C\u6D4B\u5DE9\u56FA'
                             )
@@ -110196,10 +111453,11 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
     }, {
         key: '_renderExamPage',
         value: function _renderExamPage(data) {
-            var pageSize = data.get('items').size;
+            var pageSize = data.length;
+            console.log("pageSize--->" + pageSize);
             if (pageSize > 0) {
-                return data.get('items').map(function (item, index) {
-                    var _this4 = this;
+                return data.map(function (item, index) {
+                    var _this5 = this;
 
                     return _react3.default.createElement(
                         'div',
@@ -110207,7 +111465,7 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
                         _react3.default.createElement(
                             'div',
                             { className: 'title' },
-                            item.get('title')
+                            item.title
                         ),
                         _react3.default.createElement(
                             'div',
@@ -110215,21 +111473,21 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
                             _react3.default.createElement(
                                 'button',
                                 { type: 'button', className: 'btn btn-primary', onClick: function onClick() {
-                                        return _this4.exam_goto('1');
+                                        return _this5.exam_goto('1');
                                     } },
                                 '\u67E5\u770B'
                             ),
                             _react3.default.createElement(
                                 'button',
                                 { type: 'button', className: 'btn btn-primary', onClick: function onClick() {
-                                        return _this4.exam_goto('2');
+                                        return _this5.exam_goto('2');
                                     } },
                                 '\u505A\u9898'
                             ),
                             _react3.default.createElement(
                                 'button',
                                 { type: 'button', className: 'btn btn-primary', onClick: function onClick() {
-                                        return _this4.exam_goto('3');
+                                        return _this5.exam_goto('3');
                                     } },
                                 '\u67E5\u770B\u7ED3\u679C'
                             )
@@ -110249,7 +111507,7 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
             console.log(this.state.quiz_again_status, index);
             var domqiuz = "quizAgin" + index;
             //判断本套试题有没有测试完成过，只有一测完成了才能二测
-            if (data.get('practice_status') == "1") {
+            if (data.practice_status == "1") {
                 this.setState({
                     quiz_again_status: !this.state.quiz_again_status,
                     indexNum: index
@@ -110279,12 +111537,7 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _props = this.props,
-                AllQuestionsList = _props.AllQuestionsList,
-                AllExamList = _props.AllExamList;
-            //let error = PureRenderMixin.loadDetection([AllQuestionsList,AllExamList]);//深度比较如果两次state没有变化，则不用render
-            //if (error) return error
-
+            console.log(this.state.allList, this.state.showStatus);
             return _react3.default.createElement(
                 'div',
                 { className: 'questionsAll' },
@@ -110300,7 +111553,7 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
                 _react3.default.createElement(
                     'section',
                     null,
-                    this.state.showStatus ? this._renderQuestionPage(AllQuestionsList) : this._renderExamPage(AllExamList)
+                    this.state.showStatus ? this._renderQuestionPage(this.state.allList) : this._renderExamPage(this.state.allList)
                 )
             );
         }
@@ -110311,8 +111564,8 @@ var QuestionAll = _wrapComponent('QuestionAll')(function (_Component) {
 
 function mapStateToProps(state) {
     return {
-        AllQuestionsList: state.AllQuestionsList,
-        AllExamList: state.AllExamList
+        AllQuestionsList: state.AllQuestionsList || [],
+        AllExamList: state.AllExamList || []
     };
 }
 
@@ -110439,6 +111692,7 @@ var Question = _wrapComponent('Question')(function (_Component) {
             questionNum: 0, //当前题号
             questions: [],
             questionParams: {}, //具体某道题所有数据,默认第一道题
+            Objective: false,
             analysisFlag: false, //试题分析显示标志
             analysisQuestions: {} //具体某道题的分析
         };
@@ -110455,7 +111709,8 @@ var Question = _wrapComponent('Question')(function (_Component) {
                     param: this.state.JSON_aLL
                 },
                 success: function success(data) {
-                    var new_data = JSON.parse(data); //解析JSON
+                    console.log("getQuestionList");
+                    var new_data = data; //解析JSON
                     var data_len = new_data.subquestions.length; //本套试题的所有题目数
                     var data_question = new_data.subquestions[_this2.state.questionNum];
                     _this2.setState({
@@ -110464,6 +111719,8 @@ var Question = _wrapComponent('Question')(function (_Component) {
                         questionParams: data_question
                     });
                     _this2.requestQuestion(_this2.state.questionParams, "Content");
+                    _this2.requestQuestion(_this2.state.questionParams, "Objective");
+                    _this2.requestQuestion(_this2.state.questionParams, "Analysis");
                 },
                 error: function error(mes) {
                     console.error('数据接收发生错误');
@@ -110475,16 +111732,17 @@ var Question = _wrapComponent('Question')(function (_Component) {
         value: function requestQuestion(data, type) {
             var dataitem = data;
             var content_json = []; //取数据的参数
-
-            var content = dataitem.Content;
             console.log("content_json type---->" + type);
             switch (type) {
                 case 'Content':
-                    content_json = dataitem.Content;break;
+                    content_json = dataitem.Content;
+                    break;
                 case 'Objective':
-                    content_json = dataitem.Objective;break;
+                    content_json = dataitem.Objective;
+                    break;
                 case 'Analysis':
-                    content_json = dataitem.Analysis;break;
+                    content_json = dataitem.Analysis;
+                    break;
                 case 'Explain':
                     content_json = dataitem.Explain;break;
                 case 'Exercise1':
@@ -110496,54 +111754,26 @@ var Question = _wrapComponent('Question')(function (_Component) {
             }
             console.log(content_json, content_json.length);
             //判断每一部分题的长度，即：是否有多个题
-            for (var i = 0; i < content_json.length; i++) {
-                var json = content_json[i];
-                //var return_content=[];//返回的数据
-                this.props.actions.getQuestionList({
-                    body: {
-                        param: "Question/" + json + ".json"
-                    },
-                    success: function success(data) {
-                        return JSON.parse(data);
-                        //this.setState({
-                        //    questions:JSON.parse(data),
-                        //    flag:true,
-                        //    analysisFlag:false
-                        //})
-                    },
-                    error: function error(mes) {
-                        console.error('数据接收发生错误');
-                    }
-                });
-                console.log(return_content);
-            }
-            //console.log(this.state.questions)
-
-            //this.props.actions.getQuestionList({
-            //    body:{
-            //        param:"Question/" + content_json + ".json"
-            //    },
-            //    success:(data)=>{
-            //        console.log("requestQuestion success-->:"+data);
-            //        if(type == "Analysis"){
+            //for(let i=0;i<content_json.length;i++){
+            //    let json = content_json[i];
+            //    //var return_content=[];//返回的数据
+            //    this.props.actions.getQuestionList({
+            //        body:{
+            //            param:"Question/" + json + ".json"
+            //        },
+            //        success:(data)=>{
+            //           //return data;
             //            this.setState({
-            //                analysisQuestions:JSON.parse(data),
-            //                flag:true,
-            //                analysisFlag:true
-            //            })
-            //        }else{
-            //            this.setState({
-            //                questions:JSON.parse(data),
+            //                questions:data,
             //                flag:true,
             //                analysisFlag:false
             //            })
+            //        },
+            //        error:(mes)=>{
+            //            console.error('数据接收发生错误');
             //        }
-            //
-            //    },
-            //    error:(mes)=>{
-            //        console.error('数据接收发生错误');
-            //    }
-            //})
+            //    })
+            //}
         }
     }, {
         key: '_contentQtxt',
@@ -110657,6 +111887,8 @@ var Question = _wrapComponent('Question')(function (_Component) {
             var questions = this.state.questions;
             var analysisQuestions = this.state.analysisQuestions;
             var params = this.state.questionParams;
+            console.log("render-----");
+            console.log(dataAll, questions, analysisQuestions, params);
             return _react3.default.createElement(
                 'div',
                 { className: 'mask' },
@@ -110757,11 +111989,15 @@ var Question = _wrapComponent('Question')(function (_Component) {
                                 'div',
                                 { id: 'Content_Qtxt', className: 'QContet' },
                                 this.state.flag ? this._contentQtxt(questions) : ""
-                            ),
+                            )
+                        ),
+                        _react3.default.createElement(
+                            'diV',
+                            null,
                             _react3.default.createElement(
                                 'div',
                                 { id: 'Analysis_Qtxt', className: 'QContet' },
-                                this.state.analysisFlag ? this._analysisQtxt(analysisQuestions) : ""
+                                this._analysisQtxt(analysisQuestions)
                             )
                         ),
                         _react3.default.createElement('div', { id: 'Exercise1_Qtxt', className: 'QContet' }),
@@ -110776,7 +112012,9 @@ var Question = _wrapComponent('Question')(function (_Component) {
 }(_react2.Component));
 
 function mapStateToProps(state, ownProps) {
-    return {};
+    return {
+        QuestionList: state.QuestionList
+    };
 }
 
 function mapDispatchToProps(dispatch) {
@@ -111489,6 +112727,38 @@ exports.default = {
                 }
             }
         }
+    },
+    Compare: function Compare() {
+        var reducers = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+
+        var result = true;
+        var _iteratorNormalCompletion2 = true;
+        var _didIteratorError2 = false;
+        var _iteratorError2 = undefined;
+
+        try {
+            for (var _iterator2 = reducers[Symbol.iterator](), _step2; !(_iteratorNormalCompletion2 = (_step2 = _iterator2.next()).done); _iteratorNormalCompletion2 = true) {
+                var ren = _step2.value;
+
+                debugger;
+                if (!ren.get('preload')) return result = false;
+            }
+        } catch (err) {
+            _didIteratorError2 = true;
+            _iteratorError2 = err;
+        } finally {
+            try {
+                if (!_iteratorNormalCompletion2 && _iterator2.return) {
+                    _iterator2.return();
+                }
+            } finally {
+                if (_didIteratorError2) {
+                    throw _iteratorError2;
+                }
+            }
+        }
+
+        return result;
     }
 };
 
@@ -111773,9 +113043,9 @@ function allUsers(opt) {
 }
 function login(opt) {
     return function (dispatch) {
-        var route = '/api/user/token'; //服务端数据
-        //const route = '../src/data/userInfo.json';//本地数据
-        (0, _request.request)(route, {}, dispatch, opt.success, opt.error, { method: 'POST',
+        //const route = '/api/user/token';//服务端数据
+        var route = '../src/data/userInfo.json'; //本地数据
+        (0, _request.request)(route, {}, dispatch, opt.success, opt.error, { method: 'GET',
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
             body: (0, _public.bodyUrlencoded)(opt.body) });
     };
@@ -111806,7 +113076,7 @@ function register(opt) {
 }
 function getUserBasicInfo(opt) {
     return function (dispatch) {
-        var route = '/api/carousel';
+        var route = '../src/data/userInfo.json';
         var success = function success(data) {
             dispatch({ type: TYPES.USERBASICINFO_UPDATA, result: { items: data } });
             opt.success && opt.success(data);
@@ -111865,7 +113135,9 @@ function configureStore(history, initialState) {
 
     var loggerMiddleware = (0, _reduxLogger2.default)();
 
-    var store = (0, _redux.createStore)(reducer, initialState, (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default, loggerMiddleware, (0, _reactRouterRedux.routerMiddleware)(history))));
+    var store = (0, _redux.createStore)(reducer, initialState, (0, _redux.compose)((0, _redux.applyMiddleware)(_reduxThunk2.default,
+    //loggerMiddleware,
+    (0, _reactRouterRedux.routerMiddleware)(history))));
 
     return store;
 }
@@ -111967,7 +113239,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
                                                                                                                                                                                                                    */
 
 
-var AllQuestionsList = exports.AllQuestionsList = (0, _reduxImmutablejs.createReducer)(_immutable2.default.fromJS({ preload: false }), (_createReducer = {}, _defineProperty(_createReducer, TYPES.ALLQUESTIONSLIST_UPDATE, function (state, action) {
+var AllQuestionsList = exports.AllQuestionsList = (0, _reduxImmutablejs.createReducer)(_immutable2.default.fromJS({ preload: false }), (_createReducer = {}, _defineProperty(_createReducer, TYPES.ALLQUESTIONSLIST_UPDATE, function () {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { items: [] };
+    var action = arguments[1];
+
     return state.set('preload', true).merge(_immutable2.default.fromJS(action.result));
 }), _defineProperty(_createReducer, TYPES.ALLQUESTIONSLIST_CLEAN, function (state, action) {
     return state.clear().set('preload', false);
@@ -112063,7 +113338,10 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 
 //Immutable创建的对象数据是持久化，不变话的。只要新建的或者赋值都会产生新的数据对象
-var basicInfo = exports.basicInfo = (0, _reduxImmutablejs.createReducer)(_immutable2.default.fromJS({ preload: false }), (_createReducer = {}, _defineProperty(_createReducer, TYPES.USERBASICINFO_UPDATA, function (state, action) {
+var basicInfo = exports.basicInfo = (0, _reduxImmutablejs.createReducer)(_immutable2.default.fromJS({ preload: false }), (_createReducer = {}, _defineProperty(_createReducer, TYPES.USERBASICINFO_UPDATA, function () {
+    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { items: [] };
+    var action = arguments[1];
+
     return state.set('preload', true).merge(_immutable2.default.fromJS(action.result));
 }), _defineProperty(_createReducer, TYPES.USERBASICINFO_CLEAN, function (state, action) {
     return state.clear().set('preload', false);

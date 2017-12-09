@@ -13,5 +13,14 @@ export default {
         for (let ren of reducers) {
             if (!ren.get('preload')) return (<div />)
         }
+    },
+    Compare:(reducers=[])=>{
+        let result=true;
+        for (let ren of reducers) {
+            debugger
+            if (!ren.get('preload'))
+                return result=false;
+        }
+        return result;
     }
 }
