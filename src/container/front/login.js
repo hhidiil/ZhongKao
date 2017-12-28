@@ -45,27 +45,26 @@ class LoginForm extends Component {
                                 userName: data[0].name
                             }
                         })
-                        this.props.actions.push('home')
                         //真实数据的时候可以去掉此判断，判断已在后台执行
-                        //if(values.userName == data1.UserName){
-                        //    if(values.password == data1.Password){
-                        //        sessionStorage.setItem('token', 'idiil')
-                        //        sessionStorage.setItem('username', values.userName)
-                        //        this.props.actions.push('home')
-                        //    }else{
-                        //        this.props.form.setFields({
-                        //            password: {
-                        //                errors: [new Error("密码错误！")]
-                        //            }
-                        //        });
-                        //    }
-                        //}else{
-                        //    this.props.form.setFields({
-                        //        userName: {
-                        //            errors: [new Error("用户不存在！")]
-                        //        }
-                        //    });
-                        //}
+                        if(values.userName == data[0].name){
+                            if(values.password == data[0].password){
+                                sessionStorage.setItem('token', 'idiil')
+                                sessionStorage.setItem('username', values.userName)
+                                this.props.actions.push('home')
+                            }else{
+                                this.props.form.setFields({
+                                    password: {
+                                        errors: [new Error("密码错误！")]
+                                    }
+                                });
+                            }
+                        }else{
+                            this.props.form.setFields({
+                                userName: {
+                                    errors: [new Error("用户不存在！")]
+                                }
+                            });
+                        }
                     },
                     error: (message) => {
                         this.props.form.setFields({

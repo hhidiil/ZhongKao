@@ -2,19 +2,39 @@
  * 前端公用方法
  * Created by gaoju on 2017/11/15.
  */
+import 'babel-polyfill'
 import fetch from 'isomorphic-fetch'
 
 //简单版 fetch数据请求
-export function requestData(url,success=null, error=null){
-    console.log("url:-->"+url);
-    fetch(url).then(function (res) {
-        return res.json()
-    }).then(function (json) {
-        success && success(JSON.stringify(json))
-    }).catch((err) => {
-        console.warn(err);
-        error(err)
-    });
+export function requestData(url,callback){
+    console.log(url)
+    return fetch(url)
+        .then((response) => {
+            if (response.status >= 200 && response.status < 300) {
+                return response.json();
+            }
+            const error = new Error(response.statusText);
+            error.response = response;
+            throw error;
+        })
+        .then((res) => {
+            return callback && callback(res)
+        })
+        .catch((err) => {
+            console.warn(err)
+            return err
+        })
+}
+//判断用户是否登录
+export function isAdmin(){
+    let token = sessionStorage.getItem('token');
+    let username = sessionStorage.getItem('username');
+    console.log("session username------>",token,username)
+    if(!username){
+        return false;
+    }else{
+        return true;
+    }
 }
 export function bodyUrlencoded(body) {
     let data = Object.entries(body);
@@ -26,7 +46,6 @@ export function bodyUrlencoded(body) {
     })
     return str
 }
-
 export function parseURL(url) {
     let _url = url.replace(/&/g,'*');
     return _url

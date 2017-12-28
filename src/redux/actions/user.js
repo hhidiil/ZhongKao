@@ -70,3 +70,14 @@ export function getUserBasicInfo(opt) {
         request(route, opt.params || {}, dispatch, success, opt.error)
     }
 }
+export function getCollectInfo(opt) {
+    return (dispatch) => {
+        const route = '../src/data/collect.json';
+        const success = (data) => {
+            console.log("getCollectInfo---->",data)
+            dispatch({ type: TYPES.USERCOLLECTINFO_UPDATA, result: {items: data} })
+            opt.success && opt.success(data)
+        }
+        request(route, opt.params || {}, dispatch, success, opt.error)
+    }
+}

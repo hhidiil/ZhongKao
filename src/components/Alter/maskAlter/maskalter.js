@@ -1,9 +1,9 @@
 /**
  * Created by gaoju on 2017/11/16.
  */
-import React, { Component } from 'react'
+import React, { Cmponent } from 'react'
+import Form from '../../form/form1'
 import { Modal, Button } from 'antd';
-import Login from '../../login/login'
 import './style.css'
 
 class MaskAlter extends React.Component {
@@ -15,21 +15,22 @@ class MaskAlter extends React.Component {
         }
     }
     setModalVisible(modalVisible) {
-        this.setState({modalVisible});
+        this.setState({modalVisible:modalVisible});
     }
     render() {
         return (
             <div>
                 <a type="primary" onClick={() => this.setModalVisible(true)}>{this.state.title}</a>
                 <Modal
-                    title="Login"
+                    title=""
                     footer=""
+                    width="800px"
                     maskClosable={false}
                     wrapClassName="vertical-center-modal"
                     visible={this.state.modalVisible}
                     onCancel={() => this.setModalVisible(false)}
                 >
-                    <Login></Login>
+                    <Form handleMask={() => this.setModalVisible(false)}></Form>
                 </Modal>
             </div>
         );

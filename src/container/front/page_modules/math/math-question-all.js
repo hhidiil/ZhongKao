@@ -8,6 +8,8 @@ import { push } from 'react-router-redux'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import {getAllQuestionsList} from '../../../../redux/actions/math'
 import {getAllExamList} from '../../../../redux/actions/math'
+import Preview from './preview'
+import { Button } from 'antd';
 import './style.css'
 
 
@@ -18,11 +20,9 @@ class QuestionAll extends Component{
             quiz_again_status:false,
             indexNum:0,
             showStatus:true,//测试为true,模考为false
-            allList:[]
+            allList:[],
+            previewFlag:false
         };
-    }
-    componentWillReceiveProps(self, nextProps, nextState){
-        console.log('hello world componentWillReceiveProps');
     }
     componentDidMount(){
         //用route的参数来判断是从那个页面进来，进而取对应页面数据和显示对应页面
@@ -54,10 +54,12 @@ class QuestionAll extends Component{
     _renderShowExplain(data,index){
         return(
             <div id={"quizAgin"+index} className={(this.state.indexNum==index && this.state.quiz_again_status)?"transtionBefore transtionAfter":"transtionBefore"}>
-                <div className="questionsAll-item2">
-                    <div className="title"><h4>{data.title}</h4></div>
-                    <div className="bttn looklook" onClick={()=>this.expand_goto('1')}>查看</div>
-                    <div className="bttn doexam" onClick={()=>this.expand_goto('2')}>做题</div>
+                <div className="questionsAll-item-content">
+                    <div className="title2"><p>{data.title}</p></div>
+                    <div className="btn_list">
+                        <Button type="dashed" className="bttn" onClick={()=>this.preview(data)}>预览</Button>
+                        <Button type="dashed" className="bttn" onClick={()=>this.expand_goto('2')}>巩固训练</Button>
+                    </div>
                 </div>
             </div>
             )
@@ -68,11 +70,13 @@ class QuestionAll extends Component{
             return data.map(function(item,index){
                 return(
                     <div key={index} className="questionsAll-item">
-                        <div className="questionsAll-item1">
-                            <div className="title"><h4><a href ={item.url}>{item.title}</a></h4></div>
-                            <div className="bttn looklook" onClick={()=>this.question_goto('1')}>查看</div>
-                            <div className="bttn doexam" onClick={()=>this.question_goto('2')}>做题</div>
-                            <div className="bttn quiz_again" onClick={()=>this.quizAgain(item,index)}>二测巩固</div>
+                        <div className="questionsAll-item-content">
+                            <div className="title"><p><a href ={item.url}>{item.title}</a></p></div>
+                            <div className="btn_list">
+                                <Button type="dashed" className="bttn " onClick={()=>this.preview()}>预览</Button>
+                                <Button type="dashed" className="bttn " onClick={()=>this.question_goto('2')}>训练</Button>
+                                <Button type="dashed" className="bttn " onClick={()=>this.quizAgain(item,index)}>巩固练习</Button>
+                            </div>
                         </div>
                         {this._renderShowExplain(item,index)}
                     </div>
@@ -89,9 +93,9 @@ class QuestionAll extends Component{
                     <div key={index} className="examAll-item">
                         <div className="title">{item.title}</div>
                         <div className="btnContainer">
-                            <button type="button" className="btn btn-primary" onClick={()=>this.exam_goto('1')}>查看</button>
-                            <button type="button" className="btn btn-primary" onClick={()=>this.exam_goto('2')}>做题</button>
-                            <button type="button" className="btn btn-primary" onClick={()=>this.exam_goto('3')}>查看结果</button>
+                            <button type="button" className="btn btn-primary" onClick={()=>this.preview()}>预览</button>
+                            <button type="button" className="btn btn-primary" onClick={()=>this.exam_goto('1')}>测试</button>
+                            <button type="button" className="btn btn-primary" onClick={()=>this.exam_goto('2')}>查看结果</button>
                         </div>
                     </div>
                 )
@@ -114,6 +118,14 @@ class QuestionAll extends Component{
             alert("你还没有做完本套试题一测，请先做完一测！")
         }
     }
+    preview(){
+        console.log("预览")
+        this.setState({previewFlag : true});
+    }
+    closePreview(){
+        console.log("关闭预览")
+        this.setState({previewFlag : false});
+    }
     expand_goto(param){
         let url = 'question';
         console.log(url)
@@ -124,8 +136,10 @@ class QuestionAll extends Component{
     exam_goto(param){
         let url = 'exam';
         console.log(url)
-        if(param){
+        if(param == '1'){
             this.props.actions.push(`/home/math/exams/${url}`);
+        }else if(param == '2'){
+            this.props.actions.push(`/home/math/exams/exam2`);
         }
     }
     render(){
@@ -136,6 +150,7 @@ class QuestionAll extends Component{
                 <section>
                     {this.state.showStatus?this._renderQuestionPage(this.state.allList):this._renderExamPage(this.state.allList)}
                 </section>
+                {this.state.previewFlag?<Preview closePreview={()=>this.closePreview()} />:<div/>}
             </div>
         )
     }

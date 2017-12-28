@@ -39,7 +39,7 @@ class Door extends Component {
     }
     render() {
         let { homeShowList } = this.props;
-        let error = PureRenderMixin.loadDetection([homeShowList]);//深度比较如果两次state没有变化，则不用render
+        let error = PureRenderMixin.Compare([homeShowList]);//优化render
         if (error) return error
         const menu = (
             <Menu>

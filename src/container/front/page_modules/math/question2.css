@@ -1,0 +1,157 @@
+.mask{
+    position: fixed;
+    z-index: 100;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    top: 0;
+    right: 0;
+    left: 0;
+    bottom: 0;
+    background-color: aliceblue;;
+    border: 50px solid;
+    -webkit-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
+    -moz-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
+    -o-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
+    border-image: url("/public/images/1111.jpg") 40 40 round stretch;
+}
+.math-question-content{
+}
+.math-question-content header{
+    display: flex;
+}
+.math-question-content header .title{
+    width: 100%;
+    height: 55px;
+    line-height: 55px;
+    font-size: 22px;
+    text-align: center;
+}
+.math-question-content header .exit{
+    position: absolute;
+    right: 20px;
+    top: 10px;
+    font-size: 16px;
+    cursor: pointer;
+}
+.math-question-content .pagination_css{
+    display: flex;
+    height: 45px;
+    margin: 10px 0;
+    line-height: 40px;
+    text-align: center;
+}
+.math-question-content center hr{
+    border: 1px solid gainsboro;
+}
+.btnContainer button{
+    margin: 0 2px;
+}
+.pagination_content{
+    position: relative;
+    margin: 15px 0;
+    display: flex;
+    width: 100%;
+}
+.pagination_content .pagination_before{
+    position: relative;
+    width: 40%;
+    margin: 10px 5px 10px 30px;
+}
+.pagination_content .btnContainer{
+    position: relative;
+    right: 10px;
+    top: 5px;
+    width: 55%;
+    text-align: right;
+}
+.QtxtContent2{
+    padding: 10px;
+}
+.QtxtContent2 .QtxtContent2_main{
+    overflow-y: auto;
+    margin: 10px 0;
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 10px;
+}
+.QtxtContent2_main_body{
+    border-bottom: 1px dashed gray;
+}
+.QtxtContent2_main_title{
+    border-bottom: 1px dashed;
+}
+.height_none{
+    overflow: hidden;
+    height: 0px;
+}
+.QtxtContent2_main_title_left{
+    width: 100px;
+    font-size: 16px;
+    font-weight: 600;
+}
+.QtxtContent2_main_title_right{
+    width: 100%;
+    text-align: right;
+    cursor: pointer;
+}
+.QtxtContent2 .QContet{
+    margin-bottom: 10px;
+}
+.QtxtContent2 .QContet ul{
+    border: 1px solid #ddd;
+    padding: 10px 0px 10px 20px;
+    background-color: white;
+}
+.QtxtContent2 .QContet ul li:last-child{
+    margin: 10px 0 0 0;
+}
+.QtxtContent2 .content_three{
+    display: flex;
+}
+.QtxtContent2 .content_three_left{
+    min-width: 100px;
+    max-height: 300px;
+    width: 10%;
+    border: 1px solid #ddd;
+    background-color: white;
+    margin-right: 3px;
+}
+.QtxtContent2 .content_three_right{
+    width: 100%;
+    background-color: white;
+}
+.QtxtContent2 .content_three_left ul{
+    width: 100%;
+}
+.QtxtContent2 .content_three_right ul li{
+    margin: 5px 0;
+    border: 1px dashed;
+    padding: 10px;
+}
+.skipText{
+    width: 30px;
+    height: 20px;
+}
+.exercise2 .exercise2_main_sites{
+    background-color: whitesmoke;
+    cursor: pointer;
+    height: 26px;
+    line-height: 25px;
+    margin-top: 8px;
+}
+.exercise2-border{
+    border: 1px solid lightgray;
+    padding: 8px;
+    margin-bottom: 5px;
+}
+.exercise2 .exercise2_help{
+    padding: 10px 0;
+}
+.shitifenxi{
+    font-size: 14px;
+    font-weight: 600;
+    background-color: beige;
+    padding: 5px;
+}

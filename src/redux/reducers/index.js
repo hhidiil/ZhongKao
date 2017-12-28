@@ -4,5 +4,5 @@
  */
 
 export { currentPage,homeShowList } from './page'
-export {basicInfo} from './user'
+export {basicInfo,collectInfo} from './user'
 export {AllQuestionsList,QuestionList,AllExamList,ExamList} from './math'

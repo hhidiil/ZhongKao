@@ -22,30 +22,28 @@ class Home extends Component {
         };
         this.exitOut = this.exitOut.bind(this);
     };
-    componentWillMount(){
-        //let token = sessionStorage.getItem('token');
-        //let username = sessionStorage.getItem('username');
-        //console.log("session username------>"+username)
-        //if(!username){
-        //    alert("请登录！")
-        //    this.props.actions.push('/')
-        //    return;
-        //}
-    }
     componentDidMount(){
         document.body.style.backgroundColor = '#F5F5F5';
         let screenHeight = document.documentElement.clientHeight;
         let screenWeight = document.documentElement.clientWidth;
         console.log(screenWeight,screenHeight)
         document.getElementById("section").style.height = (screenHeight-80-40)+'px';
-
     };
     handleClick = (e) => {
         console.log('click ', e);
-        let item = e;
-        let route = item.keyPath.pop();
-        console.log("item route-->"+route)
-        this.props.actions.push(`/home/${route}`)
+        let route='';
+        let routeflag=e.keyPath.pop();
+        console.log('routeflag--> ',routeflag);
+        console.log("item route-->"+route,e.key)
+        if(routeflag == "basic"){
+            route = "basic/"+e.key;
+            console.log('basic--> ', route);
+            this.props.actions.push(`/home/${route}`)
+        }else if(routeflag == "math"){
+            route = e.key;
+            console.log('math--> ',e,route);
+            this.props.actions.push(`/home/${route}`)
+        }
         this.setState({
             activeName: route
         })
@@ -89,7 +87,6 @@ class Home extends Component {
                     <section className="full-width section-left">
                         <div>{this.props.children}</div>
                     </section>
-
                 </section>
 
             </div>

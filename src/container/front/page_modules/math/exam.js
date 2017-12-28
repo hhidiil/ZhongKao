@@ -11,8 +11,7 @@ import {getQuestionList} from '../../../../redux/actions/math'
 import SelectMenu from '../../../../components/selectMenu/selectMenu'
 import './question_style.css'
 import { Pagination } from 'antd';
-import { Menu, Icon, } from 'antd'
-const SubMenu = Menu.SubMenu;
+import { Menu, Icon,Button } from 'antd'
 
 
 class Question extends Component{
@@ -22,6 +21,7 @@ class Question extends Component{
             JSON_aLL:"Exam_19008687-3c57-4105-8b6c-18205a4616a3.json",//某套题的JSON串，可取到某套试题的所有数据
             current:1,
             mainContent:true,//主题干显隐，展开true闭合false
+            two_answer_content:false,//主题干显隐，展开true闭合false
             AnalysisMenu:'0',//分析解答中左侧menu
             AnalysisFlag:true,//分析解答
             AnswerFlag:false,//标准答案
@@ -75,16 +75,23 @@ class Question extends Component{
     _contentQtxt(){
         return (
             <div>
-                <ul>
-                    <li>
-                        <p>24．如图，矩形ABCD的对角线AC、BD相交于点O，△COD关于CD的对称图形为△CED。</p>
-                        <p><img src="public/images/img/01.png"/></p>
-                        <p>1）求证：四边形OCED是菱形；</p>
-                        <p>2）连接AE，若AB = 6cm，BC = cm。</p>
-                        <p>求sin∠EAD的值；</p>
-                        <p> 若点P为线段AE上一动点（不与点A重合），连接OP，一动点Q从点O出发，以1cm/s的速度沿线段OP匀速运动到点P，再以1.5cm/s的速度沿线段PA匀速运动到点A，到达点A后停止运动。当点Q沿上述路线运动到点A所需要的时间最短时，求AP的长和点Q走完全程所需的时间。</p>
-                    </li>
-                </ul>
+                <div className="displayflex QtxtContent_main_title">
+                    <div className="QtxtContent_main_title_left">第24题：</div>
+                    <div className="QtxtContent_main_title_right" onClick={()=>{this.setState({mainContent:!this.state.mainContent})}}>
+                        <Icon type={this.state.mainContent?"down":"up"}/></div>
+                </div>
+                <div className={this.state.mainContent?"":"height_none"}>
+                    <ul>
+                        <li>
+                            <p>如图，AB是⊙O的直径，AC⌒ = BC⌒ ，AB=2，连接AC。</p>
+                            <p><img src="public/images/img/01.png"/></p>
+                            <p>1）求证：∠CAB=45°；</p>
+                            <p>2）若直线l为⊙O的切线，C是切点，在直线l上取一点D，使BD = AB，BD所在的直线与AC所在的直线相交于点E，连接AD。</p>
+                            <p>①试探究AE与AD之间的数量关系，并证明你的结论；</p>
+                            <p> 若点P为线段AE上一动点（不与点A重合），连接OP，一动点Q从点O出发，以1cm/s的速度沿线段OP匀速运动到点P，再以1.5cm/s的速度沿线段PA匀速运动到点A，到达点A后停止运动。当点Q沿上述路线运动到点A所需要的时间最短时，求AP的长和点Q走完全程所需的时间。</p>
+                        </li>
+                    </ul>
+                </div>
             </div>
         )
     }
@@ -286,19 +293,67 @@ class Question extends Component{
     }
     _exercise2Qtxt(){
         return (
-            <div>
-                <ul>
-                    <li>
-                        <p>（1）、  已知：如图，矩形ABCD的对角线AB、BD相交于点O，DE//CA，AE//BD。求证：四边形AODE是菱形。 </p>
-                        <p><img src="public/images/img/10.png"/></p>
-                        <p> [考点]：</p>
-                        <p>矩形的性质及其判定、菱形的性质及其判定、平行四边形 </p>
-                        <p>要求sin∠EAD的值，就需要考虑或者构造直角三角形。若设AE与CD相交于点K，考虑Rt△ADK，则sin∠EAD =DK/AK  ，需设法求出DK与AK的长。或者，过点E作AD的垂线，交AD的延长线于点F，考虑Rt△AEF，则sin∠EAD =EF/AE ，不难知道EF = ___ ，AF=3/2 ，利用勾股定理可求AE的长，所以，此种方法也行的通。</p>
-                        <p><img src="public/images/img/04.png"/></p>
-                        <p>最后的动点问题。如下图所示，点Q运动所需的时间t =  + = OP + AP（秒），如何求其最小值呢？可能有两个方向，一个是建立直角坐标系，求关于t的函数表达式，这可能会有点繁琐；另一个是利用几何性质，寻求将OP或者AP的转化为更容易计算的某条边，这可能需求结合前述的条件，比如sin∠EAD的值。</p>
-                        <p><img src="public/images/img/05.png"/></p>
-                    </li>
-                </ul>
+            <div className="exercise2">
+                <div className="exercise2-border">
+                    <div className="exercise2_main_content">
+                        <p>（1）、 已知a2+3a－2=0，求代数式 的值。(a-b)/(3a^2-6a)/[a+2-5/(a-2)]</p>
+                        <div className="exercise2_main_sites">
+                            <Button type="dashed" size="small" onClick={()=>{this.setState({two_answer_content:!this.state.two_answer_content})}}>考点</Button>
+                            <Button type="dashed" size="small">答案</Button>
+                            <Button type="dashed" size="small">解析</Button>
+                        </div>
+                    </div>
+                    <div className={this.state.two_answer_content?"exercise2_help":"displaynone"}>
+                        <p><span>考点：</span>分式的化简求值</p>
+                        <p><span>答案：</span>1/6</p>
+                        <p><span>解析：</span>代数式(a-b)/(3a^2-6a)/[a+2-5/(a-2)] 可化简为 (1/3a(a+3))=(1/3a^+9a) ，由已知a^2+3a－2=0，所以3a^2+9a = 6。</p>
+                    </div>
+                </div>
+                <div className="exercise2-border">
+                    <div className="exercise2_main_content">
+                        <p>（2）、 化简求值：[(2x+y)^2 - y( y + 4x) - 8xy]÷(2x)，其中x = 2，y = -2。</p>
+                        <div className="exercise2_main_sites">
+                            <Button type="dashed" size="small" onClick={()=>{}}>考点</Button>
+                            <Button type="dashed" size="small">答案</Button>
+                            <Button type="dashed" size="small">解析</Button>
+                        </div>
+                    </div>
+                    <div className="exercise2_help">
+                        <p><span>考点：</span>整式化简求值</p>
+                        <p><span>答案：</span>12</p>
+                        <p><span>解析：</span>原式＝(4x^2+4xy +y^2 － y^2－ 4xy － 8xy)÷(2x) = (4x^2－ 8xy)÷(2x) = 2x－4y。
+                            代入x ，y 的值，可得其值为12。
+                        </p>
+                    </div>
+                </div>
+                <div className="exercise2-border">
+                    <div className="exercise2_main_content">
+                        <p>（3）、 已知一次函数y = kx +b（k≠0）和反比例函数y=k/2x 的图象交于点A（1，1）。</p>
+                        <p>1）、求两个函数的表达式；</p>
+                        <p>2）、若点B（3，0），则△AOB得到面积是多少？直接写出结论。</p>
+                        <div className="exercise2_main_sites">
+                            <Button type="dashed" size="small" onClick={()=>{}}>考点</Button>
+                            <Button type="dashed" size="small">答案</Button>
+                            <Button type="dashed" size="small">解析</Button>
+                        </div>
+                    </div>
+                    <div className="exercise2_help">
+                        <div>
+                            <p>考点：</p>
+                            <p>1)、反比例函数与一次函数的交点问题；</p>
+                            <p>2)、反比例函数的图象和性质，三角形面积公式</p>
+                        </div>
+                        <div>
+                            <p>答案：</p>
+                            <p>1）、反比例函数解析式为y = ，一次函数解析式为y = 2x－1。将点A的坐标代入反比例函数解析式，可得k = 2，再将点A的坐标代入y = 2x + b，可得b = －1。</p>
+                            <p>2）、 3/2。;OB = 3，S△AOB =  ×1×3 =  。</p>
+                        </div>
+                        <div>
+                            <p>解析：</p>
+                        </div>
+                    </div>
+
+                </div>
             </div>
         )
     }

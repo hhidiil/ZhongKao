@@ -1,3 +1,78 @@
+.math-door{
+    position: absolute;
+    display: flex;
+    height: 100%;
+    width: 100%;
+    padding: 50px;
+    text-align: center;
+    background-color: #F3E5F5;
+}
+.math-door .questions,.exam{
+    position: relative;
+    height: 100%;
+    width: 50%;
+}
+.enter-block{
+    border-radius: 20px;
+    position: absolute;
+    font-size: 50px;
+    height: 200px;
+    width: 200px;
+    padding-top: 50px;
+    margin: 0 auto;
+    left: 28%;
+    top: 30%;
+}
+.enter-block:hover{
+    cursor: pointer;
+    box-shadow: 4px 4px 2px;
+    transform: translate(-2px, -2px);
+}
+.question-block{
+    background-color: lightblue;
+}
+.exam-block{
+    background-color: burlywood;
+}
+.basic_All_css{
+    padding: 20px;
+}
+.basic_title{
+    width: 60%;
+    background-color: whitesmoke;
+    border-top-left-radius: 4px;
+    border-top-right-radius: 48px;
+    font-size: 18px;
+    height: 48px;
+    line-height: 48px;
+}
+.user_head{
+    position: absolute;
+    right: 50px;
+    top: 20px;
+    width: 125px;
+    height: 155px;
+}
+.user_head img{
+    width: 100%;
+    height: 100%;
+}
+.table_basic table{
+    margin: 30px 0 10px 10px ;
+    width:500px;
+    border:2px solid #000;
+    border-collapse: collapse;
+}
+.table_basic table tr{
+    height: 48px;
+}
+.table_basic table td{
+    border:1px solid #000;
+}
+.table_basic table td:first-child{
+    text-align: center;
+}
+
 .questionsAll{
     position: absolute;
     height: 100%;
@@ -16,12 +91,9 @@
     margin-bottom: 5px;
     background-color: lightyellow;
 }
-.questionsAll-item1{
-    position: relative;
+.questionsAll-item-content{
     display: flex;
-    height: 75px;
-    line-height: 75px;
-    border: 1px solid darkgray;
+    padding: 10px 0;
 }
 .questionsAll-item2{
     position: relative;
@@ -34,46 +106,25 @@
     border: 1px solid darkgray;
 }
 .questionsAll-item .title{
+    width: 60%;
     padding-left:10px ;
-    padding-top: 20px;
+    font-size: 18px;
+}
+.questionsAll-item .title2{
+    width: 60%;
+    padding-left:10px ;
+    font-size: 16px;
+}
+.questionsAll-item .btn_list{
+    width: 40%;
+    text-align: right;
 }
 .questionsAll-item .bttn{
-    position: absolute;
-    text-align: center;
-    cursor: pointer;
-    margin-top: 20px;
-    height: 32px;
-    line-height: 32px;
-    border: 1px dashed gray;
+    margin-right: 5px;
 }
-.questionsAll-item2 .bttn{
-    position: absolute;
-    text-align: center;
-    cursor: pointer;
-    margin-top: 15px;
-    height: 32px;
-    line-height: 32px;
-    border: 1px dashed gray;
-}
-.questionsAll-item .looklook{
-    width: 42px;
-    right: 145px;
-}
-.questionsAll-item .doexam{
-    width: 42px;
-    right: 90px;
-}
-.questionsAll-item .quiz_again{
-    width: 60px;
-    right: 15px;
-}
-.questionsAll-item2 .looklook{
-    width: 36px;
-    right: 80px;
-}
-.questionsAll-item2 .doexam{
-    width: 36px;
-    right: 27px;
+.questionsAll-item .btn_margin{
+    margin-right: 5px;
+    float: right;
 }
 .examAll-item{
     position: relative;
@@ -99,12 +150,53 @@
 }
 
 .transtionBefore{
-    height: 0px;
+    display: none;
     overflow: hidden;
     background-color: bisque;
-    transition: height .8s ease-out;
 }
 .transtionAfter{
-    height: 75px;
-    background-color: bisque;
+    display: block;
+}
+.Preview-content{
+    position: fixed;
+    overflow-y: auto;
+    z-index: 101;
+    top: 0;
+    background-color: white;
+    height: 100%;
+    width: 70%;
+    left: 15%;
+    padding: 20px;
+}
+.Preview-content .exit{
+    position: absolute;
+    right: 5px;
+    top: 5px;
+}
+.Preview-content .Preview_header{
+    border-bottom: 1px solid;
+}
+.Preview-content .Preview_header .title{
+    text-align: center;
+    font-size: 18px;
+    font-weight: bold;
+}
+.Preview-content .Preview_header .second-title{
+    display: flex;
+    background-position: center center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    justify-content: center;
+    align-items: center;
+}
+.Preview-content .Preview_header .second-title div{
+    margin: 10px;
+}
+.Preview-content section{
+     overflow-x: hidden;
+ }
+.Preview-content section .question-css{
+    margin: 15px 5px;
+    padding: 10px 5px;
+    border: 1px dashed gray;
 }
