@@ -7,9 +7,9 @@ React+nodejs+redux+ant_design+webpack
 其中包含webpack热更新，代码修改后自动打包更新浏览器显示。
 
 # 使用
-# 1、使用git克隆到本地，
-#git clone https://github.com/gao351306708/React.git
-2、使用npm或其他管理工具下载依赖包（本人使用npm）
+#### 1、使用git克隆项目到本地
+git clone https://github.com/gao351306708/React.git
+#### 2、使用npm或其他管理工具下载依赖包（本人使用npm）
 npm install
-3、启动（进入到项目目录里）
+#### 3、启动（进入到项目目录里）
 npm start
