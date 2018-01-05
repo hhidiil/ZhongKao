@@ -1,6 +1,5 @@
 # React
 React+nodejs+redux+ant_design+webpack
-参照 "https://github.com/Jafeney/tms"
 
 # 介绍
 一个简单的系统。刚入门，里面用到的都是基本的react语法。使用ES6、react-route、redux、mysql等功能实现前后端整合在一起。
@@ -16,3 +15,5 @@ npm start
 #### 4、查看页面
 在chrome中输入地址：localhost:3000 查看效果！
 
+## 参照
+"https://github.com/Jafeney/tms"
