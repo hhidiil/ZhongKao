@@ -16,4 +16,4 @@ npm start
 在chrome中输入地址：localhost:3000 查看效果！
 
 ## 参照
-"https://github.com/Jafeney/tms"
+"https://github.com/Jafeney/tms" （全栈搭建）
