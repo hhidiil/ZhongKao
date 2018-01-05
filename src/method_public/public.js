@@ -6,7 +6,7 @@ import 'babel-polyfill'
 import fetch from 'isomorphic-fetch'
 
 //简单版 fetch数据请求
-export function requestData(url,callback){
+export function requestData(url){
     console.log(url)
     return fetch(url)
         .then((response) => {
@@ -18,7 +18,7 @@ export function requestData(url,callback){
             throw error;
         })
         .then((res) => {
-            return callback && callback(res)
+            return res
         })
         .catch((err) => {
             console.warn(err)

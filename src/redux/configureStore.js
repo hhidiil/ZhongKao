@@ -3,7 +3,7 @@
  * Created by gaoju on 2017/11/15.
  */
 
-import { createStore, combineReducers, compose, applyMiddleware } from 'redux'
+import { createStore,combineReducers, compose, applyMiddleware } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import createLogger from 'redux-logger'
 import * as rootReducer from './reducers';

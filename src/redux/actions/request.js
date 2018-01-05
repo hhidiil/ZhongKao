@@ -35,8 +35,7 @@ export function request(route, params, dispatch, success=null, error=null, { met
             return response.json()
         })
         .then((res) => {
-            console.log('res---------->>2')
-            console.log(res)
+            console.log('response---------->>',res)
             //if (res.code === 200) {
             //    if (method !== 'GET') dispatch({ type: TYPES.REQUEST_SUCCESS })
             //    success && success(res.data)

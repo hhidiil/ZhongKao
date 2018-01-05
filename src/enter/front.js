@@ -14,7 +14,6 @@ import configureStore from '../redux/configureStore'
 
 const store = configureStore(hashHistory)
 const history = syncHistoryWithStore(hashHistory, store)
-
 render(
     (
         <Provider store={store}>

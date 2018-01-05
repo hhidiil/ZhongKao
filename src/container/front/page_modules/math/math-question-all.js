@@ -26,7 +26,6 @@ class QuestionAll extends Component{
     }
     componentDidMount(){
         //用route的参数来判断是从那个页面进来，进而取对应页面数据和显示对应页面
-        console.log("this.props.params.quesParam-->"+this.props.params.quesParam)
         if(this.props.params.quesParam=="questions"){
             console.log("-----------questions-----------------")
             this.props.actions.getAllQuestionsList({
@@ -74,7 +73,7 @@ class QuestionAll extends Component{
                             <div className="title"><p><a href ={item.url}>{item.title}</a></p></div>
                             <div className="btn_list">
                                 <Button type="dashed" className="bttn " onClick={()=>this.preview()}>预览</Button>
-                                <Button type="dashed" className="bttn " onClick={()=>this.question_goto('2')}>训练</Button>
+                                <Button type="dashed" className="bttn " onClick={()=>this.gotoPractice()}>训练</Button>
                                 <Button type="dashed" className="bttn " onClick={()=>this.quizAgain(item,index)}>巩固练习</Button>
                             </div>
                         </div>
@@ -86,7 +85,6 @@ class QuestionAll extends Component{
     }
     _renderExamPage(data){
         let pageSize = data.length;
-        console.log("pageSize--->"+pageSize)
         if (pageSize > 0) {
             return data.map(function(item,index){
                 return(
@@ -102,11 +100,10 @@ class QuestionAll extends Component{
             },this);
         }
     }
-    question_goto(data){
-        alert("question 试题")
+    gotoPractice(){
+        this.props.actions.push(`/home/math/questions/practice`);
     }
     quizAgain(data,index){
-        console.log(this.state.quiz_again_status,index)
         let domqiuz = "quizAgin"+index;
         //判断本套试题有没有测试完成过，只有一测完成了才能二测
         if(data.practice_status == "1"){
@@ -128,14 +125,18 @@ class QuestionAll extends Component{
     }
     expand_goto(param){
         let url = 'question';
-        console.log(url)
+        if(param){
+            this.props.actions.push(`/home/math/questions/${url}`);
+        }
+    }
+    goto_practice(param){
+        let url = 'question';
         if(param){
             this.props.actions.push(`/home/math/questions/${url}`);
         }
     }
     exam_goto(param){
         let url = 'exam';
-        console.log(url)
         if(param == '1'){
             this.props.actions.push(`/home/math/exams/${url}`);
         }else if(param == '2'){
@@ -143,7 +144,6 @@ class QuestionAll extends Component{
         }
     }
     render(){
-        console.log(this.state.allList,this.state.showStatus)
         return(
             <div className="questionsAll">
                 <header><h2>{this.state.showStatus?'往年真题':'模考'}</h2></header>

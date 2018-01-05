@@ -32,6 +32,9 @@ module.exports = {
         ]
     },
     plugins: [
+        new webpack.ProvidePlugin({//加载jq,插件等
+            $:'jquery'
+        }),
         //生产环境下打开
         //new webpack.optimize.UglifyJsPlugin()
         new webpack.optimize.OccurrenceOrderPlugin(),

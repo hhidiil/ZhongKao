@@ -15,6 +15,7 @@ import BasicInfo from '../container/front/page_modules/basic/basicInfo'
 import MyCollection from '../container/front/page_modules/basic/myCollection'
 import QuestionAll from '../container/front/page_modules/math/math-question-all'
 import Question from '../container/front/page_modules/math/question'
+import Practice from '../container/front/page_modules/math/practice'
 import Exam from '../container/front/page_modules/math/exam'
 import Exam2 from '../container/front/page_modules/math/exam2'
 import Test from '../components/test'
@@ -36,6 +37,7 @@ const routes = (
             <Route path="math" component={Math}/>
             <Route path="math/:quesParam" component={QuestionAll}/>
             <Route path="math/questions/question" component={Question} />
+            <Route path="math/questions/practice" component={Practice} />
             <Route path="math/exams/exam" component={Exam} />
             <Route path="math/exams/exam2" component={Exam2} />
         </Route>

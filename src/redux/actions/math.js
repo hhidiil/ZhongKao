@@ -26,6 +26,17 @@ export function getQuestionList(opt) {
         request(route,{},dispatch,success, opt.error)
     }
 }
+//获取某套练习试题的所有主试题（即：1-25道考试题题目）
+export function getQuestion(opt) {
+    return (dispatch) => {
+        const route = '../src/data/ExamsData/JSON/Question/'+opt.param;//本地数据
+        const success = (data) => {
+            dispatch({ type: TYPES.GETMAINQUESTION_UPDATA, result: {items: data} })
+            opt.success && opt.success(data)
+        }
+        request(route,{},dispatch,success, opt.error)
+    }
+}
 //获取所有模考试题
 export function getAllExamList(opt) {
     return (dispatch) => {
@@ -47,4 +58,18 @@ export function getExamList(opt) {
         }
         request(route,{},dispatch,success, opt.error)
     }
+}
+//设置定时state
+export function setTiming(type) {
+    switch (type.param) {
+        case "set" :
+            return (dispatch) => {
+                dispatch({ type: TYPES.SET_TIMING,result:{flag:false}})
+            }
+        case "clear" :
+            return (dispatch) => {
+                dispatch({ type: TYPES.CLEAR_TIMING, result:{flag:true}})
+            }
+    }
+
 }

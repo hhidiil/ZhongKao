@@ -1,4 +1,5 @@
 /**
+ * 预览查看试题
  * Created by gaoju on 2017/12/15.
  */
 import React,{Component} from 'react'
@@ -45,48 +46,54 @@ class Preview extends Component{
         })
     }
     getData(data){
-        const dataArray = [];
+        var dataArray=[];
         for(let i=0;i<data.length;i++){
             let url = '../src/data/ExamsData/JSON/Question/'+data[i].Content+'.json';//本地数据
-            requestData(url,(data)=>{
-                dataArray[i] = data;
+            requestData(url).then((data)=>{
+                dataArray.push(data);
             });
         }
+        //由于请求数据是异步的，所以需要延迟来更新state
+        setTimeout(()=>this.getNewData(dataArray),2000)
+    }
+    getNewData(data){
         this.setState({
-            question:dataArray
+            question:data
         })
     }
     _showQuestionList(data){
         return data.map(function(item,index){
-            if (item.content.indexOf('blank') != -1) {//如果有则去掉所有空格和blank
-                item.content = item.content.replace(/\s|_/g, '');
-                item.content = item.content.replace(/blank/g, '_____');
+            let content = (item.content);
+            if(content){
+                if (content.indexOf("blank") != -1) {//如果有则去掉所有空格和blank
+                    content = content.replace(/\s|_/g, '');
+                    content = content.replace(/blank/g, '_____');
+                }
+                return(
+                    <div key={index} className='question-css'>
+                        <ul>
+                            <li dangerouslySetInnerHTML={{__html:content}}></li>
+                            <li>
+                                { item.selectoptions.length<1 ? "":<p>
+                                    <label className="checkbox-inline"><input type="radio" title="A" name={"Qopts_selects"+index} />
+                                        <span>(A)</span><span dangerouslySetInnerHTML={{__html:item.selectoptions[0]}}></span></label>
+                                    <label className="checkbox-inline"><input type="radio" title="A" name={"Qopts_selects"+index} />
+                                        <span>(B)</span><span dangerouslySetInnerHTML={{__html:item.selectoptions[1]}}></span></label>
+                                    <label className="checkbox-inline"><input type="radio" title="A" name={"Qopts_selects"+index} />
+                                        <span>(C)</span><span dangerouslySetInnerHTML={{__html:item.selectoptions[2]}}></span></label>
+                                    <label className="checkbox-inline"><input type="radio" title="A" name={"Qopts_selects"+index} />
+                                        <span>(D)</span><span dangerouslySetInnerHTML={{__html:item.selectoptions[3]}}></span></label>
+                                </p>}
+                            </li>
+                        </ul>
+                    </div>
+                )
             }
-            return(
-                <div key={index} className='question-css'>
-                    <ul>
-                        <li dangerouslySetInnerHTML={{__html:item.content}}></li>
-                        <li>
-                            {(item.selectoptions).length<1 ? "":<p>
-                                <label className="checkbox-inline"><input type="radio" title="A" name={"Qopts_selects"+index} />
-                                    <span>(A)</span><span dangerouslySetInnerHTML={{__html:item.selectoptions[0]}}></span></label>
-                                <label className="checkbox-inline"><input type="radio" title="A" name={"Qopts_selects"+index} />
-                                    <span>(B)</span><span dangerouslySetInnerHTML={{__html:item.selectoptions[1]}}></span></label>
-                                <label className="checkbox-inline"><input type="radio" title="A" name={"Qopts_selects"+index} />
-                                    <span>(C)</span><span dangerouslySetInnerHTML={{__html:item.selectoptions[2]}}></span></label>
-                                <label className="checkbox-inline"><input type="radio" title="A" name={"Qopts_selects"+index} />
-                                    <span>(D)</span><span dangerouslySetInnerHTML={{__html:item.selectoptions[3]}}></span></label>
-                            </p>}
-                        </li>
-                    </ul>
-                </div>
-            )
         })
     }
     render(){
         let title = this.state.dataAll;
         let dataitem = this.state.question;
-        console.log("question:::::",dataitem,dataitem.length)
         if(dataitem.length<1){
             return <div/>;
         }
@@ -104,7 +111,7 @@ class Preview extends Component{
                         </div>
                     </div>
                     <section>
-                        {this._showQuestionList(dataitem)}
+                        {this._showQuestionList(this.state.question)}
                     </section>
                 </div>
             </div>
