@@ -30,41 +30,37 @@ class LoginForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                console.log('this.props.actions.login: ');
                 this.props.actions.login({
                     body: {
-                        phone: values.userName,
+                        name: values.userName,
                         password: values.password
                     },
                     success: (data) => {
                         console.log("login success-->:"+data)
                         console.log(data)
-                        this.props.actions.updateCurrentPage({
-                            data: {
-                                id: data[0].id,
-                                userName: data[0].name
-                            }
-                        })
+                        sessionStorage.setItem('token', 'idiil')
+                        sessionStorage.setItem('username', values.userName)
+                        this.props.actions.push('home')
                         //真实数据的时候可以去掉此判断，判断已在后台执行
-                        if(values.userName == data[0].name){
-                            if(values.password == data[0].password){
-                                sessionStorage.setItem('token', 'idiil')
-                                sessionStorage.setItem('username', values.userName)
-                                this.props.actions.push('home')
-                            }else{
-                                this.props.form.setFields({
-                                    password: {
-                                        errors: [new Error("密码错误！")]
-                                    }
-                                });
-                            }
-                        }else{
-                            this.props.form.setFields({
-                                userName: {
-                                    errors: [new Error("用户不存在！")]
-                                }
-                            });
-                        }
+                        //if(values.userName == data[0].name){
+                        //    if(values.password == data[0].password){
+                        //        sessionStorage.setItem('token', 'idiil')
+                        //        sessionStorage.setItem('username', values.userName)
+                        //        this.props.actions.push('home')
+                        //    }else{
+                        //        this.props.form.setFields({
+                        //            password: {
+                        //                errors: [new Error("密码错误！")]
+                        //            }
+                        //        });
+                        //    }
+                        //}else{
+                        //    this.props.form.setFields({
+                        //        userName: {
+                        //            errors: [new Error("用户不存在！")]
+                        //        }
+                        //    });
+                        //}
                     },
                     error: (message) => {
                         this.props.form.setFields({

@@ -13,6 +13,7 @@ import Basic from '../container/front/page_modules/basic'
 import Math from '../container/front/page_modules/math'
 import BasicInfo from '../container/front/page_modules/basic/basicInfo'
 import MyCollection from '../container/front/page_modules/basic/myCollection'
+import EchartsDetails from '../container/front/page_modules/basic/echartsDetails'
 import QuestionAll from '../container/front/page_modules/math/math-question-all'
 import Question from '../container/front/page_modules/math/question'
 import Practice from '../container/front/page_modules/math/practice'
@@ -34,6 +35,7 @@ const routes = (
             <Route path="basic" component={Basic} />
             <Route path="basic/basicInfo" component={BasicInfo}/>
             <Route path="basic/myCollection" component={MyCollection}/>
+            <Route path="basic/echartsDetails" component={EchartsDetails}/>
             <Route path="math" component={Math}/>
             <Route path="math/:quesParam" component={QuestionAll}/>
             <Route path="math/questions/question" component={Question} />

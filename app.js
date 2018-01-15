@@ -22,7 +22,9 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use('/public',express.static(path.join(__dirname, 'public')));
+app.use(express.static('assets'));
+//app.use('/static',express.static(__dirname + '/public'));//设置虚拟根目录
 
 app.use('/', index);
 app.use('/api', api);

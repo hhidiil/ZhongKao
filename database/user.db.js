@@ -27,7 +27,7 @@ User.prototype.getUserAllItems = function(callback) {
 }
 /*根据用户名和密码匹配否正确*/
 User.prototype.getUserItemByUserName = function(callback) {
-    var _sql = `select * from user where name='${this.props.userName}' and password='${this.props.password}'`;
+    var _sql = `select * from user where name='${this.props.name}' and password='${this.props.password}'`;
     helper.db_query({
         connect: con,
         sql: _sql,
@@ -54,6 +54,27 @@ User.prototype.putUserPassword = function(callback) {
         connect: con,
         sql: _sql,
         name: 'putUserPassword',
+        callback: callback
+    })
+}
+/*注册用户*/
+User.prototype.addUser = function(callback) {
+    var _sql = `INSERT INTO user(idiilnumber,name,password,phone) VALUES ('${this.props.idiilumber}','${this.props.username}','${this.props.password}','${this.props.phone}');`;
+    console.log(_sql)
+    helper.db_query({
+        connect: con,
+        sql: _sql,
+        name: 'addUser',
+        callback: callback
+    })
+}
+User.prototype.getUserBasicInfo = function (callback) {
+    var _sql = `select * from user where name='${this.props.username}';`
+    console.log(_sql)
+    helper.db_query({
+        connect: con,
+        sql: _sql,
+        name: 'getUserBasicInfo',
         callback: callback
     })
 }

@@ -158,6 +158,11 @@
 .exercise2 .exercise2_help{
     padding: 10px 0;
 }
+#practice .next_btn{
+    position: absolute;
+    bottom:10px;
+    right: 120px;
+}
 #practice .submit_btn{
     position: absolute;
     bottom:10px;

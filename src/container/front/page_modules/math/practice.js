@@ -3,19 +3,20 @@
  * Created by gaoju on 2017/12/29.
  */
 import React,{Component} from 'react'
+import PropTypes from 'prop-types'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getQuestionList,getQuestion,setTiming} from '../../../../redux/actions/math'
+import {getQuestionList,getQuestion} from '../../../../redux/actions/math'
 import Timing from '../../../../components/timing'
+import EditContent from '../../../../components/editer'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import './question_style.css'
 import { Pagination } from 'antd';
 
 class Question extends Component{
     constructor(props){
-        console.warn("11111111111111111---------constructor--------1111111111111111111111")
         super(props);
         this.state={
             JSON_aLL:"Exam_19008687-3c57-4105-8b6c-18205a4616a3.json",//某套题的JSON串，可取到某套试题的所有数据
@@ -24,28 +25,11 @@ class Question extends Component{
             totalNum:0,//试题总数
             all_question:[],//所有题目
             dataAll:[],//整套试卷
-            errList:[],//错误题号列表
+            sentList:[],//组装答案列表，用来发送存储源数据
             questionType:'X'//题目类型
         }
     }
-    componentWillMount(){
-        console.log("------------------componentWillMount-------------")
-    }
-    componentWillReceiveProps(nextProps){
-        console.warn("----------------componentWillReceiveProps------------")
-    }
-    shouldComponentUpdate(nextProps, nextState){
-        console.warn("----------------shouldComponentUpdate------------")
-        return true
-    }
-    componentWillUpdate(nextProps, nextState){
-        console.warn("----------------componentWillUpdate------------")
-    }
-    componentDidUpdate(){
-        console.warn("----------------componentDidUpdate------------")
-    }
     componentDidMount(){
-        console.warn("----------------componentDidMount------------")
         this.props.actions.getQuestionList({
             body:{
                 param : this.state.JSON_aLL
@@ -65,26 +49,22 @@ class Question extends Component{
                 console.error('数据接收发生错误');
             }
         })
-        let aaa = $('#Content_Qtxt').find('input[type=radio]');
-        console.log("targetdom:::::::",aaa)
         //离开route的钩子处理事件
-        //this.props.router.setRouteLeaveHook(
-        //    this.props.route,
-        //    this.routerWillLeave
-        //)
+        this.props.router.setRouteLeaveHook(
+            this.props.route,
+            this.routerWillLeave
+        )
     }
     routerWillLeave=(nextLocation)=> {
         // 返回 false 会继续停留当前页面，否则，返回一个字符串，会显示给用户，让其自己决定
-            if(confirm('确认要离开？')){
-                console.log("routerWillLeave")
-                this.setState({cleartimeflag:true})
-                setTimeout(()=>{
-                    return true;
-                },1000)
-
-            }else {
-                return false;
-            }
+        if(confirm('确认要离开？')){
+            this.setState({cleartimeflag:true})
+            setTimeout(()=>{
+                return true;
+            },1000)
+        }else {
+            return false;
+        }
     }
     getData(data){
         this.props.actions.getQuestion({param : data.Content+'.json'})
@@ -123,24 +103,10 @@ class Question extends Component{
         )
     }
     onChange = (page) => {
-        console.log(page)
-        //试题类型。先这样写以后有真是数据判断
-        if(page<=10){
-            this.setState({
-                questionType:'X',
-                current: page
-            })
-        }else if(page<=16){
-            this.setState({
-                questionType:'T',
-                current: page
-            })
-        }else{
-            this.setState({
-                questionType:'Z',
-                current: page
-            })
-        }
+        console.error("onChange---",page)
+        this.setState({
+            current: page
+        })
         this.getData(this.state.all_question[page-1])
     }
     endHandle(data){
@@ -153,41 +119,57 @@ class Question extends Component{
         },1000)
 
     }
-    submit(page,answer){
-        console.log('submit',page,answer,this.state.questionType)
-        let targetDom = '';
-        if(this.state.questionType == 'X'){
-            console.log("find the dom")
+    nextSubmit(page,answer){
+        var isright = false;
+        console.log('submit:',page,answer,this.state.questionType)
+        var targetDom = '';
+        var nextpage = page+1;
+        if(this.state.current <=10){
             let doms = document.getElementsByTagName("input");
+            //获取选择的答案
             for(let i=0;i<doms.length;i++){
                 if(doms[i].checked){
                     targetDom = doms[i];
                 }
             }
-        }
-        if(targetDom){
-            console.log(targetDom)
-            let nextpage = page+1;
-            if(targetDom.value == answer){
-                console.log('选择正确')
-            }else{
-                alert('选择错误')
+            //选择答案后执行
+            if(targetDom){
+                if(targetDom.value == answer){
+                    isright = true;
+                    console.log('选择正确')
+                }else{
+                    isright = false;
+                    console.log('选择错误')
+                }
+                this.state.sentList[page-1] = {id:page,selectvalue:targetDom.value,isright:isright};
+                let sentList = this.state.sentList;
+                console.log("sentList====>",nextpage,sentList.length,sentList)
+                this.setState({
+                    current: nextpage,
+                    sentList:sentList
+                })
+                this.getData(this.state.all_question[page])
+            }else {
+                alert('请选择一个答案！')
             }
+        }else{
+            this.state.sentList[page-1] = {id:page,selectvalue:'',isright:isright};
+            let sentList = this.state.sentList;
             this.setState({
-                current: nextpage
+                current: nextpage,
+                sentList:sentList
             })
-            this.getData(this.state.all_question[nextpage])
-        }else {
-            alert('请选择一个答案！')
+            this.getData(this.state.all_question[page])
         }
-
+    }
+    submit(){
+        alert("全部提交")
     }
     render(){
         console.warn("----------------render------------")
         const {GetQuestion} = this.props;
         let error = PureRenderMixin.Compare([GetQuestion]);
         if (error) return error;
-        console.log("timeflag-----------------------",this.state.cleartimeflag)
         let answer = (GetQuestion.get('items')).get('answer');
         let title = (this.state.dataAll).topic;
         let cleartime = this.state.cleartimeflag;
@@ -210,35 +192,37 @@ class Question extends Component{
                             </div>
                         </div>
                         <div id="MathContent">
-                            请您在后面的输入框中输入<span className="mark">x^2</span>：<span className="mathquill-editable"></span><br/>
-                            <p>
-                                <textarea className="contentArea"></textarea>
-                            </p>
+                            {this.state.current <= 10?"":<EditContent/>}
                         </div>
                     </section>
-                    <button type="button" className="btn btn-primary submit_btn" onClick={()=>this.submit(this.state.current,answer)}>提交</button>
-                    <button type="button" className="btn btn-primary" onClick={()=>{this.setState({cleartimeflag:true})}}>停止</button>
+                    <button type="button" className="btn btn-primary next_btn" disabled={(this.state.current==this.state.totalNum)?true:false} onClick={()=>this.nextSubmit(this.state.current,answer)}>下一题</button>
+                    <button type="button" className="btn btn-primary submit_btn" disabled={(this.state.current==this.state.totalNum)?false:true} onClick={()=>this.submit(this)}>全部提交</button>
                 </div>
             </div>
         )
     }
 }
-//<div id="content" contentEditable="true" className="editDemo">
-//    编辑框一
-//</div>
-//Question.propTypes = {
-//    value: PropTypes.number.isRequired,
-//    onIncreaseClick: PropTypes.func.isRequired
-//}
+//array: shim,bool: shim,func: shim,number: shim,object: shim,string: shim,symbol: shim,
+Question.propTypes = {
+    getQuestion: PropTypes.func,
+    getQuestionList:PropTypes.func,
+    current: PropTypes.number,
+    totalNum: PropTypes.number,
+    all_question: PropTypes.array,
+    dataAll: PropTypes.array,
+    sentList: PropTypes.array,
+    questionType: PropTypes.string,
+    JSON_aLL: PropTypes.string,
+    cleartimeflag: PropTypes.bool
+}
 function mapStateToProps(state) {
     return {
         GetQuestion:state.GetQuestion,
-        TimingFlag:state.TimingFlag
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getQuestionList,getQuestion,setTiming}, dispatch) }
+    return { actions: bindActionCreators({push,getQuestionList,getQuestion}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question)

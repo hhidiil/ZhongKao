@@ -356,46 +356,6 @@
     ]
   }, {
     "Content": [
-      "Q_012893f1-6db6-4ebe-8f36-5b5fb0582ede"
-    ],
-    "Objective": [],
-    "Analysis": [],
-    "Explain": [
-      "Q_a259f823-3212-4f0d-bd46-c5cfbecc9262",
-      "Q_512496a6-2c13-42a7-aa4a-784023e3ca35"
-    ],
-    "Exercise1": [
-      "Q_a41fc25d-e051-4981-95f8-e04519c798e9",
-      "Q_89716e3e-5c6d-4c6f-b814-efec087b0b6c",
-      "Q_5e407cd3-5e1b-469e-8536-9386c8ae3685"
-    ],
-    "Exercise2": [
-      "Q_a2fac956-f1a1-419a-a150-2ea7202d14e3",
-      "Q_e54ff7b8-078f-4abb-8138-8d064afaef26",
-      "Q_c0d6732a-e253-4d3d-a4c9-a2715e70b66d"
-    ]
-  }, {
-    "Content": [
-      "Q_8c19ff1e-432d-4f88-8f3b-e4542493599c"
-    ],
-    "Objective": [],
-    "Analysis": [],
-    "Explain": [
-      "Q_12b1ba2a-1565-445f-8ba8-dfabffbf9d1a",
-      "Q_ddc599fb-f502-4111-b583-7d5dd61fa5aa"
-    ],
-    "Exercise1": [
-      "Q_eb067f00-4ef9-4aed-9c60-6edf482f6ab4",
-      "Q_0b667720-09c1-4a9e-b936-ead70357c6a9",
-      "Q_94a9d181-6e11-40d1-a7f9-7915c9f3556e"
-    ],
-    "Exercise2": [
-      "Q_c21c793d-2ddc-4657-8241-6c71b1196e4c",
-      "Q_dd821889-9db7-435b-b9fc-50d95516549a",
-      "Q_c9be2b94-653f-48f5-b34d-c0e4d684f191"
-    ]
-  }, {
-    "Content": [
       "Q_951b39f0-f9f2-4427-92b0-2913d7668603"
     ],
     "Objective": [],
@@ -413,87 +373,6 @@
       "Q_9897a803-34ea-4204-98d7-ed6c387c369b",
       "Q_9dfb6d05-9e14-44eb-947b-8484681c5749",
       "Q_ead8b374-3fef-479e-b2a9-c494f4b31f2b"
-    ]
-  }, {
-    "Content": [
-      "Q_cfbb11f2-c767-4639-91d1-c7f1cc6b6f7f"
-    ],
-    "Objective": [],
-    "Analysis": [],
-    "Explain": [
-      "Q_9be55259-a388-42a1-b39c-9f55a3ef08b1",
-      "Q_9275bfc4-cefc-47c8-b10a-795ab2f64370"
-    ],
-    "Exercise1": [
-      "Q_2e64dbf5-607a-4a49-8388-b21c6a43d51a",
-      "Q_e49ab501-11f8-4612-ba63-3401805c452c",
-      "Q_8ce1d422-db8d-4f45-9703-4f0ce2047d7a"
-    ],
-    "Exercise2": [
-      "Q_d0a9ac71-8dcb-44b6-8da8-4532b800f100",
-      "Q_d3ff8539-9844-4fc5-8354-3658e79ff4ec",
-      "Q_c9b40621-35d4-4e1b-8f73-fd8f1ccbad94"
-    ]
-  }, {
-    "Content": [
-      "Q_2dbdb8a7-52fd-400b-b302-2ed78d425d71"
-    ],
-    "Objective": [],
-    "Analysis": [],
-    "Explain": [
-      "Q_1451caf0-b8a2-4a29-9603-cff81cafc643",
-      "Q_9c717f99-f1d3-43ed-bff9-87a4c81effb3"
-    ],
-    "Exercise1": [
-      "Q_275a459d-a845-49e5-8e74-cdda05dfa172",
-      "Q_51c2145b-6f59-452f-b822-144062abf333",
-      "Q_1ebf6fcc-2d53-4046-96f1-4d4a9b2f8717"
-    ],
-    "Exercise2": [
-      "Q_d7f22960-5d37-4c03-b944-dbde4f16cb16",
-      "Q_ff354ff5-76ad-4ab4-b28a-2b3def09e7a7",
-      "Q_5b9ec73f-c49d-48d2-8783-74694f3b6dbe"
-    ]
-  }, {
-    "Content": [
-      "Q_d6b8af7c-bbf6-457d-a42d-fd0478cd98f3"
-    ],
-    "Objective": [],
-    "Analysis": [],
-    "Explain": [
-      "Q_e45c7489-c95b-4543-b54d-f1aeeb811b81",
-      "Q_91919c32-0bd6-41de-a54c-c7fe58d15d27",
-      "Q_f6876dc3-57c3-4e50-a5b7-30bc6cf929ab"
-    ],
-    "Exercise1": [
-      "Q_44eb5df8-5b3a-4e7f-be88-17f175b37e1f",
-      "Q_0d1f9ab3-c3a9-4d67-9d32-f2ba118efc7d",
-      "Q_a3d74bfb-4f4a-4777-bb13-23a5ec705908"
-    ],
-    "Exercise2": [
-      "Q_171ec794-71d4-4759-937f-47db1ab71091",
-      "Q_250ae571-cac4-488a-81d6-6f177c138636",
-      "Q_d3764af2-ebec-4e27-88dc-04eb093a8596"
-    ]
-  }, {
-    "Content": [
-      "Q_a19db9f3-0a47-47e3-8ec0-8d973285ed9f"
-    ],
-    "Objective": [],
-    "Analysis": [],
-    "Explain": [
-      "Q_7cf23dc7-43aa-4eac-b890-a62e9e2a3c82"
-    ],
-    "Exercise1": [
-      "Q_b7c5bfe4-0369-4cd9-b843-99c18d6f3cfc",
-      "Q_c4fc8556-c474-4522-9dff-cc6d6b9879d4",
-      "Q_6ebeb2c1-df53-479e-829d-6b2b42027aac"
-    ],
-    "Exercise2": [
-      "Q_3d5e8b63-6983-44bf-b1b0-066f73979dd7",
-      "Q_ed21fe3f-3fba-484c-ac51-6bba404dfe04",
-      "Q_c0f5a97b-f66a-485d-894e-e6db50ebde78",
-      "Q_7fba5baa-b49c-428e-a982-b969e707fcac"
     ]
   }]
 }

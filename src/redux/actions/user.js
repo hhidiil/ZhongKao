@@ -5,7 +5,7 @@
 import * as TYPES from '../types';
 import * as CONFIG from '../../config';
 import { request } from './request';
-import { bodyUrlencoded,requestData } from '../../method_public/public'
+import { bodyUrlencoded } from '../../method_public/public'
 
 //获取数据的方式先 全部使用 GET。用真实数据时使用POST方式----<<------看这里!!!------------
 export function auth(opt) {
@@ -14,6 +14,7 @@ export function auth(opt) {
         request(route, {}, dispatch, opt.success, opt.error, { method: 'POST', headers: {"Content-Type": "application/x-www-form-urlencoded"}, body: bodyUrlencoded(opt.body) })
     }
 }
+//获取所有用户
 export function allUsers(opt) {
     return (dispatch) => {
         const route = '/api/user';//服务端数据
@@ -23,9 +24,10 @@ export function allUsers(opt) {
                 body: bodyUrlencoded(opt.body) })
     }
 }
+//登录校验
 export function login(opt) {
     return (dispatch) => {
-        //const route = '/api/user/token';//服务端数据
+        //const route = '/api/user/token_name';//服务端数据
         const route = '../src/data/userInfo.json';//本地数据
         request(route, {}, dispatch, opt.success, opt.error,
             { method: 'GET',
@@ -33,6 +35,7 @@ export function login(opt) {
                 body: bodyUrlencoded(opt.body) })
     }
 }
+//修改密码
 export function changePassword(opt) {
     return (dispatch) => {
         const route = '/api/user/password';
@@ -42,6 +45,7 @@ export function changePassword(opt) {
                 body: bodyUrlencoded(opt.body) })
     }
 }
+//忘记密码
 export function forgetPassword(opt) {
     return (dispatch) => {
         const route = '/api/user/password';
@@ -51,30 +55,37 @@ export function forgetPassword(opt) {
                 body: bodyUrlencoded(opt.body) })
     }
 }
+//注册
 export function register(opt) {
     return (dispatch) => {
-        const route = '/api/user/password';
+        const route = '/api/user/register';
         request(route, {}, dispatch, opt.success, opt.error,
             { method: 'POST',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
                 body: bodyUrlencoded(opt.body) })
     }
 }
+//获取用户基本信息
 export function getUserBasicInfo(opt) {
+    console.log("getUserBasicInfo=====",opt.body)
     return (dispatch) => {
-        const route = '../src/data/userInfo.json';
+        //const route = '/api/user/basic_info';
+        const route = '../src/data/userInfo.json';//用假数据时候需要修改 发送的方式。:get
         const success = (data) => {
             dispatch({ type: TYPES.USERBASICINFO_UPDATA, result: {items: data} })
             opt.success && opt.success(data)
         }
-        request(route, opt.params || {}, dispatch, success, opt.error)
+        request(route, {}, dispatch, success, opt.error,
+            { method: 'GET',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
     }
 }
+//获取用户收藏的试题
 export function getCollectInfo(opt) {
     return (dispatch) => {
         const route = '../src/data/collect.json';
         const success = (data) => {
-            console.log("getCollectInfo---->",data)
             dispatch({ type: TYPES.USERCOLLECTINFO_UPDATA, result: {items: data} })
             opt.success && opt.success(data)
         }

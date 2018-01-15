@@ -9,8 +9,6 @@ import { bindActionCreators } from 'redux'
 import PureRenderMixin from '../../method_public/pure-render'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import {updateCurrentPage } from '../../redux/actions/page'
-import {getUserBasicInfo } from '../../redux/actions/user'
 
 const SubMenu = Menu.SubMenu;
 class Home extends Component {
@@ -80,6 +78,7 @@ class Home extends Component {
                             <SubMenu key="basic" title={<span><Icon type="mail" /><span>我的栏目</span></span>}>
                                 <Menu.Item key="basicInfo">基本信息</Menu.Item>
                                 <Menu.Item key="myCollection">我的收藏</Menu.Item>
+                                <Menu.Item key="echartsDetails">图表分析</Menu.Item>
                             </SubMenu>
                             <Menu.Item key="math"><Icon type="mail" />数学栏目</Menu.Item>
                         </Menu>
@@ -95,13 +94,11 @@ class Home extends Component {
     }
 }
 function mapStateToProps(state, ownProps) {
-    return {
-        basicInfo: state.basicInfo,
-    }
+    return {}
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getUserBasicInfo}, dispatch) }
+    return { actions: bindActionCreators({push}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

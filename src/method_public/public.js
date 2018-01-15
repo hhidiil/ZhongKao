@@ -35,7 +35,7 @@ export function isAdmin(){
     }else{
         return true;
     }
-}
+}handleImg
 export function bodyUrlencoded(body) {
     let data = Object.entries(body);
     let str = `${data[0][0]}=${data[0][1]}`;
@@ -53,4 +53,12 @@ export function parseURL(url) {
 
 export function limitStringlength(str, length) {
     return str.substr(0, length) + '...'
+}
+//img加载处理，当没有正常加载显示时使用默认图片
+export function handleImg(url){
+    if(url){
+        return url;
+    }else {
+        return 'public/images/default.jpg';
+    }
 }

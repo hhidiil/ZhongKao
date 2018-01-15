@@ -25,10 +25,10 @@ class Door extends Component {
                 return (
                     <div key={index} className="col-sm-6 col-md-3">
                         <div className="thumbnail">
-                            <img src={item.get('url_img')} alt="..."/>
+                            <img src={item.get('name')} title="头像" onError={(e)=>{e.target.src = "public/images/user_head.jpg"}}/>
                             <div className="caption">
-                                <h3>{item.get('schoolName')}</h3>
-                                <p>{item.get('message')}</p>
+                                <h3>{item.get('phone')}</h3>
+                                <p>{item.get('name')}</p>
                             </div>
                         </div>
                     </div>
@@ -39,8 +39,10 @@ class Door extends Component {
     }
     render() {
         let { homeShowList } = this.props;
+        console.log("homeShowList---1--->",homeShowList)
         let error = PureRenderMixin.Compare([homeShowList]);//优化render
         if (error) return error
+        console.log("homeShowList---2--->",homeShowList)
         const menu = (
             <Menu>
                 <Menu.Item key="0">

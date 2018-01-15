@@ -6,7 +6,7 @@ import React ,{Component} from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import {register, changePassword } from '../../redux/actions/user'
+import {register} from '../../redux/actions/user'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
 import './style.css'
 
@@ -19,6 +19,9 @@ class RegisterForm extends Component {
             confirmDirty: false,
             checkPass:true
         }
+    }
+    componentDidMount(){
+
     }
     handleConfirmBlur = (e) => {
         const value = e.target.value;
@@ -53,14 +56,16 @@ class RegisterForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
-                this.props.actions.login({
+                this.props.actions.register({
                     body: {
-                        phone: values.userName,
-                        password: values.password
+                        username: values.nickname,
+                        password: values.password,
+                        phone: values.phone
                     },
                     success: (data) => {
-                        console.log("login success:"+data)
-                        this.props.actions.push('door')
+                        console.log("register success:"+data)
+                        alert("恭喜您，注册成功！！！")
+                        //this.props.actions.push('door')
                     },
                     error: (message) => {
                         this.props.form.setFields({
@@ -73,30 +78,30 @@ class RegisterForm extends Component {
                 })
             }
         });
-    }
+    };
     render() {
         const { getFieldDecorator} = this.props.form;
         const formItemLayout = {
             labelCol: {
                 xs: { span: 24 },
-                sm: { span: 8 },
+                sm: { span: 8 }
             },
             wrapperCol: {
                 xs: { span: 24 },
-                sm: { span: 8 },
-            },
+                sm: { span: 8 }
+            }
         };
         const tailFormItemLayout = {
             wrapperCol: {
                 xs: {
                     span: 24,
-                    offset: 0,
+                    offset: 0
                 },
                 sm: {
                     span: 8,
-                    offset: 8,
-                },
-            },
+                    offset: 8
+                }
+            }
         };
         return (
             <div className="register">
@@ -118,21 +123,6 @@ class RegisterForm extends Component {
                         >
                             {getFieldDecorator('nickname', {
                                 rules: [{ required: true, message: '请输入用户名!', whitespace: true }],
-                            })(
-                                <Input />
-                            )}
-                        </FormItem>
-                        <FormItem
-                            {...formItemLayout}
-                            label="E-mail"
-                            hasFeedback
-                        >
-                            {getFieldDecorator('email', {
-                                rules: [{
-                                    type: 'email', message: '无效的 E-mail!',
-                                }, {
-                                    required: true, message: '请输入你的 E-mail!',
-                                }],
                             })(
                                 <Input />
                             )}
@@ -235,7 +225,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ push, register, changePassword }, dispatch)
+        actions: bindActionCreators({ push, register}, dispatch)
     }
 }
 
