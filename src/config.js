@@ -1,10 +1,13 @@
 /**
- * 项目配置
+ * 项目前端配置
  * Created by gaoju on 2017/11/15.
  */
 
 export const API_URI = '';
 export const USER_KEY = '@GAOJU:USER';
+export const WINDOW_HOST = window.location.origin;
+export const Storage_S = window.sessionStorage;//session存储
+export const Storage_L = window.localStorage;//本地存储缓存
 
 export const HEADERS = {
     'Accept': 'application/json',

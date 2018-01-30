@@ -9,19 +9,13 @@ import { bodyUrlencoded,requestData } from '../../method_public/public'
 //首页展示列表
 export function getHomeShowList(opt) {
     return (dispatch) => {
-        //const route = '/api/page/homelist';
-        const route = "../src/data/home.json";//本地数据
+        const route = '/api/page/homelist';//服务器数据
+        //const route = "src/data/home.json";//本地数据
         const success = (data) => {
             dispatch({ type: TYPES.HOMESHOW_LIST_UPDATA, result: {items: data} })
             opt.success && opt.success(data)
         }
         request(route,{},dispatch,success, opt.error)
-    }
-}
-
-export function updateCurrentPage(opt) {
-    return (dispatch) => {
-        dispatch({ type: TYPES.PAGE_UPDATE_CURRENT, result: opt.data })
     }
 }
 

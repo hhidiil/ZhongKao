@@ -31,6 +31,13 @@ export default function configureStore(history, initialState) {
             )
         )
     )
+    if (module.hot) {
+        // Enable Webpack hot module replacement for reducers
+        module.hot.accept('./reducers/index', () => {
+            const nextRootReducer = require('./reducers/index');
+            store.replaceReducer(nextRootReducer || nextRootReducer.default);
+        });
+    }
 
     return store
 }

@@ -8,7 +8,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import {login } from '../../redux/actions/user'
-import {updateCurrentPage} from '../../redux/actions/page'
+import {Storage_S} from '../../config'
 import { Form, Icon, Input, Button, Checkbox, Modal} from 'antd'
 import './style.css'
 
@@ -36,31 +36,10 @@ class LoginForm extends Component {
                         password: values.password
                     },
                     success: (data) => {
-                        console.log("login success-->:"+data)
-                        console.log(data)
-                        sessionStorage.setItem('token', 'idiil')
-                        sessionStorage.setItem('username', values.userName)
+                        console.log("login success-->:",data)
+                        Storage_S.setItem('username', values.userName)
+                        Storage_S.setItem('userid', data[0].userid)
                         this.props.actions.push('home')
-                        //真实数据的时候可以去掉此判断，判断已在后台执行
-                        //if(values.userName == data[0].name){
-                        //    if(values.password == data[0].password){
-                        //        sessionStorage.setItem('token', 'idiil')
-                        //        sessionStorage.setItem('username', values.userName)
-                        //        this.props.actions.push('home')
-                        //    }else{
-                        //        this.props.form.setFields({
-                        //            password: {
-                        //                errors: [new Error("密码错误！")]
-                        //            }
-                        //        });
-                        //    }
-                        //}else{
-                        //    this.props.form.setFields({
-                        //        userName: {
-                        //            errors: [new Error("用户不存在！")]
-                        //        }
-                        //    });
-                        //}
                     },
                     error: (message) => {
                         this.props.form.setFields({
@@ -68,7 +47,6 @@ class LoginForm extends Component {
                                 errors: [new Error(message || "数据错误")]
                             }
                         });
-
                     }
                 })
             }
@@ -135,7 +113,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ push, login, updateCurrentPage}, dispatch)
+        actions: bindActionCreators({ push, login}, dispatch)
     }
 }
 

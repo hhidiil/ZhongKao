@@ -38,8 +38,8 @@ const routes = (
             <Route path="basic/echartsDetails" component={EchartsDetails}/>
             <Route path="math" component={Math}/>
             <Route path="math/:quesParam" component={QuestionAll}/>
-            <Route path="math/questions/question" component={Question} />
-            <Route path="math/questions/practice" component={Practice} />
+            <Route path="math/questions/question/:id" component={Question} />
+            <Route path="math/questions/practice/:id" component={Practice} />
             <Route path="math/exams/exam" component={Exam} />
             <Route path="math/exams/exam2" component={Exam2} />
         </Route>

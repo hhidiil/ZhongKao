@@ -9,6 +9,7 @@ import Login from './login'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import PureRenderMixin from '../../method_public/pure-render'
+import {handleImg} from '../../method_public/public'
 import { getHomeShowList} from '../../redux/actions/page'
 
 class Door extends Component {
@@ -25,10 +26,10 @@ class Door extends Component {
                 return (
                     <div key={index} className="col-sm-6 col-md-3">
                         <div className="thumbnail">
-                            <img src={item.get('name')} title="头像" onError={(e)=>{e.target.src = "public/images/user_head.jpg"}}/>
+                            <img src={handleImg(item.get('headimg'))} title="头像" onError={(e)=>{e.target.src = "public/images/user_head.jpg"}}/>
                             <div className="caption">
-                                <h3>{item.get('phone')}</h3>
-                                <p>{item.get('name')}</p>
+                                <h3>{item.get('username')}</h3>
+                                <p>{item.get('phone')}</p>
                             </div>
                         </div>
                     </div>

@@ -8,39 +8,52 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getQuestionList,getQuestion} from '../../../../redux/actions/math'
+import {getQuestionList,getQuestion,sentUserPaperData,getFirstDataOfPaper} from '../../../../redux/actions/math'
 import Timing from '../../../../components/timing'
-import EditContent from '../../../../components/editer'
+import {BaseEditor,FormulaEditor} from '../../../../components/editer'
 import PureRenderMixin from '../../../../method_public/pure-render'
+import {Storage_S,Storage_L} from '../../../../config'
 import './question_style.css'
+import moment from 'moment'
 import { Pagination } from 'antd';
 
+var sentJson = {
+    "ExamInfoID":"", "UserID":"", "ExamPaperID":"",
+    "StartDate":null, "FinishDate":null, "SpendTime":0, "ExamType":"", "Score":0,
+    "ExamResult":[],
+    "DoExamInfo":[]
+}
 class Question extends Component{
     constructor(props){
         super(props);
+        let activeId = window.location.hash.split('/')[window.location.hash.split('/').length-1];//当前页面的id
+        let paper = JSON.parse(Storage_S.getItem(activeId))//缓存中取出对应数据
         this.state={
-            JSON_aLL:"Exam_19008687-3c57-4105-8b6c-18205a4616a3.json",//某套题的JSON串，可取到某套试题的所有数据
-            cleartimeflag:false,
+            dataAll:paper,//整套试卷,可取到某套试题的所有数据
+            activeId: activeId,
+            cleartimeflag:true,
             current:1,//当前题号
             totalNum:0,//试题总数
             all_question:[],//所有题目
-            dataAll:[],//整套试卷
-            sentList:[],//组装答案列表，用来发送存储源数据
-            questionType:'X'//题目类型
+            sentList:sentJson,//组装答案列表，用来发送存储源数据
+            radioState:''
         }
     }
     componentDidMount(){
+        sentJson.ExamInfoID = moment().format('x');//当前时间戳作为此次做题id
+        sentJson.UserID =Storage_S.getItem('userid');
+        sentJson.ExamPaperID = this.state.activeId;
+        sentJson.StartDate = moment().format();
+        sentJson.ExamType = "二测";
         this.props.actions.getQuestionList({
             body:{
-                param : this.state.JSON_aLL
+                paperid : this.state.activeId//试卷id
             },
             success:(data)=>{
-                let new_data = data;//解析JSON
-                let data_len = new_data.subquestions.length;//本套试题的所有题目数
-                let all_question = new_data.subquestions;
+                let all_question = data;//解析JSON
+                let data_len = all_question.length;//本套试题的所有题目数
                 this.getData(all_question[0])
                 this.setState({
-                    dataAll:new_data,
                     totalNum:data_len,
                     all_question:all_question
                 })
@@ -50,10 +63,10 @@ class Question extends Component{
             }
         })
         //离开route的钩子处理事件
-        this.props.router.setRouteLeaveHook(
-            this.props.route,
-            this.routerWillLeave
-        )
+        //this.props.router.setRouteLeaveHook(
+        //    this.props.route,
+        //    this.routerWillLeave
+        //)
     }
     routerWillLeave=(nextLocation)=> {
         // 返回 false 会继续停留当前页面，否则，返回一个字符串，会显示给用户，让其自己决定
@@ -67,43 +80,82 @@ class Question extends Component{
         }
     }
     getData(data){
-        this.props.actions.getQuestion({param : data.Content+'.json'})
+        this.props.actions.getQuestion({body:{paperid : data.questionid},
+                success:(data)=>{
+                    let isHave = (this.state.sentList).ExamResult[this.state.current-1];//做过了就显示选择的答案
+                    if(isHave){
+                        let selected = (isHave.Contents[0]).content[0];
+                        this.setState({radioState:selected})
+                    }
+                }})
+    }
+    _childsList(data){
+        return data.map(function(item,index){
+            return <li key={index} dangerouslySetInnerHTML={{__html:item.get('content')}}></li>
+        })
+    }
+    radioChange =(e)=>{
+        console.log("change")
+        this.setState({radioState: e.target.value})
     }
     _contentQtxt(data,index){
-        let items = data.get('items');
-        let option = items.get('selectoptions');
+        let items = (data.get('items')).get(0);
         let content = items.get('content');
-        if (content.indexOf("blank") != -1) {//如果有则去掉所有空格和blank
-            content = content.replace(/\s|_/g, '');
-            content = content.replace(/blank/g, '<input type="text" class="input_blank"/>');
+        let quetiontype = items.get('questiontemplate');
+        let childs = items.get('childs');
+        let optionArray=[];
+        let questionType=false;
+        //选择题的时候要处理返回的选项格式
+        if(quetiontype == '选择题'){
+            let option = items.get('optionselect');
+            $.trim(option);//去掉前后的空格
+            let ss = option.replace(/["\[\]\s]/g,"");
+            optionArray = ss.split(",");
+            questionType = true;
         }
-        return (
-            <div>
-                <div className="displayflex QtxtContent_main_title">
-                    <div className="QtxtContent_main_title_left">选择题：</div>
+        var base = new Base64();//base64对象
+        if(content){
+            if (content.indexOf("blank") != -1) {//如果有则去掉所有空格和blank
+                content = content.replace(/\s|_/g, '');
+                content = content.replace(/blank/g, '<input type="text" class="input_blank"/>');
+            }
+            return (
+                <div>
+                    <div className="displayflex QtxtContent_main_title">
+                        <div className="QtxtContent_main_title_left">{quetiontype}：</div>
+                    </div>
+                    <div className="padding10">
+                        <ul>
+                            <li dangerouslySetInnerHTML={{__html:content}}></li>
+                            <li>
+                                { !questionType ? "":<p>
+                                    <label className="checkbox-inline">
+                                        <input type="radio" value="A" id={"selectsA"+index} checked={(this.state.radioState=='A')?true:false}
+                                               onChange={this.radioChange} name={"Qopts_selects"+index} />
+                                        <span>(A)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[0])}}></span></label>
+                                    <label className="checkbox-inline">
+                                        <input type="radio" value="B" id={"selectsB"+index} checked={(this.state.radioState=='B')?true:false}
+                                               onChange={this.radioChange} name={"Qopts_selects"+index} />
+                                        <span>(B)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[1])}}></span></label>
+                                    <label className="checkbox-inline">
+                                        <input type="radio" value="C" id={"selectsC"+index} checked={(this.state.radioState=='C')?true:false}
+                                               onChange={this.radioChange} name={"Qopts_selects"+index} />
+                                        <span>(C)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[2])}}></span></label>
+                                    <label className="checkbox-inline">
+                                        <input type="radio" value="D" id={"selectsD"+index} checked={(this.state.radioState=='D')?true:false}
+                                               onChange={this.radioChange} name={"Qopts_selects"+index} />
+                                        <span>(D)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[3])}}></span></label>
+                                </p>}
+                            </li>
+                            {childs.size<1?"":this._childsList(childs)}
+                        </ul>
+                    </div>
                 </div>
-                <div className="padding10">
-                    <ul>
-                        <li dangerouslySetInnerHTML={{__html:content}}></li>
-                        <li>
-                            { option.size<1 ? "":<p>
-                                <label className="checkbox-inline"><input type="radio" value="A" name={"Qopts_selects"+index} />
-                                    <span>(A)</span><span dangerouslySetInnerHTML={{__html:option.get(0)}}></span></label>
-                                <label className="checkbox-inline"><input type="radio" value="B" name={"Qopts_selects"+index} />
-                                    <span>(B)</span><span dangerouslySetInnerHTML={{__html:option.get(1)}}></span></label>
-                                <label className="checkbox-inline"><input type="radio" value="C" name={"Qopts_selects"+index} />
-                                    <span>(C)</span><span dangerouslySetInnerHTML={{__html:option.get(2)}}></span></label>
-                                <label className="checkbox-inline"><input type="radio" value="D" name={"Qopts_selects"+index} />
-                                    <span>(D)</span><span dangerouslySetInnerHTML={{__html:option.get(3)}}></span></label>
-                            </p>}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        )
+            )
+        }
     }
     onChange = (page) => {
-        console.error("onChange---",page)
+        console.error("-----------------onChange-------",page)
         this.setState({
             current: page
         })
@@ -119,12 +171,19 @@ class Question extends Component{
         },1000)
 
     }
-    nextSubmit(page,answer){
-        var isright = false;
-        console.log('submit:',page,answer,this.state.questionType)
-        var targetDom = '';
+    nextSubmit(page,GetQuestion){
         var nextpage = page+1;
-        if(this.state.current <=10){
+        var isright = false;
+        var targetDom = '';
+        var AnswerContent = '';
+        let dataItems = (GetQuestion.get('items')).get(0);//试题数据
+        let answer = $.trim(dataItems.get('answer'));
+        let content = dataItems.get('content');
+        let type = dataItems.get('questiontemplate');
+        let quesId = dataItems.get('questionid');
+        let nexflag = true
+        console.log('submit:::::::::::',page,answer,type)
+        if(type == "选择题"){
             let doms = document.getElementsByTagName("input");
             //获取选择的答案
             for(let i=0;i<doms.length;i++){
@@ -134,45 +193,66 @@ class Question extends Component{
             }
             //选择答案后执行
             if(targetDom){
-                if(targetDom.value == answer){
+                AnswerContent = targetDom.value;
+                if(AnswerContent == answer){
                     isright = true;
-                    console.log('选择正确')
+                    console.error("选择正确")
                 }else{
                     isright = false;
-                    console.log('选择错误')
+                    console.error("选择错误")
                 }
-                this.state.sentList[page-1] = {id:page,selectvalue:targetDom.value,isright:isright};
-                let sentList = this.state.sentList;
-                console.log("sentList====>",nextpage,sentList.length,sentList)
-                this.setState({
-                    current: nextpage,
-                    sentList:sentList
-                })
-                this.getData(this.state.all_question[page])
             }else {
+                nexflag = false;
                 alert('请选择一个答案！')
             }
-        }else{
-            this.state.sentList[page-1] = {id:page,selectvalue:'',isright:isright};
-            let sentList = this.state.sentList;
+        }
+        if(nexflag){
+            let nowList = (this.state.sentList).ExamResult;
+            console.warn("nowList-=-=-=@@@-@@@@@@@=-=-=-=-=-=-=>>>",nowList,nowList.length)
+            nowList[page-1] = {
+                "QuesID": quesId,
+                "QuesType": type,
+                "Contents": [{
+                    "content": [AnswerContent],
+                    "url":"",
+                    "IsTrue": isright,
+                    "scroe":0
+                }]
+            }
             this.setState({
                 current: nextpage,
-                sentList:sentList
+                radioState:''
             })
             this.getData(this.state.all_question[page])
         }
     }
-    submit(){
-        alert("全部提交")
+    allSubmit(){
+        if(confirm("确定提交吗？")){
+            sentJson.FinishDate = moment().format();//结束时间
+            Storage_L.setItem("sentDataOfUser",JSON.stringify(this.state.sentList))
+            let sentItems = JSON.parse(Storage_L.getItem('sentDataOfUser'))
+            this.props.actions.sentUserPaperData({
+                body:{
+                    data:sentItems
+                },
+                success:(data)=>{
+                    alert("提交成功")
+                },
+                error:(mes)=>{
+                    console.error('数据接收发生错误');
+                }
+            })
+        }
     }
     render(){
-        console.warn("----------------render------------")
         const {GetQuestion} = this.props;
         let error = PureRenderMixin.Compare([GetQuestion]);
         if (error) return error;
-        let answer = (GetQuestion.get('items')).get('answer');
-        let title = (this.state.dataAll).topic;
+        let answer = ((GetQuestion.get('items')).get(0)).get('answer');
+        let questiontype = ((GetQuestion.get('items')).get(0)).get('questiontemplate');
+        let title = (this.state.dataAll).exampaper;//试卷标题
         let cleartime = this.state.cleartimeflag;
+        console.log("this.sentJson-----》》》》-----》》",this.state.current,this.state.sentList)
         return(
             <div className="mask" id="practice">
                 <div className="math-question-content">
@@ -192,11 +272,11 @@ class Question extends Component{
                             </div>
                         </div>
                         <div id="MathContent">
-                            {this.state.current <= 10?"":<EditContent/>}
+                            {(questiontype == '选择题')?'':<BaseEditor/>}
                         </div>
                     </section>
-                    <button type="button" className="btn btn-primary next_btn" disabled={(this.state.current==this.state.totalNum)?true:false} onClick={()=>this.nextSubmit(this.state.current,answer)}>下一题</button>
-                    <button type="button" className="btn btn-primary submit_btn" disabled={(this.state.current==this.state.totalNum)?false:true} onClick={()=>this.submit(this)}>全部提交</button>
+                    <button type="button" className="btn btn-primary next_btn" disabled={(this.state.current==(this.state.totalNum+1))?true:false} onClick={()=>this.nextSubmit(this.state.current,GetQuestion)}>下一题</button>
+                    <button type="button" className="btn btn-primary submit_btn" disabled={(this.state.current==(this.state.totalNum+1))?false:true} onClick={()=>this.allSubmit(this)}>全部提交</button>
                 </div>
             </div>
         )
@@ -211,8 +291,6 @@ Question.propTypes = {
     all_question: PropTypes.array,
     dataAll: PropTypes.array,
     sentList: PropTypes.array,
-    questionType: PropTypes.string,
-    JSON_aLL: PropTypes.string,
     cleartimeflag: PropTypes.bool
 }
 function mapStateToProps(state) {
@@ -222,7 +300,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getQuestionList,getQuestion}, dispatch) }
+    return { actions: bindActionCreators({push,getQuestionList,getQuestion,sentUserPaperData,getFirstDataOfPaper}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question)

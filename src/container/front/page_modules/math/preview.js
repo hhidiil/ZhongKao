@@ -7,7 +7,7 @@ import './style.css'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getQuestionList} from '../../../../redux/actions/math'
+import {getQuestionList,getQuestion} from '../../../../redux/actions/math'
 import ShowMask from '../../../../components/Alter/showMask'
 import {requestData} from '../../../../method_public/public'
 import {Button} from 'antd'
@@ -15,30 +15,22 @@ import {Button} from 'antd'
 class Preview extends Component{
     constructor(props){
         super(props)
+        let alldata = props.data;
         this.state={
-            JSON_aLL:"Exam_19008687-3c57-4105-8b6c-18205a4616a3.json",//某套题的JSON串，可取到某套试题的所有数据
-            dataAll:[],
-            total:0,
-            all_question:[],
-            question:[]
+            JSON_aLL:alldata.examid,//某套题的试卷id，可取到某套试题的所有数据
+            paper_title:alldata.exampaper,//试卷标题
+            questions:[]
         }
     }
     componentDidMount(){
         this.props.actions.getQuestionList({
             body:{
-                param : this.state.JSON_aLL
+                paperid : this.state.JSON_aLL
             },
             success:(data)=>{
-                console.log("getQuestionList")
-                let new_data = data;//解析JSON
-                let data_len = new_data.subquestions.length;//本套试题的所有题目数
-                let all_question = new_data.subquestions;
+                console.log("getQuestionList----preview-->",data)
+                let all_question = data;//解析JSON
                 this.getData(all_question)
-                this.setState({
-                    dataAll:new_data,
-                    total:data_len,
-                    all_question:all_question
-                })
             },
             error:(mes)=>{
                 console.error('数据接收发生错误');
@@ -48,22 +40,41 @@ class Preview extends Component{
     getData(data){
         var dataArray=[];
         for(let i=0;i<data.length;i++){
-            let url = '../src/data/ExamsData/JSON/Question/'+data[i].Content+'.json';//本地数据
-            requestData(url).then((data)=>{
-                dataArray.push(data);
-            });
+            let url = data[i].questionid;
+            this.props.actions.getQuestion({
+                    body:{
+                        paperid : url
+                    },
+                    success:(data)=>{
+                        dataArray.push(data);
+                    },
+                    error:(mes)=>{
+                        console.error('数据接收发生错误');
+                    }
+            })
         }
         //由于请求数据是异步的，所以需要延迟来更新state
         setTimeout(()=>this.getNewData(dataArray),2000)
     }
     getNewData(data){
         this.setState({
-            question:data
+            questions:data
+        })
+    }
+    _childsList(data){
+        return data.map(function(item,index){
+            return <li key={index} dangerouslySetInnerHTML={{__html:item.content}}></li>
         })
     }
     _showQuestionList(data){
         return data.map(function(item,index){
-            let content = (item.content);
+            let content = (item[0].content);
+            let options = item[0].optionselect;
+            let childs = item[0].childs;
+            $.trim(options);//去掉前后的空格
+            let ss = options.replace(/["\[\]]/g,"");
+            let optionArray = ss.split(",");
+            var base = new Base64();//base64对象
             if(content){
                 if (content.indexOf("blank") != -1) {//如果有则去掉所有空格和blank
                     content = content.replace(/\s|_/g, '');
@@ -74,26 +85,27 @@ class Preview extends Component{
                         <ul>
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
                             <li>
-                                { item.selectoptions.length<1 ? "":<p>
-                                    <label className="checkbox-inline"><input type="radio" title="A" name={"Qopts_selects"+index} />
-                                        <span>(A)</span><span dangerouslySetInnerHTML={{__html:item.selectoptions[0]}}></span></label>
-                                    <label className="checkbox-inline"><input type="radio" title="A" name={"Qopts_selects"+index} />
-                                        <span>(B)</span><span dangerouslySetInnerHTML={{__html:item.selectoptions[1]}}></span></label>
-                                    <label className="checkbox-inline"><input type="radio" title="A" name={"Qopts_selects"+index} />
-                                        <span>(C)</span><span dangerouslySetInnerHTML={{__html:item.selectoptions[2]}}></span></label>
-                                    <label className="checkbox-inline"><input type="radio" title="A" name={"Qopts_selects"+index} />
-                                        <span>(D)</span><span dangerouslySetInnerHTML={{__html:item.selectoptions[3]}}></span></label>
+                                { optionArray.length<4 ? "":<p>
+                                    <label className="checkbox-inline">
+                                        <span style={{margin:"0 3px"}}>(A)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[0])}}></span></label>
+                                    <label className="checkbox-inline">
+                                        <span style={{margin:"0 3px"}}>(B)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[1])}}></span></label>
+                                    <label className="checkbox-inline">
+                                        <span style={{margin:"0 3px"}}>(C)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[2])}}></span></label>
+                                    <label className="checkbox-inline">
+                                        <span style={{margin:"0 3px"}}>(D)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[3])}}></span></label>
                                 </p>}
                             </li>
+                            {childs.length<1?"":this._childsList(childs)}
                         </ul>
                     </div>
                 )
             }
-        })
+        },this)
     }
     render(){
-        let title = this.state.dataAll;
-        let dataitem = this.state.question;
+        let title = this.state.paper_title;
+        let dataitem = this.state.questions;
         if(dataitem.length<1){
             return <div/>;
         }
@@ -103,7 +115,7 @@ class Preview extends Component{
                 <div className="Preview-content">
                     <Button className="exit" onClick={this.props.closePreview}>退出</Button>
                     <div className="Preview_header">
-                        <div className="title">{title.topic}</div>
+                        <div className="title">{title}</div>
                         <div className="second-title">
                             <div>总分: 120</div>
                             <div>难度: 中等</div>
@@ -111,7 +123,7 @@ class Preview extends Component{
                         </div>
                     </div>
                     <section>
-                        {this._showQuestionList(this.state.question)}
+                        {this._showQuestionList(dataitem)}
                     </section>
                 </div>
             </div>
@@ -123,7 +135,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({getQuestionList}, dispatch) }
+    return { actions: bindActionCreators({getQuestionList,getQuestion}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Preview)

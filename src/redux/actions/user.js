@@ -27,10 +27,10 @@ export function allUsers(opt) {
 //登录校验
 export function login(opt) {
     return (dispatch) => {
-        //const route = '/api/user/token_name';//服务端数据
-        const route = '../src/data/userInfo.json';//本地数据
+        const route = '/api/user/token_name';//服务端数据
+        //const route = 'src/data/userInfo.json';//本地数据
         request(route, {}, dispatch, opt.success, opt.error,
-            { method: 'GET',
+            { method: 'POST',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
                 body: bodyUrlencoded(opt.body) })
     }
@@ -69,14 +69,14 @@ export function register(opt) {
 export function getUserBasicInfo(opt) {
     console.log("getUserBasicInfo=====",opt.body)
     return (dispatch) => {
-        //const route = '/api/user/basic_info';
-        const route = '../src/data/userInfo.json';//用假数据时候需要修改 发送的方式。:get
+        const route = '/api/user/basic_info';
+        //const route = 'src/data/userInfo.json';//用假数据时候需要修改 发送的方式。:get
         const success = (data) => {
             dispatch({ type: TYPES.USERBASICINFO_UPDATA, result: {items: data} })
             opt.success && opt.success(data)
         }
         request(route, {}, dispatch, success, opt.error,
-            { method: 'GET',
+            { method: 'POST',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
                 body: bodyUrlencoded(opt.body) })
     }
@@ -84,11 +84,21 @@ export function getUserBasicInfo(opt) {
 //获取用户收藏的试题
 export function getCollectInfo(opt) {
     return (dispatch) => {
-        const route = '../src/data/collect.json';
+        const route = 'src/data/collect.json';
         const success = (data) => {
             dispatch({ type: TYPES.USERCOLLECTINFO_UPDATA, result: {items: data} })
             opt.success && opt.success(data)
         }
         request(route, opt.params || {}, dispatch, success, opt.error)
+    }
+}
+//更新用户基本信息
+export function updateUserInfo(opt) {
+    return (dispatch) => {
+        const route = '/api/user/updateBasicInfo';
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
     }
 }

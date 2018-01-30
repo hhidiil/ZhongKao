@@ -1,19 +1,22 @@
-[
-  {
-    "id":1,
-    "idiilnumber": "IDL0000001",
-    "name": "admin",
-    "password": "123456",
-    "actualName": "王小明",
-    "phone": "18888888888",
-    "email":"",
-    "sex": "男",
-    "birthday": "2008/08/08",
-    "familyAddress": "北京市海淀区科技路28号",
-    "headimg": "public/images/user_head.jpg",
-    "rank":"0",
-    "grade":"",
-    "registerdate":"",
-    "updatetime":""
-  }
-]
+{
+  "code":200,
+  "data":[
+    {
+      "id":1,
+      "userid": "IDL0000001",
+      "username": "admin",
+      "password": "123456",
+      "actualName": "王小明",
+      "phone": "18888888888",
+      "email":"",
+      "sex": "男",
+      "birthday": "2008/08/08",
+      "familyAddress": "北京市海淀区科技路28号",
+      "headimg": "public/images/user_head.jpg",
+      "rank":"0",
+      "grade":"",
+      "registerdate":"",
+      "updatetime":""
+    }
+  ]
+}

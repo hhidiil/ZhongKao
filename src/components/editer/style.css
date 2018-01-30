@@ -1,0 +1,9 @@
+.formDialog{
+    width: 300px;
+    position: absolute;
+    background-color: aliceblue;
+    border: 2px solid gainsboro;
+    border-radius: 5px;
+    border-bottom: 1px solid #e1e1e1;
+    box-shadow: 2px 2px 5px #d3d6da;
+}

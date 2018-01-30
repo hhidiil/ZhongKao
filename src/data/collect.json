@@ -1,44 +1,47 @@
-[
-  {
-    "id":"MK0001",
-    "name":"admin",
-    "menu_title":[
-      {
-        "name":"选择题",
-        "question":[
-          {
-            "id":0,
-            "title":"如图，矩形ABCD的对角线AC、BD相交于点O，△COD关于CD的对称图形为△CED。△CED面积？",
-            "url":"http://www.jyeoo.com/math/ques/detail/bd0660d7-5789-48aa-a994-38a0556c3c46"
-          },{
-            "id":1,
-            "title":"下面正确的是？",
-            "url":""
-          },{
-            "id":2,
-            "title":"如下图所示，点Q运动所需的时间t = OP/1 +AP/3 = OP + 2/3*AP（秒），如何求其最小值是多少？",
-            "url":""
-          }
-        ]
-      },{
-        "name":"填空题",
-        "question":[]
-      },{
-        "name":"解答题",
-        "question":[
-          { "id":0,
-            "title":"如图，矩形ABCD的对角线AC、BD相交于点O，△COD关于CD的对称图形为△CED。",
-            "url":"http://localhost:3000/#/home/math/exams/exam"
-          },{
-            "id":1,
-            "title":"矩形的对角线相等且互相平分，则CO = DO，又△COD与△CED关于直线CD对称，所以四边形OCED的四条边都相等。",
-            "url":""
-          }
-        ]
-      },{
-        "name":"其他",
-        "question":[]
-      }
-    ]
-  }
-]
+{
+  "code":200,
+  "data":[
+    {
+      "id":"MK0001",
+      "name":"admin",
+      "menu_title":[
+        {
+          "name":"选择题",
+          "question":[
+            {
+              "id":0,
+              "title":"如图，矩形ABCD的对角线AC、BD相交于点O，△COD关于CD的对称图形为△CED。△CED面积？",
+              "url":"http://www.jyeoo.com/math/ques/detail/bd0660d7-5789-48aa-a994-38a0556c3c46"
+            },{
+              "id":1,
+              "title":"下面正确的是？",
+              "url":""
+            },{
+              "id":2,
+              "title":"如下图所示，点Q运动所需的时间t = OP/1 +AP/3 = OP + 2/3*AP（秒），如何求其最小值是多少？",
+              "url":""
+            }
+          ]
+        },{
+          "name":"填空题",
+          "question":[]
+        },{
+          "name":"解答题",
+          "question":[
+            { "id":0,
+              "title":"如图，矩形ABCD的对角线AC、BD相交于点O，△COD关于CD的对称图形为△CED。",
+              "url":"http://localhost:3000/#/home/math/exams/exam"
+            },{
+              "id":1,
+              "title":"矩形的对角线相等且互相平分，则CO = DO，又△COD与△CED关于直线CD对称，所以四边形OCED的四条边都相等。",
+              "url":""
+            }
+          ]
+        },{
+          "name":"其他",
+          "question":[]
+        }
+      ]
+    }
+  ]
+}

@@ -4,26 +4,31 @@
   "private": true,
   "scripts": {
     "start": "webpack --config webpack.config.js && node server.js",
-    "nodestart": "webpack --config webpack.config.js && node ./bin/www",
+    "nodestart": "node ./bin/www",
     "build": "webpack --config webpack.config.js"
   },
   "dependencies": {
     "body-parser": "~1.15.1",
     "classnames": "^2.2.5",
     "cookie-parser": "~1.4.3",
+    "cors": "^2.8.4",
     "debug": "~2.6.9",
     "echarts": "^3.8.5",
     "ejs": "~2.5.7",
     "express": "~4.15.5",
+    "express-fileupload": "^0.3.0",
     "immutable": "^3.8.1",
     "less": "^2.7.1",
     "less-loader": "^2.2.3",
+    "moment": "^2.20.1",
     "morgan": "~1.9.0",
     "mysql": "^2.15.0",
     "path": "^0.12.7",
     "prop-types": "^15.6.0",
     "react-umeditor": "^1.0.0-rc11",
-    "redux-devtools-extension": "^2.13.2"
+    "redux-devtools-extension": "^2.13.2",
+    "webpack-dev-middleware": "^2.0.4",
+    "webpack-hot-middleware": "^2.21.0"
   },
   "devDependencies": {
     "antd": "^2.13.10",

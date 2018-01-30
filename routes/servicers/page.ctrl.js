@@ -3,7 +3,6 @@
  */
 
 var Page = require('../../database/page.db');
-var Helper = require('../helper');
 
 module.exports={
     init: function(app) {
@@ -14,13 +13,19 @@ module.exports={
         var props = {};
         var page = new Page({props: props});
         page.getDoorShowItems(function(err, data) {
+            if(err){
+                console.log(err)
+                return res.send({
+                    code: 501,
+                    message: '出错了0.0'
+                });
+            }
             if (data.length>0) {
                 return res.send({
                     code: 200,
                     data: data
                 })
             } else {
-                console.log(err)
                 return res.send({
                     code: 500,
                     message: '出错了'

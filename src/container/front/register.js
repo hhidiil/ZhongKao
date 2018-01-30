@@ -5,6 +5,7 @@ import React ,{Component} from 'react'
 // redux
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
+import {Link} from 'react-router'
 import { push } from 'react-router-redux'
 import {register} from '../../redux/actions/user'
 import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
@@ -65,11 +66,11 @@ class RegisterForm extends Component {
                     success: (data) => {
                         console.log("register success:"+data)
                         alert("恭喜您，注册成功！！！")
-                        //this.props.actions.push('door')
+                        this.props.actions.push('door')
                     },
                     error: (message) => {
                         this.props.form.setFields({
-                            password: {
+                            nickname: {
                                 errors: [new Error(message)]
                             }
                         });
@@ -110,7 +111,7 @@ class RegisterForm extends Component {
                         <div className="logolay"><a href="http://www.idiil.com.cn/index.html" ><img src="public/images/uu14.png"/></a></div>
                         <div className="header-check-btn header-left-font">
                             <span>已有账号？</span>
-                            <a href="http://www.idiil.com.cn/index.html" style={{color:"#333"}} >请登录</a>
+                            <Link to="/" style={{color:"#333"}}>请登录</Link>
                         </div>
                     </div>
                 </header>

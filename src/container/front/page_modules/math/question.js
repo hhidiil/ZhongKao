@@ -1,5 +1,5 @@
 /**
- * 二测试题，学习的
+ * 二测试题
  * Created by gaoju on 2017/11/29.
  */
 import React,{Component} from 'react'
@@ -7,8 +7,10 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getQuestionList} from '../../../../redux/actions/math'
+import {getFirstDataOfPaper} from '../../../../redux/actions/math'
 import SelectMenu from '../../../../components/selectMenu/selectMenu'
+import {Storage_S,Storage_L} from '../../../../config'
+import moment from 'moment'
 import './question_style.css'
 import { Pagination } from 'antd';
 import { Menu, Icon,Button } from 'antd'
@@ -17,9 +19,12 @@ const SubMenu = Menu.SubMenu;
 class Question extends Component{
     constructor(props){
         super(props);
+        let activeId = window.location.hash.split('/')[window.location.hash.split('/').length-1];//当前页面的id
+        let paper = JSON.parse(Storage_S.getItem(activeId))//缓存中取出对应数据
         this.state={
             JSON_aLL:"Exam_19008687-3c57-4105-8b6c-18205a4616a3.json",//某套题的JSON串，可取到某套试题的所有数据
             collapsed: false,
+            activeId:activeId,
             current:1,
             mainContent:true,//主题干显隐，展开true闭合false
             two_answer_content:false,//主题干显隐，展开true闭合false
@@ -31,6 +36,19 @@ class Question extends Component{
         }
     }
     componentDidMount(){
+        this.props.actions.getFirstDataOfPaper({
+            body:{
+                userid: Storage_S.getItem('userid'),
+                exampaperid: this.state.activeId,
+            },
+            success:(data)=>{
+                console.warn(JSON.parse(data[0].ExamResult))
+            },
+            error:(message)=>{
+                console.error(message)
+            }
+
+        })
     }
     requestQuestion(type){
         console.log(type)
@@ -465,13 +483,11 @@ class Question extends Component{
     }
 }
 function mapStateToProps(state, ownProps) {
-    return {
-        QuestionList:state.QuestionList
-    }
+    return {}
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getQuestionList}, dispatch) }
+    return { actions: bindActionCreators({push,getFirstDataOfPaper}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question)

@@ -17,6 +17,7 @@ module.exports = {
         app.post('/user/password', this.doPutPassword)
         app.post('/user/register', this.doRegister)
         app.post('/user/basic_info', this.doGetUserBasicInfo)
+        app.post('/user/updateBasicInfo',this.doUpdateBasicInfo)
     },
 
     // 获取所有用户信息
@@ -24,16 +25,24 @@ module.exports = {
         var props = {};
         var user = new User({props: props});
         user.getUserAllItems(function(err, data) {
-            if (data.length) {
-                return res.send({
-                    code: 200,
-                    data: data
-                })
-            } else {
+            if(!err){
+                if (data.length) {
+                    return res.send({
+                        code: 200,
+                        data: data
+                    })
+                } else {
+                    console.log(data)
+                    return res.send({
+                        code: 500,
+                        message: '查询出错'
+                    })
+                }
+            }else {
                 console.log(err)
                 return res.send({
-                    code: 500,
-                    message: '出错了'
+                    code: 501,
+                    message: '报出错了'
                 })
             }
         })
@@ -44,40 +53,52 @@ module.exports = {
         props.password = Helper.getMD5(req.body.password);
         var user = new User({ props: props });
         user.getUserItemByUserName(function(err, data) {
-            console.log(data)
-            if (data.length) {
-                console.log(data)
-                return res.send({
-                    code: 200,
-                    data: data
-                })
-            } else {
+            if(!err){
+                if (data.length) {
+                    console.log(data)
+                    return res.send({
+                        code: 200,
+                        data: data
+                    })
+                } else {
+                    return res.send({
+                        code: 500,
+                        message: '用户名不存在或密码错误'
+                    })
+                }
+            }else {
                 console.log(err)
                 return res.send({
-                    code: 500,
-                    message: '用户名不存在或密码错误'
+                    code: 501,
+                    message: '报出错了'
                 })
             }
         })
     },
-
     // 用户登录，通过手机号登陆
     doGetUserItemByPhone: function(req, res) {
         var props = req.body;
         props.password = Helper.getMD5(req.body.password);
         var user = new User({ props: props });
         user.getUserItemByPhone(function(err, data) {
-            if (data.length) {
-                console.log(data)
-                return res.send({
-                    code: 200,
-                    data: data
-                })
-            } else {
+            if(!err){
+                if (data.length) {
+                    console.log(data)
+                    return res.send({
+                        code: 200,
+                        data: data
+                    })
+                } else {
+                    return res.send({
+                        code: 500,
+                        message: '用户名或密码不正确'
+                    })
+                }
+            }else {
                 console.log(err)
                 return res.send({
-                    code: 500,
-                    message: '用户名或密码不正确'
+                    code: 501,
+                    message: '报出错了'
                 })
             }
         })
@@ -91,14 +112,21 @@ module.exports = {
         };
         var user = new User({ props: props });
         user.putUserPassword(function(err, data) {
-            if (data.changedRows >= 0) {
-                return res.send({
-                    code: 200
-                })
-            } else {
+            if(!err){
+                if (data.changedRows >= 0) {
+                    return res.send({
+                        code: 200
+                    })
+                } else {
+                    return res.send({
+                        code: 500,
+                        message: '重置密码出错'
+                    })
+                }
+            }else {
                 console.log(err)
                 return res.send({
-                    code: 500,
+                    code: 501,
                     message: '出错了'
                 })
             }
@@ -106,21 +134,63 @@ module.exports = {
     },
     // 注册
     doRegister: function(req, res) {
-        var props = req.body;
-        props.password = Helper.getMD5(req.body.password);
-        var user = new User({ props: props });
-        user.addUser(function(err, data) {
-            console.log("register------->>>>>>>>>>>>",data)
-            if (data.insertId>0) {
-                return res.send({
-                    code: 200,
-                    data:data.insertId
-                })
-            } else {
+        const params = {
+            username:req.body.username
+        };
+        let user = new User({ props: params });
+        //判断用户名是否存在
+        user.getUserInfo(function(err, data){
+            if(err){
                 console.log(err)
                 return res.send({
+                    code: 501,
+                    message: '出错了0.0'
+                });
+            }
+            if(data.length<1){
+                const params = {};
+                let user = new User({ props: params });
+                //获取当前最新用户id
+                user.getMaxUserId(function(err, data){
+                    console.log("register------->>>>>>>>>>>>::")
+                    let num = data[0].userid;
+                    let props = req.body;
+                    if (num.length>0) {//有用户
+                        props.idiilumber = Helper.createUserId(data[0].userid);
+                    } else {
+                        props.idiilumber = 'IDIIL00000001';//第一个用户
+                    }
+                    props.password = Helper.getMD5(req.body.password);
+                    let user = new User({ props: props });
+                    //添加新用户
+                    user.addUser(function(err, data) {
+                        if(err){
+                            console.log(err)
+                            return res.send({
+                                code: 501,
+                                message: '出错了0.0'
+                            });
+                        }
+                        if (data.insertId>0) {
+                            return res.send({
+                                code: 200,
+                                data:data.insertId
+                            })
+                        } else {
+                            console.log(err)
+                            return res.send({
+                                code: 500,
+                                type:'register',
+                                message: '注册出错了,请重新注册'
+                            })
+                        }
+                    })
+                })
+            }else {
+                return res.send({
                     code: 500,
-                    message: '注册出错了'
+                    type:'username',
+                    message: '用户名已存在，请重新输入！'
                 })
             }
         })
@@ -132,17 +202,41 @@ module.exports = {
         };
         var user = new User({props:props});
         user.getUserBasicInfo(function(err,data){
-            console.log("doGetUserBasicInfo::::",data)
+            if(err){
+                console.log(err)
+                return res.send({
+                    code: 501,
+                    message: '出错了0.0'
+                });
+            }
             if(data.length>0){
                 return res.send({
                     code:200,
                     data:data
                 })
             }else{
-                console.log(err)
                 return res.send({
                     code: 500,
                     message: '获取信息错误'
+                })
+            }
+        })
+    },
+    doUpdateBasicInfo: function (req,res){
+        console.log("doUpdateBasicInfo::::",req)
+        var props = req.body;
+        var user = new User({props:props});
+        user.UpdateBasicInfo(function(err,data){
+            if(!err){
+                return res.send({
+                    code:200,
+                    data:data
+                })
+            }else{
+                console.error("UpdateBasicInfo>>>>err>>>>",err)
+                return res.send({
+                    code: 500,
+                    message: '修改出错'
                 })
             }
         })

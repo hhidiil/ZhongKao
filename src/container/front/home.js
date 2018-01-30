@@ -47,7 +47,6 @@ class Home extends Component {
         })
     };
     exitOut(){
-        console.log("exitOut")
         if(window.confirm("确定要退出吗？")){
             sessionStorage.clear();
             this.props.actions.push('/');
