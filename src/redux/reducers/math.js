@@ -33,6 +33,16 @@ export const GetQuestion = createReducer(Immutable.fromJS({preload:false}),{
         return state.set('preload', true).merge(Immutable.fromJS(action.result))
     }
 })
+export const SecondTestQuestions = createReducer(Immutable.fromJS({preload:false}),{
+    [TYPES.SECONDTESTQUESTIONS_UPDATA]: (state, action) => {
+        return state.set('preload', true).merge(Immutable.fromJS(action.result))
+    }
+})
+export const GetFirstDataOfPaper = createReducer(Immutable.fromJS({preload:false}),{
+    [TYPES.GETFIRSTDATAOFPAPER]: (state, action) => {
+        return state.set('preload', true).merge(Immutable.fromJS(action.result))
+    }
+})
 export const TimingFlag = createReducer(Immutable.fromJS({preload:false}),{
     [TYPES.SET_TIMING]: (state, action) => {
         return state.set('preload', true).merge(Immutable.fromJS(action.result))

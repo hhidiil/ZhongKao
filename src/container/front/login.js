@@ -36,7 +36,6 @@ class LoginForm extends Component {
                         password: values.password
                     },
                     success: (data) => {
-                        console.log("login success-->:",data)
                         Storage_S.setItem('username', values.userName)
                         Storage_S.setItem('userid', data[0].userid)
                         this.props.actions.push('home')

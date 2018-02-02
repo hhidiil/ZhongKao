@@ -48,24 +48,6 @@
 .btnContainer button{
     margin: 0 2px;
 }
-.pagination_content{
-    position: relative;
-    margin: 15px 0;
-    display: flex;
-    width: 100%;
-}
-.pagination_content .pagination_before{
-    position: relative;
-    width: 50%;
-    margin: 10px 5px 10px 30px;
-}
-.pagination_content .btnContainer{
-    position: relative;
-    right: 10px;
-    top: 5px;
-    width: 55%;
-    text-align: right;
-}
 .QtxtContent2{
     padding: 10px;
 }

@@ -7,7 +7,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import PureRenderMixin from '../../../../method_public/pure-render'
-import {getAllQuestionsList} from '../../../../redux/actions/math'
+import {getAllQuestionsList,getFirstDataOfPaper} from '../../../../redux/actions/math'
 import {getAllExamList} from '../../../../redux/actions/math'
 import {Storage_S} from '../../../../config'
 import Preview from './preview'
@@ -32,14 +32,9 @@ class QuestionAll extends Component{
         if(this.props.params.quesParam=="questions"){
             console.log("-----------questions-----------------")
             this.props.actions.getAllQuestionsList({
-                body:{
-                    username:"admin"
-                },
+                body:{userid:Storage_S.getItem('userid')},
                 success:(data)=>{
-                    this.setState({
-                        showStatus:true,
-                        allList:data
-                    })
+                    this.getDataOfFirst(data)
                 },
                 error:(message)=>{console.warn("数据错误")}
             });
@@ -59,6 +54,34 @@ class QuestionAll extends Component{
             });
         }
     };
+    getDataOfFirst(items){
+        let olddata = items;
+        var len = olddata.length;
+        let i;
+        var dataArray = [];
+        for(i=0;i<len;i++){
+            let newdata = olddata[i];
+            this.props.actions.getFirstDataOfPaper({
+                body:{
+                    userid: Storage_S.getItem('userid'),
+                    exampaperid: newdata.examid
+                },
+                success:(data)=>{
+                    newdata.doneDetails =data;
+                    dataArray.push(newdata)
+                },
+                error:(mes)=>{console.error("数据获取失败")}
+            })
+        }
+        setTimeout(()=>this.getNewData(dataArray),1000)
+    }
+    getNewData(data){
+        console.log(data)
+        this.setState({
+            showStatus:true,
+            allList:data
+        })
+    }
     /*试卷对应二测部分*/
     _renderShowExplain(data,index){
         return(
@@ -78,14 +101,17 @@ class QuestionAll extends Component{
         let pageSize = data.length;
         if (pageSize > 0) {
             return data.map(function(item,index){
+                let len = (item.doneDetails).length;
                 return(
                     <div key={index} className="questionsAll-item">
                         <div className="questionsAll-item-content">
                             <div className="title"><p>{item.exampaper}</p></div>
                             <div className="btn_list">
+                                {len>0?<span className="wancheng">已完成</span>:""}
+                                {len>0?<span className="wancheng">总分：{(item.doneDetails)[0].Score}</span>:""}
                                 <Button type="dashed" className="bttn " onClick={()=>this.preview(item)}>预览</Button>
                                 <Button type="dashed" className="bttn " onClick={()=>this.gotoPractice(item)}>训练</Button>
-                                <Button type="dashed" className="bttn " onClick={()=>this.quizAgain(item,index)}>巩固练习</Button>
+                                <Button type="dashed" className="bttn " onClick={()=>this.quizAgain(item,index,len)}>巩固练习</Button>
                             </div>
                         </div>
                         {this._renderShowExplain(item,index)}
@@ -117,17 +143,17 @@ class QuestionAll extends Component{
         Storage_S.setItem(id,JSON.stringify(data))
         this.props.actions.push(`/home/math/questions/practice/${id}`);
     }
-    quizAgain(data,index){
+    quizAgain(data,index,flag){
         let domqiuz = "quizAgin"+index;
         //判断本套试题有没有测试完成过，只有一测完成了才能二测
-        //if(data.practice_status == "1"){
+        if(flag >0){
             this.setState({
                 quiz_again_status : !this.state.quiz_again_status,
                 indexNum : index
             });
-        //}else{
-        //    alert("你还没有做完本套试题一测，请先做完一测！")
-        //}
+        }else{
+            alert("你还没有做完本套试题一测，请先做完一测！")
+        }
     }
     preview(data){
         console.log("预览")
@@ -167,7 +193,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({push, getAllQuestionsList,getAllExamList }, dispatch)
+        actions: bindActionCreators({push, getAllQuestionsList,getAllExamList ,getFirstDataOfPaper}, dispatch)
     }
 }
 

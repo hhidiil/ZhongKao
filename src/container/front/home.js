@@ -31,15 +31,11 @@ class Home extends Component {
         console.log('click ', e);
         let route='';
         let routeflag=e.keyPath.pop();
-        console.log('routeflag--> ',routeflag);
-        console.log("item route-->"+route,e.key)
         if(routeflag == "basic"){
             route = "basic/"+e.key;
-            console.log('basic--> ', route);
             this.props.actions.push(`/home/${route}`)
         }else if(routeflag == "math"){
             route = e.key;
-            console.log('math--> ',e,route);
             this.props.actions.push(`/home/${route}`)
         }
         this.setState({
@@ -69,7 +65,7 @@ class Home extends Component {
                     <menu className="menu-css">
                         <Menu
                             onClick={this.handleClick}
-                            style={{ width: 240}}
+                            style={{ width: 180}}
                             defaultSelectedKeys={['1']}
                             defaultOpenKeys={['basic']}
                             mode="inline"

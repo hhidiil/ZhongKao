@@ -11,11 +11,13 @@ module.exports={
         app.post('/math/questionsOfPaper',this.getQuestionsOfPaper);
         app.post('/math/question',this.getQuestion);
         app.post('/math/sentUserPaperData',this.sentUserPaperData);
-        app.post('/math/firstDataOfPaper',this.getFirstDataOfPaper)
+        app.post('/math/firstDataOfPaper',this.getFirstDataOfPaper);
+        app.post('/math/secondTestQuestion',this.getSecondTestQuestion);
+        app.post('/math/contentOfChildQues',this.getContentOfChildQues)
     },
     getAllPapers: (req, res) => {
-        var props = {};
-        var math = new Math({props: props});
+        let props = {};
+        let math = new Math({props: props});
         math.getAllPapersList(function(err, data) {
             if(err){
                 console.log(err)
@@ -78,12 +80,101 @@ module.exports={
                         paperid:data[0].questionid
                     };
                     let math = new Math({props: props});
-                    math.getQuestionChildItems(function(err, data){
+                    math.getQuestionChild(function(err, data){
                         olddata[0].childs = data;
                         if(!err){
                             return res.send({
                                 code: 200,
                                 data: olddata
+                            })
+                        }else {
+                            console.log(err);
+                            return res.send({
+                                code: 501,
+                                message: '数据获取出错了^@^'
+                            })
+                        }
+                    })
+                } else {
+                    console.log(err);
+                    return res.send({
+                        code: 500,
+                        message: '数据不存在^@^'
+                    })
+                }
+            }else{
+                console.log(err);
+                return res.send({
+                    code: 501,
+                    message: '数据获取出错了^@^'
+                })
+            }
+        })
+    },
+    getContentOfChildQues: (req,res) => {
+        console.log("getQuestion======>",req.body.itemid)
+        let props = {
+            itemid:req.body.itemid
+        };
+        let math = new Math({props: props});
+        math.getContentOfChildQuesItems(function(err, data) {
+            if(!err){
+                if (data.length>0) {
+                    return res.send({
+                        code: 200,
+                        data: data
+                    })
+                } else {
+                    console.log(err);
+                    return res.send({
+                        code: 500,
+                        message: '数据不存在^@^'
+                    })
+                }
+            }else{
+                console.log(err);
+                return res.send({
+                    code: 501,
+                    message: '数据获取出错了^@^'
+                })
+            }
+        })
+    },
+    getSecondTestQuestion: (req,res) => {
+        let props = {
+            paperid:req.body.questionid
+        };
+        let math = new Math({props: props});
+        math.getQuestionItems(function(err, data) {
+            if(!err){
+                if (data.length>0) {
+                    let olddata = data;
+                    let props = {
+                        paperid:data[0].questionid
+                    };
+                    let math = new Math({props: props});
+                    math.getQuestionChild(function(err, data){
+                        olddata[0].childs = data;
+                        if(!err){
+                            let props = {
+                                questionid:olddata[0].questionid
+                            };
+                            let math = new Math({props: props});
+                            //查出其所有子题，
+                            math.getQuestionChildItems(function(err, data){
+                                olddata[0].childsid = data;
+                                if(!err){
+                                    return res.send({
+                                        code: 200,
+                                        data: olddata
+                                    })
+                                }else {
+                                    console.log(err);
+                                    return res.send({
+                                        code: 501,
+                                        message: '数据获取出错了^@^'
+                                    })
+                                }
                             })
                         }else {
                             console.log(err);

@@ -40,10 +40,8 @@ class Door extends Component {
     }
     render() {
         let { homeShowList } = this.props;
-        console.log("homeShowList---1--->",homeShowList)
         let error = PureRenderMixin.Compare([homeShowList]);//优化render
         if (error) return error
-        console.log("homeShowList---2--->",homeShowList)
         const menu = (
             <Menu>
                 <Menu.Item key="0">

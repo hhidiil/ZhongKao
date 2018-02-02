@@ -21,21 +21,24 @@ var sentJson = {
     "ExamInfoID":"", "UserID":"", "ExamPaperID":"",
     "StartDate":null, "FinishDate":null, "SpendTime":0, "ExamType":"", "Score":0,
     "ExamResult":[],
-    "DoExamInfo":[]
+    "DoExamInfo":[],
+    "currentquesid":0,
+    "Done":'no'
 }
 class Question extends Component{
     constructor(props){
         super(props);
         let activeId = window.location.hash.split('/')[window.location.hash.split('/').length-1];//当前页面的id
-        let paper = JSON.parse(Storage_S.getItem(activeId))//缓存中取出对应数据
+        let paper = JSON.parse(Storage_S.getItem(activeId))//缓存中取出试卷的对应数据
+        let paperItems = JSON.parse(Storage_L.getItem('sentDataOfUser'))//缓存中取出做题情况的对应数据
         this.state={
             dataAll:paper,//整套试卷,可取到某套试题的所有数据
             activeId: activeId,
             cleartimeflag:true,
-            current:1,//当前题号
+            current: !paperItems ? 1 : paperItems.currentquesid,//当前题号
             totalNum:0,//试题总数
             all_question:[],//所有题目
-            sentList:sentJson,//组装答案列表，用来发送存储源数据
+            sentList: !paperItems? sentJson : paperItems,//组装答案列表，用来发送存储源数据
             radioState:''
         }
     }
@@ -52,7 +55,7 @@ class Question extends Component{
             success:(data)=>{
                 let all_question = data;//解析JSON
                 let data_len = all_question.length;//本套试题的所有题目数
-                this.getData(all_question[0])
+                this.getData(all_question[this.state.current-1])
                 this.setState({
                     totalNum:data_len,
                     all_question:all_question
@@ -80,7 +83,8 @@ class Question extends Component{
         }
     }
     getData(data){
-        this.props.actions.getQuestion({body:{paperid : data.questionid},
+        if(data){
+            this.props.actions.getQuestion({body:{paperid : data.questionid},
                 success:(data)=>{
                     let isHave = (this.state.sentList).ExamResult[this.state.current-1];//做过了就显示选择的答案
                     if(isHave){
@@ -88,6 +92,7 @@ class Question extends Component{
                         this.setState({radioState:selected})
                     }
                 }})
+        }
     }
     _childsList(data){
         return data.map(function(item,index){
@@ -95,7 +100,6 @@ class Question extends Component{
         })
     }
     radioChange =(e)=>{
-        console.log("change")
         this.setState({radioState: e.target.value})
     }
     _contentQtxt(data,index){
@@ -155,7 +159,6 @@ class Question extends Component{
         }
     }
     onChange = (page) => {
-        console.error("-----------------onChange-------",page)
         this.setState({
             current: page
         })
@@ -178,7 +181,6 @@ class Question extends Component{
         var AnswerContent = '';
         let dataItems = (GetQuestion.get('items')).get(0);//试题数据
         let answer = $.trim(dataItems.get('answer'));
-        let content = dataItems.get('content');
         let type = dataItems.get('questiontemplate');
         let quesId = dataItems.get('questionid');
         let nexflag = true
@@ -208,7 +210,7 @@ class Question extends Component{
         }
         if(nexflag){
             let nowList = (this.state.sentList).ExamResult;
-            console.warn("nowList-=-=-=@@@-@@@@@@@=-=-=-=-=-=-=>>>",nowList,nowList.length)
+            (this.state.sentList).currentquesid = page;//当前题号，断点续做
             nowList[page-1] = {
                 "QuesID": quesId,
                 "QuesType": type,
@@ -223,20 +225,23 @@ class Question extends Component{
                 current: nextpage,
                 radioState:''
             })
+            Storage_L.setItem("sentDataOfUser",JSON.stringify(this.state.sentList))//每做完一个题缓存一个
             this.getData(this.state.all_question[page])
         }
     }
     allSubmit(){
         if(confirm("确定提交吗？")){
-            sentJson.FinishDate = moment().format();//结束时间
-            Storage_L.setItem("sentDataOfUser",JSON.stringify(this.state.sentList))
-            let sentItems = JSON.parse(Storage_L.getItem('sentDataOfUser'))
+            (this.state.sentList).FinishDate = moment().format();//结束时间
+            (this.state.sentList).Done = "yes";
+            let sentItems = this.state.sentList;
             this.props.actions.sentUserPaperData({
                 body:{
                     data:sentItems
                 },
                 success:(data)=>{
                     alert("提交成功")
+                    Storage_L.clear()
+                    this.exitBack()
                 },
                 error:(mes)=>{
                     console.error('数据接收发生错误');
@@ -252,7 +257,6 @@ class Question extends Component{
         let questiontype = ((GetQuestion.get('items')).get(0)).get('questiontemplate');
         let title = (this.state.dataAll).exampaper;//试卷标题
         let cleartime = this.state.cleartimeflag;
-        console.log("this.sentJson-----》》》》-----》》",this.state.current,this.state.sentList)
         return(
             <div className="mask" id="practice">
                 <div className="math-question-content">

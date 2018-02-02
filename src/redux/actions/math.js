@@ -53,6 +53,34 @@ export function getQuestion(opt) {
                 body: bodyUrlencoded(opt.body) })
     }
 }
+//获取某套试卷的所有子试题（即：主题，观察，考点，分析。。。）
+export function getSecondTestQuestion(opt) {
+    return (dispatch) => {
+        const route = '/api/math/secondTestQuestion';
+        const success = (data) => {
+            dispatch({ type: TYPES.SECONDTESTQUESTIONS_UPDATA, result: {items: data} })
+            opt.success && opt.success(data)
+        }
+        request(route,{},dispatch,success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
+    }
+}
+//查询二测中某个试题的子题内容（观察or分析or 。。。）
+export function getContentOfChildQues(opt) {
+    return (dispatch) => {
+        const route = '/api/math/contentOfChildQues';
+        const success = (data) => {
+            dispatch({ type: TYPES.GETCONTENTOFCHILDQUES_UPDATA, result: {items: data} })
+            opt.success && opt.success(data)
+        }
+        request(route,{},dispatch,success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
+    }
+}
 //获取一测试卷的做题详情
 export function getFirstDataOfPaper(opt) {
     return (dispatch) => {
@@ -75,8 +103,7 @@ export function sentUserPaperData(opt) {
         request(route, {}, dispatch, opt.success, opt.error,
             { method: 'POST',
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'},
-                //headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                    body: JSON.stringify(data)})
+                body: JSON.stringify(data)})
     }
 }
 //获取所有模考试题

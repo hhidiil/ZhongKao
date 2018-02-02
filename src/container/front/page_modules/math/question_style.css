@@ -50,21 +50,25 @@
 }
 .pagination_content{
     position: relative;
-    margin: 15px 0;
+    margin-top: 15px;
     display: flex;
     width: 100%;
 }
 .pagination_content .pagination_before{
     position: relative;
-    width: 40%;
+    width: 52%;
     margin: 10px 5px 10px 30px;
 }
 .pagination_content .btnContainer{
     position: relative;
     right: 10px;
     top: 5px;
-    width: 55%;
+    width: 45%;
     text-align: right;
+}
+.pagination_error li{
+    margin: 0 2px !important;
+    /*background-color: coral;*/
 }
 .QtxtContent{
     padding: 10px;
@@ -109,7 +113,7 @@
 }
 .QtxtContent .content_three_left{
     min-width: 140px;
-    height: 400px;
+    /*height: 400px;*/
     overflow-y: auto;
     width: 15%;
     border: 1px solid #ddd;
@@ -122,8 +126,6 @@
 }
 .QtxtContent .content_three_right{
     width: 100%;
-    overflow-y: auto;
-    max-height: 400px;
     padding: 15px;
     border: 1px solid darkgray;
     background-color: white;
