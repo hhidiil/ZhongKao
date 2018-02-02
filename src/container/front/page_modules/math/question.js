@@ -264,7 +264,7 @@ class Question extends Component{
                 questionType = optionArray.length>2?true:false;//有两个选项以上
             }
             return (
-                <div className="exercise2">
+                <div className="exercise2" key={index}>
                     { !questionType ? "":<div className="exercise2-border">
                         <div className="exercise2_main_content">
                             <div>
@@ -326,6 +326,7 @@ class Question extends Component{
                     //let childid = data[0].childsid;
                     //this.getDateOfAnalysis('Objective',childid);
                     this.setState({currentQuesData:data})
+                    $('#Explain_exer').click()//默认点击一下解析部分
                 }})
         }
     }
