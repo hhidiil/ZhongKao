@@ -43,7 +43,8 @@ class Question extends Component{
             currentQuesData:[],//当前试题的所有内容
             analysisLeftContent:[],//当前试题的分析部分
             exerciseContent:[],//当前试题的分析部分
-            current:null,
+            current:null,//当前是第几题
+            current1:null,
             current2:null,//默认先显示错误题
             total:0,
             errorArray : [],//一测做错的题
@@ -55,6 +56,7 @@ class Question extends Component{
             exerciseIndex:'',
             AnalysisMenu:'0',//分析解答中左侧menu
             AnalysisFlag:true,//分析解答
+            nowAnalysisPart:'',//当前解析的是那一部分
             AnswerFlag:false,//标准答案
             Exercise1Flag:false,//巩固
             openKeys:['sub0'],
@@ -98,7 +100,8 @@ class Question extends Component{
                         total:datajson.length,
                         errorArray:errorArray,
                         all_question:datajson,
-                        current2:errorArray[0]
+                        current2:errorArray[0],
+                        current:errorArray[0]
                     })
                 }else {
                     this.getData(datajson[0])
@@ -106,7 +109,8 @@ class Question extends Component{
                         total:datajson.length,
                         errorArray:errorArray,
                         all_question:datajson,
-                        current:1
+                        current:1,
+                        current1:1
                     })
                 }
 
@@ -198,6 +202,7 @@ class Question extends Component{
         });
     }
     FocusHandle(e,num){
+        console.log("88888888888")
         let tar_id,top='',left='',id='';
         let add_id = "answer"+this.state.current+num;
         if($(e)[0].localName == 'img'){
@@ -276,7 +281,7 @@ class Question extends Component{
                                 success:(data)=>{
                                     console.log("getDateOfAnalysis------getContentOfChildItemsForQues---->>",data)
                                     if(data[0].code == 200){
-                                        this.setState({analysisLeftContent:data[0].data,showEditor:false});
+                                        this.setState({analysisLeftContent:data[0].data,showEditor:false,nowAnalysisPart:type});
                                     }else {
                                         console.error(data[0].message)
                                     }
@@ -332,11 +337,11 @@ class Question extends Component{
             alert("请先提交答案再查看提示!")
         }
     }
-    submitOne(){
-        console.log("提交答案")
+    submitOne(data,index,type){
+        console.log("提交答案：",data.answer,this.state.current,type,index)
     }
-    _analysisQtxt(data){
-        console.log('_analysisQtxt------\\\--------->',data)
+    _analysisQtxt(data,type){
+        console.log('_analysisQtxt------\\\--------->',data,type)
         return data.map(function(item,index){
             let content = item.content;
             let knowledge = item.knowledge;
@@ -362,17 +367,17 @@ class Question extends Component{
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
                             {questionType?<MultipleChoice type={item.questiontype} index={index} choiceList={item.optionselect} />:''}
                         </ul>
+                        {(item.answer).length<1?"":<ul>
+                            {knowledge.length>0 ? <span>知识点回顾：{knowledge.map((itm,index)=>{
+                                return <a key={index} style={{marginLeft:"5px"}} onClick={(e)=>{alert($(e.target)[0].innerText)}} dangerouslySetInnerHTML={{__html:itm}}></a>
+                            })}</span> :''}
+                            <span style={{margin:"0 10px"}}>答案：<span dangerouslySetInnerHTML={{__html:item.answer}}></span></span>
+                            <button className="marginl10" onClick={()=>{this.submitOne(item,index,type)}}>提交</button>
+                        </ul>}
                     </div>
-                    {(item.answer).length<1?"":<div>
-                        {knowledge.length>0 ? <span>知识点回顾：{knowledge.map((itm,index)=>{
-                            return <a key={index} style={{marginLeft:"5px"}} onClick={(e)=>{alert($(e.target)[0].innerText)}} dangerouslySetInnerHTML={{__html:itm}}></a>
-                        })}</span> :''}
-                        <span style={{margin:"0 10px"}}>答案：<span dangerouslySetInnerHTML={{__html:item.answer}}></span></span>
-                        <button className="marginl10" onClick={()=>this.submitOne}>提交</button>
-                    </div>}
                 </div>
             )
-        })
+        },this)
     }
     _practicesQtxt(data){
         return data.map(function (item,index) {
@@ -439,6 +444,7 @@ class Question extends Component{
         console.log("page--",page)
         this.setState({
             current: page,
+            current1: page,
             analysisLeftContent:[],
             exerciseContent:[],
             showEditor:false
@@ -449,6 +455,7 @@ class Question extends Component{
         console.log("page--",page)
         this.setState({
             current2: page,
+            current: page,
             analysisLeftContent:[],
             exerciseContent:[],
             showEditor:false
@@ -531,7 +538,7 @@ class Question extends Component{
                         <div className="pagination_all">
                             <div className="widthPrecent5 margint10">题号:</div>
                             <div className="padding0">
-                                <Pagination2 total={this.state.total} scoreArraylist={[3,3,3,3,3,0,0,3,3,0,5,5,5,5,0,6,8,15,10,10]} current={this.state.current}  onChange={this.onChange}/></div>
+                                <Pagination2 total={this.state.total} scoreArraylist={[3,3,3,3,3,0,0,3,3,0,5,5,5,5,0,6,8,15,10,10]} current={this.state.current1}  onChange={this.onChange}/></div>
                         </div>
                         <div className="pagination_content">
                             <div className="pagination_before">
@@ -589,7 +596,7 @@ class Question extends Component{
                                     </div>
                                     <div className="content_three_right">
                                         <p style={{color:"darkgoldenrod",fontSize:"12px"}}>tips：标有红色※的空必须填写奥！</p>
-                                        {(this.state.analysisLeftContent).length>0?this._analysisQtxt(this.state.analysisLeftContent):<NoThisPart/>}
+                                        {(this.state.analysisLeftContent).length>0?this._analysisQtxt(this.state.analysisLeftContent,this.state.nowAnalysisPart):<NoThisPart/>}
                                     </div>
                                 </div>
                             </div>
