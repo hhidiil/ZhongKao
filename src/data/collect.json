@@ -30,7 +30,7 @@
           "question":[
             { "id":0,
               "title":"如图，矩形ABCD的对角线AC、BD相交于点O，△COD关于CD的对称图形为△CED。",
-              "url":"http://localhost:3000/#/home/math/exams/exam"
+              "url":""
             },{
               "id":1,
               "title":"矩形的对角线相等且互相平分，则CO = DO，又△COD与△CED关于直线CD对称，所以四边形OCED的四条边都相等。",

@@ -32,6 +32,7 @@ class UpLoadFile extends Component{
                 callback:(data)=>{
                     alert('上传成功！')
                     this.setState({ imageURL: `${WINDOW_HOST}/${data.file}` });
+                    this.props.imgUrl(this.state.imageURL)
                 }
             })
         }
@@ -54,14 +55,15 @@ class UpLoadFile extends Component{
     }
     render(){
         return(
-            <div>
+            <div className="fileupload">
                 <form>
                     <label htmlFor="exampleInputFile">上传文件：</label>
                     <input ref={(ref) => { this.uploadInput = ref; }} type="file" onChange={this.preview} id="exampleInputFile" /><br/>
                     <div id="preview"></div>
-                    <p>请再次确定上传的文件是否正确，上传后不能修改</p>
+                    <p className="tip_content">请再次确定上传的文件是否正确，上传后不能修改</p>
                     <button type="button" className="btn btn-default btn-sm" onClick={this.upLoadSubmit}>开始上传</button>
-                    <button type="button" className="btn btn-default btn-sm" onClick={this.deleteSubmit}>删除</button>
+                    <button type="button" className="btn ant-btn-danger btn-sm" onClick={this.deleteSubmit}>删除</button>
+                    <button type="button" className="btn btn-primary btn-sm" onClick={this.props.submitHandle}>提交</button>
                     <br/>
                 </form>
             </div>

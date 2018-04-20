@@ -5,35 +5,29 @@ import React,{Component} from 'react'
 import ReactDom from 'react-dom'
 import Editor from 'react-umeditor'
 import './style.css'
+import {Icon} from 'antd'
+import UpLoadFile from '../upload/index'
 
-class Edit extends Component{
+class FormulaEdit extends Component{
     constructor(props){
         super(props)
         this.state = {
-            showEditor:false,
-            content: ""
+            position:props.position,
+            showEditor:props.showFlag || false,
+            content: "",
+            imgUrl:''
         }
     }
     componentDidMount(){
-        var aaa = this._child;
-        var ccc = $(".formula-dropdown").val();
-        var eee = ReactDom.findDOMNode(aaa)
-        console.log("aaa--::",aaa)
-        console.log("bbb--::",document.getElementsByClassName('editor-toolbar'))
-        console.log("ccc--::",ccc)
-        console.log(this._child,eee)
-
         //拖动效果
+        setTimeout(this.drafting,1000)
     }
     drafting(){
         var div1 = document.getElementById("formulaDialog");
-        console.log("33333333",this,div1)
         div1.onmousedown = function(ev){
             var oevent = ev || event;
-
             var distanceX = oevent.clientX - div1.offsetLeft;
             var distanceY = oevent.clientY - div1.offsetTop;
-            console.log(oevent.clientX,oevent.clientY,distanceX,distanceY)
             document.onmousemove = function(ev){
                 var oevent = ev || event;
                 div1.style.left = oevent.clientX - distanceX + 'px';
@@ -53,42 +47,32 @@ class Edit extends Component{
     }
     getIcons(){
         //工具栏
-        var icons = ['formula']
+        var icons = ['undo redo |','selectall','cleardoc','formula']
         return icons;
     }
-    getPlugins(){
+    btnClick =(e)=>{
+        let content = this.editor.getContent();
+        let img_url = this.state.imgUrl;
+        if(!this.props.inputDom) return alert("请点击要填写的输入框")
+        this.props.editContent(content,this.props.inputDom,img_url)
     }
-    showEditor(){
-        console.log("11111111111")
-        this.setState({
-            showEditor:true
-        })
-        setTimeout(this.drafting,1000)
-    }
-    hideEditor(){
-        console.log("22222222222")
-        this.setState({
-            showEditor:false
-        })
-    }
-    handlefun(){
-        console.log("123123123")
+    callbackImgUrl(cont){
+        console.log("imgUrl====>>>",cont)
+        this.setState({imgUrl:cont})
     }
     render(){
         var icons = this.getIcons();
         return (
-            <div>
-                输入：<input type="text" contentEditable="true" onFocus={()=>{this.showEditor(this)}} name="formula"/>
-                {!this.state.showEditor?'':<div id="formulaDialog" className="formDialog">
-                    <button className="btn btn-primary" onClick={()=>{this.hideEditor(this)}}>关闭</button>
-                    <Editor ref={()=>{this.handlefun()}}
-                            icons={icons}
-                            value={this.state.content}
-                            onChange={this.handleChange.bind(this)}
-                    />
-                </div>}
+            <div id="formulaDialog" className="formDialog">
+                <Icon type="close" className="marginl5" onClick={()=>this.props.closeHandle(false)}/>
+                <Editor ref={(e)=>{this.editor = e}}
+                        icons={icons}
+                        defaultValue={this.state.content}
+                        onChange={this.handleChange.bind(this)}
+                />
+                <UpLoadFile imgUrl={this.callbackImgUrl.bind(this)} submitHandle={this.btnClick.bind(this)}></UpLoadFile>
             </div>
         )
     }
 }
-export default Edit
+export default FormulaEdit

@@ -1,0 +1,11 @@
+.fileupload{
+    padding: 5px;
+}
+.fileupload button{
+    margin: 5px 2px;
+}
+.tip_content{
+    font-size: 10px;
+    color: firebrick;
+    opacity: 0.5;
+}

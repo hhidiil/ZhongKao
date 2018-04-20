@@ -13,7 +13,9 @@ module.exports={
         app.post('/math/sentUserPaperData',this.sentUserPaperData);
         app.post('/math/firstDataOfPaper',this.getFirstDataOfPaper);
         app.post('/math/secondTestQuestion',this.getSecondTestQuestion);
-        app.post('/math/contentOfChildQues',this.getContentOfChildQues)
+        app.post('/math/contentOfChildItems',this.getContentOfChildItems);
+        app.post('/math/contentOfChildItemsForQues',this.getContentOfChildItemsForQues)
+        app.post('/math/childQuestionsForQuestion',this.getChildQuestionsForQuestion)
     },
     getAllPapers: (req, res) => {
         let props = {};
@@ -41,7 +43,7 @@ module.exports={
     },
     getQuestionsOfPaper: (req,res) => {
         var props = {
-            paperid:req.body.paperid
+            id:req.body.id
         };
         var math = new Math({props: props});
         math.getQuestionsOfPaperList(function(err, data) {
@@ -66,19 +68,18 @@ module.exports={
         })
     },
     getQuestion: (req,res) => {
-        console.log("getQuestion======>",req.body.paperid)
         let props = {
-            paperid:req.body.paperid
+            id:req.body.id
         };
         let math = new Math({props: props});
         math.getQuestionItems(function(err, data) {
             if(!err){
-                console.log("getQuestionItems======>",data)
                 if (data.length>0) {
                     let olddata = data;
                     let props = {
-                        paperid:data[0].questionid
+                        id:data[0].questionid
                     };
+                    console.log("getQuestionItems---////----->",data[0].id,data)
                     let math = new Math({props: props});
                     math.getQuestionChild(function(err, data){
                         olddata[0].childs = data;
@@ -111,13 +112,68 @@ module.exports={
             }
         })
     },
-    getContentOfChildQues: (req,res) => {
-        console.log("getQuestion======>",req.body.itemid)
+    getContentOfChildItems: (req,res) => {
         let props = {
-            itemid:req.body.itemid
+            id:req.body.id
         };
         let math = new Math({props: props});
-        math.getContentOfChildQuesItems(function(err, data) {
+        math.getContentOfChildItems(function(err, data) {
+            if(!err){
+                if (data.length>0) {
+                    return res.send({
+                        code: 200,
+                        data: data
+                    })
+                } else {
+                    console.log(err);
+                    return res.send({
+                        code: 500,
+                        message: '数据不存在^@^'
+                    })
+                }
+            }else{
+                console.log(err);
+                return res.send({
+                    code: 501,
+                    message: '数据获取出错了^@^'
+                })
+            }
+        })
+    },
+    getContentOfChildItemsForQues: (req,res) => {
+        let props = {
+            id:req.body.id
+        };
+        let math = new Math({props: props});
+        math.getContentOfChildItemsForQues(function(err, data) {
+            if(!err){
+                if (data.length>0) {
+                    return res.send({
+                        code: 200,
+                        data: data
+                    })
+                } else {
+                    console.log(err);
+                    return res.send({
+                        code: 500,
+                        message: '数据不存在^@^'
+                    })
+                }
+            }else{
+                console.log(err);
+                return res.send({
+                    code: 501,
+                    message: '数据获取出错了^@^'
+                })
+            }
+        })
+    },
+    getChildQuestionsForQuestion: (req,res) => {
+        let props = {
+            id:req.body.id
+        };
+        let math = new Math({props: props});
+        math.getQuestionChildItems(function(err, data) {
             if(!err){
                 if (data.length>0) {
                     return res.send({
@@ -142,7 +198,7 @@ module.exports={
     },
     getSecondTestQuestion: (req,res) => {
         let props = {
-            paperid:req.body.questionid
+            id:req.body.id
         };
         let math = new Math({props: props});
         math.getQuestionItems(function(err, data) {
@@ -150,14 +206,14 @@ module.exports={
                 if (data.length>0) {
                     let olddata = data;
                     let props = {
-                        paperid:data[0].questionid
+                        id:data[0].questionid
                     };
                     let math = new Math({props: props});
                     math.getQuestionChild(function(err, data){
                         olddata[0].childs = data;
                         if(!err){
                             let props = {
-                                questionid:olddata[0].questionid
+                                id:olddata[0].questionid
                             };
                             let math = new Math({props: props});
                             //查出其所有子题，
@@ -201,7 +257,6 @@ module.exports={
         })
     },
     sentUserPaperData: (req,res)=>{
-        console.log("sentUserPaperData-------->>>",req.body)
         var props = req.body;
         props.DoExamInfo = JSON.stringify(req.body.DoExamInfo);
         props.ExamResult = JSON.stringify(req.body.ExamResult);
@@ -222,8 +277,11 @@ module.exports={
         })
     },
     getFirstDataOfPaper: (req,res)=>{
-        var prpos = req.body;
-        var math = new Math({props:prpos});
+        let props = {
+            userid:req.body.userid,
+            id:req.body.id
+        };
+        var math = new Math({props:props});
         math.getFirstDataOfPaper(function(err,data){
             if(!err){
                 return res.send({

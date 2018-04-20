@@ -25,6 +25,18 @@ export function requestData(url,data,callback){
             return err
         })
 }
+//g改装版 fetch数据请求，使用promise.all 模拟同步加载数据
+export function requestSyn(url,lists,callback){
+    console.log("requestSyn---->",url,lists)
+    Promise.all(lists.map((list) =>{
+        let data = { method: 'POST',
+                    headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                    body:bodyUrlencoded({paperid:list})};
+        return fetch(url,data).then(resp => resp.json())}
+    )).then(res => {
+        return callback(res)
+    })
+}
 //判断用户是否登录
 export function isAdmin(){
     let token = sessionStorage.getItem('token');

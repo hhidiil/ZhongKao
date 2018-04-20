@@ -3,11 +3,8 @@
  * Created by gaoju on 2018/1/9.
  */
 
-var mysql = require('mysql'),
-    helper = require('../routes/helper'),
-    config = require('./config.db');
-
-var con = mysql.createConnection(config);
+var helper = require('../routes/helper'),
+    con = require('./config.db');
 
 /*用户模块 构造方法*/
 var Page = function(page) {

@@ -45,33 +45,39 @@
 .math-question-content center hr{
     border: 1px solid gainsboro;
 }
-.btnContainer button{
-    margin: 0 2px;
+.pagination_all{
+    display: flex;
+    width: 100%;
+    padding: 0 15px;
 }
 .pagination_content{
     position: relative;
-    margin-top: 15px;
     display: flex;
     width: 100%;
 }
 .pagination_content .pagination_before{
     position: relative;
-    width: 52%;
-    margin: 10px 5px 10px 30px;
+    width: 100%;
+}
+.pagination_content .pagination_before .pagination{
+    margin: 8px 0 !important;
 }
 .pagination_content .btnContainer{
     position: relative;
     right: 10px;
     top: 5px;
-    width: 45%;
+    width: 40%;
     text-align: right;
+}
+.btnContainer button{
+    margin: 1px 2px;
 }
 .pagination_error li{
     margin: 0 2px !important;
     /*background-color: coral;*/
 }
 .QtxtContent{
-    padding: 10px;
+    padding: 0 10px;
 }
 .QtxtContent .QtxtContent_main{
     overflow: hidden;
@@ -110,6 +116,7 @@
 }
 .QtxtContent .content_three{
     display: flex;
+    height: 100%;
 }
 .QtxtContent .content_three_left{
     min-width: 140px;
@@ -124,11 +131,21 @@
     width: 60px;
     transition: width 0.5s ;
 }
+.QtxtContent .content_three .shrink{
+    margin-bottom: 5px;
+    width: 100%;
+    text-align: center;
+    background-color: darkgray;
+    color: white;
+    padding: 5px 0;
+    cursor: pointer;
+}
 .QtxtContent .content_three_right{
     width: 100%;
     padding: 15px;
     border: 1px solid darkgray;
     background-color: white;
+    overflow-y: auto;
 }
 .QtxtContent .content_three_left ul{
     width: 100%;
@@ -169,4 +186,17 @@
     position: absolute;
     bottom:10px;
     right: 20px;
+}
+.div_input{
+    position: relative;
+    display: inline-flex;
+    min-width: 50px;
+    border-bottom: 1px solid black;
+}
+.inputfoucs-style{
+    border-color: lightseagreen;
+}
+.exercise2 .tips{
+    position: relative;
+    top: 2px;
 }

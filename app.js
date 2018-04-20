@@ -7,13 +7,6 @@ var bodyParser = require('body-parser');
 //文件上传
 var fileUpload = require('express-fileupload');
 const cors = require('cors');
-//添加热更新
-var webpackDevMiddleware = require('webpack-dev-middleware');
-var webpackHotMiddleware = require('webpack-hot-middleware');
-var webpackConfig = require('./webpack.config.js');
-var webpack = require('webpack');
-
-
 
 var index = require('./routes/index');
 var api = require('./routes/api');
@@ -34,6 +27,7 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(fileUpload());
 app.use('/public',express.static(path.join(__dirname, '/public')));//设置虚拟根目录
+app.use(express.static('thirdParty'));
 app.use(express.static('assets'));
 app.use(express.static('students_upload_images'));
 app.use('/src',express.static('src'));
@@ -43,8 +37,12 @@ app.use('/api', api);
 //app.use('/admin', admin);
 
 //热更新模块
+console.log("process.env.NODE_ENV====>>",process.env.NODE_ENV)
 if (process.env.NODE_ENV !== 'production') {
-  console.log("process.env.NODE_ENV:::--->",process.env.NODE_ENV)
+  var webpackDevMiddleware = require('webpack-dev-middleware');
+  var webpackHotMiddleware = require('webpack-hot-middleware');
+  var webpackConfig = require('./webpack.config.js');
+  var webpack = require('webpack');
   var compiler = webpack(webpackConfig);
   var devMiddleware = webpackDevMiddleware(compiler, {
     publicPath: webpackConfig.output.publicPath,

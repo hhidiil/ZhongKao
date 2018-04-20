@@ -1,11 +1,4 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
-}
-
-a {
-  color: #00B7FF;
-}
+/*公用css*/
 .displayflex{
   display: flex;
 }
@@ -16,6 +9,12 @@ a {
   border: 0px;
   border-bottom: 1px solid #333;
   text-align: center;
+}
+.widthPrecent5{
+  width: 5%;
+}
+.widthPrecent7{
+  width: 7%;
 }
 .padding10{
   padding: 10px !important;
@@ -29,6 +28,27 @@ a {
 .margin0{
   margin: 0px !important;
 }
+.margint5{
+  margin-top: 5px !important;
+}
 .margint10{
   margin-top: 10px !important;
+}
+.margint15{
+  margin-top: 15px !important;
+}
+.margint20{
+   margin-top: 20px !important;
+ }
+.marginl5{
+  margin-left: 5px !important;
+}
+.marginl10{
+  margin-left: 10px !important;
+}
+.marginl15{
+  margin-left: 15px !important;
+}
+.marginl20{
+  margin-left: 20px !important;
 }

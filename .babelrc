@@ -8,8 +8,5 @@
         "development": {
             "presets": ["react-hmre"]
         }
-   },
-   "plugins": [
-       ["import", { libraryName: "antd", style: "css" }]
-     ]
+   }
 }

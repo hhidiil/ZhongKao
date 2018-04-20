@@ -16,20 +16,24 @@ class Preview extends Component{
     constructor(props){
         super(props)
         let alldata = props.data;
+        let questionDetails = [];
+        if((alldata.doneDetails.data).length > 0){
+            questionDetails = JSON.parse(alldata.doneDetails.data[0].ExamResult);
+        }
+        console.log('this.state.alldata=========>',alldata,questionDetails)
         this.state={
+            questionDetails:questionDetails,
             JSON_aLL:alldata.examid,//某套题的试卷id，可取到某套试题的所有数据
             paper_title:alldata.exampaper,//试卷标题
+            type:props.type || '',
             questions:[]
         }
     }
     componentDidMount(){
         this.props.actions.getQuestionList({
-            body:{
-                paperid : this.state.JSON_aLL
-            },
+            body:[{id:this.state.JSON_aLL}],
             success:(data)=>{
-                console.log("getQuestionList----preview-->",data)
-                let all_question = data;//解析JSON
+                let all_question = data[0].data;//解析JSON
                 this.getData(all_question)
             },
             error:(mes)=>{
@@ -40,25 +44,22 @@ class Preview extends Component{
     getData(data){
         var dataArray=[];
         for(let i=0;i<data.length;i++){
-            let url = data[i].questionid;
-            this.props.actions.getQuestion({
-                    body:{
-                        paperid : url
-                    },
-                    success:(data)=>{
-                        dataArray.push(data);
-                    },
-                    error:(mes)=>{
-                        console.error('数据接收发生错误');
-                    }
-            })
+            dataArray.push({id:data[i].questionid})
         }
-        //由于请求数据是异步的，所以需要延迟来更新state
-        setTimeout(()=>this.getNewData(dataArray),2000)
-    }
-    getNewData(data){
-        this.setState({
-            questions:data
+        this.props.actions.getQuestion({
+            body:dataArray,
+            success:(data)=>{
+                if(this.state.type == '1'){//结果预览有答案及错误情况
+                    let details = this.state.questionDetails;
+                    for(let i in data){
+                        data[i].details =details[i];
+                    }
+                }
+                this.setState({questions:data})
+            },
+            error:(mes)=>{
+                console.error('数据接收发生错误');
+            }
         })
     }
     _childsList(data){
@@ -68,32 +69,41 @@ class Preview extends Component{
     }
     _showQuestionList(data){
         return data.map(function(item,index){
-            let content = (item[0].content);
-            let options = item[0].optionselect;
-            let childs = item[0].childs;
+            let detail = item.details;
+            let newitem = item.data[0];
+            let content = (newitem.content);
+            let options = newitem.optionselect;
+            let childs = newitem.childs;
             $.trim(options);//去掉前后的空格
             let ss = options.replace(/["\[\]]/g,"");
             let optionArray = ss.split(",");
             var base = new Base64();//base64对象
+            let detailFlag = true;
+            let answerFlag = '';
+            if(detail && detail.Contents.length>0){
+                detailFlag = (detail.Contents[0]).IsTrue;
+                answerFlag = (detail.Contents[0]).content;
+            }
             if(content){
                 if (content.indexOf("blank") != -1) {//如果有则去掉所有空格和blank
                     content = content.replace(/\s|_/g, '');
                     content = content.replace(/blank/g, '_____');
                 }
                 return(
-                    <div key={index} className='question-css'>
+                    <div key={index} className={detailFlag?'question-css':'question-css-err'}>
+                        {detailFlag?'':<img style={{width:'20px',position:'absolute',left:'5px'}} src="public/images/error.png"/>}
                         <ul>
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
                             <li>
                                 { optionArray.length<4 ? "":<p>
                                     <label className="checkbox-inline">
-                                        <span style={{margin:"0 3px"}}>(A)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[0])}}></span></label>
+                                        <span className={answerFlag=='A' ? 'question-answer-2':'question-answer-1'}>(A)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[0])}}></span></label>
                                     <label className="checkbox-inline">
-                                        <span style={{margin:"0 3px"}}>(B)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[1])}}></span></label>
+                                        <span className={answerFlag=='B' ? 'question-answer-2':'question-answer-1'}>(B)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[1])}}></span></label>
                                     <label className="checkbox-inline">
-                                        <span style={{margin:"0 3px"}}>(C)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[2])}}></span></label>
+                                        <span className={answerFlag=='C' ? 'question-answer-2':'question-answer-1'}>(C)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[2])}}></span></label>
                                     <label className="checkbox-inline">
-                                        <span style={{margin:"0 3px"}}>(D)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[3])}}></span></label>
+                                        <span className={answerFlag=='D' ? 'question-answer-2':'question-answer-1'}>(D)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[3])}}></span></label>
                                 </p>}
                             </li>
                             {childs.length<1?"":this._childsList(childs)}
@@ -119,7 +129,6 @@ class Preview extends Component{
                         <div className="second-title">
                             <div>总分: 120</div>
                             <div>难度: 中等</div>
-                            <div>收藏试卷</div>
                         </div>
                     </div>
                     <section>

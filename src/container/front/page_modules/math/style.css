@@ -162,6 +162,18 @@
     padding: 10px 5px;
     border: 1px dashed gray;
 }
+.Preview-content section .question-css-err{
+    margin: 15px 5px;
+    padding: 10px 5px;
+    border: 1px dashed red;
+}
+.Preview-content section .question-answer-1{
+    margin: 0px 3px;
+}
+.Preview-content section .question-answer-2{
+    margin: 0px 3px;
+    text-decoration: underline double red;
+}
 .wancheng{
     margin-right: 15px;
     color: chocolate;

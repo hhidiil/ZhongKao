@@ -152,7 +152,6 @@ module.exports = {
                 let user = new User({ props: params });
                 //获取当前最新用户id
                 user.getMaxUserId(function(err, data){
-                    console.log("register------->>>>>>>>>>>>::")
                     let num = data[0].userid;
                     let props = req.body;
                     if (num.length>0) {//有用户
@@ -196,7 +195,6 @@ module.exports = {
         })
     },
     doGetUserBasicInfo: function (req,res) {
-        console.log("doGetUserBasicInfo::::",req)
         var props = {
             username: req.body.params
         };
@@ -223,7 +221,6 @@ module.exports = {
         })
     },
     doUpdateBasicInfo: function (req,res){
-        console.log("doUpdateBasicInfo::::",req)
         var props = req.body;
         var user = new User({props:props});
         user.UpdateBasicInfo(function(err,data){
@@ -233,7 +230,6 @@ module.exports = {
                     data:data
                 })
             }else{
-                console.error("UpdateBasicInfo>>>>err>>>>",err)
                 return res.send({
                     code: 500,
                     message: '修改出错'

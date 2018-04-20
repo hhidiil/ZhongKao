@@ -10,7 +10,7 @@ class NoThisPart extends Component{
         super(props)
     }
     render(){
-        return <div className="nothispart">没有此部分</div>
+        return <div className="nothispart">略。。。</div>
 
     }
 }

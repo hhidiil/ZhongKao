@@ -21,17 +21,24 @@ var helper = {
         return md5.digest('hex');
     },
     // 执行sql语句
-    db_query: function(opt) {
-        opt.connect.query(opt.sql, function(err, res) {
-            if (err) {
-                console.log(`${opt.name} err: + ${err}`);
+    db_query: function(opt){
+        opt.connect.getConnection(function(err, connection){
+            if(err){
                 opt.callback(err)//返回异常
-            } else {
-                console.log(`${opt.name} success!`);
-                if (typeof(opt.callback) === 'function') {
-                    opt.callback(err, res);
-                }
+            }else {
+                connection.query(opt.sql,  function(err, res){
+                    if(err){
+                        console.log(`${opt.name} err: + ${err}`);
+                        opt.callback(err)//返回异常
+                    }else{
+                        console.log(`${opt.name} success!`);
+                        if (typeof(opt.callback) === 'function') {
+                            opt.callback(err, res);
+                        }
+                    }
+                });
             }
+            connection.release();//释放连接池
         });
     },
     // 反处理URL

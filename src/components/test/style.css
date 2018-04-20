@@ -1,0 +1,15 @@
+.inputfoucs-style{
+    border-color: lightseagreen;
+}
+.div_input{
+    position: relative;
+    display: inline-block;
+    min-width: 80px;
+    border-bottom: 1px solid black;
+}
+.div_input .mq-editable-field{
+    border: none !important;
+}
+.mustText{
+    color: red;
+}

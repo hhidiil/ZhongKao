@@ -4,50 +4,68 @@
 import React,{Component} from 'react'
 import './style.css'
 import ReactDom from 'react-dom'
+import PropTypes from 'prop-types'
 
 class Pagination extends Component{
     constructor(props){
         super(props)
         this.state={
-            current:props.current || 1,
-            total:props.total || 5,
-            arrayList:[]
+            current: props.current,
+            total: props.total || 0,
+            arrayList: props.wordNum ||[],
+            color:props.color
+        }
+    }
+    componentWillMount(){
+        let arraylist=[];
+        if(this.state.arrayList.length<1){
+            for(let i=0;i<this.state.total;i++) {
+                arraylist[i] = i+1;
+            }
+            this.setState({arrayList:arraylist})
         }
     }
     componentDidMount(){
+        console.log("props==componentDidMount===:",this.props)
+        this.addClassHandle(this.state.current)
     }
-    _pageItem(num){
-        var List = '';
-        for(let i=0;i<num;i++){
-            List = List + '<li><a ref="1">i</a></li>';
+    componentWillReceiveProps(nextProps) {
+        if (nextProps) {
+           this.addClassHandle(nextProps.current)
         }
-        console.log("List---",List)
     }
-    handleClick(e){
-        console.log(e)
+    addClassHandle(num){
+        let _this = this.refs[num];
+        $(_this).siblings().removeClass("active")
+        $(_this).attr("class","active")
+    }
+    handleChange(e){
+        this.addClassHandle(e.target.text);
+        this.props.onChange(Number(e.target.text))
     }
     render(){
-
-        console.log(this.state.total)
+        if(this.state.arrayList.length<1){
+            return <div/>
+        }
+        let color = this.state.color;
         return(
             <div className="myPagination">
                 <nav aria-label="Page navigation">
                     <ul className="pagination">
-                        <li>
-                            <a aria-label="Previous">
-                                <span aria-hidden="true">&laquo;</span>
-                            </a>
-                        </li>
-                        {this._pageItem(5)}
-                        <li>
-                            <a aria-label="Previous">
-                                <span aria-hidden="true">&raquo;</span>
-                            </a>
-                        </li>
+                        {this.state.arrayList.map((index,i)=>(
+                            <li key={index} ref={index} id={index}><a onClick={this.handleChange.bind(this)}>{index}</a></li>
+                        ))}
                     </ul>
                 </nav>
             </div>
         )
     }
+}
+Pagination.propTypes = {
+    current: PropTypes.number,
+    total:PropTypes.number,
+    onChange:PropTypes.func,
+    color:PropTypes.string,
+    wordNum:PropTypes.array
 }
 export default Pagination

@@ -4,6 +4,7 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { Menu, Dropdown, Icon } from 'antd'
+import 'antd/dist/antd.css';
 import './style.css'
 import Login from './login'
 import { bindActionCreators } from 'redux'
@@ -60,8 +61,7 @@ class Door extends Component {
                         <div className="logolay"><a href="http://www.idiil.com.cn/index.html" ><img src="public/images/uu14.png"/></a></div>
                         <div className="header-check-btn">
                             <Dropdown overlay={menu} trigger={['click']}>
-                            <a className="ant-dropdown-link color-white" href="#">
-                                Click me <Icon type="down" />
+                            <a className="ant-dropdown-link color-white" href="#">登录<Icon type="down" />
                             </a>
                             </Dropdown>
                         </div>

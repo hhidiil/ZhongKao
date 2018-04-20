@@ -184,7 +184,7 @@ class BasicInfo extends Component{
                     <Sider style={{backgroundColor: "white"}}>
                         <div className="user_head">
                             <img src={handleImg(items.get('headimg'))} alt="头像"/>
-                            <span>头像更改</span>
+                            <span>头像...更55改</span>
                         </div>
                     </Sider>
                 </Layout>
