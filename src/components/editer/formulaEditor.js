@@ -1,4 +1,5 @@
 /**
+ * 自定义可拖动的编辑器
  * Created by gaoju on 2018/1/15.
  */
 import React,{Component} from 'react'

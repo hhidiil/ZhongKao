@@ -88,6 +88,7 @@
 }
 .QtxtContent_main_title{
     border-bottom: 1px dashed;
+    padding-bottom: 5px;
 }
 .height_none{
     overflow: hidden;
@@ -102,6 +103,10 @@
     width: 100%;
     text-align: right;
     cursor: pointer;
+}
+.QtxtContent_main_title_right button{
+    text-align: center;
+    margin-right: 15px;
 }
 .QtxtContent .QContet{
     margin-bottom: 10px;
@@ -175,7 +180,8 @@
     margin-bottom: 5px;
 }
 .exercise2 .exercise2_help{
-    padding: 10px 0;
+    padding: 6px 0;
+    border-top: 1px dashed;
 }
 #practice .next_btn{
     position: absolute;
@@ -190,6 +196,7 @@
 .div_input{
     position: relative;
     display: inline-flex;
+    text-align: center;
     min-width: 50px;
     border-bottom: 1px solid black;
 }
@@ -199,4 +206,13 @@
 .exercise2 .tips{
     position: relative;
     top: 2px;
+}
+.submitAndscore{
+    position: relative;
+    display: inline-block;
+    right: 10px;
+    float: right;
+}
+.submitAndscore button{
+    margin-right: 8px;
 }

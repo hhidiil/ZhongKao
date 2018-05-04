@@ -25,7 +25,6 @@ class Pagination2 extends Component{
         this.setState({arrayList:arraylist})
     }
     componentDidMount(){
-        console.log("props==componentDidMount===:",this.props)
         let score = this.state.scoreList;
         $('.after').each(function(i){
             $(this).attr('data-attr',score[i])

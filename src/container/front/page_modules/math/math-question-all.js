@@ -54,7 +54,6 @@ class QuestionAll extends Component{
         }
     };
     getDataOfFirst(items){
-        console.log("11111111111111111111111111111111---",items)
         let olddata = items[0].data;
         var len = olddata.length;
         let i;
@@ -66,7 +65,6 @@ class QuestionAll extends Component{
         this.props.actions.getFirstDataOfPaper({
             body:dataArray,
             success:(data)=>{
-                console.log("222222222222222222222222222-----",data)
                 for(let i=0;i<data.length;i++){
                     if(data[i].data.length >0){//已经做过了一测
                         olddata[i].doneDetails =data[i];
@@ -74,7 +72,6 @@ class QuestionAll extends Component{
                         olddata[i].doneDetails ={"code":200,"data":[]};
                     }
                 }
-                console.log("333333333333333333333333333-----",olddata)
                 this.setState({showStatus:true, allList:olddata})
             },
             error:(mes)=>{console.error("数据获取失败")}

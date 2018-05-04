@@ -19,22 +19,24 @@ class UpLoadFile extends Component{
     }
     upLoadSubmit = (e) =>{
         e.preventDefault();
-        let file = this.uploadInput.files[0];
-        if(beforeUpload(file)){
-            const data = new FormData();
-            data.append("file", file);
-            data.append("username", sessionStorage.getItem('username'));
-            this.props.actions.upload({
-                body:{
-                    method: 'POST',
-                    body: data
-                },
-                callback:(data)=>{
-                    alert('上传成功！')
-                    this.setState({ imageURL: `${WINDOW_HOST}/${data.file}` });
-                    this.props.imgUrl(this.state.imageURL)
-                }
-            })
+        if(confirm("请再次确定上传的文件是否正确，上传后不能修改!")){
+            let file = this.uploadInput.files[0];
+            if(beforeUpload(file)){
+                const data = new FormData();
+                data.append("file", file);
+                data.append("username", sessionStorage.getItem('username'));
+                this.props.actions.upload({
+                    body:{
+                        method: 'POST',
+                        body: data
+                    },
+                    callback:(data)=>{
+                        alert('上传成功！')
+                        this.setState({ imageURL: `${WINDOW_HOST}/${data.file}` });
+                        this.props.imgUrl(this.state.imageURL)
+                    }
+                })
+            }
         }
     }
     deleteSubmit = (e) =>{
@@ -61,8 +63,8 @@ class UpLoadFile extends Component{
                     <input ref={(ref) => { this.uploadInput = ref; }} type="file" onChange={this.preview} id="exampleInputFile" /><br/>
                     <div id="preview"></div>
                     <p className="tip_content">请再次确定上传的文件是否正确，上传后不能修改</p>
-                    <button type="button" className="btn btn-default btn-sm" onClick={this.upLoadSubmit}>开始上传</button>
                     <button type="button" className="btn ant-btn-danger btn-sm" onClick={this.deleteSubmit}>删除</button>
+                    <button type="button" className="btn btn-default btn-sm" onClick={this.upLoadSubmit}>开始上传</button>
                     <button type="button" className="btn btn-primary btn-sm" onClick={this.props.submitHandle}>提交</button>
                     <br/>
                 </form>

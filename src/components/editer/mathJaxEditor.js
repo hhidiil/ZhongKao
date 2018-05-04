@@ -1,4 +1,5 @@
 /**
+ * mathjax公式编辑器
  * Created by gaoju on 2018/3/27.
  */
 import React,{Component} from 'react'

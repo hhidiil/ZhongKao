@@ -51,13 +51,13 @@ export function requestSyn(route,params, dispatch, success=null, error=null, { m
     const p = params ? '?' + Object.entries(params).map((i) => `${i[0]}=${encodeURI(i[1])}`).join('&') : '';
     const url = `${ CONFIG.API_URI }${ route }${ p }`;
     let datalist = body;
-    console.log("datalist------>>>>>>",datalist)
+    console.log("requestdatalist------>>>>>>",datalist)
     Promise.all(datalist.map((list) =>{
         let data = { method: method,
                     headers: headers,
                     body:bodyUrlencoded(list)};
 
-        console.log(`[${method}]:${url}::${data}`,data);
+        //console.log(`[${method}]:${url}::${data}`,data);
         return fetch(url,data).then((response) => {
                     dispatch({ type: TYPES.REQUEST_DONE, [ pendingTask ]: end})
                     if (response.status === 200) {
@@ -68,11 +68,10 @@ export function requestSyn(route,params, dispatch, success=null, error=null, { m
                 })}
     )).then((res) => {
         if (res) {
-            console.log("res===200=====>",res)
+            //console.log("respond===200=====>",res)
             if (method !== 'GET') dispatch({ type: TYPES.REQUEST_SUCCESS })
             return success && success(res)
         } else {
-            console.log("res====!!!200====>",res)
             dispatch({ type: TYPES.REQUEST_ERROR, res })
             return error(res.message)
         }

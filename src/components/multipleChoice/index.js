@@ -13,18 +13,39 @@ class Choice extends Component{
         this.state = {
             type:props.type,
             choiceList:props.choiceList,//选项
-            index:props.index
+            index:props.index,
+            radioState:props.answer || ''
+        }
+    }
+    radioChange =(e)=>{
+        let endstr = '',tar = e.target.value;
+        if((this.state.radioState).split('').indexOf(tar) != -1){
+            endstr = this.state.radioState.replace(eval("/"+tar+"/"),"");
+        }else {
+            endstr = this.state.radioState + tar;
+        }
+        this.setState({radioState: endstr})
+    }
+    componentWillReceiveProps(nextProps){
+        //this.props //当前的props,nextProps //下一阶段的props
+        if(nextProps.answer != this.state.radioState){
+            this.setState({radioState: nextProps.answer})
         }
     }
     render(){
         let optionArray=[],option = this.props.choiceList,type = this.props.type;
         let ss = ($.trim(option)).replace(/["\[\]\s]/g,"");
+        let answer = this.state.radioState;
+        if(answer.length>1){//多选题
+            answer = answer.split('');
+        }
         optionArray = ss.split(",");
         const optionList = (length)=>{
             const list = [];
             for(let i=0;i<length;i++){
                 list.push(<label className="checkbox-inline" key={i}>
-                    <input type={type == '单选题'?'radio':'checkbox'} value={optionName[i]} name={"Qopts_selects_practice"+this.props.index} />
+                    <input type={type == '单选题'?'radio':'checkbox'} checked={(answer.indexOf(optionName[i]) != -1)?true:false}
+                           onChange={this.radioChange} value={optionName[i]} name={"Qopts_selects_practice"+this.props.index} />
                     <span>{optionName[i]}</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[i])}}></span>
                     </label>)
             }

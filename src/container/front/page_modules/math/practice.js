@@ -15,6 +15,7 @@ import {Storage_S,Storage_L} from '../../../../config'
 import './question_style.css'
 import moment from 'moment'
 import Pagination from '../../../../components/pagination/pagination'
+import MultipleChoice from '../../../../components/multipleChoice/index'
 
 var sentJson = {
     "ExamInfoID":"", "UserID":"", "ExamPaperID":"",
@@ -38,11 +39,11 @@ class Question extends Component{
             totalNum:0,//试题总数
             all_question:[],//所有题目
             sentList: !paperItems? sentJson : paperItems,//组装答案列表，用来发送存储源数据
-            radioState:'',//选择题答案
-            inputAnwer:[],//非选择题答案
+            oldAnwers:'',//答案
             target_id:'',//当前要操作的dom
             img_url:'',
-            AnswerContent:[]
+            AnswerContent:[],
+            questionList:''
         }
     }
     componentDidMount(){
@@ -76,7 +77,9 @@ class Question extends Component{
         //)
     }
     componentDidUpdate(prevProps,prevState){
-        this.addEventFuc()//为填空题以及解答添加事件处理
+        if(prevState.questionList != this.state.questionList){
+            this.addEventFuc()//为填空题以及解答添加事件处理
+        }
     }
     routerWillLeave=(nextLocation)=> {
         // 返回 false 会继续停留当前页面，否则，返回一个字符串，会显示给用户，让其自己决定
@@ -92,8 +95,13 @@ class Question extends Component{
     addEventFuc(){
         let _this = this;
         $(".div_input").each(function(i){
-            $(this).on('focus',function(){
-                _this.FocusHandle(this,i)
+            let add_id = "practice"+_this.state.current+i;
+            let oldAnwers = _this.state.oldAnwers[i] ? _this.state.oldAnwers[i].content :'';
+            $(this).attr("id",add_id);
+            $(this).text(oldAnwers);
+            $(this).on('click',function(event){
+                $(this).addClass("inputfoucs-style")
+                _this.setState({target_id: add_id})
             })
         });
     }
@@ -102,49 +110,35 @@ class Question extends Component{
             this.props.actions.getQuestion({body:[{id:data.questionid}],
                 success:(data)=>{
                     console.log("getQuestion=======555555=========>",data)
-                    let isHave = (this.state.sentList).ExamResult[this.state.current-1];//做过了就显示选择的答案
-                    if(isHave){
-                        if(isHave.QuesType == '选择题'){
-                            let selected = (isHave.Contents[0]).content;
-                            this.setState({radioState:selected})
-                        }else {
-                            let answers = isHave.Contents;
-                            let answersArray = [];
-                            for(let i=0;i<answers.length;i++){
-                                answersArray.push(answers[i].content);
-                            }
-                            this.setState({inputAnwer:answersArray})
+                    if(data[0].code == 200){
+                        let isHave = (this.state.sentList).ExamResult[this.state.current-1];//做过了就显示选择的答案
+                        let oldAnwers = '';
+                        if(isHave){
+                            console.log("----------isHave------------------------>>>>",isHave)
+                            oldAnwers = isHave.Contents;
                         }
+                        this.setState({oldAnwers: oldAnwers,questionList:data[0].data})
                     }
                 }})
         }
+    }
+    getEditContent(cont,dom,url){
+        console.warn(cont,url)
+        this.setState({img_url: url})
     }
     _childsList(data){
         return data.map(function(item,index){
             return <li key={index} dangerouslySetInnerHTML={{__html:item.get('content')}}></li>
         })
     }
-    radioChange =(e)=>{
-        this.setState({radioState: e.target.value})
-    }
-    getEditContent(cont,dom,url){
-        console.warn(cont,url)
-        $("#"+dom).text('').append(cont);
-        let AnswerArr = [{
-            "domid":dom,
-            "content": cont,
-            "url":url,
-            "IsTrue": '',
-            "scroe":0
-        }]
-        this.setState({AnswerContent: AnswerArr})
-    }
-    FocusHandle(e,num){
-        console.log("focused",e)
-        let add_id = ""+this.state.current+num;
-        $(e).addClass("inputfoucs-style")
-        $(e).attr("id",add_id)
-        this.setState({target_id: add_id})
+    _doAndAnswer(data){
+        let imgurl = data[0] ? data[0].url : '';
+        return (
+            <p>
+                <li>解：<span contentEditable="true" className="div_input"></span></li>
+                <li>附件(提交的答案)：<img width="80px" height="80px" src={imgurl}/></li>
+            </p>
+        )
     }
     _contentQtxt(data,index){
         let item = (data.get('items')).get(0);
@@ -152,20 +146,11 @@ class Question extends Component{
         let content = items.get('content');
         let questiontype = items.get('questiontemplate');
         let childs = items.get('childs');
-        let optionArray=[];
-        let questionTypeFlag=false;
-        //选择题的时候要处理返回的选项格式
-        if(questiontype == '选择题'){
-            let option = items.get('optionselect');
-            $.trim(option);//去掉前后的空格
-            let ss = option.replace(/["\[\]\s]/g,"");
-            optionArray = ss.split(",");
-            questionTypeFlag = true;
-        }
-        var base = new Base64();//base64对象
+        let oldAnwers = this.state.oldAnwers[0] ? this.state.oldAnwers[0].content :'';
         if(content){
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-                content = content.replace(/blank|BLANK/g, '<span contenteditable="true" class="div_input"></span>');
+                content = content.replace(/\s/g,'');
+                content = content.replace(/<u>blank<\/u>|blank|BLANK/g,'<span contenteditable="true" class="div_input"></span>')
             }
             return (
                 <div>
@@ -175,28 +160,9 @@ class Question extends Component{
                     <div className="padding10">
                         <ul>
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
-                            <li>
-                                { !questionTypeFlag ? "":<p>
-                                    <label className="checkbox-inline">
-                                        <input type="radio" value="A" id={"selectsA"+index} checked={(this.state.radioState=='A')?true:false}
-                                               onChange={this.radioChange} name={"Qopts_selects"+index} />
-                                        <span>(A)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[0])}}></span></label>
-                                    <label className="checkbox-inline">
-                                        <input type="radio" value="B" id={"selectsB"+index} checked={(this.state.radioState=='B')?true:false}
-                                               onChange={this.radioChange} name={"Qopts_selects"+index} />
-                                        <span>(B)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[1])}}></span></label>
-                                    <label className="checkbox-inline">
-                                        <input type="radio" value="C" id={"selectsC"+index} checked={(this.state.radioState=='C')?true:false}
-                                               onChange={this.radioChange} name={"Qopts_selects"+index} />
-                                        <span>(C)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[2])}}></span></label>
-                                    <label className="checkbox-inline">
-                                        <input type="radio" value="D" id={"selectsD"+index} checked={(this.state.radioState=='D')?true:false}
-                                               onChange={this.radioChange} name={"Qopts_selects"+index} />
-                                        <span>(D)</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[3])}}></span></label>
-                                </p>}
-                            </li>
+                            {questiontype == "选择题" ?<MultipleChoice type={items.get('questiontype')} answer={oldAnwers}  index={index} choiceList={items.get('optionselect')} />:''}
                             {childs.size<1?"":this._childsList(childs)}
-                            {questiontype == '简答题' ? <li>解：<span contentEditable="true" className="div_input"></span></li> :''}
+                            {questiontype == '简答题' ? this._doAndAnswer(this.state.oldAnwers) :''}
                         </ul>
                     </div>
                 </div>
@@ -206,9 +172,9 @@ class Question extends Component{
     onChange = (page) => {
         this.setState({
             current: page,
-            radioState:'',
-            inputAnwer:'',
-            img_url:''
+            oldAnwers:'',
+            img_url:'',
+            AnswerContent:[]
         })
         this.getData(this.state.all_question[page-1])
     }
@@ -232,6 +198,7 @@ class Question extends Component{
         let type = dataItems.get('questiontemplate');
         let quesId = dataItems.get('questionid');
         let nexflag = true;
+        let score = dataItems.get('totalpoints');//先把题的得分拿出来，错了在赋值为0
         console.log(page,nextpage,"正确答案：",answer)
         if(type == "选择题"){
             let doms = document.getElementsByTagName("input");
@@ -249,6 +216,7 @@ class Question extends Component{
                     console.log("选择正确")
                 }else{
                     isright = false;
+                    score = 0;
                     console.error("选择错误")
                 }
                 AnswerArr = [{
@@ -256,7 +224,6 @@ class Question extends Component{
                     "content": myAnswer,
                     "url":"",
                     "IsTrue": isright,
-                    "scroe":0
                 }]
                 this.state.AnswerContent = AnswerArr;
             }else {
@@ -265,41 +232,40 @@ class Question extends Component{
             }
         }else {//除了选择题，其他的先统一按照简答题来处理
             //nexflag = false;
-            AnswerArr = this.state.AnswerContent;
-            console.warn(AnswerArr)
+            let _this = this;//全局this赋给新的值
             $(".div_input").each(function(i){
-                let myAnswer = $(this).html();
+                let myAnswer = $(this).text();
                 let myId = $(this).attr("id");
                 if( myAnswer == answer){
                     isright = true;
                     console.log("正确")
                 }else{
                     isright = false;
+                    score = 0;
                     console.error("错误")
                 }
-                for(let i=0;i< AnswerArr.length;i++){
-                    if(AnswerArr[i].domid == myId){
-                        AnswerArr[i].IsTrue = isright;
-                        AnswerArr[i].scroe = 5;
-                    }
+                AnswerArr[i] = {
+                    "domid":myId,
+                    "content": myAnswer,
+                    "url": _this.state.img_url,
+                    "IsTrue": isright
                 }
             });
+            console.warn(AnswerArr)
             this.state.AnswerContent = AnswerArr;
         }
         if(nexflag){
-            console.log("this.state.AnswerContent::::------::::",this.state.AnswerContent,AnswerArr)
-            let nowList = (this.state.sentList).ExamResult;
+            let nowList = (this.state.sentList).ExamResult,endscore=0;
             (this.state.sentList).currentquesid = page;//当前题号，断点续做
             nowList[page-1] = {
                 "QuesID": quesId,
                 "QuesType": type,
                 "Contents": this.state.AnswerContent,
-                "scroe":10
+                "score":score
             }
             this.setState({
                 current: nextpage,
-                radioState:'',
-                inputAnwer:'',
+                oldAnwers:'',
                 img_url:''
             })
             Storage_L.setItem(this.state.activeId,JSON.stringify(this.state.sentList))//每做完一个题缓存一个
@@ -317,6 +283,11 @@ class Question extends Component{
         if(confirm("确定提交吗？")){
             (this.state.sentList).FinishDate = moment().format();//结束时间
             (this.state.sentList).AllDone = "yes";
+            let endalllist = (this.state.sentList).ExamResult,allscore=0;
+            for(let ii in endalllist){
+                allscore += Number(endalllist[ii].score);
+            }
+            (this.state.sentList).Score = allscore;
             let sentItems = this.state.sentList;
             this.props.actions.sentUserPaperData({
                 body:{data:sentItems},
@@ -337,7 +308,8 @@ class Question extends Component{
         if (error) return error;
         if((this.state.totalNum)<1) return (<div />);
         let questiontype = ((GetQuestion.get('items')).get(0)).get('data').get(0).get('questiontemplate');
-        console.warn("questiontype--->",questiontype)
+        let objective = ((GetQuestion.get('items')).get(0)).get('data').get(0).get('isobjective');
+        let objectiveFlag = (objective== "主观") ? true:false;
         let title = (this.state.dataAll).exampaper;//试卷标题
         let cleartime = this.state.cleartimeflag;
         return(
@@ -349,7 +321,12 @@ class Question extends Component{
                     </header>
                     <center><hr width="90%" size={2}  color="black"></hr></center>
                     <div className="pagination_content">
-                        <div className="pagination_before"><Pagination total={this.state.totalNum} current={this.state.current} onChange={this.onChange}/></div>
+                        <div className="pagination_before pagination_all">
+                            <div className="widthPrecent5 margint10">题号:</div>
+                            <div className="padding0">
+                                <Pagination total={this.state.totalNum} current={this.state.current} onChange={this.onChange}/>
+                            </div>
+                        </div>
                     </div>
                     <section className="QtxtContent">
                         <div className="QtxtContent_main">
@@ -358,7 +335,7 @@ class Question extends Component{
                             </div>
                         </div>
                         <div id="MathContent">
-                            {(questiontype == '选择题')?'':<BaseEditor inputDom={this.state.target_id} editContent={this.getEditContent.bind(this)} />}
+                            {!objectiveFlag ? '':<BaseEditor inputDom={this.state.target_id} editContent={this.getEditContent.bind(this)} />}
                         </div>
                     </section>
                     <button type="button" className="btn btn-primary next_btn" disabled={(this.state.current==(this.state.totalNum+1))?true:false} onClick={()=>this.nextSubmit(this.state.current,GetQuestion)}>下一题</button>

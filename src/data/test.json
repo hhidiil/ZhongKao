@@ -20,22 +20,22 @@
             {
               "itemid": "",
               "content": [{
-                "answer":"90",
+                "answer":"",
                 "knowledges":[{
-                  "name":"三角函数",
-                  "rightRank":"80"
+                  "name":"",
+                  "rightRank":""
                 },{
-                  "name":"勾股定理",
-                  "rightRank":"90"
+                  "name":"",
+                  "rightRank":""
                 }]
               },{
-                "answer":"45",
+                "answer":"",
                 "knowledges":[{
-                  "name":"三角函数",
-                  "rightRank":"80"
+                  "name":"",
+                  "rightRank":""
                 },{
-                  "name":"勾股定理",
-                  "rightRank":"90"
+                  "name":"",
+                  "rightRank":""
                 }]
               }]
             }
@@ -43,30 +43,25 @@
           "Review": [
             {
               "itemid": "",
-              "anwser": [],
-              "fills": [
-                {
-                  "knowledges": [
-                    "三角函数",
-                    "勾股定理"
-                  ],
-                  "isRight": true,
-                  "childNum": 2,
-                  "rightNum": 1,
-                  "knowledgesChilds": [
-                    {
-                      "knowledgeid": "",
-                      "anwser": [],
-                      "isRight": true
-                    },
-                    {
-                      "knowledgeid": "",
-                      "anwser": [],
-                      "isRight": false
-                    }
-                  ]
-                }
-              ]
+              "content": [{
+                "answer":"",
+                "knowledges":[{
+                  "name":"",
+                  "rightRank":""
+                },{
+                  "name":"",
+                  "rightRank":""
+                }]
+              },{
+                "answer":"",
+                "knowledges":[{
+                  "name":"",
+                  "rightRank":""
+                },{
+                  "name":"",
+                  "rightRank":""
+                }]
+              }]
             }
           ],
           "Analysis": [
