@@ -8,7 +8,7 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getFirstDataOfPaper,getSecondTestQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion} from '../../../../redux/actions/math'
+import {getFirstDataOfPaper,getSecondTestQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection} from '../../../../redux/actions/math'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import SelectMenu from '../../../../components/selectMenu/selectMenu'
 import NoThisPart from '../../../../components/defaultJPG/nothispart'
@@ -61,6 +61,7 @@ class Question extends Component{
             AnalysisMenu:'0',//分析解答中左侧menu
             AnalysisFlag:true,//分析解答
             nowAnalysisPart:'',//当前解析的是那一部分
+            nowPart:'',//当前显示的是那一部分：解析，答案，巩固，拓展
             AnswerFlag:false,//标准答案
             Exercise1Flag:false,//巩固
             openKeys:['sub0'],
@@ -99,7 +100,7 @@ class Question extends Component{
                         ii = ii+1;
                     }
                 }
-                console.log("--------------------------------->>",datajson)
+                console.log("--------------all_question------------------->>",datajson)
                 if(errorArray.length>0){
                     this.getData(datajson[errorArray[0]-1],errorArray[0]-1)
                     this.setState({
@@ -127,20 +128,25 @@ class Question extends Component{
 
         })
     }
-    componentWillReceiveProps(nextProps){
-        //this.props //当前的props,nextProps //下一阶段的props
+    componentWillReceiveProps(){
+        console.log('componentWillReceiveProps')
+    }
+    componentWillUpdate(){
+        console.log('componentWillUpdate')
     }
     componentDidUpdate(prevProps,prevState){
         //完成渲染新的props或者state后调用，此时可以访问到新的DOM元素。
         if(prevState.analysisLeftContent != this.state.analysisLeftContent){
-            this.addEventFuc(prevState.showEditor);//为填空题以及解答添加事件处理
+            this.addEventFuc('0');//为填空题以及解答添加事件处理
+        }
+        if(prevState.solution != this.state.solution){
+            this.addEventFuc('1');//为填空题以及解答添加事件处理
         }
         if(prevState.mainContent != this.state.mainContent){
             let H = $('.QtxtContent_main').height();
             this.setState({mainContentH:H})
         }
         if(prevState.nowAnalysisPart != this.state.nowAnalysisPart){
-            console.log("componentDidUpdate======",prevState.nowAnalysisPart , this.state.nowAnalysisPart)
             this.addAnswer(this.state.nowAnalysisPart);//为填空题以及解答添加事件处理
         }
     }
@@ -148,18 +154,18 @@ class Question extends Component{
         let childid = data[0].childsid;
         switch (type){
             case 'AnalyContent' :
-                this.setState({AnalysisFlag:true, AnswerFlag:false, Exercise1Flag:false,mainContent:true,showEditor:false});
+                this.setState({AnalysisFlag:true, AnswerFlag:false, Exercise1Flag:false,mainContent:true,showEditor:false,nowPart:type});
                 break;
             case 'Answer' :
-                this.setState({AnalysisFlag:false, AnswerFlag:true, Exercise1Flag:false,mainContent:true,showEditor:false});
+                this.setState({AnalysisFlag:false, AnswerFlag:true, Exercise1Flag:false,mainContent:true,showEditor:false,nowPart:type});
                 break;
             case 'Exercise1' :
                 this.getDateOfPractice(type,childid);
-                this.setState({AnalysisFlag:false, AnswerFlag:false, Exercise1Flag:true,mainContent:false,showEditor:false});
+                this.setState({AnalysisFlag:false, AnswerFlag:false, Exercise1Flag:true,mainContent:false,showEditor:false,nowPart:type});
                 break;
             case 'Exercise2':
                 this.getDateOfPractice(type,childid);
-                this.setState({AnalysisFlag:false, AnswerFlag:false, Exercise1Flag:true,mainContent:false,showEditor:false});
+                this.setState({AnalysisFlag:false, AnswerFlag:false, Exercise1Flag:true,mainContent:false,showEditor:false,nowPart:type});
                 break;
             default: break;
         }
@@ -202,10 +208,16 @@ class Question extends Component{
             default: break;
         }
     }
-    addEventFuc(flag){
+    addEventFuc(type){
         let _this = this;
+        console.log("addEventFuc----------------->>>>>>>",type)
         $(".div_input").each(function(i){
-            let add_id = "answer-"+_this.state.current+"-"+_this.state.nowAnalysisPart+"-"+i;
+            let add_id='';
+            if(type == '0'){
+                add_id = "answer-"+_this.state.current+"-"+_this.state.nowAnalysisPart+"-"+i;
+            }else if(type == '1'){
+                add_id = "main-answer-"+_this.state.current;
+            }
             $(this).attr("id",add_id);
             $(this).on('click',function(event){
                 _this.FocusHandle(this,add_id)
@@ -215,7 +227,6 @@ class Question extends Component{
     addAnswer(type){
         let childsLen = this.state.sentAllList.ExamResult[this.state.current-1];
         let ddd = !childsLen ? '':childsLen.childs[0][type];
-        console.log("151515515151515151515151=====",ddd,ddd.length)
         $(".analysisContent").each(function(ii){
             $(this).find('.div_input').each(function(i){
                 let oldAnswer = (ddd && ddd.length>0) ?  ddd[ii].content[i].answer:'';
@@ -255,20 +266,45 @@ class Question extends Component{
             return <li key={index} dangerouslySetInnerHTML={{__html:item.content}}></li>
         })
     }
+    doCollection(){
+        console.log("收藏！！！！")
+        let ques = this.state.all_question[this.state.current-1];
+        let setdata={
+            userId: Storage_S.getItem('userid'),
+            questionId:ques.QuesID,
+            questionType:ques.QuesType,
+            parentId: this.state.activeId,
+            title: "我是题目"
+        }
+        this.props.actions.doSetCollection({
+            body: setdata,
+            success:()=>{alert("收藏成功！")},
+            error:(mes)=>{alert("收藏失败！("+mes+")")}
+        })
+    }
     redoIt(){
-        console.log("redoit");
         this.setState({solution: true})
     }
     redoSubmit(type,index){
-        console.log("redosubmit");
-        let value ='';
+        let value =[];
         if(type){//选择题
-            let answer = $("#mainTopic").find("input:checked");//选项;
-            answer.each(function(ii){
-                value += $(this).val();//用户填写的答案
+            let answers = $("#mainTopic").find("input:checked");//选项;
+            let answer = '';
+            answers.each(function(ii){
+                answer += $(this).val();//用户填写的答案
             })
+            value[0] ={
+                "content":answer,
+                "url":''
+            }
         }else{
-            value = $("#mainTopic #solition span").text();
+            let answers = $("#mainTopic").find("div_input");//选项;
+            answers.each(function(ii){
+                value[ii] = {
+                    "content":$(this).text(),
+                    "url":''
+                };
+            })
         }
         newChildList.answer = value;
         (this.state.sentAllList).ExamResult[index-1] = newChildList;
@@ -285,13 +321,11 @@ class Question extends Component{
             questionType = true;
         }
         let oldcontent = this.state.sentAllList.ExamResult[index-1];
-        console.log(oldcontent)
-        let oldanswer = oldcontent && oldcontent.answer?oldcontent.answer: this.state.all_question[index-1].Contents[0].content;
-        //let oldanswer = this.state.all_question[index-1].Contents[0].content;
+        let oldanswer = oldcontent && oldcontent.answer?oldcontent.answer: this.state.all_question[index-1].Contents;
         if(content){
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                 content = content.replace(/\_|\s/g,"");
-                let qqq =  '<span class="div_input">'+oldanswer+'</span>';
+                let qqq =  '<span class="div_input"></span>';
                 content = content.replace(/blank|BLANK/g,qqq);
             }
             return (
@@ -299,6 +333,7 @@ class Question extends Component{
                     <div className="displayflex QtxtContent_main_title">
                         <div className="QtxtContent_main_title_left">{questiontemplate}：</div>
                         <div className="QtxtContent_main_title_right">
+                            <Button onClick={()=>this.doCollection()}>收藏</Button>
                             <Button onClick={()=>this.redoIt()}>重做</Button>
                             <Button id="redosubimt" onClick={()=>this.redoSubmit(questionType,index)}>提交</Button>
                             <Icon type={this.state.mainContent?"down":"up"} onClick={()=>this.setState({mainContent: !this.state.mainContent})}/>
@@ -307,9 +342,9 @@ class Question extends Component{
                     <div className={this.state.mainContent?"":"height_none"}>
                         <ul id="mainTopic" style={{padding:"8px 0"}}>
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
-                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer} index={index} choiceList={items.optionselect} />:''}
+                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer[0].content} index={index} choiceList={items.optionselect} />:''}
                             {childs.size<1?"":this._childsList(childs)}
-                            {questionType || !this.state.solution ? "":<li id="solition" style={{paddingTop:"5px"}}>解：<span contentEditable="true" className="div_input"></span></li>}
+                            {questiontemplate!='简答题' || !this.state.solution ? "":<li id="solition" style={{paddingTop:"5px"}}>解：<span contentEditable="true" className="div_input"></span></li>}
                         </ul>
                     </div>
                 </div>
@@ -330,12 +365,12 @@ class Question extends Component{
                             this.props.actions.getContentOfChildItemsForQues({
                                 body:dataArray,
                                 success:(data)=>{
+                                    console.warn("888888888888888888---->",data)
                                     if(data[0].code == 200){
                                         this.setState({analysisLeftContent:data[0].data,showEditor:false,nowAnalysisPart:type});
                                     }else {
                                         console.error(data[0].message)
                                     }
-
                                 },
                                 error:(err)=>{console.error(err)}
                             })
@@ -376,16 +411,26 @@ class Question extends Component{
     seeAnswer (data){
         this.setState({two_answer_content:data})
     }
-    submitAnwser(index){
-        let target_exe = "exerciseTopic"+index,target_value='';
+    submitAnwser(index,data){
+        let target_exe = "exerciseTopic"+index,target_value='',type = this.state.nowPart;
         $("#"+target_exe).find("ul input:checked").each(function(ii){
             target_value += $(this).val();
         })
+        console.log("提交答案",index,target_value,this.state.nowPart,data.answer)
         if(!target_value){
            alert("请选择答案再提交！")
+            return;
         }
-        console.log("提交答案",target_value)
-        this.setState({exerciseIndex:index});
+        newChildList.childs[0][type][index] = {
+            "questionid": data.questionid,
+            "answer": target_value,
+            "isRight": (data.answer == target_value)?true:false,
+            "isdone":true
+        };
+        (this.state.sentAllList).currentquesid = this.state.current;
+        (this.state.sentAllList).ExamResult[this.state.current-1] = newChildList;
+        Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
+        this.setState({exerciseIndex:index})
     }
     makeScore(index,total){
         let tar = "makescore"+index,score = '';
@@ -395,9 +440,10 @@ class Question extends Component{
         }
         console.log("打分",tar,$("#"+tar).val(),total)
     }
-    clickTip(index){
-        if(this.state.exerciseIndex === index){
-            this.setState({two_answer_flag:!this.state.two_answer_flag})
+    clickTip(index,olddata){
+        console.error(olddata)
+        if(olddata && olddata.isdone == true){
+            this.setState({two_answer_flag:!this.state.two_answer_flag,exerciseIndex:index})
         }else {
             alert("请先提交答案再查看提示!")
         }
@@ -432,7 +478,6 @@ class Question extends Component{
                 "isRight": isRight,
                 "knowledges":knowledge_new
             };
-            console.log("这是选择题的情况下====>",rightanswer,knowledge_new,value,isRight);
         }else{
             let knowledge = ((data.knowledge).replace(/["\[\]\s]/g,"")).split('||');//知识点
             let inputList = $(e.target).parent().parent().find(".div_input");
@@ -502,51 +547,56 @@ class Question extends Component{
         },this)
     }
     _practicesQtxt(data){
+        let num = this.state.current,type = this.state.nowPart;
+        let childsLen = this.state.sentAllList.ExamResult[num-1];
+        let ddd = !childsLen ? '':childsLen.childs[0][type];
         return data.map(function (item,index) {
             let items = (item.data)[0];
             let content = items.content;
             let questionType = false;
-            var base = new Base64();//base64对象
+            let ddd_content = (ddd && ddd[index]) ? ddd[index] : '';//解析的某部分的第几个content所有内容（比如考点中的第一个小题全部内容）
             if (content.indexOf("blank") != -1) {//如果有则去掉所有空格和blank
                 content = content.replace(/blank/g,'<input type="text" class="input_blank"/>');
             }
             if(items.questiontemplate == '选择题'){
                 questionType = true;//有两个选项以上
             }
-            return (
-                <div className="exercise2" key={index}>
-                    <div className="exercise2-border">
-                        <div className="exercise2_main_content">
-                            <div id={"exerciseTopic"+index}>
-                                <ul>
-                                    <li style={{paddingTop:"6px"}} dangerouslySetInnerHTML={{__html:content}}></li>
-                                    {questionType?<MultipleChoice type={items.questiontype} answer="" index={index} choiceList={items.optionselect} />:''}
-                                    {items.childs.size<1?"":this._childsList(items.childs)}
-                                    {questionType ? "":<li id="solition" style={{paddingTop:"5px"}}>解：<span contentEditable="true" className="div_input"></span></li>}
-                                </ul>
-                            </div>
-                            <div><span style={{cursor:'pointer',color:'palevioletred'}} onClick={()=>this.clickTip(index)}>tips:</span>
-                                <Icon className="tips" type={this.state.exerciseIndex==index && this.state.two_answer_flag?"up":"down"}/>
-                                <div className="submitAndscore">
-                                    <Button type="primary" size="small" onClick={()=>this.submitAnwser(index)}>提交答案</Button>
-                                    {questionType ? "":<label>打分：<input type="tel" maxLength = "2" id={"makescore"+index} style={{width:"30px"}} />
-                                        <a onClick={()=>this.makeScore(index,items.totalpoints)}>确定</a></label>}
+            if(content){
+                return (
+                    <div className="exercise2" key={index}>
+                        <div className="exercise2-border">
+                            <div className="exercise2_main_content">
+                                <div id={"exerciseTopic"+index}>
+                                    <ul>
+                                        <li style={{paddingTop:"6px"}} dangerouslySetInnerHTML={{__html:content}}></li>
+                                        {questionType?<MultipleChoice type={items.questiontype} answer={ddd_content?ddd_content.answer:''} index={index} choiceList={items.optionselect} />:''}
+                                        {items.childs.size<1?"":this._childsList(items.childs)}
+                                        {questionType ? "":<li id="solition" style={{paddingTop:"5px"}}>解：<span contentEditable="true" className="div_input"></span></li>}
+                                    </ul>
                                 </div>
-                            </div>
-                            <div className={this.state.exerciseIndex==index && this.state.two_answer_flag ?"exercise2_help":"displaynone"}>
-                                <div className="exercise2_main_sites">
-                                    <Button type="dashed" size="small" onClick={()=>this.seeAnswer(items.knowledge)}>考点</Button>
-                                    <Button type="dashed" size="small" onClick={()=>this.seeAnswer(items.answer)}>答案</Button>
-                                    <Button type="dashed" size="small" onClick={()=>this.seeAnswer(items.analysis)}>解析</Button>
+                                <div><span style={{cursor:'pointer',color:'palevioletred'}} onClick={()=>this.clickTip(index,ddd_content)}>tips:</span>
+                                    <Icon className="tips" type={this.state.exerciseIndex==index && this.state.two_answer_flag?"up":"down"}/>
+                                    <div className="submitAndscore">
+                                        <Button type="primary" size="small" onClick={()=>this.submitAnwser(index,items)}>提交答案</Button>
+                                        {questionType ? "":<label>打分：<input type="tel" maxLength = "2" id={"makescore"+index} style={{width:"30px"}} />
+                                            <a onClick={()=>this.makeScore(index,items.totalpoints)}>确定</a></label>}
+                                    </div>
                                 </div>
-                                <div>
-                                    <p><span dangerouslySetInnerHTML={{__html:this.state.two_answer_content}}></span></p>
+                                <div className={this.state.exerciseIndex==index && this.state.two_answer_flag ?"exercise2_help":"displaynone"}>
+                                    <div className="exercise2_main_sites">
+                                        <Button type="dashed" size="small" onClick={()=>this.seeAnswer(items.knowledge)}>考点</Button>
+                                        <Button type="dashed" size="small" onClick={()=>this.seeAnswer(items.answer)}>答案</Button>
+                                        <Button type="dashed" size="small" onClick={()=>this.seeAnswer(items.analysis)}>解析</Button>
+                                    </div>
+                                    <div>
+                                        <p><span dangerouslySetInnerHTML={{__html:this.state.two_answer_content}}></span></p>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )
+                )
+            }
         },this)
     }
     _AnswerFlag(type,data){
@@ -561,8 +611,8 @@ class Question extends Component{
         if(data){
             let olddata = this.state.sentAllList.ExamResult[page-1];
             if(!olddata){//有缓存
-                newChildList.isRight = data.Contents[0].IsTrue;//取出一测的做题答案信息
-                newChildList.answer = data.Contents[0].content;
+                newChildList.isRight = data.Contents[0]?data.Contents[0].IsTrue:'';//取出一测的做题答案信息
+                newChildList.answer = data.Contents[0]?data.Contents[0].content:'';
             }
             this.props.actions.getSecondTestQuestion({body:[{id:data.QuesID}],
                 success:(data)=>{
@@ -601,6 +651,7 @@ class Question extends Component{
         this.getData(this.state.all_question[page-1],page)
     }
     exitBack(){
+        UE.delEditor('container');//退出的时候删除实例化的编辑器
         this.props.actions.push("/home/math/questions")
     }
     onOpenChange = (openKeys) => {
@@ -767,7 +818,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getFirstDataOfPaper,getSecondTestQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion}, dispatch) }
+    return { actions: bindActionCreators({push,getFirstDataOfPaper,getSecondTestQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question)

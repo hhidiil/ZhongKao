@@ -71,7 +71,7 @@ Math.prototype.getQuestionChild = function(callback){
 }
 /*查询试题的所有关联的子题（考点，扩展，分析。。。）*/
 Math.prototype.getQuestionChildItems = function(callback){
-    var _sql = `select t1.parttype,t2.itemid,t1.questionid from tblQuestion2Part t1,tblQuestionPart2Item t2 where t1.partid=t2.partid and t1.questionid='${this.props.id}' ORDER BY t1.ordersn`;
+    var _sql = `select t1.parttype,t2.itemid,t1.questionid from tblQuestion2Part t1,tblQuestionPart2Item t2 where t1.partid=t2.partid and t1.questionid='${this.props.id}' ORDER BY t2.ordersn`;
     helper.db_query({
         connect: con,
         sql: _sql,
@@ -109,6 +109,27 @@ Math.prototype.getFirstDataOfPaper = function (callback) {
         sql: _sql,
         name: 'getFirstDataOfPaper',
         callback: callback
+    })
+}
+Math.prototype.getThisCollection = function (callback) {
+    var _sql = `select * from tblStudentCollectInfo where userid='${this.props.userId}' and questionid='${this.props.questionId}' `;
+    helper.db_query({
+        connect:con,
+        sql:_sql,
+        name:'getThisCollection',
+        callback:callback
+    })
+}
+/*用户收藏试题*/
+Math.prototype.setCollection = function (callback) {
+    var _sql = `INSERT INTO tblStudentCollectInfo (userid,questionid,questiontype,parentid,content)
+                VALUES
+                ('${this.props.userId}','${this.props.questionId}','${this.props.questionType}','${this.props.parentId}','${this.props.title}');`;
+    helper.db_query({
+        connect:con,
+        sql:_sql,
+        name:'setCollection',
+        callback:callback
     })
 }
 module.exports = Math

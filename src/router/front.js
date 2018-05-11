@@ -18,7 +18,7 @@ import QuestionAll from '../container/front/page_modules/math/math-question-all'
 import Question from '../container/front/page_modules/math/question'
 import Practice from '../container/front/page_modules/math/practice'
 import Exam from '../container/front/page_modules/math/exam'
-import Exam2 from '../container/front/page_modules/math/exam2'
+import QuestionDetail from '../container/front/page_modules/math/signQuestionDetail'
 import Test from '../components/test'
 
 const requireAuth = (nextState, replace) => {
@@ -41,7 +41,7 @@ const routes = (
             <Route path="math/questions/question/:id" component={Question} />
             <Route path="math/questions/practice/:id" component={Practice} />
             <Route path="math/exams/exam" component={Exam} />
-            <Route path="math/exams/exam2" component={Exam2} />
+            <Route path="math/questionDetail/:id" component={QuestionDetail} />
         </Route>
         <Route path="/test" component={Test} />
     </Route>

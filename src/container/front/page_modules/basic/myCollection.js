@@ -6,61 +6,78 @@ import './style.css'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
+import { Link } from 'react-router'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import {getCollectInfo } from '../../../../redux/actions/user'
 import { Collapse } from 'antd';
+import {Storage_S} from '../../../../config'
 
 const Panel = Collapse.Panel;
 class Collect extends Component{
     constructor(props){
         super(props);
-        console.log("1")
         this.state={
+            collectList : []
         }
     }
     componentDidMount(){
-        this.props.actions.getCollectInfo({});
+        this.props.actions.getCollectInfo({body:{userid:Storage_S.getItem('userid')},
+            success:(data)=>{
+                this.setState({collectList:data})
+            }
+        });
     };
     _questionList(list){
-        let questions = list.get('question');
-        return questions.map((item,index)=>{
+        return list.map((item,index)=>{
+            let url = '/home/math/questionDetail/'+item.questionid;
             return(
                 <div key={index} className="collectAll_question">
-                    <a href={item.get('url')}><p><span>{index+'、'}</span>{item.get('title')}</p></a>
+                    <Link to={url}><p><span>{index+'、'}</span>{item.content}</p></Link>
                 </div>
             )
         })
     }
-    _showList(list){
-        let item = list.get('items');
-        let item2 = (item.get(0)).get('menu_title');
-        return item2.map((item,index)=>{
-            let num = item.get('question').size;
-            let header = item.get('name')+"("+num+")";
-            return(
-                <Panel header={header} key={index}>
-                    {this._questionList(item)}
-                </Panel>
-            )
-        })
+    gotoPractice(data){
+        let id = data.examid;
+        this.props.actions.push(`/home/math/questions/practice/${id}`);
     }
     render(){
-        let {collectInfo} = this.props;
-        let error = PureRenderMixin.Compare([collectInfo]);//深度比较如果两次state没有变化，则不用render
-        if (error) return error
+        let quesTypeX=[],quesTypeT=[],quesTypeJ=[],quesTypeQ=[],list = this.state.collectList;
+        for(let ii in list){
+            let type = list[ii].questiontype;
+            switch (type){
+                case '选择题': quesTypeX.push(list[ii]);
+                    break;
+                case '填空题': quesTypeT.push(list[ii]);
+                    break;
+                case '简答题': quesTypeJ.push(list[ii]);
+                    break;
+                default : quesTypeQ.push(list[ii]);
+                    break;
+            }
+        }
         return(
             <div className="collectAll">
                 <Collapse bordered={false}>
-                    {this._showList(collectInfo)}
+                    <Panel header={"选择题"+"("+quesTypeX.length+")"}>
+                        {this._questionList(quesTypeX)}
+                    </Panel>
+                    <Panel header={"填空题"+"("+quesTypeT.length+")"}>
+                        {this._questionList(quesTypeT)}
+                    </Panel>
+                    <Panel header={"简答题"+"("+quesTypeJ.length+")"}>
+                        {this._questionList(quesTypeJ)}
+                    </Panel>
+                    <Panel header={"其他"+"("+quesTypeQ.length+")"}>
+                        {this._questionList(quesTypeQ)}
+                    </Panel>
                 </Collapse>
             </div>
         )
     }
 }
 function mapStateToProps(state) {
-    return {
-        collectInfo:state.collectInfo || [],
-    }
+    return {}
 }
 function mapDispatchToProps(dispatch) {
     return {

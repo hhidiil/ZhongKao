@@ -5,7 +5,7 @@
 import * as TYPES from '../types';
 import * as CONFIG from '../../config';
 import { request } from './request';
-import { bodyUrlencoded } from '../../method_public/public'
+import { bodyUrlencoded,requestData } from '../../method_public/public'
 
 //获取数据的方式先 全部使用 GET。用真实数据时使用POST方式----<<------看这里!!!------------
 export function auth(opt) {
@@ -84,18 +84,41 @@ export function getUserBasicInfo(opt) {
 //获取用户收藏的试题
 export function getCollectInfo(opt) {
     return (dispatch) => {
-        const route = 'src/data/collect.json';
+        const route = '/api/user/getCollection';
         const success = (data) => {
             dispatch({ type: TYPES.USERCOLLECTINFO_UPDATA, result: {items: data} })
             opt.success && opt.success(data)
         }
-        request(route, opt.params || {}, dispatch, success, opt.error)
+        request(route, opt.params || {}, dispatch, success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
+    }
+}
+//获取用户收藏的试题
+export function getCollection(opt){
+    return (dispatch) => {
+        const route = '/api/user/getCollection';
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
     }
 }
 //更新用户基本信息
 export function updateUserInfo(opt) {
     return (dispatch) => {
         const route = '/api/user/updateBasicInfo';
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
+    }
+}
+//更新用户基本信息
+export function updateHeadImg(opt) {
+    return (dispatch) => {
+        const route = '/api/user/updateHeadImg';
         request(route, {}, dispatch, opt.success, opt.error,
             { method: 'POST',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},

@@ -16,6 +16,11 @@
     border-bottom: 1px solid transparent;
     transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
 }
+.door_headimg {
+    height: 200px !important;
+    width: 200px !important;
+    background-size: cover;
+}
 .box-align-center {
     align-items: center;
 }

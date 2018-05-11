@@ -27,8 +27,8 @@ class Door extends Component {
                 return (
                     <div key={index} className="col-sm-6 col-md-3">
                         <div className="thumbnail">
-                            <img src={handleImg(item.get('headimg'))} title="头像" onError={(e)=>{e.target.src = "public/images/user_head.jpg"}}/>
-                            <div className="caption">
+                            <img className="door_headimg" src={handleImg(item.get('headimg'))} title="头像" onError={(e)=>{e.target.src = "public/images/user_head.jpg"}}/>
+                            <div className="caption center">
                                 <h3>{item.get('username')}</h3>
                                 <p>{item.get('phone')}</p>
                             </div>

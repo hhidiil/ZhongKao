@@ -17,7 +17,7 @@ class MathJaxEditor extends Component{
         window.setLatexValue = this.setLatexValue.bind(this);//设置全局回调，子页面来调用
     }
     componentDidMount(){
-        //移除编辑框
+        //编辑框
         var ue = UE.getEditor('container', {
             toolbars: [['kityformula']],
             elementPathEnabled:false,

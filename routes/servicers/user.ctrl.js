@@ -11,13 +11,15 @@ module.exports = {
     // 模块初始化
 
     init: function(app) {
-        app.get('/user', this.doGetUserAllItems)
-        app.post('/user/token', this.doGetUserItemByPhone)
-        app.post('/user/token_name', this.doGetUserItemByUserName)
-        app.post('/user/password', this.doPutPassword)
-        app.post('/user/register', this.doRegister)
-        app.post('/user/basic_info', this.doGetUserBasicInfo)
-        app.post('/user/updateBasicInfo',this.doUpdateBasicInfo)
+        app.get('/user', this.doGetUserAllItems);
+        app.post('/user/token', this.doGetUserItemByPhone);
+        app.post('/user/token_name', this.doGetUserItemByUserName);
+        app.post('/user/password', this.doPutPassword);
+        app.post('/user/register', this.doRegister);
+        app.post('/user/basic_info', this.doGetUserBasicInfo);
+        app.post('/user/updateBasicInfo',this.doUpdateBasicInfo);
+        app.post('/user/updateHeadImg',this.doUpdateHeadImg);
+        app.post('/user/getCollection',this.doGetCollection)
     },
 
     // 获取所有用户信息
@@ -233,6 +235,40 @@ module.exports = {
                 return res.send({
                     code: 500,
                     message: '修改出错'
+                })
+            }
+        })
+    },
+    doUpdateHeadImg: function (req,res){
+        var props = req.body;
+        var user = new User({props:props});
+        user.UpdateHeadImg(function(err,data){
+            if(!err){
+                return res.send({
+                    code:200,
+                    data:data
+                })
+            }else{
+                return res.send({
+                    code: 500,
+                    message: '修改出错'
+                })
+            }
+        })
+    },
+    doGetCollection: function(req,res){
+        var props = req.body;
+        var user = new User({props:props});
+        user.getCollection(function(err,data){
+            if(!err){
+                return res.send({
+                    code:200,
+                    data:data
+                })
+            }else{
+                return res.send({
+                    code:501,
+                    message:'获取数据出错'
                 })
             }
         })

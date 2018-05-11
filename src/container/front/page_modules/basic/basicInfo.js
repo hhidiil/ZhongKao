@@ -7,31 +7,31 @@ import moment from 'moment'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import PureRenderMixin from '../../../../method_public/pure-render'
-import {handleImg,exchangeGrade} from '../../../../method_public/public'
-import {getUserBasicInfo, updateUserInfo} from '../../../../redux/actions/user'
+import {handleImg,exchangeGrade,beforeUpload,getBase64} from '../../../../method_public/public'
+import {getUserBasicInfo, updateUserInfo,updateHeadImg} from '../../../../redux/actions/user'
 import './style.css'
 import {Form, Select,Radio,Input, Button, Upload, Icon,Layout,DatePicker} from 'antd';
-import {  } from 'antd';
-
 
 const {Sider, Content } = Layout;
 const FormItem = Form.Item;
 const Option = Select.Option;
 const RadioGroup = Radio.Group;
+
 class BasicInfo extends Component{
     constructor(props){
         super(props);
         this.state={
             userid:'',
+            head_img:''
         };
     }
-    componentWillReceiveProps(self, nextProps, nextState){
-        console.log('hello world componentWillReceiveProps');
-    }
     componentDidMount(){
-        //用route的参数来判断是从那个页面进来，进而取对应页面数据和显示对应页面
         let username = window.sessionStorage.getItem('username')
-        this.props.actions.getUserBasicInfo({body:{params:username}})
+        this.props.actions.getUserBasicInfo({body:{params:username},
+            success:(data)=>{
+                console.log("successsuccess----success--->",data)
+                this.setState({head_img: decodeURIComponent(data[0].headimg),userid:data[0].userid})
+        }})
     };
     handleSubmit = (e) => {
         e.preventDefault();
@@ -53,12 +53,27 @@ class BasicInfo extends Component{
             }
         });
     }
-    normFile = (e) => {
-        console.log('Upload event:', e);
-        if (Array.isArray(e)) {
-            return e;
+    headSubmit(){
+        let headimg = encodeURIComponent(this.state.head_img);
+        this.props.actions.updateHeadImg({
+            body:{head:headimg,userid:this.state.userid},
+            success:(data)=>{
+                console.log(data)
+                alert("修改成功！")
+            },
+            error: (mes)=>{
+                console.error("修改出错",mes)
+            }
+        })
+    }
+    preview =()=>{
+        let file = this.uploadInput.files[0];
+        let _this = this;
+        if(beforeUpload(file)){
+            getBase64(file,function(data){
+                _this.setState({head_img:data})
+            })
         }
-        return e && e.fileList;
     }
     render(){
         let { basicInfo } = this.props;
@@ -183,8 +198,14 @@ class BasicInfo extends Component{
                     </Content>
                     <Sider style={{backgroundColor: "white"}}>
                         <div className="user_head">
-                            <img src={handleImg(items.get('headimg'))} alt="头像"/>
-                            <span>头像...更55改</span>
+                            <img src={handleImg(this.state.head_img)} alt="头像"/>
+                            <div className="head_btn">
+                                <a className="btn btn-success fileinput-button">
+                                    <span>修改</span>
+                                    <input ref={(ref) => {this.uploadInput = ref}} onChange={this.preview} type="file" />
+                                </a>
+                                <button className="btn" onClick={()=>this.headSubmit()}>提交</button>
+                            </div>
                         </div>
                     </Sider>
                 </Layout>
@@ -200,7 +221,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({push, getUserBasicInfo,updateUserInfo}, dispatch)
+        actions: bindActionCreators({push, getUserBasicInfo,updateUserInfo,updateHeadImg}, dispatch)
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Basic)

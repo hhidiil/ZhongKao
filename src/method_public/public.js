@@ -78,6 +78,14 @@ export function handleImg(url){
         return 'public/images/default.jpg';
     }
 }
+//转码file文件为 base64
+export function getBase64(img,callback) {
+    const reader = new FileReader();
+    reader.readAsDataURL(img);
+    reader.onload = function(e){
+        callback(reader.result)
+    }
+}
 //上传图片文件格式判断
 export function beforeUpload(file) {
     if(file){

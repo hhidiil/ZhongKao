@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "cross-env NODE_ENV=production node ./bin/www",
+    "start": " npm run build && cross-env NODE_ENV=production node ./bin/www",
     "dev": "node ./bin/www",
     "devbuild": "webpack --config webpack.config.js",
     "build": "webpack --config webpack.prod.config.js",
@@ -27,7 +27,6 @@
     "mysql": "^2.15.0",
     "path": "^0.12.7",
     "prop-types": "^15.6.0",
-    "react-string-replace": "^0.4.1",
     "react-umeditor": "^1.0.0-rc11",
     "redux-devtools-extension": "^2.13.2",
     "webpack-dev-middleware": "^2.0.4",

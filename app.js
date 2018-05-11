@@ -23,7 +23,7 @@ app.set('view engine', 'ejs');
 app.use(logger('dev'));
 app.use(cors());//同源策略
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({ limit:'50mb',extended: false }));//请求数据是参数的大小
 app.use(cookieParser());
 app.use(fileUpload());
 app.use('/public',express.static(path.join(__dirname, '/public')));//设置虚拟根目录

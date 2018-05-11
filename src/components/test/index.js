@@ -8,7 +8,6 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import {WINDOW_HOST} from '../../config'
-import reactStringReplace from 'react-string-replace';
 import {FormulaEditor,MathJaxEditor} from '../editer/index'
 import {upload} from '../../redux/actions/upload'
 import {beforeUpload} from '../../method_public/public'
@@ -180,9 +179,9 @@ class Test extends Component{
         //var result;
         //while((result=regex.exec(str))!=null)
         //    console.log(result[1],result);
-        replacedText = reactStringReplace(str,regex,(match,i)=>(
-            <button className="skipText" key={match+i}></button>
-        ));
+        //replacedText = reactStringReplace(str,regex,(match,i)=>(
+        //    <button className="skipText" key={match+i}></button>
+        //));
         replacedText = str.replace(regex,'<span class="mustText">※</span>')
         console.log("str---------str---------->>>",replacedText);
         return(

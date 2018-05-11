@@ -126,6 +126,16 @@ export function sentUserPaperData(opt) {
                 body: JSON.stringify(data)})
     }
 }
+//收藏试卷或者试题
+export function doSetCollection(opt){
+    return (dispatch)=>{
+        const route = '/api/math/setCollection';
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
+    }
+}
 //获取所有模考试题
 export function getAllExamList(opt) {
     return (dispatch) => {
@@ -137,18 +147,6 @@ export function getAllExamList(opt) {
         requestSyn(route,{},dispatch,success, opt.error)
     }
 }
-//获取某套模考试题
-export function getExamList(opt) {
-    return (dispatch) => {
-        const route = 'src/data/home.json';//本地数据
-        const success = (data) => {
-            dispatch({ type: TYPES.EXAMLIST_UPDATE, result: {items: data} })
-            opt.success && opt.success(data)
-        }
-        requestSyn(route,{},dispatch,success, opt.error)
-    }
-}
-
 //设置定时state
 export function setTiming(type) {
     switch (type.param) {

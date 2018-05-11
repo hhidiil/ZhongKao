@@ -14,8 +14,9 @@ module.exports={
         app.post('/math/firstDataOfPaper',this.getFirstDataOfPaper);
         app.post('/math/secondTestQuestion',this.getSecondTestQuestion);
         app.post('/math/contentOfChildItems',this.getContentOfChildItems);
-        app.post('/math/contentOfChildItemsForQues',this.getContentOfChildItemsForQues)
-        app.post('/math/childQuestionsForQuestion',this.getChildQuestionsForQuestion)
+        app.post('/math/contentOfChildItemsForQues',this.getContentOfChildItemsForQues);
+        app.post('/math/childQuestionsForQuestion',this.getChildQuestionsForQuestion);
+        app.post('/math/setCollection',this.doSetCollection)
     },
     getAllPapers: (req, res) => {
         let props = {};
@@ -297,5 +298,38 @@ module.exports={
             }
         })
 
+    },
+    doSetCollection: (req,res)=>{
+        var props = req.body;
+        var math = new Math({props:props});
+        math.getThisCollection(function(err,data){
+            if(!err){
+                if(data.length>0){//此题已经存在
+                    return res.send({
+                        code:500,
+                        message:'此题已经收藏过了'
+                    })
+                }else{
+                    math.setCollection(function(err,data){
+                        if(!err){
+                            return res.send({
+                                code:200,
+                                data:data
+                            })
+                        }else{
+                            return res.send({
+                                code:501,
+                                message:'数据出错了'
+                            })
+                        }
+                    })
+                }
+            }else{
+                return res.send({
+                    code:501,
+                    message:'数据出错了'
+                })
+            }
+        })
     }
 }

@@ -16,8 +16,6 @@
     -o-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
     border-image: url("/public/images/1111.jpg") 40 40 round stretch;
 }
-.math-question-content{
-}
 .math-question-content header{
     display: flex;
 }
@@ -89,6 +87,9 @@
 .QtxtContent_main_title{
     border-bottom: 1px dashed;
     padding-bottom: 5px;
+}
+.exit button{
+    margin: 5px 10px;
 }
 .height_none{
     overflow: hidden;
@@ -215,4 +216,16 @@
 }
 .submitAndscore button{
     margin-right: 8px;
+}
+.questionDetail{
+     position: relative;
+     overflow-y: auto;
+     height: 800px;
+     border: 1px dashed;
+     border-radius: 5px;
+     padding: 15px;
+     font-size: 14px;
+ }
+.questionDetail ul{
+    padding: 10px 5px;
 }

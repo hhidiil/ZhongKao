@@ -16,8 +16,6 @@
     -o-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
     border-image: url("/public/images/1111.jpg") 40 40 round stretch;
 }
-.math-question-content{
-}
 .math-question-content header{
     display: flex;
 }

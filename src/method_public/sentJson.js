@@ -40,11 +40,6 @@ export var EveryChildInfo={
             "Explain": [
             ],
             "Exercise1": [
-                {
-                    "questionid": "Q_9c3b6664-ba01-4809-8ebf-b52888ee56c6",
-                    "answer": "6",
-                    "isRight": true,
-                }
             ],
             "Exercise2": [
             ]
