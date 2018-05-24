@@ -54,10 +54,10 @@ export function getQuestion(opt) {
                 body: opt.body })
     }
 }
-//获取某套试卷的所有子试题（即：主题，观察，考点，分析。。。）
-export function getSecondTestQuestion(opt) {
+//获取某个试题的所有子试题（即：主题，观察，考点，分析。。。）
+export function getAllChildOfQuestion(opt) {
     return (dispatch) => {
-        const route = '/api/math/secondTestQuestion';
+        const route = '/api/math/allChildOfQuestion';
         const success = (data) => {
             dispatch({ type: TYPES.SECONDTESTQUESTIONS_UPDATA, result: {items: data} })
             opt.success && opt.success(data)
@@ -115,11 +115,35 @@ export function getFirstDataOfPaper(opt) {
                 body: opt.body })
     }
 }
+//获取知识点对应的试题
+export function getKnowledgeIdList(opt) {
+    return (dispatch) => {
+        const route = '/api/math/knowledgeIdList';
+        const success = (data) => {
+            dispatch({ type: TYPES.GETFIRSTDATAOFPAPER, result: {items: data} })
+            opt.success && opt.success(data)
+        }
+        requestSyn(route,{},dispatch,success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: opt.body })
+    }
+}
 //存储用户试卷的做题数据
 export function sentUserPaperData(opt) {
     let data = opt.body.data;
     return (dispatch) => {
         const route = '/api/math/sentUserPaperData';
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'},
+                body: JSON.stringify(data)})
+    }
+}
+export function setThematicQuestionAnswerInfo(opt){
+    let data = opt.body.data;
+    return (dispatch) => {
+        const route = '/api/math/thematicQuestionAnswerInfo';
         request(route, {}, dispatch, opt.success, opt.error,
             { method: 'POST',
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -136,15 +160,18 @@ export function doSetCollection(opt){
                 body: bodyUrlencoded(opt.body) })
     }
 }
-//获取所有模考试题
-export function getAllExamList(opt) {
+//获取所有真题模块训练的试题
+export function getAllQuestionOfThematic(opt) {
     return (dispatch) => {
-        const route = 'src/data/exam.json';//本地数据
+        const route = '/api/math/allQuestionOfThematic';//本地数据
         const success = (data) => {
-            dispatch({ type: TYPES.ALLEXAMLIST_UPDATE, result: {items: data} })
+            dispatch({ type: TYPES.ALLQUESTIONOFTHEMATIC_UPDATE, result: {items: data} })
             opt.success && opt.success(data)
         }
-        requestSyn(route,{},dispatch,success, opt.error)
+        request(route,{},dispatch,success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: opt.body })
     }
 }
 //设置定时state

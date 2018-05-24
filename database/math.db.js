@@ -20,6 +20,15 @@ Math.prototype.getAllPapersList = function(callback) {
         callback: callback
     })
 }
+Math.prototype.getAllQuestionOfThematic = function (callback) {
+    var _sql = "select * from tblQuestion where questiontype='单选题' and isobjective!='材料' LIMIT 0,20";
+    helper.db_query({
+        connect: con,
+        sql: _sql,
+        name: 'getAllQuestionOfThematic',
+        callback: callback
+    })
+}
 /*查询试卷的所有试题*/
 Math.prototype.getQuestionsOfPaperList = function(callback) {
     var _sql = `select * from tblExamPaper2Question where examid='${this.props.id}' ORDER BY ordersn`;
@@ -103,7 +112,7 @@ Math.prototype.addUserPaperData = function (callback) {
 }
 /*获取用户一测数据的做题数据(最新的一条数据)*/
 Math.prototype.getFirstDataOfPaper = function (callback) {
-    var _sql = `select * from tblStudentExamInfo where UserID='${this.props.userid}' and ExamPaperID='${this.props.id}' ORDER BY ExamInfoID DESC LIMIT 0,1;`;
+    var _sql = `select * from tblStudentExamInfo where UserID='${this.props.userid}' and ExamPaperID='${this.props.id}' and ExamType='一测' ORDER BY ExamInfoID DESC LIMIT 0,1;`;
     helper.db_query({
         connect: con,
         sql: _sql,
@@ -117,6 +126,26 @@ Math.prototype.getThisCollection = function (callback) {
         connect:con,
         sql:_sql,
         name:'getThisCollection',
+        callback:callback
+    })
+}
+Math.prototype.getKnowledgeIdList = function (callback) {
+    var _sql = `select * from tblKnowledge2Question where knowledgeid=(select knowledgeid from tblKnowledgeArch where knowledge='${this.props.knowledgeName}')`;
+    helper.db_query({
+        connect:con,
+        sql:_sql,
+        name:'getKnowledgeIdList',
+        callback:callback
+    })
+}
+Math.prototype.setThematicQuestionAnswerInfo = function (callback) {
+    var _sql = `INSERT INTO tblStudentThematicExerciseInfo (userid,questionid,wherefrom,exercisedetailinfo)
+                VALUES
+                ('${this.props.userId}','${this.props.questionId}','${this.props.whereFrom}','${this.props.exerciseDetailInfo}');`;
+    helper.db_query({
+        connect:con,
+        sql:_sql,
+        name:'setThematicQuestionAnswerInfo',
         callback:callback
     })
 }

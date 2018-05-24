@@ -3,6 +3,7 @@
  */
 import React, { Component } from 'react'
 import echarts from 'echarts'
+import './style.css'
 
 export default class echart extends Component {
     constructor(props) {
@@ -65,9 +66,11 @@ export default class echart extends Component {
     }
     render() {
         return (
-            <div className="page padding20">知识点掌握情况：
-                <div className="page" ref={(c) => this.chart = c}></div>
-            </div>
+           <div className="echartMain">
+               <div className="page padding20">知识点掌握情况：
+                   <div className="page" ref={(c) => this.chart = c}></div>
+               </div>
+           </div>
         )
     }
 }

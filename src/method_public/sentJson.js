@@ -18,17 +18,20 @@ export var sentJson_Question = {
     "ExamResult": []
 };
 //默认：二测数据中每一个试题下面子题的数据存储结构
+/*
+* answer= [
+    {
+     "content":"",
+     "isTrue":false,
+     "url":""
+     }
+   ]
+* */
 export var EveryChildInfo={
     "questionid": "",
     "QuesType": "",
-    "answer": [
-        {
-            "content":"",
-            "url":""
-        }
-    ],
-    "scroe": 0,
-    "isRight": false,
+    "answer": [],
+    "score": 0,
     "childs": [
         {
             "Objective": [

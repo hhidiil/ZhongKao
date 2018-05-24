@@ -18,11 +18,11 @@ class Math extends Component{
     render(){
         return (
             <div className="math-door">
-                <div className="questions">
-                    <div className="enter-block question-block" onClick={this.goPage.bind(this,'questions')}>真题</div>
-                </div>
                 <div className="exam">
-                    <div className="enter-block exam-block" onClick={this.goPage.bind(this,'exams')}>模考</div>
+                    <div className="enter-block exam-block" onClick={this.goPage.bind(this,'questions')}>专题训练</div>
+                </div>
+                <div className="questions">
+                    <div className="enter-block question-block" onClick={this.goPage.bind(this,'exams')}>模考训练</div>
                 </div>
             </div>
         )

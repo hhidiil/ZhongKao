@@ -122,10 +122,6 @@ class Question extends Component{
                 }})
         }
     }
-    getEditContent(cont,dom,url){
-        console.warn(cont,url)
-        this.setState({img_url: url})
-    }
     _childsList(data){
         return data.map(function(item,index){
             return <li key={index} dangerouslySetInnerHTML={{__html:item.get('content')}}></li>
@@ -184,7 +180,7 @@ class Question extends Component{
     exitBack(){
         this.setState({cleartimeflag:true})
         setTimeout(()=>{
-            this.props.actions.push("/home/math/questions")
+            this.props.actions.push("/home/math/exams")
         },1000)
 
     }
@@ -301,6 +297,10 @@ class Question extends Component{
                 }
             })
         }
+    }
+    getEditContent(cont,dom,url){
+        console.warn(cont,url)
+        this.setState({img_url: url})
     }
     render(){
         const {GetQuestion} = this.props;
