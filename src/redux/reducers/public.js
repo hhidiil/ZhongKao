@@ -1,7 +1,7 @@
 /**
  * Created by gaoju on 2018/5/28.
  */
-
+import Immutable from 'immutable';
 import * as TYPES from '../types'
 import { createReducer } from 'redux-immutablejs'
 
