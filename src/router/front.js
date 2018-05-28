@@ -18,7 +18,10 @@ import QuestionAll from '../container/front/page_modules/math/math-question-all'
 import Question from '../container/front/page_modules/math/question'
 import Practice from '../container/front/page_modules/math/practice'
 import Exam from '../container/front/page_modules/math/exam'
+import Thematic from  '../container/front/page_modules/math/thematic'
+import ThematicQuesList from  '../container/front/page_modules/math/thematicQuesList'
 import QuestionDetail from '../container/front/page_modules/math/signQuestionDetail'
+import Knowledge from '../container/front/page_modules/math/knowledge'
 import Test from '../components/test'
 
 const requireAuth = (nextState, replace) => {
@@ -38,9 +41,11 @@ const routes = (
             <Route path="basic/echartsDetails" component={EchartsDetails}/>
             <Route path="math" component={Math}/>
             <Route path="math/:quesParam" component={QuestionAll}/>
-            <Route path="math/questions/question/:id" component={Question} />
-            <Route path="math/questions/practice/:id" component={Practice} />
-            <Route path="math/exams/exam" component={Exam} />
+            <Route path="math/knowledge/:name" component={Knowledge} />
+            <Route path="math/exams/question/:id" component={Question} />
+            <Route path="math/exams/practice/:id" component={Practice} />
+            <Route path="math/questions/:flag" component={Thematic} />
+            <Route path="math/questions/:flag/:index" component={ThematicQuesList} />
             <Route path="math/questionDetail/:id" component={QuestionDetail} />
         </Route>
         <Route path="/test" component={Test} />

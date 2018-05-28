@@ -87,7 +87,7 @@ class Preview extends Component{
             if(content){
                 if (content.indexOf("blank") != -1) {//如果有则去掉所有空格和blank
                     content = content.replace(/\s|_/g, '');
-                    content = content.replace(/blank/g, '_____');
+                    content = content.replace(/blank|BLANK/g, '___');
                 }
                 return(
                     <div key={index} className={detailFlag?'question-css':'question-css-err'}>

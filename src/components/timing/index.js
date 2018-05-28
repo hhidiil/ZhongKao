@@ -31,7 +31,6 @@ class Timing extends Component{
         let newSeconds = newDuration-newHours*3600-newMinutes*60;
         if(newDuration === 0){
             clearInterval(this.timer)
-            console.log("endendend")
             this.props.endHandle();
         }
         if(newMinutes<10){

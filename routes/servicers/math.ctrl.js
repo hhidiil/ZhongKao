@@ -1,5 +1,5 @@
 /**
- * 数学真题
+ * 服务端--获取数学真题
  * Created by gaoju on 2018/1/19.
  */
 
@@ -12,11 +12,14 @@ module.exports={
         app.post('/math/question',this.getQuestion);
         app.post('/math/sentUserPaperData',this.sentUserPaperData);
         app.post('/math/firstDataOfPaper',this.getFirstDataOfPaper);
-        app.post('/math/secondTestQuestion',this.getSecondTestQuestion);
+        app.post('/math/allChildOfQuestion',this.getAllChildOfQuestion);
         app.post('/math/contentOfChildItems',this.getContentOfChildItems);
         app.post('/math/contentOfChildItemsForQues',this.getContentOfChildItemsForQues);
         app.post('/math/childQuestionsForQuestion',this.getChildQuestionsForQuestion);
-        app.post('/math/setCollection',this.doSetCollection)
+        app.post('/math/setCollection',this.doSetCollection);
+        app.post('/math/allQuestionOfThematic',this.getAllQuestionOfThematic);
+        app.post('/math/knowledgeIdList',this.getKnowledgeIdList);
+        app.post('/math/thematicQuestionAnswerInfo',this.setThematicQuestionAnswerInfo)
     },
     getAllPapers: (req, res) => {
         let props = {};
@@ -37,7 +40,30 @@ module.exports={
             } else {
                 return res.send({
                     code: 500,
-                    message: '数据获取出错了^@^'
+                    message: '未获取到数据^@^'
+                })
+            }
+        })
+    },
+    getAllQuestionOfThematic:(req,res)=>{
+        let props={};
+        let math = new Math({props:props});
+        math.getAllQuestionOfThematic(function(err,data){
+            if(err){
+                return res.send({
+                    code:501,
+                    message:'出错了0.0'
+                })
+            }
+            if(data.length>0){
+                return res.send({
+                    code:200,
+                    data:data
+                })
+            }else {
+                return res.send({
+                    code: 500,
+                    message: '未获取到数据'
                 })
             }
         })
@@ -63,7 +89,7 @@ module.exports={
             } else {
                 return res.send({
                     code: 500,
-                    message: '数据获取出错了^@^'
+                    message: '未获取到数据^@^'
                 })
             }
         })
@@ -101,7 +127,7 @@ module.exports={
                     console.log(err);
                     return res.send({
                         code: 500,
-                        message: '数据不存在^@^'
+                        message: '未获取到数据^@^'
                     })
                 }
             }else{
@@ -129,7 +155,7 @@ module.exports={
                     console.log(err);
                     return res.send({
                         code: 500,
-                        message: '数据不存在^@^'
+                        message: '未获取到数据^@^'
                     })
                 }
             }else{
@@ -157,7 +183,7 @@ module.exports={
                     console.log(err);
                     return res.send({
                         code: 500,
-                        message: '数据不存在^@^'
+                        message: '未获取到数据^@^'
                     })
                 }
             }else{
@@ -185,7 +211,7 @@ module.exports={
                     console.log(err);
                     return res.send({
                         code: 500,
-                        message: '数据不存在^@^'
+                        message: '未获取到数据^@^'
                     })
                 }
             }else{
@@ -197,7 +223,7 @@ module.exports={
             }
         })
     },
-    getSecondTestQuestion: (req,res) => {
+    getAllChildOfQuestion: (req,res) => {
         let props = {
             id:req.body.id
         };
@@ -245,7 +271,7 @@ module.exports={
                     console.log(err);
                     return res.send({
                         code: 500,
-                        message: '数据不存在^@^'
+                        message: '未获取到数据^@^'
                     })
                 }
             }else{
@@ -324,6 +350,40 @@ module.exports={
                         }
                     })
                 }
+            }else{
+                return res.send({
+                    code:501,
+                    message:'数据出错了'
+                })
+            }
+        })
+    },
+    getKnowledgeIdList:(req,res)=>{
+        var props = req.body;
+        var math = new Math({props:props});
+        math.getKnowledgeIdList(function(err,data){
+            if(!err){
+                return res.send({
+                    code:500,
+                    data:data
+                })
+            }else{
+                return res.send({
+                    code:501,
+                    message:'数据出错了'
+                })
+            }
+        })
+    },
+    setThematicQuestionAnswerInfo:(req,res)=>{
+        var props = req.body;
+        var math = new Math({props:props});
+        math.setThematicQuestionAnswerInfo(function(err,data){
+            if(!err){
+                return res.send({
+                    code:500,
+                    data:data
+                })
             }else{
                 return res.send({
                     code:501,

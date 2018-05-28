@@ -5,4 +5,5 @@
 
 export { currentPage,homeShowList } from './page'
 export {basicInfo,collectInfo} from './user'
-export {AllQuestionsList,QuestionList,AllExamList,ExamList,GetQuestion,TimingFlag,SecondTestQuestions,GetFirstDataOfPaper} from './math'
+export {TimingFlag,PREROUTE} from './public'
+export {AllQuestionsList,QuestionList,AllExamList,ExamList,GetQuestion,SecondTestQuestions,GetFirstDataOfPaper} from './math'

@@ -56,9 +56,7 @@ class Home extends Component {
                 <header id="header-home" className="flex-box box-align-center justify-center">
                     <div className="full-width position-relative width-max-xxlarge">
                         <div className="logolay"><a href="http://www.idiil.com.cn/index.html" ><img src="public/images/uu14.png"/></a></div>
-                        <div className="header-check-btn">
-                            <Icon type="logout" style={{cursor:"pointer"}} onClick={this.exitOut}></Icon>
-                        </div>
+                        <div className="header-check-btn" onClick={this.exitOut}>退出</div>
                     </div>
                 </header>
                 <section id="section" className="flex-box section-all">
@@ -82,16 +80,13 @@ class Home extends Component {
                         <div>{this.props.children}</div>
                     </section>
                 </section>
-
             </div>
-
         );
     }
 }
 function mapStateToProps(state, ownProps) {
     return {}
 }
-
 function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators({push}, dispatch) }
 }

@@ -30,6 +30,9 @@ input::-webkit-inner-spin-button {
 .padding20{
   padding: 20px !important;
 }
+.padding5{
+  padding: 5px !important;
+}
 .padding0{
   padding: 0px !important;
 }
@@ -59,4 +62,16 @@ input::-webkit-inner-spin-button {
 }
 .marginl20{
   margin-left: 20px !important;
+}
+.marginr5{
+  margin-right: 5px !important;
+}
+.marginr10{
+  margin-right: 10px !important;
+}
+.marginr15{
+  margin-right: 15px !important;
+}
+.marginr20{
+  margin-right: 20px !important;
 }

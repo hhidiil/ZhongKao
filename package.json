@@ -33,7 +33,7 @@
     "webpack-hot-middleware": "^2.21.0"
   },
   "devDependencies": {
-    "antd": "^2.13.10",
+    "antd": "^3.5.3",
     "babel-core": "^6.18.2",
     "babel-loader": "^6.2.8",
     "babel-plugin-import": "^1.6.2",

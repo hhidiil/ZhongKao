@@ -13,7 +13,7 @@ npm install
 #### 3、启动（进入到项目目录里）
 npm start
 #### 4、查看页面
-在chrome中输入地址：localhost:3000 查看效果！
+在chrome中输入地址：localhost:10000 查看效果！
 
 ## 参照
 "https://github.com/Jafeney/tms" （全栈搭建）

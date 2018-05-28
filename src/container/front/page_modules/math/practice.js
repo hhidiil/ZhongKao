@@ -9,11 +9,12 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import {getQuestionList,getQuestion,sentUserPaperData,getFirstDataOfPaper} from '../../../../redux/actions/math'
 import Timing from '../../../../components/timing'
-import {BaseEditor} from '../../../../components/editer'
+import {BaseEditor,MathJaxEditor} from '../../../../components/editer'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import {Storage_S,Storage_L} from '../../../../config'
 import './question_style.css'
 import moment from 'moment'
+import {Modal} from 'antd'
 import Pagination from '../../../../components/pagination/pagination'
 import MultipleChoice from '../../../../components/multipleChoice/index'
 
@@ -34,7 +35,7 @@ class Question extends Component{
         this.state={
             dataAll:paper,//整套试卷,可取到某套试题的所有数据
             activeId: activeId,
-            cleartimeflag:true,
+            cleartimeflag:true,//定时器
             current: !paperItems ? 1 : paperItems.currentquesid,//当前题号
             totalNum:0,//试题总数
             all_question:[],//所有题目
@@ -42,8 +43,11 @@ class Question extends Component{
             oldAnwers:'',//答案
             target_id:'',//当前要操作的dom
             img_url:'',
+            previewVisible:false,//提交的照片放大查看
             AnswerContent:[],
-            questionList:''
+            questionList:'',
+            showEditor:false,
+            position:[]
         }
     }
     componentDidMount(){
@@ -100,10 +104,28 @@ class Question extends Component{
             $(this).attr("id",add_id);
             $(this).text(oldAnwers);
             $(this).on('click',function(event){
-                $(this).addClass("inputfoucs-style")
-                _this.setState({target_id: add_id})
+                _this.FocusHandle(this,add_id)
             })
         });
+    }
+    FocusHandle(e,add_id){
+        console.log("FocusHandleFocusHandle")
+        let tar_id,top='',left='';
+        if($(e)[0].localName == 'img'){
+            tar_id= ($(e)[0].offsetParent);
+        }else {
+            tar_id = $(e)[0];
+        }
+        top = (tar_id.offsetTop - 40)+"px";
+        left = (tar_id.offsetLeft)+"px";
+        $(tar_id).addClass("inputfoucs-style");
+        if(add_id != this.state.target_id){
+            this.setState({showEditor:true,position:[top,left],target_id:add_id})
+        }else {
+            if(!this.state.showEditor){
+                this.setState({showEditor:true,position:[top,left],target_id:add_id})
+            }
+        }
     }
     getData(data){
         if(data){
@@ -122,22 +144,28 @@ class Question extends Component{
                 }})
         }
     }
-    getEditContent(cont,dom,url){
-        console.warn(cont,url)
-        this.setState({img_url: url})
-    }
     _childsList(data){
         return data.map(function(item,index){
             return <li key={index} dangerouslySetInnerHTML={{__html:item.get('content')}}></li>
         })
     }
     _doAndAnswer(data){
-        let imgurl = data[0] ? data[0].url : '';
+        let imgurl = data[0] ? data[0].url : this.state.img_url;
+        if(this.state.img_url){
+            imgurl = this.state.img_url;
+        }else {
+            imgurl = data[0] ? data[0].url : '';
+        }
         return (
-            <p>
-                <li>解：<span contentEditable="true" className="div_input"></span></li>
-                <li>附件(提交的答案)：<img width="80px" height="80px" src={imgurl}/></li>
-            </p>
+            <div>
+                <div>解：<span contentEditable="true" className="div_input"></span></div>
+                <div>附件(提交的答案)：
+                    <img className="preview_img" src={imgurl}/><span onClick={()=>this.handlePreview()}>查看</span>
+                    <Modal visible={this.state.previewVisible} footer={null} onCancel={()=>this.handleCancel()}>
+                        <img alt="preview" style={{ width: '100%' }} src={imgurl} />
+                    </Modal>
+                </div>
+            </div>
         )
     }
     _contentQtxt(data,index){
@@ -169,12 +197,21 @@ class Question extends Component{
             )
         }
     }
+    handlePreview(){
+        this.setState({
+            previewVisible: true
+        });
+    }
+    handleCancel(){
+        this.setState({ previewVisible: false })
+    }
     onChange = (page) => {
         this.setState({
             current: page,
             oldAnwers:'',
             img_url:'',
-            AnswerContent:[]
+            AnswerContent:[],
+            showEditor:false
         })
         this.getData(this.state.all_question[page-1])
     }
@@ -182,10 +219,11 @@ class Question extends Component{
         confirm('时间已到！')
     }
     exitBack(){
-        this.setState({cleartimeflag:true})
+        this.setState({cleartimeflag:true});
+        UE.delEditor('container');
         setTimeout(()=>{
-            this.props.actions.push("/home/math/questions")
-        },1000)
+            this.props.actions.push("/home/math/exams")
+        },500)
 
     }
     nextSubmit(page,GetQuestion){
@@ -196,6 +234,7 @@ class Question extends Component{
         let dataItems = ((GetQuestion.get('items')).get(0)).get('data').get(0);//试题数据
         let answer = $.trim(dataItems.get('answer'));
         let type = dataItems.get('questiontemplate');
+        let isobjective = dataItems.get('isobjective');
         let quesId = dataItems.get('questionid');
         let nexflag = true;
         let score = dataItems.get('totalpoints');//先把题的得分拿出来，错了在赋值为0
@@ -233,25 +272,34 @@ class Question extends Component{
         }else {//除了选择题，其他的先统一按照简答题来处理
             //nexflag = false;
             let _this = this;//全局this赋给新的值
-            $(".div_input").each(function(i){
-                let myAnswer = $(this).text();
-                let myId = $(this).attr("id");
-                if( myAnswer == answer){
-                    isright = true;
-                    console.log("正确")
-                }else{
-                    isright = false;
-                    score = 0;
-                    console.error("错误")
-                }
-                AnswerArr[i] = {
-                    "domid":myId,
-                    "content": myAnswer,
+            if(isobjective == '主观'){//如果是主观题则按照错题来处理
+                AnswerArr = [{
+                    "domid":'',
+                    "content": '',
                     "url": _this.state.img_url,
-                    "IsTrue": isright
-                }
-            });
-            console.warn(AnswerArr)
+                    "IsTrue": false
+                }]
+                score = 0;
+            }else{
+                $(".div_input").each(function(i){
+                    let myAnswer = $(this).text();
+                    let myId = $(this).attr("id");
+                    if( myAnswer == answer){
+                        isright = true;
+                        console.log("正确")
+                    }else{
+                        isright = false;
+                        score = 0;
+                        console.error("错误")
+                    }
+                    AnswerArr[i] = {
+                        "domid":myId,
+                        "content": myAnswer,
+                        "url": _this.state.img_url,
+                        "IsTrue": isright
+                    }
+                });
+            }
             this.state.AnswerContent = AnswerArr;
         }
         if(nexflag){
@@ -263,13 +311,20 @@ class Question extends Component{
                 "Contents": this.state.AnswerContent,
                 "score":score
             }
-            this.setState({
-                current: nextpage,
-                oldAnwers:'',
-                img_url:''
-            })
             Storage_L.setItem(this.state.activeId,JSON.stringify(this.state.sentList))//每做完一个题缓存一个
-            this.getData(this.state.all_question[page])
+            if(nextpage>this.state.totalNum){//最后一个题做完了
+                if(confirm("已做到最后一题，是否全部提交？")){
+                    this.allSubmit();
+                }
+            }else {
+                this.setState({
+                    current: nextpage,
+                    oldAnwers:'',
+                    img_url:'',
+                    showEditor:false
+                })
+                this.getData(this.state.all_question[page])
+            }
         }
     }
     allSubmit(){
@@ -302,6 +357,10 @@ class Question extends Component{
             })
         }
     }
+    getEditContent(cont,dom,url){
+        console.warn(cont,url)
+        this.setState({img_url: url})
+    }
     render(){
         const {GetQuestion} = this.props;
         let error = PureRenderMixin.Compare([GetQuestion]);
@@ -312,6 +371,12 @@ class Question extends Component{
         let objectiveFlag = (objective== "主观") ? true:false;
         let title = (this.state.dataAll).exampaper;//试卷标题
         let cleartime = this.state.cleartimeflag;
+        //获取各部分的高度
+        let hh = ($(window).height()-$('.pagination_content').height()-$('header').height()-160)+'px';
+        const contH = {
+            height:hh,
+            overflowY:'auto'
+        };
         return(
             <div className="mask" id="practice">
                 <div className="math-question-content">
@@ -328,7 +393,8 @@ class Question extends Component{
                             </div>
                         </div>
                     </div>
-                    <section className="QtxtContent">
+                    <section className="QtxtContent" style={contH}>
+                        <MathJaxEditor position={this.state.position} target_id={this.state.target_id} showEditor={this.state.showEditor}/>
                         <div className="QtxtContent_main">
                             <div id="Content_Qtxt">
                                 {this._contentQtxt(GetQuestion,this.state.current)}
@@ -339,7 +405,7 @@ class Question extends Component{
                         </div>
                     </section>
                     <button type="button" className="btn btn-primary next_btn" disabled={(this.state.current==(this.state.totalNum+1))?true:false} onClick={()=>this.nextSubmit(this.state.current,GetQuestion)}>下一题</button>
-                    <button type="button" className="btn btn-primary submit_btn" disabled={(this.state.current==(this.state.totalNum+1))?false:true} onClick={()=>this.allSubmit(this)}>全部提交</button>
+                    {/*<button type="button" className="btn btn-primary submit_btn" disabled={(this.state.current==(this.state.totalNum+1))?false:true} onClick={()=>this.allSubmit(this)}>全部提交</button>*/}
                 </div>
             </div>
         )

@@ -21,7 +21,7 @@ class QuestionAll extends Component{
         this.state={
             quiz_again_status:false,//二测标志
             indexNum:0,
-            showStatus:true,//测试为true,模考为false
+            showStatus:false,//模考为true,专题为false
             allList:[],
             previewFlag:false,
             previewData:'',
@@ -30,7 +30,7 @@ class QuestionAll extends Component{
     }
     componentDidMount(){
         //用route的参数来判断是从那个页面进来，进而取对应页面数据和显示对应页面
-        if(this.props.params.quesParam=="questions"){
+        if(this.props.params.quesParam=="exams"){//模考试题
             this.props.actions.getAllQuestionsList({
                 body:[{id:Storage_S.getItem('userid')}],
                 success:(data)=>{
@@ -38,19 +38,8 @@ class QuestionAll extends Component{
                 },
                 error:(message)=>{console.warn("数据错误")}
             });
-        }else if(this.props.params.quesParam=="exams"){
-            this.props.actions.getAllExamList({
-                body:{
-                    username:"admin"
-                },
-                success:(data)=>{
-                    this.setState({
-                        showStatus:false,
-                        allList:data
-                    })
-                },
-                error:(message)=>{console.warn("数据错误")}
-            });
+        }else if(this.props.params.quesParam=="questions"){//专题
+            //this.props.actions.getAllExamList({});
         }
     };
     getDataOfFirst(items){
@@ -82,11 +71,13 @@ class QuestionAll extends Component{
         return(
             <div id={"quizAgin"+index} className={(this.state.indexNum==index && this.state.quiz_again_status)?"transtionBefore transtionAfter":"transtionBefore"}>
                 <div className="questionsAll-item-content">
-                    <div className="title2"><p>{data.exampaper+"(此部分针对试题答题结果进行分析)"}</p></div>
-                    <div className="btn_list">
-                        <Button type="dashed" className="bttn" onClick={()=>this.preview(data,'1')}>结果预览</Button>
-                        <Button type="dashed" className="bttn" onClick={()=>this.expand_goto(data)}>巩固训练</Button>
+                    <div className="title2 col-md-7"><p>{data.exampaper+"(此部分针对试题答题结果进行分析)"}</p></div>
+                    <div className="btn_list col-md-5">
+                        <Button type="dashed" className="marginr5" onClick={()=>this.expand_goto(data)}>开始训练</Button>
+                        <Button type="dashed" className="marginr5" onClick={()=>this.preview(data,'1')}>结果预览</Button>
+                        <Button type="dashed" className="marginr5">数据分析</Button>
                     </div>
+                    <div className="clearfix"></div>
                 </div>
             </div>
             )
@@ -104,14 +95,17 @@ class QuestionAll extends Component{
                 return(
                     <div key={index} className="questionsAll-item">
                         <div className="questionsAll-item-content">
-                            <div className="title"><p>{item.exampaper}</p></div>
-                            <div className="btn_list">
+                            <div className="col-md-5 title"><p>{item.exampaper}</p></div>
+                            <div className="col-md-7 btn_list">
                                 {doneFlag?<span className="wancheng">已完成</span>:<span className="wancheng">未完成</span>}
                                 {doneFlag?<span className="wancheng">总分：{doneDetails.Score}</span>:""}
-                                <Button type="dashed" className="bttn " onClick={()=>this.preview(item,"2")}>预览</Button>
-                                <Button type="dashed" className="bttn " onClick={()=>this.gotoPractice(item)}>训练</Button>
-                                <Button type="dashed" className="bttn " onClick={()=>this.quizAgain(item,index,doneFlag)}>巩固练习</Button>
+                                {/*<Button type="dashed" className="bttn " onClick={()=>this.preview(item,"2")}>预览</Button>*/}
+                                <Button type="dashed" className="bttn " onClick={()=>this.gotoPractice(item)}>模底</Button>
+                                <Button type="dashed" className="bttn " onClick={()=>this.quizAgain(item,index,doneFlag)}>强化</Button>
+                                <Button type="dashed" className="bttn " onClick={()=>this.practiceAgain(item,index)}>检测</Button>
+                                <Button type="dashed" className="bttn " onClick={()=>this.practiceAgain(item,index)}>拓展</Button>
                             </div>
+                            <div className="clearfix"></div>
                         </div>
                         {this._renderShowExplain(item,index)}
                     </div>
@@ -119,28 +113,29 @@ class QuestionAll extends Component{
             },this);
         }
     }
-    /*考试试卷列表*/
+    /*专题试卷列表*/
     _renderExamPage(data){
-        let pageSize = data.length;
-        if (pageSize > 0) {
-            return data.map(function(item,index){
-                return(
-                    <div key={index} className="examAll-item">
-                        <div className="title">{item.title}</div>
-                        <div className="btnContainer">
-                            <button type="button" className="btn btn-primary" onClick={()=>this.preview(item,'2')}>预览</button>
-                            <button type="button" className="btn btn-primary" onClick={()=>this.exam_goto('1')}>测试</button>
-                            <button type="button" className="btn btn-primary" onClick={()=>this.exam_goto('2')}>查看结果</button>
-                        </div>
-                    </div>
-                )
-            },this);
-        }
+        return(
+            <div>
+                <div className="examAll-item">
+                    <div className="title" onClick={()=>this.goThematicQuestion('one')}>一轮复习</div>
+                </div>
+                <div className="examAll-item">
+                    <div className="title" onClick={()=>this.goThematicQuestion('two')}>二轮复习</div>
+                </div>
+            </div>
+        )
+    }
+    goThematicQuestion(flag){
+        this.props.actions.push(`/home/math/questions/${flag}`);
     }
     gotoPractice(data){
         let id = data.examid;
         Storage_S.setItem(id,JSON.stringify(data))
-        this.props.actions.push(`/home/math/questions/practice/${id}`);
+        this.props.actions.push(`/home/math/exams/practice/${id}`);
+    }
+    practiceAgain(){
+        alert("此部分的试题是根据模块试卷结构知识点新出的试题，用来检测训练的效果")
     }
     quizAgain(data,index,flag){
         //判断本套试题有没有测试完成过，只有一测完成了才能二测
@@ -162,22 +157,15 @@ class QuestionAll extends Component{
     expand_goto(data){
         let id = data.examid;
         Storage_S.setItem(id,JSON.stringify(data))
-        this.props.actions.push(`/home/math/questions/question/${id}`);
-    }
-    exam_goto(param){
-        let url = 'exam';
-        if(param == '1'){
-            this.props.actions.push(`/home/math/exams/${url}`);
-        }else if(param == '2'){
-            this.props.actions.push(`/home/math/exams/exam2`);
-        }
+        this.props.actions.push(`/home/math/exams/question/${id}`);
     }
     render(){
         return(
             <div className="questionsAll">
-                <header><h2>{this.state.showStatus?'往年真题':'模考'}</h2></header>
+                <header><h2>{this.state.showStatus?'模 考':'专题复习'}</h2></header>
                 <section>
                     {this.state.showStatus?this._renderQuestionPage(this.state.allList):this._renderExamPage(this.state.allList)}
+                    {this.props.children}
                 </section>
                 {this.state.previewFlag?<Preview data={this.state.previewData} type={this.state.previewType} closePreview={()=>this.closePreview()} />:<div/>}
             </div>

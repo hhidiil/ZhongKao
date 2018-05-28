@@ -8,7 +8,7 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getSecondTestQuestion,getContentOfChildItems,getContentOfChildItemsForQues} from '../../../../redux/actions/math'
+import {getQuestion,getContentOfChildItems,getContentOfChildItemsForQues} from '../../../../redux/actions/math'
 import MultipleChoice from '../../../../components/multipleChoice/index'
 import { Menu, Icon,Button,Tooltip } from 'antd'
 
@@ -27,11 +27,11 @@ class SignQuestion extends Component{
         }
     }
     componentDidMount(){
-        this.props.actions.getSecondTestQuestion({body:[{id:this.state.activeId}],
+        this.props.actions.getQuestion({body:[{id:this.state.activeId}],
             success:(data)=>{
                 if(data[0].code == 200){
                     console.log("getQuestion===========>",data)
-                    this.getChildData((data[0].data)[0].childsid)
+                    //this.getChildData((data[0].data)[0].childsid)
                     this.setState({dataAll:data[0].data})
                 }
             }})
@@ -53,7 +53,6 @@ class SignQuestion extends Component{
                             this.props.actions.getContentOfChildItemsForQues({
                                 body:dataArray,
                                 success:(data)=>{
-                                    console.warn("888888888888888888---->",data)
                                     if(data[0].code == 200){
                                         if(type == 'Objective'){
                                             this.setState({observeContent:data[0].data});
@@ -140,7 +139,7 @@ function mapStateToProps(state, ownProps) {
     return {}
 }
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getSecondTestQuestion,getContentOfChildItems,getContentOfChildItemsForQues}, dispatch) }
+    return { actions: bindActionCreators({push,getQuestion,getContentOfChildItems,getContentOfChildItemsForQues}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignQuestion)

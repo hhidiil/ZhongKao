@@ -8,7 +8,9 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import {WINDOW_HOST} from '../../config'
 import {beforeUpload} from '../../method_public/public'
+import * as Modals from '../../method_public/antd-modal'
 import {upload} from '../../redux/actions/upload'
+
 
 class UpLoadFile extends Component{
     constructor(props){
@@ -19,25 +21,28 @@ class UpLoadFile extends Component{
     }
     upLoadSubmit = (e) =>{
         e.preventDefault();
-        if(confirm("请再次确定上传的文件是否正确，上传后不能修改!")){
-            let file = this.uploadInput.files[0];
+        let _this = this;
+        Modals.showConfirm("请再次确定上传的文件是否正确，上传后不能修改，确定是否提交？", function () {
+            let file = _this.uploadInput.files[0];
             if(beforeUpload(file)){
                 const data = new FormData();
                 data.append("file", file);
                 data.append("username", sessionStorage.getItem('username'));
-                this.props.actions.upload({
-                    body:{
-                        method: 'POST',
-                        body: data
-                    },
-                    callback:(data)=>{
-                        alert('上传成功！')
-                        this.setState({ imageURL: `${WINDOW_HOST}/${data.file}` });
-                        this.props.imgUrl(this.state.imageURL)
-                    }
-                })
+                setTimeout(()=>{
+                    _this.props.actions.upload({
+                        body:{
+                            method: 'POST',
+                            body: data
+                        },
+                        callback:(data)=>{
+                            Modals.success('','上传成功！')
+                            _this.setState({ imageURL: `${WINDOW_HOST}/${data.file}` });
+                            _this.props.imgUrl(_this.state.imageURL)
+                        }
+                    })
+                },2000)
             }
-        }
+        })
     }
     deleteSubmit = (e) =>{
         e.preventDefault();
