@@ -71,12 +71,13 @@ class QuestionAll extends Component{
         return(
             <div id={"quizAgin"+index} className={(this.state.indexNum==index && this.state.quiz_again_status)?"transtionBefore transtionAfter":"transtionBefore"}>
                 <div className="questionsAll-item-content">
-                    <div className="title2"><p>{data.exampaper+"(此部分针对试题答题结果进行分析)"}</p></div>
-                    <div className="btn_list">
+                    <div className="title2 col-md-7"><p>{data.exampaper+"(此部分针对试题答题结果进行分析)"}</p></div>
+                    <div className="btn_list col-md-5">
                         <Button type="dashed" className="marginr5" onClick={()=>this.expand_goto(data)}>开始训练</Button>
                         <Button type="dashed" className="marginr5" onClick={()=>this.preview(data,'1')}>结果预览</Button>
                         <Button type="dashed" className="marginr5">数据分析</Button>
                     </div>
+                    <div className="clearfix"></div>
                 </div>
             </div>
             )
@@ -99,9 +100,10 @@ class QuestionAll extends Component{
                                 {doneFlag?<span className="wancheng">已完成</span>:<span className="wancheng">未完成</span>}
                                 {doneFlag?<span className="wancheng">总分：{doneDetails.Score}</span>:""}
                                 {/*<Button type="dashed" className="bttn " onClick={()=>this.preview(item,"2")}>预览</Button>*/}
-                                <Button type="dashed" className="bttn " onClick={()=>this.gotoPractice(item)}>模底考试</Button>
-                                <Button type="dashed" className="bttn " onClick={()=>this.quizAgain(item,index,doneFlag)}>巩固训练</Button>
-                                <Button type="dashed" className="bttn " onClick={()=>this.practiceAgain(item,index)}>成效检测</Button>
+                                <Button type="dashed" className="bttn " onClick={()=>this.gotoPractice(item)}>模底</Button>
+                                <Button type="dashed" className="bttn " onClick={()=>this.quizAgain(item,index,doneFlag)}>强化</Button>
+                                <Button type="dashed" className="bttn " onClick={()=>this.practiceAgain(item,index)}>检测</Button>
+                                <Button type="dashed" className="bttn " onClick={()=>this.practiceAgain(item,index)}>拓展</Button>
                             </div>
                             <div className="clearfix"></div>
                         </div>

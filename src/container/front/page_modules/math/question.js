@@ -9,6 +9,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import {getFirstDataOfPaper,getAllChildOfQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData} from '../../../../redux/actions/math'
+import {setPreRoute} from '../../../../redux/actions/public'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import SelectMenu from '../../../../components/selectMenu/selectMenu'
 import NoThisPart from '../../../../components/defaultJPG/nothispart'
@@ -16,7 +17,7 @@ import {Storage_S,Storage_L} from '../../../../config'
 import {sentJson_Question,EveryChildInfo} from '../../../../method_public/sentJson'
 import moment from 'moment'
 import './question_style.css'
-import {Menu, Icon,Button,Input } from 'antd'
+import {Menu, Icon,Button,Input,message } from 'antd'
 import {Pagination,Pagination2} from '../../../../components/pagination'
 import MultipleChoice from '../../../../components/multipleChoice/index'
 import {BaseEditor,FormulaEditor,MathJaxEditor} from '../../../../components/editer'
@@ -131,19 +132,23 @@ class Question extends Component{
 
         })
     }
-    componentWillReceiveProps(){
-        console.log('componentWillReceiveProps')
-    }
-    componentWillUpdate(){
+    shouldComponentUpdate(nextProps,nextState){
         console.log('componentWillUpdate')
+        //当切换题的时候如果新的数据还没有加载出来则不需要render
+        if(this.state.current != nextState.current){
+            if(this.state.currentQuesData == nextState.currentQuesData){
+                return false;
+            }
+        }
+        return true;
     }
     componentDidUpdate(prevProps,prevState){
         //完成渲染新的props或者state后调用，此时可以访问到新的DOM元素。
         if(prevState.analysisLeftContent != this.state.analysisLeftContent){
-            this.addEventFuc('0');//为填空题以及解答添加事件处理
+            this.addEventFuc('0');//为分析部分添加事件处理
         }
         if(prevState.solution != this.state.solution){
-            this.addEventFuc('1');//为填空题以及解答添加事件处理
+            this.addEventFuc('1');//主题解答添加事件处理
         }
         if(prevState.mainContent != this.state.mainContent){
             let H = $('.QtxtContent_main').height();
@@ -260,13 +265,12 @@ class Question extends Component{
             collapsed: !this.state.collapsed
         });
     }
-    radioChange =(e)=>{
-        this.setState({radioState: e.target.value})
-    }
     _childsList(data){
-        return data.map(function(item,index){
-            return <li key={index} dangerouslySetInnerHTML={{__html:item.content}}></li>
-        })
+        if(data.length>0){
+            return data.map(function(item,index){
+                return <li key={index} dangerouslySetInnerHTML={{__html:item.content}}></li>
+            })
+        }
     }
     doCollection(){
         let ques = this.state.all_question[this.state.current-1];
@@ -284,7 +288,11 @@ class Question extends Component{
         })
     }
     redoIt(){
-        this.setState({solution: true})
+        let answers = $("#mainTopic").find(".div_input");//选项;
+        answers.each(function(){
+            $(this).attr("contentEditable",true)
+        })
+        //this.setState({solution: true})
     }
     redoSubmit(data,type,index){
         let contents =[],istrue=false,score=0;
@@ -293,7 +301,7 @@ class Question extends Component{
             let answer = '';
             answers.each(function(ii){
                 answer += $(this).val();//用户填写的答案
-            })
+            });
             if(data[0].answer.trim() == answer){
                 istrue =true;
                 score = data[0].totalpoints;
@@ -304,8 +312,8 @@ class Question extends Component{
                 "url":''
             }
         }else{
-            let answers = $("#mainTopic").find("div_input");//选项;
-            let rightanswer = data[0].answer.trim().split(',')//处理选择题可能有两个答案的情况
+            let answers = $("#mainTopic").find(".div_input");//选项;
+            let rightanswer = data[0].answer.trim().split(',')//处理选择题可能有两个答案的情况，每空平分总分
             let  len = answers ? answers.length : 1 ;//有几个空，平均每个空的答案得分
             answers.each(function(ii){
                 if(rightanswer[ii]==$(this).text()){
@@ -323,8 +331,10 @@ class Question extends Component{
         newChildList.score = score;
         (this.state.sentAllList).ExamResult[index-1] = newChildList;
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
+        message.success("提交成功")
     }
     _contentQtxt(data,index){
+        console.log("_contentQtext------||||||\\\\//////--------------------->>>>>",data)
         let items = data[0];
         let content = items.content;
         let questiontemplate = items.questiontemplate;
@@ -357,10 +367,13 @@ class Question extends Component{
                         <ul id="mainTopic" style={{padding:"8px 0"}}>
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
                             {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer[0].content} index={index} choiceList={items.optionselect} />:''}
-                            {childs.size<1?"":this._childsList(childs)}
+                            {childs.length<1?"":this._childsList(childs)}
                         </ul>
                         <ul>
-                            {questiontemplate!='简答题' || !this.state.solution ? "":<li id="solition" style={{paddingTop:"5px"}}>解：<span contentEditable="true" className="div_input"></span></li>}
+                            {items.isobjective != '主观' || !this.state.solution ? "":<li id="solition" style={{paddingTop:"5px"}}>解：<span contentEditable="true" id="main-solution" className="div_input"></span></li>}
+                        </ul>
+                        <ul>
+                            {items.isobjective == '主观' ? <BaseEditor inputDom={this.state.target_id} editContent={this.getEditContent.bind(this)} />:""}
                         </ul>
                     </div>
                 </div>
@@ -552,6 +565,11 @@ class Question extends Component{
     }
     getKnowledge(e){
         console.log($(e.target)[0].innerText)
+        let knowledge = $(e.target)[0].innerText;
+        console.log("getKnowledge-----constructor--------props--->",this.props.location.pathname)
+        this.props.actions.setPreRoute(this.props.location.pathname)
+
+        //this.props.actions.push(`/home/math/knowledge/${knowledge}`)
     }
     _analysisQtxt(data,type){
         let num = this.state.current;
@@ -667,35 +685,23 @@ class Question extends Component{
                     console.log("currentQuesData-------===---->>>",(data[0].data));
                     newChildList.questionid = (data[0].data)[0].questionid;
                     newChildList.QuesType = (data[0].data)[0].questiontemplate;
-                    this.setState({currentQuesData:data[0].data})
+                    //this.setState({})
+                    this.setState({
+                        current2: page+1,
+                        current: page+1,
+                        current1: page+1,
+                        analysisLeftContent:[],
+                        exerciseContent:[],
+                        showEditor:false,
+                        solution: false,
+                        currentQuesData:data[0].data
+                    })
                     $('#Explain_exer').click()//默认点击一下解析部分
                 }})
         }
     }
     onChange = (page) => {
         console.log("page--",page)
-        //newChildList = !this.state.sentAllList.ExamResult[page-1] ? JSON.parse(everyChildInfo):this.state.sentAllList.ExamResult[page-1];
-        this.setState({
-            current: page,
-            current1: page,
-            analysisLeftContent:[],
-            exerciseContent:[],
-            showEditor:false,
-            solution: false
-        })
-        this.getData(this.state.all_question[page-1],page-1)
-    }
-    onChange2=(page)=>{
-        console.log("page--",page)
-        //newChildList = !this.state.sentAllList.ExamResult[page-1] ? JSON.parse(everyChildInfo):this.state.sentAllList.ExamResult[page-1];
-        this.setState({
-            current2: page,
-            current: page,
-            analysisLeftContent:[],
-            exerciseContent:[],
-            showEditor:false,
-            solution: false
-        })
         this.getData(this.state.all_question[page-1],page-1)
     }
     exitBack(){
@@ -756,7 +762,8 @@ class Question extends Component{
             childslen = this.state.currentQuesData[0].childs.length;
         }else {return <div/>}
         //获取各部分的高度
-        let hh = ($(window).height()-$('.pagination_content').height()-$('header').height()- this.state.mainContentH -210)+'px';
+        let hh = ($(window).height()-$('.Question_content').height()-$('header').height() -140)+'px';
+        console.log("height-------height----------<>>>>>",$(window).height(),$('.Question_content').height(),$('header').height(),this.state.mainContentH,hh)
         const contH = {
             height:hh,
             overflowY:'auto'
@@ -772,7 +779,7 @@ class Question extends Component{
                         </div>
                     </header>
                     <center><hr width="90%" size={2}  color="black"></hr></center>
-                    <div>
+                    <div className="Question_content">
                         <MathJaxEditor position={this.state.position} target_id={this.state.target_id} showEditor={this.state.showEditor}/>
                         <div className="pagination_all">
                             <div className="widthPrecent5 margint10">题号:</div>
@@ -780,14 +787,14 @@ class Question extends Component{
                                 <Pagination2 total={this.state.total} scoreArraylist={[3,3,3,3,3,0,0,3,3,0,5,5,5,5,0,6,8,15,10,10]} current={this.state.current1}  onChange={this.onChange}/></div>
                         </div>
                         <div className="pagination_content">
-                            <div className="pagination_before">
+                            <div className="pagination_before col-md-7">
                                 <div className="pagination_all">
                                     <div className="widthPrecent7 margint10">错题:</div>
                                     <div className="padding0">
-                                        <Pagination className="pagination_error" wordNum={this.state.errorArray} current={this.state.current2} onChange={this.onChange2} total={errLength} /></div>
+                                        <Pagination className="pagination_error" wordNum={this.state.errorArray} current={this.state.current2} onChange={this.onChange} total={errLength} /></div>
                                 </div>
                             </div>
-                            <div className="btnContainer" id="btnContainer">
+                            <div className="btnContainer col-md-5" id="btnContainer">
                                 <button id="Explain_exer" type="button" className="btn btn-primary"
                                         onClick={()=>this.requestQuestion("AnalyContent",this.state.currentQuesData)}>
                                     解答分析
@@ -806,14 +813,17 @@ class Question extends Component{
                                 </button>
                             </div>
                         </div>
+                        <div className="clearfix"></div>
                     </div>
-                    <section className="QtxtContent">
+                    <br/>
+                    <hr/>
+                    <section className="QtxtContent" style={contH}>
                         <div className="QtxtContent_main">
                             <div id="Content_Qtxt">
                                 {this._contentQtxt(this.state.currentQuesData,this.state.current)}
                             </div>
                         </div>
-                        <div style={contH}>
+                        <div>
                             <div id="Analysis_Qtxt" style={{height:"100%"}} className={this.state.AnalysisFlag?'':'displaynone'}>
                                 <div className="content_three">
                                     <div className={this.state.collapsed?"content_three_left2":"content_three_left"}>
@@ -869,7 +879,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getFirstDataOfPaper,getAllChildOfQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData}, dispatch) }
+    return { actions: bindActionCreators({push,setPreRoute,getFirstDataOfPaper,getAllChildOfQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question)

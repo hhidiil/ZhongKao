@@ -9,3 +9,12 @@
     color: firebrick;
     opacity: 0.5;
 }
+#preview{
+    max-width: 400px;
+    max-height: 400px;
+}
+.preview_img{
+    width: 150px;
+    max-height: 150px;
+    background-size:cover ;
+}

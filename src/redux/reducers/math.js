@@ -43,11 +43,3 @@ export const GetFirstDataOfPaper = createReducer(Immutable.fromJS({preload:false
         return state.set('preload', true).merge(Immutable.fromJS(action.result))
     }
 })
-export const TimingFlag = createReducer(Immutable.fromJS({preload:false}),{
-    [TYPES.SET_TIMING]: (state, action) => {
-        return state.set('preload', true).merge(Immutable.fromJS(action.result))
-    },
-    [TYPES.CLEAR_TIMING]: (state, action) => {
-        return state.clear().set('preload', false).merge(Immutable.fromJS(action.result))
-    }
-})

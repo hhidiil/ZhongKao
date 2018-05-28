@@ -34,3 +34,5 @@ export const GETCONTENTOFCHILDQUES_UPDATA = 'GETCONTENTOFCHILDQUES_UPDATA';
 //定时
 export const SET_TIMING = 'SET_TIMING';
 export const CLEAR_TIMING = 'CLEAR_TIMING';
+//记录路由状态，每一次跳转的前一个路由地址
+export const SET_PREROUTE = 'SET_PREROUTE'

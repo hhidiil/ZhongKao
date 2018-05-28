@@ -24,7 +24,7 @@ export function getAllQuestionsList(opt) {
                 body: opt.body })
     }
 }
-//获取某套练习试卷的所有试题
+//获取某套练习试卷的所有试题（即：1-25道考试题题目）
 export function getQuestionList(opt) {
     return (dispatch) => {
         //const route = '../src/data/ExamsData/JSON/'+opt.body.param;//本地数据
@@ -39,7 +39,7 @@ export function getQuestionList(opt) {
                 body: opt.body })
     }
 }
-//获取某套练习试题的所有主试题（即：1-25道考试题题目）
+//获取某个主试题的信息
 export function getQuestion(opt) {
     return (dispatch) => {
         //const route = 'src/data/ExamsData/JSON/Question/'+opt.param;//本地数据
@@ -173,18 +173,4 @@ export function getAllQuestionOfThematic(opt) {
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
                 body: opt.body })
     }
-}
-//设置定时state
-export function setTiming(type) {
-    switch (type.param) {
-        case "set" :
-            return (dispatch) => {
-                dispatch({ type: TYPES.SET_TIMING,result:{flag:false}})
-            }
-        case "clear" :
-            return (dispatch) => {
-                dispatch({ type: TYPES.CLEAR_TIMING, result:{flag:true}})
-            }
-    }
-
 }
