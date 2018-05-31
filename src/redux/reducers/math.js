@@ -18,11 +18,6 @@ export const QuestionList = createReducer(Immutable.fromJS({preload: false}), {
         return state.set('preload', true).merge(Immutable.fromJS(action.result))
     }
 })
-export const AllExamList = createReducer(Immutable.fromJS({preload: false}), {
-    [TYPES.ALLEXAMLIST_UPDATE]: (state, action) => {
-        return state.set('preload', true).merge(Immutable.fromJS(action.result))
-    }
-})
 export const ExamList = createReducer(Immutable.fromJS({preload: false}), {
     [TYPES.EXAMLIST_UPDATE]: (state, action) => {
         return state.set('preload', true).merge(Immutable.fromJS(action.result))

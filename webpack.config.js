@@ -30,6 +30,9 @@ module.exports = {
                 test: /\.js|jsx$/,
                 loaders: 'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react',
                 include: path.join(__dirname, 'src'),
+                options:{
+                    "presets": ["react-hmre"]
+                }
             },
             {test: /\.css$/, loader: 'style-loader!css-loader'},
             {test: /\.less$/, loader: 'style-loader!css-loader!less-loader'},

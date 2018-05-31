@@ -8,7 +8,6 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import {getAllQuestionsList,getFirstDataOfPaper} from '../../../../redux/actions/math'
-import {getAllExamList} from '../../../../redux/actions/math'
 import {Storage_S} from '../../../../config'
 import Preview from './preview'
 import { Button } from 'antd';
@@ -39,7 +38,6 @@ class QuestionAll extends Component{
                 error:(message)=>{console.warn("数据错误")}
             });
         }else if(this.props.params.quesParam=="questions"){//专题
-            //this.props.actions.getAllExamList({});
         }
     };
     getDataOfFirst(items){
@@ -178,7 +176,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({push, getAllQuestionsList,getAllExamList ,getFirstDataOfPaper}, dispatch)
+        actions: bindActionCreators({push, getAllQuestionsList ,getFirstDataOfPaper}, dispatch)
     }
 }
 

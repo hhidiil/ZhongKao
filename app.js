@@ -38,7 +38,8 @@ app.use('/api', api);
 
 //热更新模块
 console.log("process.env.NODE_ENV====>>",process.env.NODE_ENV)
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
+  console.log("热更新进来了")
   var webpackDevMiddleware = require('webpack-dev-middleware');
   var webpackHotMiddleware = require('webpack-hot-middleware');
   var webpackConfig = require('./webpack.config.js');
