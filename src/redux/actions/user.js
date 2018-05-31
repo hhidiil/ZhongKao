@@ -67,7 +67,6 @@ export function register(opt) {
 }
 //获取用户基本信息
 export function getUserBasicInfo(opt) {
-    console.log("getUserBasicInfo=====",opt.body)
     return (dispatch) => {
         const route = '/api/user/basic_info';
         //const route = 'src/data/userInfo.json';//用假数据时候需要修改 发送的方式。:get

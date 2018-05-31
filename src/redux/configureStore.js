@@ -26,7 +26,7 @@ export default function configureStore(history, initialState) {
         compose(
             applyMiddleware(
                 thunkMiddleware,
-                loggerMiddleware,
+                //loggerMiddleware,
                 routerMiddleware(history)
             )
         )
