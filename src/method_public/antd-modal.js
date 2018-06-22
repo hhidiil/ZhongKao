@@ -1,10 +1,11 @@
 /**
+ * 使用antd库 对话弹框
  * Created by gaoju on 2018/5/28.
  */
-import {Modal,Button } from 'antd'
+import {Modal,Button,message } from 'antd'
 const confirm = Modal.confirm;
 
-
+//全局 对话框
 export function success(title,content){
     Modal.success({
         title: title,
@@ -34,4 +35,19 @@ export function showConfirm(content,callback) {
             console.log("cancel")
         }
     });
+}
+
+//message的全局配置
+message.config({
+    top: 100,
+    maxCount: 3
+});
+export function messageSuccess(content,duration,callback) {
+    return message.success(content,duration,callback);
+}
+export function messageError(content,duration,callback) {
+    return message.error(content,duration,callback);
+}
+export function messageWarning(content,duration,callback) {
+    return message.warning(content,duration,callback);
 }

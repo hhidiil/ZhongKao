@@ -125,3 +125,15 @@ export function exchangeGrade(data) {
         return ''
     }
 }
+//获取当前点击的元素在页面中的位置
+export function getCoords(el){
+    var box = el.getBoundingClientRect(),
+        doc = el.ownerDocument,
+        body = doc.body,
+        html = doc.documentElement,
+        clientTop = html.clientTop || body.clientTop || 0,
+        clientLeft = html.clientLeft || body.clientLeft || 0,
+        top = box.top + (self.pageYOffset || html.scrollTop || body.scrollTop ) - clientTop,
+        left = box.left + (self.pageXOffset || html.scrollLeft || body.scrollLeft) - clientLeft;
+    return { 'top': top, 'left': left };
+};

@@ -28,19 +28,21 @@ class UpLoadFile extends Component{
                 const data = new FormData();
                 data.append("file", file);
                 data.append("username", sessionStorage.getItem('username'));
-                setTimeout(()=>{
-                    _this.props.actions.upload({
-                        body:{
-                            method: 'POST',
-                            body: data
-                        },
-                        callback:(data)=>{
-                            Modals.success('','上传成功！')
-                            _this.setState({ imageURL: `${WINDOW_HOST}/${data.file}` });
-                            _this.props.imgUrl(_this.state.imageURL)
-                        }
-                    })
-                },2000)
+                data.append("preurl",_this.state.imageURL);//前一个上传的答案，如果从新上传一张则删除上传的前一张
+                _this.props.actions.upload({
+                    body:{
+                        method: 'POST',
+                        body: data
+                    },
+                    callback:(data)=>{
+                        Modals.success('','上传成功！')
+                        _this.setState({ imageURL: `${WINDOW_HOST}/${data.file}` });
+                        setTimeout(()=>{
+                            _this.props.imgUrl(_this.state.imageURL)//将子页面的值传回父级
+                            _this.props.submitHandle();
+                        },1000)
+                    }
+                })
             }
         })
     }
@@ -51,6 +53,7 @@ class UpLoadFile extends Component{
         $('#preview').empty()
     }
     preview =()=>{
+        console.log("onchange------->>>>>>>=====>>>>>",this.state.imageURL)
         let file = this.uploadInput.files[0];
         var img = new Image(), url = img.src = URL.createObjectURL(file);
         $(img).addClass("img-responsive");
@@ -67,10 +70,8 @@ class UpLoadFile extends Component{
                     <label htmlFor="exampleInputFile">上传文件：</label>
                     <input ref={(ref) => { this.uploadInput = ref; }} type="file" onChange={this.preview} id="exampleInputFile" /><br/>
                     <div id="preview"></div>
-                    <p className="tip_content">请再次确定上传的文件是否正确，上传后不能修改</p>
                     <button type="button" className="btn ant-btn-danger btn-sm" onClick={this.deleteSubmit}>删除</button>
                     <button type="button" className="btn btn-default btn-sm" onClick={this.upLoadSubmit}>开始上传</button>
-                    <button type="button" className="btn btn-primary btn-sm" onClick={this.props.submitHandle}>提交</button>
                     <br/>
                 </form>
             </div>

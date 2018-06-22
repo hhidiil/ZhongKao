@@ -36,11 +36,10 @@ class Edit extends Component{
         //let content = this.editor.getContent();
         let content = '';
         let img_url = this.state.imgUrl;
-        if(!this.props.inputDom) return alert("请点击要填写的输入框")
+        //if(!this.props.inputDom) return alert("请点击要填写的输入框")
         this.props.editContent(content,this.props.inputDom,img_url)
     }
     callbackImgUrl(cont){
-        console.log("imgUrl====>>>",cont)
         this.setState({imgUrl:cont})
     }
     render(){
@@ -51,8 +50,9 @@ class Edit extends Component{
                  icons={icons}
                  defaultValue={this.state.content}
                  onChange={this.handleChange.bind(this)}
-                 />*/}
-                <div style={{color:"lightsalmon"}}>(如果答案较为复杂输入框无法正常显示，可以在抄稿纸上写好答案并拍照上传奥！)</div>
+                 />
+                 <div style={{color:"lightsalmon"}}>(如果答案较为复杂输入框无法正常显示，可以在抄稿纸上写好答案并拍照上传奥！)</div>
+                 */}
                 <UpLoadFile imgUrl={this.callbackImgUrl.bind(this)} submitHandle={this.btnClick.bind(this)}></UpLoadFile>
             </div>
         )

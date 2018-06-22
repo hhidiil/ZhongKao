@@ -484,3 +484,7 @@ footer .container .footer-grids .col-md-4 p{
 .echartMain .page{
     height: 600px;
 }
+.nofound{
+    text-align: center;
+    padding: 50px;
+}

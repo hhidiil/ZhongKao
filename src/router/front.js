@@ -22,7 +22,8 @@ import Thematic from  '../container/front/page_modules/math/thematic'
 import ThematicQuesList from  '../container/front/page_modules/math/thematicQuesList'
 import QuestionDetail from '../container/front/page_modules/math/signQuestionDetail'
 import Knowledge from '../container/front/page_modules/math/knowledge'
-import Test from '../components/test'
+import Test from '../components/test/index'
+import NoFound from '../container/front/nofound'
 
 const requireAuth = (nextState, replace) => {
     if (!isAdmin()) {
@@ -49,6 +50,7 @@ const routes = (
             <Route path="math/questionDetail/:id" component={QuestionDetail} />
         </Route>
         <Route path="/test" component={Test} />
+        <Route path="*" component={NoFound} />
     </Route>
 );
 

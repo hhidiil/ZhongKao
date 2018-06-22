@@ -68,6 +68,20 @@ var helper = {
         }
         return str+times;
     },
+    // 查看文件是否存在,存在即删除
+    deleteFile: function (dirpath,fileurl) {
+        const name = fileurl.split('/').pop();
+        let path = dirpath+"/"+name;
+        //判断文件是否存在，有则删除
+        if (name && fs.existsSync(path)) {
+            fs.unlink(path, function (err) {
+                if (err) return console.log(err);
+                console.log('文件'+name+'删除成功');
+            });
+        }else {
+            console.log("文件不存在")
+        }
+    },
     // 为每一个学生创建上传文件的目录，用来存放上传文件
     createFolder: function (dirpath,name) {
         const new_dir = dirpath+'/'+name;

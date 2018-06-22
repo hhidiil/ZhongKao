@@ -15,8 +15,10 @@ import {Storage_S,Storage_L} from '../../../../config'
 import './question_style.css'
 import moment from 'moment'
 import {Modal} from 'antd'
+import * as Modals from '../../../../method_public/antd-modal'
 import Pagination from '../../../../components/pagination/pagination'
 import MultipleChoice from '../../../../components/multipleChoice/index'
+import {getCoords} from '../../../../method_public/public'
 
 var sentJson = {
     "ExamInfoID":"", "UserID":"", "ExamPaperID":"",
@@ -100,9 +102,14 @@ class Question extends Component{
         let _this = this;
         $(".div_input").each(function(i){
             let add_id = "practice"+_this.state.current+i;
-            let oldAnwers = _this.state.oldAnwers[i] ? _this.state.oldAnwers[i].content :'';
+            if(_this.state.oldAnwers[i]){
+                if(_this.state.oldAnwers[i].url){//有图片的话,添加img
+                    $(this).append('<img src='+_this.state.oldAnwers[i].url+' data-latex='+_this.state.oldAnwers[i].content+'/>');
+                }else{
+                    $(this).text(_this.state.oldAnwers[i].content);
+                }
+            }
             $(this).attr("id",add_id);
-            $(this).text(oldAnwers);
             $(this).on('click',function(event){
                 _this.FocusHandle(this,add_id)
             })
@@ -116,8 +123,10 @@ class Question extends Component{
         }else {
             tar_id = $(e)[0];
         }
-        top = (tar_id.offsetTop - 40)+"px";
-        left = (tar_id.offsetLeft)+"px";
+        let positions = getCoords(tar_id);//获取当前点击的元素在页面中的位置
+        top = (positions.top -210) + "px";
+        left = (positions.left - 10) + "px";
+
         $(tar_id).addClass("inputfoucs-style");
         if(add_id != this.state.target_id){
             this.setState({showEditor:true,position:[top,left],target_id:add_id})
@@ -136,7 +145,6 @@ class Question extends Component{
                         let isHave = (this.state.sentList).ExamResult[this.state.current-1];//做过了就显示选择的答案
                         let oldAnwers = '';
                         if(isHave){
-                            console.log("----------isHave------------------------>>>>",isHave)
                             oldAnwers = isHave.Contents;
                         }
                         this.setState({oldAnwers: oldAnwers,questionList:data[0].data})
@@ -282,8 +290,14 @@ class Question extends Component{
                 score = 0;
             }else{
                 $(".div_input").each(function(i){
-                    let myAnswer = $(this).text();
-                    let myId = $(this).attr("id");
+                    let myAnswer='',myId='',mysrc='';
+                    if($(this).children('img').length>0){//先查找公式编辑器输入的内容即用编辑器输入的会产生一个img标签，没有则直接查text
+                        mysrc = $(this).find('img')[0].src;
+                        myAnswer = $(this).find('img')[0].dataset.latex;
+                    }else{
+                        myAnswer = $(this).text();
+                    }
+                    myId = $(this).attr("id");
                     if( myAnswer == answer){
                         isright = true;
                         console.log("正确")
@@ -295,7 +309,7 @@ class Question extends Component{
                     AnswerArr[i] = {
                         "domid":myId,
                         "content": myAnswer,
-                        "url": _this.state.img_url,
+                        "url": mysrc || _this.state.img_url,
                         "IsTrue": isright
                     }
                 });
@@ -313,9 +327,10 @@ class Question extends Component{
             }
             Storage_L.setItem(this.state.activeId,JSON.stringify(this.state.sentList))//每做完一个题缓存一个
             if(nextpage>this.state.totalNum){//最后一个题做完了
-                if(confirm("已做到最后一题，是否全部提交？")){
-                    this.allSubmit();
-                }
+                let _this = this;
+                Modals.showConfirm("已做到最后一题，是否全部提交？", function () {
+                    _this.allSubmit();
+                })
             }else {
                 this.setState({
                     current: nextpage,
@@ -329,33 +344,35 @@ class Question extends Component{
     }
     allSubmit(){
         let endList = (this.state.sentList).ExamResult;
+        let _this = this;
         for(let i=0;i<endList.length;i++){
             if(!endList[i]){
-                alert("第"+(i+1)+"个题还没有做，请切到第"+(i+1)+"个题提交并点击下一题")
+                Modals.warning("提示","第"+(i+1)+"个题还没有做，请切到第"+(i+1)+"个题提交并点击下一题")
                 return
             }
         }
-        if(confirm("确定提交吗？")){
-            (this.state.sentList).FinishDate = moment().format();//结束时间
-            (this.state.sentList).AllDone = "yes";
-            let endalllist = (this.state.sentList).ExamResult,allscore=0;
+        Modals.showConfirm("确定提交吗？", function () {
+            (_this.state.sentList).FinishDate = moment().format();//结束时间
+            (_this.state.sentList).AllDone = "yes";
+            let endalllist = (_this.state.sentList).ExamResult,allscore=0;
             for(let ii in endalllist){
                 allscore += Number(endalllist[ii].score);
             }
-            (this.state.sentList).Score = allscore;
-            let sentItems = this.state.sentList;
-            this.props.actions.sentUserPaperData({
+            (_this.state.sentList).Score = allscore;
+            let sentItems = _this.state.sentList;
+            _this.props.actions.sentUserPaperData({
                 body:{data:sentItems},
                 success:(data)=>{
-                    alert("提交成功")
-                    Storage_L.clear()
-                    this.exitBack()
+                    Modals.messageSuccess("提交成功!",2, function () {
+                        Storage_L.clear()
+                        _this.exitBack()
+                    });
                 },
                 error:(mes)=>{
                     console.error('数据接收发生错误');
                 }
             })
-        }
+        })
     }
     getEditContent(cont,dom,url){
         console.warn(cont,url)

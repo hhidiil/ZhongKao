@@ -78,6 +78,7 @@
 }
 .QtxtContent{
     padding: 0 10px;
+    position: relative;
 }
 .QtxtContent .QtxtContent_main{
     overflow: hidden;
