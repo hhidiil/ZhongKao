@@ -47,7 +47,7 @@ class Choice extends Component{
                 list.push(<label className="checkbox-inline optionsCss" key={i}>
                     <input type={type == '单选题'?'radio':'checkbox'} checked={(answer.indexOf(optionName[i]) != -1)?true:false}
                            onChange={this.radioChange} value={optionName[i]} name={"Qopts_selects_practice"+this.props.index} />
-                    <span>{optionName[i]}</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[i])}}></span>
+                    <span className="marginl5 marginr5">{optionName[i]+"、"}</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[i])}}></span>
                     </label>)
             }
             return list;

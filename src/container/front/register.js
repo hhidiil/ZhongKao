@@ -164,27 +164,29 @@ class RegisterForm extends Component {
                             },{
                                 validator: this.checkPhone
                             })(
-                                <Input type="number" style={{ width: '100%' }} />
+                                <Input type="number" min={11} max={11} style={{ width: '100%' }} />
                             )}
                         </FormItem>
-                        <FormItem
-                            {...formItemLayout}
-                            label="验证"
-                            extra="我们必须确保您不是一个机器人."
-                        >
-                            <Row gutter={8}>
-                                <Col span={12}>
-                                    {getFieldDecorator('captcha', {
-                                        rules: [{ required: true, message: '请输入验证码!' }],
-                                    })(
-                                        <Input size="large" maxLength="6" />
-                                    )}
-                                </Col>
-                                <Col span={12}>
-                                    <Button size="large">获取验证码</Button>
-                                </Col>
-                            </Row>
-                        </FormItem>
+                        {/*
+                         <FormItem
+                         {...formItemLayout}
+                         label="验证"
+                         extra="我们必须确保您不是一个机器人."
+                         >
+                         <Row gutter={8}>
+                         <Col span={12}>
+                         {getFieldDecorator('captcha', {
+                         rules: [{ required: true, message: '请输入验证码!' }],
+                         })(
+                         <Input size="large" maxLength="6" />
+                         )}
+                         </Col>
+                         <Col span={12}>
+                         <Button size="large">获取验证码</Button>
+                         </Col>
+                         </Row>
+                         </FormItem>
+                        */}
                         <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
                             {getFieldDecorator('agreement', {
                                 valuePropName: 'checked',

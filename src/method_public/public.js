@@ -89,10 +89,10 @@ export function getBase64(img,callback) {
 //上传图片文件格式判断
 export function beforeUpload(file) {
     if(file){
-        const isJPG = file.type === 'image/png';
+        const isJPG = file.type === 'image/png'||'image/jpg';
         const isNameType = file.name;
         if (!isJPG) {
-            alert('只能上传png格式的图片!');
+            alert('只能上传png或者jpg格式的图片!');
         }
         const isLt2M = file.size / 1024 / 1024 < 2;
         if (!isLt2M) {
