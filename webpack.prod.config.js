@@ -10,7 +10,6 @@ module.exports = {
             './src/enter/front.js'
         ],
         admin:[
-            'webpack-hot-middleware/client',
             './src/enter/admin.js'
         ]
     },
