@@ -21,7 +21,8 @@ import './question_style.css'
 import {Menu, Icon,Button,Input,message } from 'antd'
 import {Pagination,Pagination2} from '../../../../components/pagination'
 import MultipleChoice from '../../../../components/multipleChoice/index'
-import {BaseEditor,FormulaEditor,MathJaxEditor} from '../../../../components/editer'
+import {BaseEditor,MathJaxEditor} from '../../../../components/editer'
+import Knowledge from './knowledge.js'
 
 const SubMenu = Menu.SubMenu;
 const MenuItemGroup = Menu.ItemGroup;
@@ -30,7 +31,7 @@ const rootSubmenuKeys = ['sub0','sub1', 'sub2', 'sub3','sub4'];
 var everyChildInfo = JSON.stringify(EveryChildInfo);
 var newChildList = JSON.parse(everyChildInfo);
 var sentJson = {
-    "ExamInfoID":"", "UserID":"", "ExamPaperID":"",
+    "ExamInfoID":"", "UserID":"", "ExamPaperID":"","ExamPaperTitle":"",
     "StartDate":null, "FinishDate":null, "SpendTime":0, "ExamType":"", "Score":0,
     "ExamResult":[],
     "DoExamInfo":[],
@@ -71,7 +72,9 @@ class Question extends Component{
             showEditor:false,
             target_id:'',
             position:[],
-            solution:false
+            solution:false,
+            knowledgeFlag:false,
+            knowledgeName:''
         }
     }
     componentDidMount(){
@@ -80,10 +83,11 @@ class Question extends Component{
         sentJson.ExamPaperID = this.state.activeId;
         sentJson.StartDate = moment().format();
         sentJson.ExamType = "二测";
+        sentJson.ExamPaperTitle = JSON.parse(Storage_S.getItem(this.state.activeId)).exampaper;
         this.props.actions.getFirstDataOfPaper({//获取最近一测考试的结果
             body:[{
                 userid: Storage_S.getItem('userid'),
-                id: this.state.activeId,
+                id: this.state.activeId
             }],
             success:(data)=>{
                 console.log("getFirstDataOfPaper------->>>----->>>>",data);
@@ -91,7 +95,7 @@ class Question extends Component{
                 let errorArray=[];//错误题号
                 var ii=0;
                 for(let ss in datajson){
-                    if(datajson[ss]){
+                    if(datajson[ss] && datajson[ss]!= "null"){
                         if(datajson[ss].Contents.length>0){
                             if(!(datajson[ss].Contents[0].IsTrue)){//获取错题列表
                                 errorArray[ii] =  Number(ss)+1;
@@ -130,8 +134,12 @@ class Question extends Component{
             error:(message)=>{
                 console.error(message)
             }
-
         })
+        //离开route的钩子处理事件
+        this.props.router.setRouteLeaveHook(
+            this.props.route,
+            this.routerWillLeave
+        )
     }
     shouldComponentUpdate(nextProps,nextState){
         //当切换题的时候如果新的数据还没有加载出来则不需要render
@@ -159,6 +167,17 @@ class Question extends Component{
         if(prevState.mainContent != this.state.mainContent){
             let H = $('.QtxtContent_main').height();
             this.setState({mainContentH:H})
+        }
+    }
+    routerWillLeave=(nextLocation)=> {
+        // 返回 false 会继续停留当前页面，否则，返回一个字符串，会显示给用户，让其自己决定
+        if(confirm('确认要离开？')){
+            UE.delEditor('container');//退出的时候删除实例化的编辑器
+            setTimeout(()=>{
+                return true;
+            },1000)
+        }else {
+            return false;
         }
     }
     requestQuestion(type,data){
@@ -222,7 +241,7 @@ class Question extends Component{
     addOldAnswer(){
         let _this = this;
         let oldcontent = this.state.sentAllList.ExamResult[this.state.current-1];//做过一次的数据
-        let oldanswer = (oldcontent && oldcontent.answer) ? oldcontent.answer: this.state.allQuestionetails[this.state.current-1].Contents;
+        let oldanswer = (oldcontent && (oldcontent.Contents).length>0) ? oldcontent.Contents: this.state.allQuestionetails[this.state.current-1].Contents;
         $("#Content_Qtxt").find('.div_input').each(function(i){
             let add_id = "question"+_this.state.current+i;
             if(oldanswer[i]){
@@ -279,8 +298,8 @@ class Question extends Component{
             tar_id = $(e)[0];
         }
         let positions = getCoords(tar_id);//获取当前点击的元素在页面中的位置
-        top = (positions.top) + "px";
-        left = positions.left + "px";
+        top = (positions.top-40) + "px";
+        left = (positions.left+50) + "px";
         $(tar_id).addClass("inputfoucs-style");
         if(add_id != this.state.target_id){
             this.setState({showEditor:true,position:[top,left],target_id:add_id})
@@ -324,9 +343,9 @@ class Question extends Component{
         })
         this.setState({solution: true})
     }
-    redoSubmit(data,type,index){
+    redoSubmit(data,items,index){
         let contents =[],istrue=false,score=0;
-        if(type){//选择题
+        if(items.questiontemplate == '选择题'){//选择题
             let answers = $("#mainTopic").find("input:checked");//选项;
             let answer = '';
             answers.each(function(ii){
@@ -342,29 +361,39 @@ class Question extends Component{
                 "url":''
             }
         }else{
-            let answers = $("#mainTopic").find(".div_input");//选项;
             let mysrc = '',myvalue = '';
             let rightanswer = data[0].answer.trim().split(',')//处理填空题可能有两个答案的情况，每空平分总分
-            let  len = answers ? answers.length : 1 ;//有几个空，平均每个空的答案得分
-            answers.each(function(ii){
-                if($(this).children('img').length>0){//先查找公式编辑器输入的内容即用编辑器输入的会产生一个img标签，没有则直接查text
-                    mysrc = $(this).find('img')[0].src;
-                    myvalue = $(this).find('img')[0].dataset.latex;
-                }else{
-                    myvalue = $(this).text();
-                }
-                if(rightanswer[ii]==myvalue){
-                    istrue =true;
-                    score += Number(data[0].totalpoints)/len;
-                }
-                contents[ii] = {
-                    "content":myvalue,
+            if(items.questiontemplate == '简答题'){
+                mysrc = $("#main-solution").find('img')[0].src;
+                contents[0] = {
+                    "content":'',
                     "isTrue":istrue,
                     "url":mysrc
                 };
-            })
+            }else {
+                let answers = $("#mainTopic").find(".div_input");//选项;
+                let  len = answers ? answers.length : 1 ;//有几个空，平均每个空的答案得分
+                answers.each(function(ii){
+                    if($(this).children('img').length>0){//先查找公式编辑器输入的内容即用编辑器输入的会产生一个img标签，没有则直接查text
+                        mysrc = $(this).find('img')[0].src;
+                        myvalue = $(this).find('img')[0].dataset.latex;
+                    }else{
+                        myvalue = $(this).text();
+                    }
+                    if(rightanswer[ii] == myvalue){
+                        istrue =true;
+                        score += Number(data[0].totalpoints)/len;
+                    }
+                    contents[ii] = {
+                        "content":myvalue,
+                        "isTrue":istrue,
+                        "url":mysrc
+                    };
+                })
+            }
         }
-        newChildList.answer = contents;
+        console.log("contents--contents-contents--contents----->>>>",contents)
+        newChildList.Contents = contents;
         newChildList.score = score;
         (this.state.sentAllList).ExamResult[index-1] = newChildList;
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
@@ -382,7 +411,8 @@ class Question extends Component{
             questionType = true;
         }
         let oldcontent = this.state.sentAllList.ExamResult[index-1];//做过一次的数据
-        let oldanswer = (oldcontent && oldcontent.answer) ? oldcontent.answer: this.state.allQuestionetails[index-1].Contents;
+        let oldanswer = (oldcontent && (oldcontent.Contents).length>0) ? oldcontent.Contents: this.state.allQuestionetails[index-1].Contents;
+        console.log("oldanswer=====>>>>>>>>",oldanswer)
         if(content){
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                 content = content.replace(/\_|\s/g,"");
@@ -396,20 +426,22 @@ class Question extends Component{
                         <div className="QtxtContent_main_title_right">
                             <Button onClick={()=>this.doCollection()}>收藏</Button>
                             <Button onClick={()=>this.redoIt()}>重做</Button>
-                            <Button id="redosubimt" onClick={()=>this.redoSubmit(data,questionType,index)}>提交</Button>
+                            <Button id="redosubimt" onClick={()=>this.redoSubmit(data,items,index)}>提交</Button>
                         </div>
                     </div>
                     <div>
                         <ul id="mainTopic" style={{padding:"8px 0"}}>
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
-                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer[0].content} index={index} choiceList={items.optionselect} />:''}
+                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer.length>0?oldanswer[0].content:""} index={index} choiceList={items.optionselect} />:''}
                             {childs.length<1?"":this._childsList(childs)}
                         </ul>
                         <ul>
-                            {items.isobjective != '主观' ? "":<li id="solition" style={{paddingTop:"5px"}}>解：<span id="main-solution" className="div_input"></span></li>}
-                        </ul>
-                        <ul>
-                            {items.isobjective == '主观' ? <BaseEditor inputDom={this.state.target_id} editContent={this.getEditContent.bind(this)} />:""}
+                            {items.isobjective == '主观'?(<div>
+                                <li id="solition" style={{paddingTop:"5px"}}>解：<span id="main-solution">
+                                     <img src={oldanswer[0].url} width="200px" />
+                                </span></li>
+                                <BaseEditor inputDom={this.state.target_id} editContent={this.getEditContent.bind(this)} />
+                            </div>):''}
                         </ul>
                     </div>
                 </div>
@@ -430,6 +462,7 @@ class Question extends Component{
                             this.props.actions.getContentOfChildItemsForQues({
                                 body:dataArray,
                                 success:(data)=>{
+                                    console.log("getContentOfChildItemsForQues=====>>>",data)
                                     if(data[0].code == 200){
                                         this.setState({analysisLeftContent:data[0].data,showEditor:false,nowAnalysisPart:type});
                                     }else {
@@ -466,7 +499,9 @@ class Question extends Component{
         })
     }
     getEditContent(cont,dom,url){
-        console.warn(cont,url)
+        console.warn("getEditContent==>>",cont,dom,url)
+        //$("#main-solution").append('<img src='+url+' width="200px" />')
+        $("#main-solution").find('img')[0].src = url;
         $("#"+dom).text('').append(cont);
     }
     seeAnswer (data){
@@ -528,7 +563,6 @@ class Question extends Component{
                 success:(data)=>{
                     alert("提交成功")
                     Storage_L.clear()
-                    this.exitBack()
                 },
                 error:(mes)=>{
                     console.error('数据接收发生错误');
@@ -609,9 +643,12 @@ class Question extends Component{
         console.log($(e.target)[0].innerText)
         let knowledge = $(e.target)[0].innerText;
         console.log("getKnowledge-----constructor--------props--->",this.props.location.pathname)
-        //this.props.actions.setPreRoute(this.props.location.pathname)
-
+        this.setState({knowledgeFlag:true,knowledgeName:knowledge})
         //this.props.actions.push(`/home/math/knowledge/${knowledge}`)
+    }
+    closeKnowledgeBox(){
+        console.log("closeKnowledgeBox")
+        this.setState({knowledgeFlag:false})
     }
     _analysisQtxt(data,type){
         let num = this.state.current;
@@ -632,7 +669,8 @@ class Question extends Component{
                 questionType = true;
             }
             if(knowledge){
-                knowledge = (knowledge.replace(/["\[\]\s]/g,"")).split('；');
+                knowledge = (knowledge.replace(/["\[\]\s]/g,""));
+                knowledge = knowledge.replace(/；|;|\|\|/g,"@&").split('@&');
             }
             return (
                 <div className="analysisContent" style={{padding: "10px",borderBottom: '1px dashed gray'}} key={index} >
@@ -647,6 +685,7 @@ class Question extends Component{
                         <span style={{margin:"0 10px"}}>答案：<span dangerouslySetInnerHTML={{__html:item.answer}}></span></span>
                         <button className="marginl10" onClick={(e)=>{this.submitOne(e,item,index,type,questionType)}}>提交</button>
                     </ul>}
+                    {!this.state.knowledgeFlag?"":<Knowledge knowledgeName={this.state.knowledgeName} closeKnowledge={this.closeKnowledgeBox.bind(this)}></Knowledge>}
                 </div>
             )
         },this)
@@ -714,18 +753,17 @@ class Question extends Component{
         let olddata = this.state.sentAllList.ExamResult[page];
         if(!olddata){//没有此题缓存，则取出一测的做题答案信息
             newChildList = JSON.parse(everyChildInfo)//先全部给空，初始化
-            newChildList.answer = data.Contents;
+            newChildList.Contents = data.Contents;
             newChildList.score = data.score;
         }else {
-            newChildList = this.state.sentAllList.ExamResult[page];
+            newChildList = olddata;
         }
         if(data){
             this.props.actions.getAllChildOfQuestion({body:[{id:data.QuesID}],
                 success:(data)=>{
                     console.log("currentQuesData-------===---->>>",(data[0].data));
-                    newChildList.questionid = (data[0].data)[0].questionid;
+                    newChildList.QuesID = (data[0].data)[0].questionid;
                     newChildList.QuesType = (data[0].data)[0].questiontemplate;
-                    //this.setState({})
                     this.setState({
                         current2: page+1,
                         current: page+1,

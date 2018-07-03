@@ -9,8 +9,8 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import {getQuestionList,getQuestion} from '../../../../redux/actions/math'
 import ShowMask from '../../../../components/Alter/showMask'
-import {requestData} from '../../../../method_public/public'
-import {Button} from 'antd'
+import {Button,Modal} from 'antd'
+
 
 class Preview extends Component{
     constructor(props){
@@ -25,8 +25,8 @@ class Preview extends Component{
             questionDetails:questionDetails,
             JSON_aLL:alldata.examid,//某套题的试卷id，可取到某套试题的所有数据
             paper_title:alldata.exampaper,//试卷标题
-            type:props.type || '',
-            questions:[]
+            questions:[],//每道试题的详情
+            previewVisible:false
         }
     }
     componentDidMount(){
@@ -41,6 +41,9 @@ class Preview extends Component{
             }
         })
     }
+    shouldComponentUpdate(nextProps,nextState){
+        return true;
+    }
     getData(data){
         var dataArray=[];
         for(let i=0;i<data.length;i++){
@@ -49,11 +52,9 @@ class Preview extends Component{
         this.props.actions.getQuestion({
             body:dataArray,
             success:(data)=>{
-                if(this.state.type == '1'){//结果预览有答案及错误情况
-                    let details = this.state.questionDetails;
-                    for(let i in data){
-                        data[i].details =details[i];
-                    }
+                let details = this.state.questionDetails;
+                for(let i in data){
+                    data[i].details =details[i];
                 }
                 this.setState({questions:data})
             },
@@ -62,13 +63,33 @@ class Preview extends Component{
             }
         })
     }
+    handlePreview(){
+        this.setState({
+            previewVisible: true
+        });
+    }
     _childsList(data){
         return data.map(function(item,index){
             return <li key={index} dangerouslySetInnerHTML={{__html:item.content}}></li>
         })
     }
+    _doAndAnswer(data){
+        let imgurl =data.Contents[0].url?data.Contents[0].url:"";
+        return (
+            <div>
+                <div>解：__</div>
+                <div>附件(提交的答案)：
+                    <img className="preview_img" src={imgurl}/><span onClick={()=>this.handlePreview()}>查看</span>
+                    <Modal visible={this.state.previewVisible} footer={null} onCancel={()=>this.setState({previewVisible: false})}>
+                        <img alt="preview" style={{ width: '100%' }} src={imgurl} />
+                    </Modal>
+                </div>
+            </div>
+        )
+    }
     _showQuestionList(data){
         return data.map(function(item,index){
+            console.log(item)
             let detail = item.details;
             let newitem = item.data[0];
             let content = (newitem.content);
@@ -85,9 +106,9 @@ class Preview extends Component{
                 answerFlag = (detail.Contents[0]).content;
             }
             if(content){
-                if (content.indexOf("blank") != -1) {//如果有则去掉所有空格和blank
+                if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                     content = content.replace(/\s|_/g, '');
-                    content = content.replace(/blank|BLANK/g, '___');
+                    content = content.replace(/<u>blank<\/u>|blank|BLANK/g, answerFlag);
                 }
                 return(
                     <div key={index} className={detailFlag?'question-css':'question-css-err'}>
@@ -107,6 +128,7 @@ class Preview extends Component{
                                 </p>}
                             </li>
                             {childs.length<1?"":this._childsList(childs)}
+                            {newitem.questiontemplate == '简答题' ? this._doAndAnswer(detail) :''}
                         </ul>
                     </div>
                 )

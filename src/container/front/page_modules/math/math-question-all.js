@@ -10,10 +10,15 @@ import PureRenderMixin from '../../../../method_public/pure-render'
 import {getAllQuestionsList,getFirstDataOfPaper} from '../../../../redux/actions/math'
 import {Storage_S} from '../../../../config'
 import Preview from './preview'
-import { Button } from 'antd';
+import Analysis from './dataAnalysis.js'
+import DialogMask from '../../../../components/Alter/dialogMask/dialogmask'
+import { Button,Collapse } from 'antd';
 import './style.css'
+const Panel = Collapse.Panel;
 
-
+function callback(key) {
+    console.log(key);
+}
 class QuestionAll extends Component{
     constructor(props){
         super(props);
@@ -24,7 +29,8 @@ class QuestionAll extends Component{
             allList:[],
             previewFlag:false,
             previewData:'',
-            previewType:''
+            DialogMaskFlag:false,
+            dataAnalysisDate:''
         };
     }
     componentDidMount(){
@@ -33,6 +39,7 @@ class QuestionAll extends Component{
             this.props.actions.getAllQuestionsList({
                 body:[{id:Storage_S.getItem('userid')}],
                 success:(data)=>{
+                    console.log("getAllQuestionsList=====>>>",data)
                     this.getDataOfFirst(data)
                 },
                 error:(message)=>{console.warn("数据错误")}
@@ -59,6 +66,7 @@ class QuestionAll extends Component{
                         olddata[i].doneDetails ={"code":200,"data":[]};
                     }
                 }
+                console.log("getFirstDataOfPaper==2222===>>>",olddata)
                 this.setState({showStatus:true, allList:olddata})
             },
             error:(mes)=>{console.error("数据获取失败")}
@@ -72,7 +80,7 @@ class QuestionAll extends Component{
                     <div className="title2 col-md-7"><p>{data.exampaper+"(此部分针对试题答题结果进行分析)"}</p></div>
                     <div className="btn_list col-md-5">
                         <Button type="dashed" className="marginr5" onClick={()=>this.expand_goto(data)}>开始训练</Button>
-                        <Button type="dashed" className="marginr5" onClick={()=>this.preview(data,'1')}>结果预览</Button>
+                        {/*<Button type="dashed" className="marginr5" onClick={()=>this.preview(data,'1')}>结果预览</Button>*/}
                         <Button type="dashed" className="marginr5">数据分析</Button>
                     </div>
                     <div className="clearfix"></div>
@@ -87,24 +95,68 @@ class QuestionAll extends Component{
             return data.map(function(item,index){
                 let doneFlag = false;
                 let doneDetails = (item.doneDetails.data[0]);
-                if(doneDetails && doneDetails.IsDone == 'yes'){
-                    doneFlag = true;
+                if(doneDetails){
+                    if(doneDetails.IsDone == 'yes'){
+                        doneFlag = true;
+                    }
                 }
+                let doneTitle = doneFlag ?"（已做）":"（未做）";
                 return(
                     <div key={index} className="questionsAll-item">
                         <div className="questionsAll-item-content">
-                            <div className="col-md-5 title"><p>{item.exampaper}</p></div>
-                            <div className="col-md-7 btn_list">
-                                {doneFlag?<span className="wancheng">已完成</span>:<span className="wancheng">未完成</span>}
-                                {doneFlag?<span className="wancheng">总分：{doneDetails.Score}</span>:""}
-                                {/*<Button type="dashed" className="bttn " onClick={()=>this.preview(item,"2")}>预览</Button>*/}
-                                <Button type="dashed" className="bttn " onClick={()=>this.gotoPractice(item)}>模底</Button>
-                                <Button type="dashed" className="bttn " onClick={()=>this.quizAgain(item,index,doneFlag)}>强化</Button>
-                                <Button type="dashed" className="bttn " onClick={()=>this.practiceAgain(item,index)}>检测</Button>
-                                <Button type="dashed" className="bttn " onClick={()=>this.practiceAgain(item,index)}>拓展</Button>
+                            <Collapse onChange={callback}>
+                                <Panel header={item.exampaper+doneTitle} key="1">
+                                    <div className="questionsAll-item-content-child row">
+                                        <div className="col-md-4 title">摸 底</div>
+                                        <div className="col-md-8 btn_list">
+                                            {doneFlag?<span className="wancheng">已完成</span>:<span className="wancheng">未完成</span>}
+                                            {doneFlag?<span className="wancheng">总分：{doneDetails.Score}</span>:""}
+                                            {doneFlag?<span className="wancheng">批改状态：{doneDetails.markFlag}</span>:""}
+                                            <Button type="dashed" className="bttn " onClick={()=>this.preview(item)}>结果预览</Button>
+                                            <Button type="dashed" className="marginr5" onClick={()=>this.dataAnalysis(item)}>数据分析</Button>
+                                            <Button type="dashed" className="bttn " onClick={()=>this.gotoPractice(item)}>开始</Button>
+                                        </div>
+                                    </div>
+                                    <div className="questionsAll-item-content-child row">
+                                        <div className="col-md-4 title">强 化</div>
+                                        <div className="col-md-8 btn_list">
+                                            <Button type="dashed" className="marginr5">数据分析</Button>
+                                            <Button type="dashed" className="bttn " onClick={()=>this.expand_goto(item,index,doneFlag)}>开始</Button>
+                                        </div>
+                                    </div>
+                                    <div className="questionsAll-item-content-child row">
+                                        <div className="col-md-4 title">检 测</div>
+                                        <div className="col-md-8 btn_list">
+                                            <Button type="dashed" className="marginr5">数据分析</Button>
+                                            <Button type="dashed" className="bttn " onClick={()=>this.practiceAgain(item)}>开始</Button>
+                                        </div>
+                                    </div>
+                                    <div className="questionsAll-item-content-child row">
+                                        <div className="col-md-4 title">拓 展</div>
+                                        <div className="col-md-8 btn_list">
+                                            <Button type="dashed" className="marginr5">数据分析</Button>
+                                            <Button type="dashed" className="bttn" onClick={()=>this.practiceAgain(item)}>开始</Button>
+                                        </div>
+                                    </div>
+                                </Panel>
+                            </Collapse>
+                        </div>
+                        {/**
+                         <div className="questionsAll-item-content">
+                         <div className="col-md-5 title"><p>{item.exampaper}</p></div>
+                         <div className="col-md-7 btn_list">
+                         {doneFlag?<span className="wancheng">已完成</span>:<span className="wancheng">未完成</span>}
+                         {doneFlag?<span className="wancheng">总分：{doneDetails.Score}</span>:""}
+                         {doneFlag?<span className="wancheng">批改状态：{doneDetails.markFlag}</span>:""}
+                            <Button type="dashed" className="bttn " onClick={()=>this.preview(item,"1")}>结果预览</Button>
+                            <Button type="dashed" className="bttn " onClick={()=>this.gotoPractice(item)}>摸底</Button>
+                            <Button type="dashed" className="bttn " onClick={()=>this.quizAgain(item,index,doneFlag)}>强化</Button>
+                            <Button type="dashed" className="bttn " onClick={()=>this.practiceAgain(item,index)}>检测</Button>
+                            <Button type="dashed" className="bttn " onClick={()=>this.practiceAgain(item,index)}>拓展</Button>
                             </div>
                             <div className="clearfix"></div>
-                        </div>
+                            </div>
+                        */}
                         {this._renderShowExplain(item,index)}
                     </div>
                 )
@@ -116,11 +168,11 @@ class QuestionAll extends Component{
         return(
             <div>
                 <div className="examAll-item">
-                    <div className="title" onClick={()=>this.goThematicQuestion('one')}>一轮复习</div>
+                    <div className="title" onClick={()=>this.goThematicQuestion('one')}>知识点复习</div>
                 </div>
                 <div className="examAll-item">
-                    <div className="title" onClick={()=>this.goThematicQuestion('two')}>二轮复习</div>
-                </div>
+                 <div className="title" onClick={()=>this.goThematicQuestion('two')}>专题复习</div>
+                 </div>
             </div>
         )
     }
@@ -146,13 +198,28 @@ class QuestionAll extends Component{
             alert("你还没有做完本套试题一测，请先做完一测！")
         }
     }
-    preview(data,flag){
-        this.setState({previewFlag : true,previewData:data,previewType:flag});
+    preview(data){
+        this.setState({previewFlag : true,previewData:data});
+    }
+    dataAnalysis(data){
+        this.setState({DialogMaskFlag : true,dataAnalysisDate:data});
+    }
+    closeDialogMask(){
+        console.log("closeDialogMask")
+        this.setState({DialogMaskFlag : false});
     }
     closePreview(){
         this.setState({previewFlag : false});
     }
-    expand_goto(data){
+    expand_goto(data,index,flag){
+        //判断本套试题有没有测试完成过，只有一测完成了才能二测
+        if(!flag){
+            alert("你还没有做完本套试题一测，请先做完一测！")
+        }
+        this.setState({
+            quiz_again_status : !this.state.quiz_again_status,
+            indexNum : index
+        });
         let id = data.examid;
         Storage_S.setItem(id,JSON.stringify(data))
         this.props.actions.push(`/home/math/exams/question/${id}`);
@@ -160,12 +227,13 @@ class QuestionAll extends Component{
     render(){
         return(
             <div className="questionsAll">
-                <header><h2>{this.state.showStatus?'模 考':'专题复习'}</h2></header>
+                <header><h2>{this.state.showStatus?'模 考':'考纲复习'}</h2></header>
                 <section>
                     {this.state.showStatus?this._renderQuestionPage(this.state.allList):this._renderExamPage(this.state.allList)}
                     {this.props.children}
                 </section>
-                {this.state.previewFlag?<Preview data={this.state.previewData} type={this.state.previewType} closePreview={()=>this.closePreview()} />:<div/>}
+                {this.state.previewFlag?<Preview data={this.state.previewData} closePreview={()=>this.setState({previewFlag : false})} />:<div/>}
+                {this.state.DialogMaskFlag?<DialogMask title="试题分析" closeDialog={()=>this.setState({DialogMaskFlag : false})}><Analysis data={this.state.dataAnalysisDate}/></DialogMask>:<div/>}
             </div>
         )
     }

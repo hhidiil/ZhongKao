@@ -11,6 +11,7 @@ module.exports={
         app.post('/math/questionsOfPaper',this.getQuestionsOfPaper);
         app.post('/math/question',this.getQuestion);
         app.post('/math/sentUserPaperData',this.sentUserPaperData);
+        app.post('/math/sentUserQuestionDataOfPaper',this.sentUserQuestionDataOfPaper);
         app.post('/math/firstDataOfPaper',this.getFirstDataOfPaper);
         app.post('/math/allChildOfQuestion',this.getAllChildOfQuestion);
         app.post('/math/contentOfChildItems',this.getContentOfChildItems);
@@ -289,6 +290,59 @@ module.exports={
         props.ExamResult = JSON.stringify(req.body.ExamResult);
         var math = new Math({props: props});
         math.addUserPaperData(function(err, data){
+            if(!err){
+                return res.send({
+                    code: 200,
+                    data: data
+                })
+            }else {
+                console.log(err);
+                return res.send({
+                    code: 501,
+                    message: '数据获取出错了^@^'
+                })
+            }
+        });
+    },
+    sentUserQuestionDataOfPaper:(req,res)=>{
+        //先处理一测的情况
+        let data = req.body;
+        let props={},str = '';
+        //('${this.props.ExamInfoID}','${this.props.UserID}','${this.props.ExamPaperID}','${this.props.ExamPaperTitle}',
+        // '${this.props.StartDate}','${this.props.FinishDate}','${this.props.SpendTime}','${this.props.ExamType}',
+        // '${this.props.Score}','${this.props.ExamResult}','${this.props.DoExamInfo}','${this.props.AllDone}')
+        //(questionId,examInfoId,examPaperId,userId,examOrExercise,questionType,trueOrfalse,knowledge,questionScore,answerContent,url)
+        let ExamResult = data.ExamResult;
+        if(ExamResult.length>0){
+            for(let i=0;i<ExamResult.length;i++){
+                let everystr = "";
+                if(ExamResult[i]){
+                    let Contents = ExamResult[i].Contents;
+                    let answer='';let trueOrfalse="true";let url='';
+                    if(Contents.length>0){
+                        for (let j in Contents){
+                            if(!Contents[j].IsTrue){//如果以一个是false则结果为false
+                                trueOrfalse = "false";
+                            }
+                            answer = answer + Contents[j].content + "|";//每一个答案用|分开
+                            url = url + Contents[j].url + "@$";
+                        }
+                        answer = answer.substring(0, answer.lastIndexOf('|'));//最后一个|去掉
+                        url = url.substring(0, url.lastIndexOf('@$'));//最后一个|去掉
+                    }
+                    everystr = "("+ "'"+ExamResult[i].QuesID+"'" +","+"'"+data.ExamInfoID+"'"+","+"'"+data.ExamPaperID+"'"+","
+                        +"'"+data.UserID+"'"+","+"'"+data.ExamOrExercise+"'"+"," + "'"+ExamResult[i].QuesType+"'"+","+"'"+trueOrfalse+"'"+","+"'"+"null"+"'"+","
+                        +ExamResult[i].score+"," + "'"+answer+"'"+","+"'"+url+"'"+")"
+                }
+                str = str + everystr + ",";
+            }
+            str = str.substring(0, str.lastIndexOf(','));//最后一个|去掉
+        }
+        props.list = str;
+        console.log("sentUserQuestionDataOfPaper===>>>",props.list);
+        let math2 = new Math({props: props});
+        //添加试卷中每个试题的记录信息
+        math2.addUserQuestionDataOfPaper(function(err, data){
             if(!err){
                 return res.send({
                     code: 200,

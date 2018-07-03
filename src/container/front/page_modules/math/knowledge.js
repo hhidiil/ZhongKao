@@ -16,17 +16,17 @@ import { Menu, Icon,Button } from 'antd'
 class Knowledge extends Component{
     constructor(props){
         super(props);
-        console.log("Knowledge-----constructor--------props--->",props)
         this.state={
+            knowledgeName:props.knowledgeName
         }
     }
     componentDidMount(){
-        let knowledgeName = this.props.params.name;
-        console.log("knowledgeName:::-22222->",this.props.params.name)
+        let knowledgeName = this.state.knowledgeName;
+        console.log("knowledgeName:::-22222->",knowledgeName)
         this.props.actions.getKnowledgeIdList({
             body:[{knowledgeName:'有理数的大小比较'}],
             success:(data)=>{
-                console.log(data[0].data)
+                console.log(data)
                 let newdata=[],alldata = data[0].data;
                 for(let i in alldata){
                     newdata[i] = {
@@ -49,17 +49,15 @@ class Knowledge extends Component{
         })
     }
     exitBack(){
-        UE.delEditor('container');//退出的时候删除实例化的编辑器
-        //this.props.actions.push("/home/math/exams")
-        this.props.actions.history.go(-1)
+        this.props.closeKnowledge();
     }
     render(){
         return(
-            <div className="mask">
+            <div className="maskknowledge">
                 <div className="math-question-content">
                     <header>
                         <div className="title" id="title">反比例函数</div>
-                        <button type="button" className="btn btn-default" onClick={()=>this.exitBack()}>返回</button>
+                        <button type="button" className="btn btn-default" onClick={()=>this.exitBack()}>关闭</button>
                     </header>
                     <section>
                         <Form></Form>

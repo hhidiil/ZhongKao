@@ -174,6 +174,12 @@ class ThematicQuesList extends Component{
             }
         })
     }
+    getKnowledge(e){
+        console.log($(e.target)[0].innerText)
+        let knowledge = $(e.target)[0].innerText;
+        console.log("getKnowledge-----constructor--------props--->",this.props.location.pathname)
+        this.props.actions.push(`/home/math/knowledge/${knowledge}`)
+    }
     _fromContent(data){
         console.log("当前题的ID：",data[0])
         if(data.length<1) return;
@@ -202,16 +208,16 @@ class ThematicQuesList extends Component{
                     <button onClick={()=>this.showAnalysis(item)}>解析</button></div>
                 {!this.state.jiexiFlag?'':<div>
                     <div className="parts part-review">
-                        <p><span className="head">考点：{item.knowledge}</span></p>
+                        <p>考点：<span className="head" onClick={(e)=>this.getKnowledge(e)}>有理数</span></p>
                     </div>
                     <div className="parts part-analysis">
-                        <p><span className="head">分析：{item.analysis}</span></p>
+                        <p>分析：<span className="head" dangerouslySetInnerHTML={{__html:item.analysis}}></span></p>
                     </div>
                     <div className="parts part-thematic">
                         <p><span className="head">专题：{modalParts[this.state.whichPart]}</span></p>
                     </div>
                     <div className="parts part-reslution">
-                        <p><span className="head">解答：{item.answer}</span></p>
+                        <p>解答：<span className="head" dangerouslySetInnerHTML={{__html:item.answer}}></span></p>
                     </div>
                 </div>}
             </fieldset>

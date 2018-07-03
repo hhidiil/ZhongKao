@@ -28,9 +28,9 @@ export var sentJson_Question = {
    ]
 * */
 export var EveryChildInfo={
-    "questionid": "",
+    "QuesID": "",
     "QuesType": "",
-    "answer": [],
+    "Contents": [],
     "score": 0,
     "childs": [
         {

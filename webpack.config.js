@@ -16,6 +16,10 @@ module.exports = {
             //'webpack/hot/only-dev-server',
             // 我们app的入口文件
             './src/enter/front.js'
+        ],
+        admin:[
+            'webpack-hot-middleware/client',
+            './src/enter/admin.js'
         ]
     },
     output: {

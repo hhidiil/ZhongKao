@@ -10,9 +10,7 @@ export default class echart extends Component {
         super(props)
     }
     componentDidMount() {
-        setTimeout(() => {
-            this.loadChart()
-        }, 500)
+        this.loadChart()
     }
     loadChart() {
         console.log("loadChart")

@@ -10,21 +10,26 @@ const optionName=['A','B','C','D','E','F','G'];
 class Choice extends Component{
     constructor(props){
         super(props)
+        console.log("radioChange=1111=",props.isCando)
         this.state = {
-            type:props.type,
+            type:props.type,//选择类型。单选或者多选
             choiceList:props.choiceList,//选项
             index:props.index,
-            radioState:props.answer || ''
+            radioState:props.answer || '',//答案
+            isCando: props.isCando//是否可以选择答案
         }
     }
     radioChange =(e)=>{
-        let endstr = '',tar = e.target.value;
-        if((this.state.radioState).split('').indexOf(tar) != -1){
-            endstr = this.state.radioState.replace(eval("/"+tar+"/"),"");
-        }else {
-            endstr = this.state.radioState + tar;
+        let isCando = this.state.isCando;
+        if(isCando != "false"){
+            let endstr = '',tar = e.target.value;
+            if((this.state.radioState).split('').indexOf(tar) != -1){
+                endstr = this.state.radioState.replace(eval("/"+tar+"/"),"");
+            }else {
+                endstr = this.state.radioState + tar;
+            }
+            this.setState({radioState: endstr})
         }
-        this.setState({radioState: endstr})
     }
     componentWillReceiveProps(nextProps){
         //this.props //当前的props,nextProps //下一阶段的props
@@ -36,7 +41,6 @@ class Choice extends Component{
         let optionArray=[],option = this.props.choiceList,type = this.props.type;
         let ss = ($.trim(option)).replace(/["\[\]\s]/g,"");
         let answer = this.state.radioState;
-        console.log("answer --answer--------->>>>>>",answer)
         if(answer){//多选题
             answer = answer.split('');
         }

@@ -1,0 +1,34 @@
+.Dialog-content{
+    position: fixed;
+    overflow: hidden;
+    z-index: 101;
+    top: 50%;
+    left: 50%;
+    background-color: white;
+    height: 800px;
+    width: 900px;
+    margin-left: -450px;
+    margin-top: -400px;
+    border-radius: 8px;
+}
+.Dialog-content header{
+    height: 50px;
+    background-color: #4abde6;
+}
+.Dialog-content header h3{
+    float: left;
+    margin: 0px;
+    padding-left: 10px;
+    line-height: 50px;
+}
+.Dialog-content .exit{
+    float: right;
+    right: 5px;
+    top: 10px;
+}
+.Dialog-content section{
+    position: relative;
+    padding: 10px 20px;
+    height: 750px;
+    overflow-y: auto;
+}

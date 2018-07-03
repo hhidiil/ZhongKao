@@ -7,7 +7,7 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getQuestionList,getQuestion,sentUserPaperData,getFirstDataOfPaper} from '../../../../redux/actions/math'
+import {getQuestionList,getQuestion,sentUserPaperData,sentUserQuestionDataOfPaper,getFirstDataOfPaper} from '../../../../redux/actions/math'
 import Timing from '../../../../components/timing'
 import {BaseEditor,MathJaxEditor} from '../../../../components/editer'
 import PureRenderMixin from '../../../../method_public/pure-render'
@@ -21,7 +21,7 @@ import MultipleChoice from '../../../../components/multipleChoice/index'
 import {getCoords} from '../../../../method_public/public'
 
 var sentJson = {
-    "ExamInfoID":"", "UserID":"", "ExamPaperID":"",
+    "ExamInfoID":"", "UserID":"", "ExamPaperID":"","ExamPaperTitle":"","ExamOrExercise":"",
     "StartDate":null, "FinishDate":null, "SpendTime":0, "ExamType":"", "Score":0,
     "ExamResult":[],
     "DoExamInfo":[],
@@ -58,6 +58,8 @@ class Question extends Component{
         sentJson.ExamPaperID = this.state.activeId;
         sentJson.StartDate = moment().format();
         sentJson.ExamType = "一测";
+        sentJson.ExamPaperTitle = (this.state.dataAll).exampaper;
+        sentJson.ExamOrExercise = "exam";
         this.props.actions.getQuestionList({
             body:[{id:this.state.activeId}],
             success:(data)=>{
@@ -116,7 +118,6 @@ class Question extends Component{
         });
     }
     FocusHandle(e,add_id){
-        console.log("FocusHandleFocusHandle")
         let tar_id,top='',left='';
         if($(e)[0].localName == 'img'){
             tar_id= ($(e)[0].offsetParent);
@@ -147,6 +148,7 @@ class Question extends Component{
                         if(isHave){
                             oldAnwers = isHave.Contents;
                         }
+                        console.log("this.state.sentList=======555555=========>",this.state.sentList)
                         this.setState({oldAnwers: oldAnwers,questionList:data[0].data})
                     }
                 }})
@@ -166,7 +168,7 @@ class Question extends Component{
         }
         return (
             <div>
-                <div>解：<span contentEditable="true" className="div_input"></span></div>
+                <div>解：__</div>
                 <div>附件(提交的答案)：
                     <img className="preview_img" src={imgurl}/><span onClick={()=>this.handlePreview()}>查看</span>
                     <Modal visible={this.state.previewVisible} footer={null} onCancel={()=>this.handleCancel()}>
@@ -244,9 +246,10 @@ class Question extends Component{
         let type = dataItems.get('questiontemplate');
         let isobjective = dataItems.get('isobjective');
         let quesId = dataItems.get('questionid');
+        let knowledge = dataItems.get('knowledge');
         let nexflag = true;
         let score = dataItems.get('totalpoints');//先把题的得分拿出来，错了在赋值为0
-        console.log(page,nextpage,"正确答案：",answer)
+        console.log(page,nextpage,"正确答案：",answer,GetQuestion)
         if(type == "选择题"){
             let doms = document.getElementsByTagName("input");
             //获取选择的答案
@@ -323,7 +326,8 @@ class Question extends Component{
                 "QuesID": quesId,
                 "QuesType": type,
                 "Contents": this.state.AnswerContent,
-                "score":score
+                "score":score,
+                "knowledge":knowledge
             }
             Storage_L.setItem(this.state.activeId,JSON.stringify(this.state.sentList))//每做完一个题缓存一个
             if(nextpage>this.state.totalNum){//最后一个题做完了
@@ -347,7 +351,7 @@ class Question extends Component{
         let _this = this;
         for(let i=0;i<endList.length;i++){
             if(!endList[i]){
-                Modals.warning("提示","第"+(i+1)+"个题还没有做，请切到第"+(i+1)+"个题提交并点击下一题")
+                Modals.warning("提示","第"+(i+1)+"个题还没有做，请切到第"+(i+1)+"个题提交并点击页面确定按钮")
                 return
             }
         }
@@ -370,6 +374,16 @@ class Question extends Component{
                 },
                 error:(mes)=>{
                     console.error('数据接收发生错误');
+                }
+            })
+            _this.props.actions.sentUserQuestionDataOfPaper({
+                body:{data:sentItems},
+                success:(data)=>{
+                    Storage_L.clear()
+                    console.log('sentUserQuestionDataOfPaper数据插入成功');
+                },
+                error:(mes)=>{
+                    console.error('sentUserQuestionDataOfPaper数据接收发生错误');
                 }
             })
         })
@@ -421,7 +435,7 @@ class Question extends Component{
                             {!objectiveFlag ? '':<BaseEditor inputDom={this.state.target_id} editContent={this.getEditContent.bind(this)} />}
                         </div>
                     </section>
-                    <button type="button" className="btn btn-primary next_btn" disabled={(this.state.current==(this.state.totalNum+1))?true:false} onClick={()=>this.nextSubmit(this.state.current,GetQuestion)}>下一题</button>
+                    <button type="button" className="btn btn-primary next_btn" disabled={(this.state.current==(this.state.totalNum+1))?true:false} onClick={()=>this.nextSubmit(this.state.current,GetQuestion)}>确定</button>
                     {/*<button type="button" className="btn btn-primary submit_btn" disabled={(this.state.current==(this.state.totalNum+1))?false:true} onClick={()=>this.allSubmit(this)}>全部提交</button>*/}
                 </div>
             </div>
@@ -435,7 +449,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getQuestionList,getQuestion,sentUserPaperData,getFirstDataOfPaper}, dispatch) }
+    return { actions: bindActionCreators({push,getQuestionList,getQuestion,sentUserPaperData,sentUserQuestionDataOfPaper,getFirstDataOfPaper}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question)

@@ -100,13 +100,24 @@ Math.prototype.getChildQuestionsForQuestion = function(callback){
 }
 /*添加用户试卷做题记录*/
 Math.prototype.addUserPaperData = function (callback) {
-    var _sql = `INSERT INTO tblStudentExamInfo (ExamInfoID,UserID,ExamPaperID,StartDate,FinishDate,SpendTime,ExamType,Score,ExamResult,DoExamInfo,IsDone)
+    var _sql = `INSERT INTO tblStudentExamInfo (ExamInfoID,UserID,ExamPaperID,ExamPaperTitle,StartDate,FinishDate,SpendTime,ExamType,Score,ExamResult,DoExamInfo,IsDone)
                 VALUES
-                ('${this.props.ExamInfoID}','${this.props.UserID}','${this.props.ExamPaperID}','${this.props.StartDate}','${this.props.FinishDate}','${this.props.SpendTime}','${this.props.ExamType}','${this.props.Score}','${this.props.ExamResult}','${this.props.DoExamInfo}','${this.props.AllDone}');`;
+                ('${this.props.ExamInfoID}','${this.props.UserID}','${this.props.ExamPaperID}','${this.props.ExamPaperTitle}','${this.props.StartDate}','${this.props.FinishDate}','${this.props.SpendTime}','${this.props.ExamType}','${this.props.Score}','${this.props.ExamResult}','${this.props.DoExamInfo}','${this.props.AllDone}');`;
     helper.db_query({
         connect: con,
         sql: _sql,
         name: 'addUserPaperData',
+        callback: callback
+    })
+}
+/*记录用户每题做题记录*/
+Math.prototype.addUserQuestionDataOfPaper = function (callback) {
+    var _sql = `INSERT INTO tblStudentExamQuestionInfo (questionId,examInfoId,examPaperId,userId,examOrExercise,questionType,trueOrfalse,knowledge,questionScore,answerContent,url)
+                VALUES ${this.props.list};`;
+    helper.db_query({
+        connect: con,
+        sql: _sql,
+        name: 'addUserQuestionDataOfPaper',
         callback: callback
     })
 }

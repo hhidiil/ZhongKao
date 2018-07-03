@@ -13,7 +13,8 @@ class Pagination extends Component{
             current: props.current,
             total: props.total || 0,
             arrayList: props.wordNum ||[],
-            color:props.color
+            color:props.color,
+            errorList:props.errorList||[]
         }
     }
     componentWillMount(){
@@ -26,11 +27,18 @@ class Pagination extends Component{
         }
     }
     componentDidMount(){
-        this.addClassHandle(this.state.current)
+        this.setBackgroudcolor(this.state.errorList);
+        this.addClassHandle(this.state.current);
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps) {
            this.addClassHandle(nextProps.current)
+        }
+    }
+    setBackgroudcolor(list){
+        for(let i=0;i<list.length;i++){
+            let _this = this.refs[list[i]];
+            $(_this).find('a').css("color","red")
         }
     }
     addClassHandle(num){

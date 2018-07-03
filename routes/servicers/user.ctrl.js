@@ -1,15 +1,14 @@
 /**
  * @desc 用户 控制器
- * @author Jafeney <692270687@qq.com>
- * @dateTime 2016-11-29
+ * @dateTime 2017-11-29
  **/
 
 var User = require('../../database/user.db');
 var Helper = require('../helper');
+//var doGetUserBasicInfo = require('../userModule/getUserInfo')//将处理函数单独放在一个模块文件中来处理。
 
 module.exports = {
     // 模块初始化
-
     init: function(app) {
         app.get('/user', this.doGetUserAllItems);
         app.post('/user/token', this.doGetUserItemByPhone);
@@ -21,7 +20,6 @@ module.exports = {
         app.post('/user/updateHeadImg',this.doUpdateHeadImg);
         app.post('/user/getCollection',this.doGetCollection)
     },
-
     // 获取所有用户信息
     doGetUserAllItems: function(req, res) {
         var props = {};
@@ -200,6 +198,7 @@ module.exports = {
         var props = {
             username: req.body.params
         };
+        debugger
         var user = new User({props:props});
         user.getUserBasicInfo(function(err,data){
             if(err){

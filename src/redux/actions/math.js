@@ -140,6 +140,17 @@ export function sentUserPaperData(opt) {
                 body: JSON.stringify(data)})
     }
 }
+//存储用户试卷中每一个试题的做题数据
+export function sentUserQuestionDataOfPaper(opt) {
+    let data = opt.body.data;
+    return (dispatch) => {
+        const route = '/api/math/sentUserQuestionDataOfPaper';
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'},
+                body: JSON.stringify(data)})
+    }
+}
 export function setThematicQuestionAnswerInfo(opt){
     let data = opt.body.data;
     return (dispatch) => {

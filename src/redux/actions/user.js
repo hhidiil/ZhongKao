@@ -21,7 +21,7 @@ export function allUsers(opt) {
         request(route, {}, dispatch, opt.success, opt.error,
             { method: 'GET',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                body: bodyUrlencoded(opt.body) })
+                body:(opt.body) })
     }
 }
 //登录校验

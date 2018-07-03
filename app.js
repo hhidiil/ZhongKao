@@ -10,8 +10,6 @@ const cors = require('cors');
 
 var index = require('./routes/index');
 var api = require('./routes/api');
-//以后的管理系统入口
-//var users = require('./routes/users');
 
 var app = express();
 // view engine setup
@@ -34,7 +32,7 @@ app.use('/src',express.static('src'));
 
 app.use('/', index);
 app.use('/api', api);
-//app.use('/admin', admin);
+app.use('/teacher', index);
 
 //热更新模块
 console.log("process.env.NODE_ENV====>>",process.env.NODE_ENV)

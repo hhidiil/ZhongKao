@@ -19,7 +19,7 @@ class Math extends Component{
         return (
             <div className="math-door">
                 <div className="exam">
-                    <div className="enter-block exam-block" onClick={this.goPage.bind(this,'questions')}>专题训练</div>
+                    <div className="enter-block exam-block" onClick={this.goPage.bind(this,'questions')}>考纲复习</div>
                 </div>
                 <div className="questions">
                     <div className="enter-block question-block" onClick={this.goPage.bind(this,'exams')}>模考训练</div>

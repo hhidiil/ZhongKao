@@ -7,8 +7,8 @@ router.get('/', function(req, res, next) {
 });
 
 /* GET admin. */
-router.get('/admin', function(req, res, next) {
-  res.send('respond with a resource');
+router.get('/teacher', function(req, res, next) {
+  res.render('admin', {});
 });
 
 module.exports = router;
