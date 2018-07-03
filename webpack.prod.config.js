@@ -8,6 +8,10 @@ module.exports = {
     entry: {
         front:[
             './src/enter/front.js'
+        ],
+        admin:[
+            'webpack-hot-middleware/client',
+            './src/enter/admin.js'
         ]
     },
     output: {
