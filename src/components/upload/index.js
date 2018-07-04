@@ -16,16 +16,20 @@ class UpLoadFile extends Component{
     constructor(props){
         super(props)
         this.state={
-            imageURL:""
+            imageURL:"",
+            preview:props.preview || 'true',//是否预显示,
+            personFlag:props.personFlag || '1'//谁上传的： 教师、学生、管理员。。。。；教师为0，学生为1;默认为学生上传
         }
     }
     upLoadSubmit = (e) =>{
         e.preventDefault();
         let _this = this;
-        Modals.showConfirm("请再次确定上传的文件是否正确，上传后不能修改，确定是否提交？", function () {
-            let file = _this.uploadInput.files[0];
-            if(beforeUpload(file)){
+        console.log("upLoadSubmit=====>>>>>",this.state.personFlag)
+        let file = _this.uploadInput.files[0];
+        if(beforeUpload(file)){
+            Modals.showConfirm("请再次确定上传的文件是否正确，上传后不能修改，确定是否提交？", function () {
                 const data = new FormData();
+                data.append("personflag", _this.state.personFlag);
                 data.append("file", file);
                 data.append("username", sessionStorage.getItem('username'));
                 data.append("preurl",_this.state.imageURL);//前一个上传的答案，如果从新上传一张则删除上传的前一张
@@ -38,13 +42,13 @@ class UpLoadFile extends Component{
                         Modals.success('','上传成功！')
                         _this.setState({ imageURL: `${WINDOW_HOST}/${data.file}` });
                         setTimeout(()=>{
-                            _this.props.imgUrl(_this.state.imageURL)//将子页面的值传回父级
-                            _this.props.submitHandle();
+                            _this.props.submitHandle(_this.state.imageURL);
                         },1000)
                     }
                 })
-            }
-        })
+
+            })
+        }
     }
     deleteSubmit = (e) =>{
         e.preventDefault();
@@ -53,7 +57,6 @@ class UpLoadFile extends Component{
         $('#preview').empty()
     }
     preview =()=>{
-        console.log("onchange------->>>>>>>=====>>>>>",this.state.imageURL)
         let file = this.uploadInput.files[0];
         var img = new Image(), url = img.src = URL.createObjectURL(file);
         $(img).addClass("img-responsive");
@@ -64,12 +67,13 @@ class UpLoadFile extends Component{
         }
     }
     render(){
+        console.log("this.state.preview====>>>>>>",this.state.preview)
         return(
             <div className="fileupload">
                 <form>
                     <label htmlFor="exampleInputFile">上传文件：</label>
-                    <input ref={(ref) => { this.uploadInput = ref; }} type="file" onChange={this.preview} id="exampleInputFile" /><br/>
-                    <div id="preview"></div>
+                    <input ref={(ref) => { this.uploadInput = ref; }} type="file" width="200px" onChange={this.preview} id="exampleInputFile" /><br/>
+                    {this.state.preview != 'false'?<div id="preview"></div>:''}
                     <button type="button" className="btn ant-btn-danger btn-sm" onClick={this.deleteSubmit}>删除</button>
                     <button type="button" className="btn btn-default btn-sm" onClick={this.upLoadSubmit}>开始上传</button>
                     <br/>

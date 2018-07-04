@@ -87,17 +87,11 @@ class LoginForm extends Component {
                             )}
                         </FormItem>
                         <FormItem wrapperCol={{ span: 15, offset: 5 }}>
-                            {getFieldDecorator('remember', {
-                                valuePropName: 'checked',
-                                initialValue: true,
-                            })(
-                                <Checkbox>Remember me</Checkbox>
-                            )}
-                            <a className="login-form-forgot" href="#">忘记密码</a>
                             <Button type="primary" htmlType="submit" className="login-form-button">
                                 登 录
                             </Button>
                             <Link to="/register">立即注册</Link>
+                            <Link className="login-form-forgot" to="/forgotpassword">忘记密码</Link>
                         </FormItem>
                     </Form>
                 </Modal>

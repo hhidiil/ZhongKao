@@ -52,7 +52,16 @@ User.prototype.getUserItemByPhone = function(callback) {
         callback: callback
     })
 }
-
+/*通过用户名和手机号查找用户*/
+User.prototype.getUserWithNameAndPwd = function (callback) {
+    var _sql = `select id from tblUser where username='${this.props.username}' and phone='${this.props.phone}';`
+    helper.db_query({
+        connect: con,
+        sql: _sql,
+        name: 'getUserWithNameAndPwd',
+        callback: callback
+    })
+}
 /*修改用户登录密码*/
 User.prototype.putUserPassword = function(callback) {
     var _sql = `update tblUser set pwd = '${this.props.new_password}' where id = ${this.props.id}`;

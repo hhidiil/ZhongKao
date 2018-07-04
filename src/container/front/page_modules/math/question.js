@@ -22,6 +22,7 @@ import {Menu, Icon,Button,Input,message } from 'antd'
 import {Pagination,Pagination2} from '../../../../components/pagination'
 import MultipleChoice from '../../../../components/multipleChoice/index'
 import {BaseEditor,MathJaxEditor} from '../../../../components/editer'
+import UpLoadFile from '../../../../components/upload/index'
 import Knowledge from './knowledge.js'
 
 const SubMenu = Menu.SubMenu;
@@ -440,7 +441,7 @@ class Question extends Component{
                                 <li id="solition" style={{paddingTop:"5px"}}>解：<span id="main-solution">
                                      <img src={oldanswer[0].url} width="200px" />
                                 </span></li>
-                                <BaseEditor inputDom={this.state.target_id} editContent={this.getEditContent.bind(this)} />
+                                <UpLoadFile submitHandle={this.getEditContent.bind(this)} />
                             </div>):''}
                         </ul>
                     </div>
@@ -498,11 +499,10 @@ class Question extends Component{
             error:(err)=>{console.error(err)}
         })
     }
-    getEditContent(cont,dom,url){
-        console.warn("getEditContent==>>",cont,dom,url)
-        //$("#main-solution").append('<img src='+url+' width="200px" />')
+    getEditContent(url){
+        console.warn("getEditContent==>>",url)
         $("#main-solution").find('img')[0].src = url;
-        $("#"+dom).text('').append(cont);
+        //$("#"+dom).text('').append(cont);
     }
     seeAnswer (data){
         this.setState({two_answer_content:data})

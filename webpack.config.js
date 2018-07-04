@@ -17,9 +17,9 @@ module.exports = {
             // 我们app的入口文件
             './src/enter/front.js'
         ],
-        admin:[
+        teacher:[
             'webpack-hot-middleware/client',
-            './src/enter/admin.js'
+            './src/enter/teacher.js'
         ]
     },
     output: {

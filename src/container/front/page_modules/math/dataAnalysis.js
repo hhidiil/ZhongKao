@@ -30,7 +30,7 @@ class Analysis extends Component{
         }
         this.state={
             alldata:alldata,
-            questionDetails:questionDetails
+            questionDetails:questionDetails || []
         }
     }
     componentDidMount(){
@@ -39,37 +39,38 @@ class Analysis extends Component{
         let tianKongQuestionNum = 0;
         let jianDaQuestionNum = 0;
         let knowledge = [];//知识点
-        console.log(questionDetails)
-        for(let i in questionDetails){
-            if(questionDetails[i].QuesType == '选择题'){
-                singleQuestionNum = singleQuestionNum + 1;
-            }else if(questionDetails[i].QuesType == '填空题'){
-                tianKongQuestionNum = tianKongQuestionNum + 1;
-            }else if(questionDetails[i].QuesType == '简答题'){
-                jianDaQuestionNum = jianDaQuestionNum + 1;
-            }
-            if(questionDetails[i].knowledge){
-                let item = (questionDetails[i].knowledge).split('；');
-                console.log("questionDetails[i].knowledge====>>>",item)
-                let istrue = questionDetails[i].Contents[0].IsTrue;//对错
-                let number = istrue?0:1;
-                for(let j=0;j<item.length;j++){
-                    if(knowledge.length>0){//存在
-                        let ishave = false;//默认此知识点没有在knowledge中
-                        for(let m=0;m<knowledge.length;m++){
-                            if(knowledge[m].name == item[j] ){//knowledge中有这个知识点
-                                knowledge[m].num = knowledge[m].num + number;
-                                ishave = true;
+        if(questionDetails.length>0){
+            for(let i in questionDetails){
+                if(questionDetails[i].QuesType == '选择题'){
+                    singleQuestionNum = singleQuestionNum + 1;
+                }else if(questionDetails[i].QuesType == '填空题'){
+                    tianKongQuestionNum = tianKongQuestionNum + 1;
+                }else if(questionDetails[i].QuesType == '简答题'){
+                    jianDaQuestionNum = jianDaQuestionNum + 1;
+                }
+                if(questionDetails[i].knowledge){
+                    let item = (questionDetails[i].knowledge).split('；');
+                    console.log("questionDetails[i].knowledge====>>>",item)
+                    let istrue = questionDetails[i].Contents[0].IsTrue;//对错
+                    let number = istrue?0:1;
+                    for(let j=0;j<item.length;j++){
+                        if(knowledge.length>0){//存在
+                            let ishave = false;//默认此知识点没有在knowledge中
+                            for(let m=0;m<knowledge.length;m++){
+                                if(knowledge[m].name == item[j] ){//knowledge中有这个知识点
+                                    knowledge[m].num = knowledge[m].num + number;
+                                    ishave = true;
+                                }
                             }
-                        }
-                        if(!ishave){
-                            knowledge.push({"name":item[j],"num":1,"errorNum":number})
+                            if(!ishave){
+                                knowledge.push({"name":item[j],"num":1,"errorNum":number})
+                            }
+
+                        }else {
+                            knowledge.push({"name":item[j],"num":1,"errorNum":number});
                         }
 
-                    }else {
-                        knowledge.push({"name":item[j],"num":1,"errorNum":number});
                     }
-
                 }
             }
         }
@@ -77,15 +78,17 @@ class Analysis extends Component{
         var xDataName = [];//柱状X轴知识点名
         var xDataNameNum = [];//柱状X轴知识点出现次数
         var xDataNameErrorNum = [];//柱状X轴知识点出现次数
+        if(knowledge.length>0){
+            for(let i in knowledge){
+                xDataName.push(knowledge[i].name);
+                xDataNameNum.push(knowledge[i].num);
+                xDataNameErrorNum.push(knowledge[i].errorNum)
+            }
+        }
+        console.log("xDataName====>>>>",xDataName,xDataNameNum);
         var pieChartOne = echarts.init(this.pieOne);
         var pieChartTwo = echarts.init(this.pieTwo);
-        var pieChartThree = echarts.init(this.pieThree);
-        for(let i in knowledge){
-            xDataName.push(knowledge[i].name);
-            xDataNameNum.push(knowledge[i].num);
-            xDataNameErrorNum.push(knowledge[i].errorNum)
-        }
-        console.log("xDataName====>>>>",xDataName,xDataNameNum)
+        //var pieChartThree = echarts.init(this.pieThree);
         pieChartOne.setOption({
             title: {
                 text: '试卷结构'
@@ -167,10 +170,6 @@ class Analysis extends Component{
         console.log(data)
     }
     render(){
-        let dataitem = this.state.questionDetails;
-        if(dataitem.length<1){
-            return <div/>;
-        }
         return(
             <div className="dataAnalysis">
                 <div className="part-one" ref={(e)=>this.pieOne=e}></div>

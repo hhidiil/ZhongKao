@@ -15,6 +15,7 @@ module.exports = {
         app.post('/user/token_name', this.doGetUserItemByUserName);
         app.post('/user/password', this.doPutPassword);
         app.post('/user/register', this.doRegister);
+        app.post('/user/resetPassword',this.doResetPassword);
         app.post('/user/basic_info', this.doGetUserBasicInfo);
         app.post('/user/updateBasicInfo',this.doUpdateBasicInfo);
         app.post('/user/updateHeadImg',this.doUpdateHeadImg);
@@ -121,6 +122,48 @@ module.exports = {
                     return res.send({
                         code: 500,
                         message: '重置密码出错'
+                    })
+                }
+            }else {
+                console.log(err)
+                return res.send({
+                    code: 501,
+                    message: '出错了'
+                })
+            }
+        })
+    },
+    doResetPassword: function (req,res) {
+        let props = req.body;
+        let user = new User({props:props});
+        user.getUserWithNameAndPwd(function (err,data) {
+            if(!err){
+                if(data.length>0){
+                    console.log("getUserWithNameAndPwd=====>>>>>",data)
+                    let props = {
+                        id: data[0].id,
+                        new_password: Helper.getMD5(req.body.new_password)
+                    };
+                    let user = new User({props:props});
+                    user.putUserPassword(function(err, data) {
+                        if(!err){
+                            console.log(data)
+                            return res.send({
+                                code: 200,
+                                message:data
+                            })
+                        }else {
+                            console.log(err)
+                            return res.send({
+                                code: 500,
+                                message: '重置密码出错'
+                            })
+                        }
+                    })
+                }else {
+                    return res.send({
+                        code:500,
+                        message:'此用户不存在或者手机号不正确'
                     })
                 }
             }else {

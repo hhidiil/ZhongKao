@@ -51,6 +51,7 @@ export function requestSyn(route,params, dispatch, success=null, error=null, { m
     const url = `${ CONFIG.API_URI }${ route }${ p }`;
     let datalist = body;
     console.log("requestdatalist------>>>>>>",datalist)
+    //使用promise的all方法将异步执行转化为同步执行，即查询的参数为一个数组列表，一个一个发送。当其中一个出错时则整体查询出错。
     Promise.all(datalist.map((list) =>{
         let data = { method: method,
                     headers: headers,

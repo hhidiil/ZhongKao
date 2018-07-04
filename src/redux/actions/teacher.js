@@ -7,17 +7,6 @@ import * as CONFIG from '../../config';
 import { request } from './request';
 import { bodyUrlencoded,requestData } from '../../method_public/public'
 
-
-//注册
-export function teacherRegister(opt) {
-    return (dispatch) => {
-        const route = '/api/teacher/register';
-        request(route, {}, dispatch, opt.success, opt.error,
-            { method: 'POST',
-                headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                body: bodyUrlencoded(opt.body) })
-    }
-}
 //登录校验
 export function login(opt) {
     return (dispatch) => {
@@ -28,10 +17,20 @@ export function login(opt) {
                 body: bodyUrlencoded(opt.body) })
     }
 }
+//注册
+export function teacherRegister(opt) {
+    return (dispatch) => {
+        const route = '/api/teacher/register';
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
+    }
+}
 //获取学生所有做的试卷
 export function getAllPaperOfStudent(opt){
     return (dispatch) => {
-        const route = '/api/allPaperOfStudent';//服务端数据
+        const route = '/api/teacher/allPaperOfStudent';//服务端数据
         request(route, {}, dispatch, opt.success, opt.error,
             { method: 'POST',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
@@ -41,7 +40,7 @@ export function getAllPaperOfStudent(opt){
 //获取一测试卷的做题详情
 export function getDataOfPaper(opt) {
     return (dispatch) => {
-        const route = '/api/math/dataOfPaper';
+        const route = '/api/teacher/dataOfPaper';
         request(route,{},dispatch,opt.success, opt.error,
             { method: 'POST',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
@@ -51,7 +50,7 @@ export function getDataOfPaper(opt) {
 //上传试卷批改信息
 export function updateMarkExamInfo(opt){
     return (dispatch) => {
-        const route = '/api/updateMarkExamInfo';//服务端数据
+        const route = '/api/teacher/updateMarkExamInfo';//服务端数据
         request(route, {}, dispatch, opt.success, opt.error,
             { method: 'POST',
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'},
@@ -61,7 +60,7 @@ export function updateMarkExamInfo(opt){
 //上传试题批改信息
 export function updateMarkQuestionInfo(opt){
     return (dispatch) => {
-        const route = '/api/updateMarkQuestionInfo';//服务端数据
+        const route = '/api/teacher/updateMarkQuestionInfo';//服务端数据
         request(route, {}, dispatch, opt.success, opt.error,
             { method: 'POST',
                 headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'},

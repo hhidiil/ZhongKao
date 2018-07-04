@@ -149,6 +149,18 @@ Math.prototype.getKnowledgeIdList = function (callback) {
         callback:callback
     })
 }
+/*在tblQuestion、tblQuestionItem两个表中查找某个试题id的详情。因为不知道存在于某个表中*/
+Math.prototype.getEveryQuestion = function (callback) {
+    var _sql = `(select * from tblQuestion where questionid='${this.props.id}')
+                UNION
+                (SELECT * from tblQuestionItem where itemid='${this.props.id}')`;
+    helper.db_query({
+        connect:con,
+        sql:_sql,
+        name:'getEveryQuestion',
+        callback:callback
+    })
+}
 Math.prototype.setThematicQuestionAnswerInfo = function (callback) {
     var _sql = `INSERT INTO tblStudentThematicExerciseInfo (userid,questionid,wherefrom,exercisedetailinfo)
                 VALUES

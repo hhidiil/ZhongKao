@@ -10,10 +10,10 @@ module.exports =  {
     init: function(app) {
         app.post('/teacher', this.doGetUserInfo);
         app.post('/teacher/register',this.doRegister);
-        app.post('/allPaperOfStudent',this.getAllPaperOfStudent);
-        app.post('/math/dataOfPaper',this.getDataOfPaper);
-        app.post('/updateMarkExamInfo',this.doUpdateMarkExamInfo);
-        app.post('/updateMarkQuestionInfo',this.doUpdateMarkQuestionInfo)
+        app.post('/teacher/allPaperOfStudent',this.getAllPaperOfStudent);
+        app.post('/teacher/dataOfPaper',this.getDataOfPaper);
+        app.post('/teacher/updateMarkExamInfo',this.doUpdateMarkExamInfo);
+        app.post('/teacher/updateMarkQuestionInfo',this.doUpdateMarkQuestionInfo)
     },
     doGetUserInfo:function(req,res){
         var props = req.body;
@@ -160,17 +160,19 @@ module.exports =  {
         var questionlist = '';
         var markerContent = '';
         var markerscore = '';
-        var markerFlag = '';
+        var markerUrl = '';
         for(let i in allquestion){
-            if(allquestion[i].teacherMark){
+            if(allquestion[i].hasOwnProperty('teacherMark')){
                 markerscore = markerscore + " WHEN " + "'"+allquestion[i].QuesID+"'" + " THEN " + allquestion[i].score;
                 markerContent = markerContent + " WHEN " + "'"+allquestion[i].QuesID+"'" + " THEN " + "'"+allquestion[i].teacherMark+"'";
+                markerUrl = markerUrl + " WHEN " + "'"+allquestion[i].QuesID+"'" + " THEN " + "'"+allquestion[i].teacherMarkUrl+"'";
                 questionlist = questionlist + ", '"+allquestion[i].QuesID+"'";
             }
         }
         questionlist =  questionlist.replace(/,/,"");
         var sql = "markerscore = CASE questionid " + markerscore + " END, " +
-                    "markerContent = CASE questionid " + markerContent + " END " +
+                    "markerContent = CASE questionid " + markerContent + " END, " +
+                    "markerUrl = CASE questionid " + markerUrl + " END " +
                     "WHERE examinfoid=" + "'"+examinfoid+"'" + " and questionid in " + "("+questionlist+")";
 
         console.log(sql);

@@ -9,7 +9,8 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import {getQuestionList,getQuestion,sentUserPaperData,sentUserQuestionDataOfPaper,getFirstDataOfPaper} from '../../../../redux/actions/math'
 import Timing from '../../../../components/timing'
-import {BaseEditor,MathJaxEditor} from '../../../../components/editer'
+import {MathJaxEditor} from '../../../../components/editer'
+import UpLoadFile from '../../../../components/upload/index'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import {Storage_S,Storage_L} from '../../../../config'
 import './question_style.css'
@@ -388,8 +389,8 @@ class Question extends Component{
             })
         })
     }
-    getEditContent(cont,dom,url){
-        console.warn(cont,url)
+    getEditContent(url){
+        console.warn(url)
         this.setState({img_url: url})
     }
     render(){
@@ -432,7 +433,7 @@ class Question extends Component{
                             </div>
                         </div>
                         <div id="MathContent">
-                            {!objectiveFlag ? '':<BaseEditor inputDom={this.state.target_id} editContent={this.getEditContent.bind(this)} />}
+                            {!objectiveFlag ? '':<UpLoadFile submitHandle={this.getEditContent.bind(this)} />}
                         </div>
                     </section>
                     <button type="button" className="btn btn-primary next_btn" disabled={(this.state.current==(this.state.totalNum+1))?true:false} onClick={()=>this.nextSubmit(this.state.current,GetQuestion)}>确定</button>

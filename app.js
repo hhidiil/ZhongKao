@@ -27,7 +27,7 @@ app.use(fileUpload());
 app.use('/public',express.static(path.join(__dirname, '/public')));//设置虚拟根目录
 app.use(express.static('thirdParty'));
 app.use(express.static('assets'));
-app.use(express.static('students_upload_images'));
+app.use(express.static('uploadImages'));
 app.use('/src',express.static('src'));
 
 app.use('/', index);

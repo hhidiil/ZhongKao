@@ -65,6 +65,15 @@ export function register(opt) {
                 body: bodyUrlencoded(opt.body) })
     }
 }
+export function resetPassword(opt){
+    return (dispatch) => {
+        const route = '/api/user/resetPassword';
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
+    }
+}
 //获取用户基本信息
 export function getUserBasicInfo(opt) {
     return (dispatch) => {

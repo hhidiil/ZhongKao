@@ -54,6 +54,17 @@ export function getQuestion(opt) {
                 body: opt.body })
     }
 }
+//获取某个知识点中所有的试题的详情:
+export function getEveryQuestion(opt) {
+    return (dispatch) => {
+        //const route = 'src/data/ExamsData/JSON/Question/'+opt.param;//本地数据
+        const route = '/api/math/everyQuestion';
+        requestSyn(route,{},dispatch,opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: opt.body })
+    }
+}
 //获取某个试题的所有子试题（即：主题，观察，考点，分析。。。）
 export function getAllChildOfQuestion(opt) {
     return (dispatch) => {

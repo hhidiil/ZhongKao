@@ -112,7 +112,7 @@ class QuestionAll extends Component{
                                             {doneFlag?<span className="wancheng">已完成</span>:<span className="wancheng">未完成</span>}
                                             {doneFlag?<span className="wancheng">总分：{doneDetails.Score}</span>:""}
                                             {doneFlag?<span className="wancheng">批改状态：{doneDetails.markFlag}</span>:""}
-                                            <Button type="dashed" className="bttn " onClick={()=>this.preview(item)}>结果预览</Button>
+                                            <Button type="dashed" className="bttn " onClick={()=>this.preview(item,doneFlag)}>结果预览</Button>
                                             <Button type="dashed" className="marginr5" onClick={()=>this.dataAnalysis(item)}>数据分析</Button>
                                             <Button type="dashed" className="bttn " onClick={()=>this.gotoPractice(item)}>开始</Button>
                                         </div>
@@ -198,7 +198,11 @@ class QuestionAll extends Component{
             alert("你还没有做完本套试题一测，请先做完一测！")
         }
     }
-    preview(data){
+    preview(data,flag){
+        if(!flag){
+            alert("您还没有做完本套试题,无法查看，请先做完试卷在查看！")
+            return;
+        }
         this.setState({previewFlag : true,previewData:data});
     }
     dataAnalysis(data){
@@ -215,6 +219,7 @@ class QuestionAll extends Component{
         //判断本套试题有没有测试完成过，只有一测完成了才能二测
         if(!flag){
             alert("你还没有做完本套试题一测，请先做完一测！")
+            return;
         }
         this.setState({
             quiz_again_status : !this.state.quiz_again_status,

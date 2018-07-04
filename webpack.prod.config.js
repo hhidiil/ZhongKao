@@ -9,8 +9,8 @@ module.exports = {
         front:[
             './src/enter/front.js'
         ],
-        admin:[
-            './src/enter/admin.js'
+        teacher:[
+            './src/enter/teacher.js'
         ]
     },
     output: {

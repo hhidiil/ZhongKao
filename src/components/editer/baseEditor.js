@@ -5,15 +5,13 @@
 import React,{Component} from 'react'
 import Editor from 'react-umeditor'
 import './style.css'
-import UpLoadFile from '../upload/index'
 import {Icon} from 'antd'
 
 class Edit extends Component{
     constructor(props){
         super(props)
         this.state = {
-            content: props.content || "",
-            imgUrl:''
+            content: props.content || ""
         }
     }
     handleChange(content){
@@ -32,28 +30,15 @@ class Edit extends Component{
         ]
         return icons;
     }
-    btnClick(){
-        //let content = this.editor.getContent();
-        let content = '';
-        let img_url = this.state.imgUrl;
-        //if(!this.props.inputDom) return alert("请点击要填写的输入框")
-        this.props.editContent(content,this.props.inputDom,img_url)
-    }
-    callbackImgUrl(cont){
-        this.setState({imgUrl:cont})
-    }
     render(){
         var icons = this.getIcons();
         return (
             <div>
-                {/*<Editor ref={(e)=>{this.editor = e}}
+                <Editor ref={(e)=>{this.editor = e}}
                  icons={icons}
                  defaultValue={this.state.content}
                  onChange={this.handleChange.bind(this)}
                  />
-                 <div style={{color:"lightsalmon"}}>(如果答案较为复杂输入框无法正常显示，可以在抄稿纸上写好答案并拍照上传奥！)</div>
-                 */}
-                <UpLoadFile imgUrl={this.callbackImgUrl.bind(this)} submitHandle={this.btnClick.bind(this)}></UpLoadFile>
             </div>
         )
     }

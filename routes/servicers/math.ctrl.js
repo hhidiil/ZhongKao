@@ -20,6 +20,7 @@ module.exports={
         app.post('/math/setCollection',this.doSetCollection);
         app.post('/math/allQuestionOfThematic',this.getAllQuestionOfThematic);
         app.post('/math/knowledgeIdList',this.getKnowledgeIdList);
+        app.post('/math/everyQuestion',this.getEveryQuestion);
         app.post('/math/thematicQuestionAnswerInfo',this.setThematicQuestionAnswerInfo)
     },
     getAllPapers: (req, res) => {
@@ -418,7 +419,24 @@ module.exports={
         math.getKnowledgeIdList(function(err,data){
             if(!err){
                 return res.send({
-                    code:500,
+                    code:200,
+                    data:data
+                })
+            }else{
+                return res.send({
+                    code:501,
+                    message:'数据出错了'
+                })
+            }
+        })
+    },
+    getEveryQuestion:(req,res)=>{
+        var props = req.body;
+        var math = new Math({props:props});
+        math.getEveryQuestion(function(err,data){
+            if(!err){
+                return res.send({
+                    code:200,
                     data:data
                 })
             }else{

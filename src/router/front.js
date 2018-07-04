@@ -9,8 +9,10 @@ import Door from '../container/front/door'
 import {isAdmin} from '../method_public/public'
 import Home from '../container/front/home'
 import Register from '../container/front/register'
+import ForgotPassword from '../container/front/forgotpassword'
 import Basic from '../container/front/page_modules/basic'
 import Math from '../container/front/page_modules/math'
+import ExciseTips from '../container/front/page_modules/exciseTips/index'
 import BasicInfo from '../container/front/page_modules/basic/basicInfo'
 import MyCollection from '../container/front/page_modules/basic/myCollection'
 import EchartsDetails from '../container/front/page_modules/basic/echartsDetails'
@@ -35,6 +37,7 @@ const routes = (
     <Route>
         <Route path="/" component={Door} />
         <Route path="/register" component={Register} />
+        <Route path="/forgotpassword" component={ForgotPassword} />
         <Route path="/home" component={Home} onEnter={requireAuth} >
             <Route path="basic" component={Basic} />
             <Route path="basic/basicInfo" component={BasicInfo}/>
@@ -48,6 +51,7 @@ const routes = (
             <Route path="math/questions/:flag" component={Thematic} />
             <Route path="math/questions/:flag/:index" component={ThematicQuesList} />
             <Route path="math/questionDetail/:id" component={QuestionDetail} />
+            <Route path="excisetip" component={ExciseTips}/>
         </Route>
         <Route path="/test" component={Test} />
         <Route path="*" component={NoFound} />

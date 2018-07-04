@@ -2,8 +2,6 @@
  * 上传文件
  * Created by gaoju on 2018/1/16.
  */
-var express = require('express');
-var fs = require('fs')
 const CONFIG_MAP = require('../../config')
 const Helper = require('../helper')
 
@@ -12,8 +10,16 @@ module.exports={
         app.post('/upload',this.doUpLoadFile)
     },
     doUpLoadFile: (req, res, next) => {
-        let imageFile = req.files.file,foldername='',preUrl='',dateString='',target_path='';
-        let path = `${CONFIG_MAP.root_path}/students_upload_images/all_images`;
+        let personflag = req.body.personflag;//那个角色上传的，有教师、学生。。教师为0，学生为1
+        let imageFile = req.files.file;
+        let foldername='',preUrl='',dateString='',target_path='';
+        let whichfile = '';
+        if(personflag == '0'){
+            whichfile = 'teacherImg';
+        }else if(personflag == '1'){
+            whichfile = 'studentImg';
+        }
+        let path = `${CONFIG_MAP.root_path}/uploadImages/${whichfile}`
         foldername = req.body.username;
         preUrl = req.body.preurl;
         Helper.deleteFile((path+"/"+foldername),preUrl);//文件存在，删除文件
@@ -24,7 +30,7 @@ module.exports={
             if (err) {
                 return res.status(500).send(err);
             }
-            res.json({file: `all_images/${foldername}/${dateString}.png`});
+            res.json({file: `${whichfile}/${foldername}/${dateString}.png`});
         });
     }
 }

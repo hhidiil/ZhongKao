@@ -1,14 +1,13 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET home page. */
+/* GET 学生. */
 router.get('/', function(req, res, next) {
   res.render('index', {});
 });
 
-/* GET admin. */
+/* GET 教师. */
 router.get('/teacher', function(req, res, next) {
-  res.render('admin', {});
+  res.render('teacher', {});
 });
-
 module.exports = router;
