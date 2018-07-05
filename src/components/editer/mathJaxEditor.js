@@ -7,6 +7,7 @@ import './style.css'
 
 class MathJaxEditor extends Component{
     constructor(props){
+        console.log("2222222222222222222222222222222222222222222222")
         super(props)
         this.state={
             showEditor:props.showEditor||false,
@@ -18,7 +19,8 @@ class MathJaxEditor extends Component{
     }
     componentDidMount(){
         //编辑框
-        var ue = UE.getEditor('container', {
+        let editorname = this.props.editorId;
+        var ue = UE.getEditor(editorname, {
             toolbars: [['kityformula']],
             elementPathEnabled:false,
             wordCount:false
@@ -46,9 +48,11 @@ class MathJaxEditor extends Component{
     }
     render(){
         const displayCss=[{display:"inline-flex",top:this.props.position[0],left:this.props.position[1]},{display:"none"}];
+        let editorid = this.props.editorId;
+        console.log("editorid---1111111111------->",editorid)
         return(
             <div className="mathEditorTip" style={this.props.showEditor?displayCss[0]:displayCss[1]}>
-                <div id="container" type="text/plain"></div>
+                <div id={editorid} className="editorContainer" type="text/plain"></div>
                 <div className="mathJaxClear" onClick={this.clearLatexValue}>清空</div>
             </div>
         )

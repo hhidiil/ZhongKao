@@ -1,4 +1,4 @@
-/**
+/**解题技巧
  * Created by gaoju on 2018/7/4.
  */
 import React,{Component} from 'react'

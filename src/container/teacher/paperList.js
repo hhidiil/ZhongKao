@@ -75,7 +75,8 @@ class PaperList extends Component {
                     return (
                         <div key={index} className="listitem">
                             <div className="one"><h4>({index+1})、{item.ExamPaperTitle}--{item.ExamType}--{this.state.activeName}</h4></div>
-                            <div className="two"><span>完成进度：{item.IsDone=='yes'?"已完成":"未完成"}</span><span>批改状态：{item.markFlag}</span><span>得分：{item.Score}</span>
+                            <div className="two"><span>完成进度：{item.IsDone=='yes'?"已完成":"未完成"}</span><span>批改状态：{item.markFlag}</span>
+                                {item.ExamType!='二测'?<span>得分：{item.Score}</span>:""}
                                 <Button type="primary" size="small" onClick={()=>{this.gotoPaper(item)}}>开始批改</Button>
                             </div>
                         </div>

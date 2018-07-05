@@ -2,16 +2,18 @@
  * 知识点页面
  * Created by gaoju on 2018/5/28.
  */
+
 import React,{Component} from 'react'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import {getKnowledgeIdList,getEveryQuestion} from '../../../../redux/actions/math'
-import Form from '../../../../components/form/form1'
 import './question_style.css'
 import ShowMask from '../../../../components/Alter/showMask'
 import MultipleChoice from '../../../../components/multipleChoice/index'
+import {MathJaxEditor} from '../../../../components/editer'
+import {getCoords} from '../../../../method_public/public'
 import { Menu, Icon,Button } from 'antd'
 
 
@@ -20,7 +22,10 @@ class Knowledge extends Component{
         super(props);
         this.state={
             knowledgeName:props.knowledgeName,//知识点名
-            questionListOfKnowledge:[]//知识点对应的所有试题
+            questionListOfKnowledge:[],//知识点对应的所有试题
+            target_id:'',
+            position:[],
+            showEditor:false
         }
     }
     componentDidMount(){
@@ -56,25 +61,56 @@ class Knowledge extends Component{
             }
         })
     }
+    componentDidUpdate(prevProps,prevState){
+        //完成渲染新的props或者state后调用，此时可以访问到新的DOM元素。
+       this.addEvent();
+    }
+    addEvent(){
+        console.log("12312321321321311321213")
+        let _this = this;
+        $(".knowledgeContent .practice").find('.div_input').each(function(i){
+            let add_id='';
+            add_id = "knowledge-"+i;
+            $(this).attr("id",add_id);
+            $(this).on('click',function(event){
+                _this.FocusHandle(this,add_id)
+            })
+        });
+    }
+    FocusHandle(e,add_id){
+        let tar_id,top='',left='';
+        if($(e)[0].localName == 'img'){
+            tar_id= ($(e)[0].offsetParent);
+        }else {
+            tar_id = $(e)[0];
+        }
+        let positions = getCoords(tar_id);//获取当前点击的元素在页面中的位置
+        top = (positions.top-40) + "px";
+        left = (positions.left+50) + "px";
+        $(tar_id).addClass("inputfoucs-style");
+        this.setState({showEditor:true,position:[top,left],target_id:add_id})
+    }
     exitBack(){
         this.props.closeKnowledge();
     }
     handleSubmit=(e)=>{
         e.preventDefault();
         console.log("submit")
-        //this.props.handleMask();
     }
     _QuestionContent(data){
         if(data.length<1){return <div/>}
         return data.map((item,index)=>{
+            let content = item.content;
+            if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
+                let qqq =  '<span class="div_input" contenteditable="true"></span>';
+                content = content.replace(/#blank#|#BLANK#/g,qqq);
+            }
             return(
                 <div key={index} className="practice">
-                    <div className="title">
-                        <ul>
-                            <li dangerouslySetInnerHTML={{__html:item.content}}></li>
-                            {item.questiontemplate == "选择题" ?<MultipleChoice type={item.questiontype} answer=""  index={index} choiceList={item.optionselect} />:''}
-                        </ul>
-                    </div>
+                    <ul>
+                        <li dangerouslySetInnerHTML={{__html:content}}></li>
+                        {item.questiontemplate == "选择题" ?<MultipleChoice type={item.questiontype} answer=""  index={index} choiceList={item.optionselect} />:''}
+                    </ul>
                 </div>
             )
         })
@@ -82,24 +118,12 @@ class Knowledge extends Component{
     render(){
         let quetionList = this.state.questionListOfKnowledge;
         return(
-            <div>
-                <ShowMask></ShowMask>
-                <div className="maskknowledge">
-                    <div className="math-question-content">
-                        <header>
-                            <div className="title" id="title">{this.state.knowledgeName}</div>
-                            <button type="button" className="btn btn-default" onClick={()=>this.exitBack()}>关闭</button>
-                        </header>
-                        <section>
-                            <div className="form1">
-                                <form onSubmit={this.handleSubmit}>
-                                    {this._QuestionContent(quetionList)}
-                                    <button type="submit" className="btn btn-primary submit_btn">提交</button>
-                                </form>
-                            </div>
-                        </section>
-                    </div>
-                </div>
+            <div className="knowledgeContent">
+                <MathJaxEditor position={this.state.position} editorId="knowledgeContainer" target_id={this.state.target_id} showEditor={this.state.showEditor}/>
+                <form onSubmit={this.handleSubmit}>
+                    {this._QuestionContent(quetionList)}
+                    <button type="submit" className="btn btn-primary submit_btn">提交</button>
+                </form>
             </div>
         )
     }

@@ -32,21 +32,6 @@
     -o-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
     border-image: url("/public/images/1111.jpg") 40 40 round stretch;
 }
-.maskknowledge{
-    position: fixed;
-    margin: 0 auto;
-    z-index: 1001;
-    width: 800px;
-    height: 725px;
-    overflow: hidden;
-    top: 50px;
-    right: 0;
-    left: 0;
-    bottom: 0;
-    background-color: white;
-    border: 5px solid dimgray;
-    border-radius: 5px;
-}
 .math-question-content{
     padding: 10px 20px;
 }
@@ -408,4 +393,20 @@
     background-color: white;
     height: 1000px;
     overflow-y: auto;
+}
+.knowledgeContent{
+    width: 100%;
+}
+.knowledgeContent .practice{
+    margin: 5px 0;
+}
+.knowledgeContent .practice p{
+    /*padding-left: 20px;*/
+}
+.knowledgeContent .practice img{
+    max-width: 100%;
+}
+.knowledgeContent .submit_btn{
+    float: right;
+    margin: 10px 20px 10px 0;
 }

@@ -80,7 +80,7 @@ class PaperDetail extends Component {
         })
     };
     getData(data,page){
-        let allQuestionetails = this.state.allQuestionetails[page];
+        console.log(data)
         if(data){
             this.props.actions.getAllChildOfQuestion({body:[{id:data.QuesID}],
                 success:(data)=>{
@@ -166,6 +166,9 @@ class PaperDetail extends Component {
     }
     _contentQtxt(data,index){
         console.log("_contentQtext------||||||\\\\//////--------------------->>>>>",data)
+        if(data.length<1){
+            return ;
+        }
         let items = data[0];
         let content = items.content;
         let questiontemplate = items.questiontemplate;
@@ -239,9 +242,6 @@ class PaperDetail extends Component {
     }
     render() {
         let currentQuesData =  this.state.currentQuesData;
-        if(currentQuesData.length<1){
-            return <div/>
-        }
         return (
             <div className="mask3 paperDetail">
                 <div className="math-question-content">

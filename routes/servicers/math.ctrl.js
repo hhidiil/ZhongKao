@@ -332,7 +332,7 @@ module.exports={
                         url = url.substring(0, url.lastIndexOf('@$'));//最后一个|去掉
                     }
                     everystr = "("+ "'"+ExamResult[i].QuesID+"'" +","+"'"+data.ExamInfoID+"'"+","+"'"+data.ExamPaperID+"'"+","
-                        +"'"+data.UserID+"'"+","+"'"+data.ExamOrExercise+"'"+"," + "'"+ExamResult[i].QuesType+"'"+","+"'"+trueOrfalse+"'"+","+"'"+"null"+"'"+","
+                        +"'"+data.UserID+"'"+","+"'"+data.ExamOrExercise+"'"+"," + "'"+ExamResult[i].QuesType+"'"+","+"'"+trueOrfalse+"'"+","+"'"+ExamResult[i].knowledge+"'"+","
                         +ExamResult[i].score+"," + "'"+answer+"'"+","+"'"+url+"'"+")"
                 }
                 str = str + everystr + ",";

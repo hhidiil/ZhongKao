@@ -32,6 +32,7 @@ export var EveryChildInfo={
     "QuesType": "",
     "Contents": [],
     "score": 0,
+    "knowledge":'',
     "childs": [
         {
             "Objective": [

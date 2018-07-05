@@ -15,7 +15,7 @@ import PureRenderMixin from '../../../../method_public/pure-render'
 import SelectMenu from '../../../../components/selectMenu/selectMenu'
 import NoThisPart from '../../../../components/defaultJPG/nothispart'
 import {Storage_S,Storage_L} from '../../../../config'
-import {sentJson_Question,EveryChildInfo} from '../../../../method_public/sentJson'
+import {EveryChildInfo} from '../../../../method_public/sentJson'
 import moment from 'moment'
 import './question_style.css'
 import {Menu, Icon,Button,Input,message } from 'antd'
@@ -23,6 +23,7 @@ import {Pagination,Pagination2} from '../../../../components/pagination'
 import MultipleChoice from '../../../../components/multipleChoice/index'
 import {BaseEditor,MathJaxEditor} from '../../../../components/editer'
 import UpLoadFile from '../../../../components/upload/index'
+import DialogMask from '../../../../components/Alter/dialogMask/dialogmask'
 import Knowledge from './knowledge.js'
 
 const SubMenu = Menu.SubMenu;
@@ -74,7 +75,7 @@ class Question extends Component{
             target_id:'',
             position:[],
             solution:false,
-            knowledgeFlag:false,
+            DialogMaskFlag:false,
             knowledgeName:''
         }
     }
@@ -154,7 +155,7 @@ class Question extends Component{
     componentDidUpdate(prevProps,prevState){
         //完成渲染新的props或者state后调用，此时可以访问到新的DOM元素。
         if(prevState.analysisLeftContent != this.state.analysisLeftContent){
-            this.addEventFuc('0');//为分析部分添加事件处理
+            this.addEventFuc();//为分析部分添加事件处理
         }
         //if(prevState.solution != this.state.solution){
         //    this.addEventFuc('1');//主题解答添加事件处理
@@ -173,7 +174,7 @@ class Question extends Component{
     routerWillLeave=(nextLocation)=> {
         // 返回 false 会继续停留当前页面，否则，返回一个字符串，会显示给用户，让其自己决定
         if(confirm('确认要离开？')){
-            UE.delEditor('container');//退出的时候删除实例化的编辑器
+            UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
             setTimeout(()=>{
                 return true;
             },1000)
@@ -262,6 +263,9 @@ class Question extends Component{
     }
     addEventFuc(type){
         let _this = this;
+        $('#knowledgeText').on('click',function(e){
+            _this.getKnowledge(e);
+        });
         $("#Analysis_Qtxt").find('.div_input').each(function(i){
             let add_id='';
             add_id = "answer-"+_this.state.current+"-"+_this.state.nowAnalysisPart+"-"+i;
@@ -545,19 +549,24 @@ class Question extends Component{
     }
     //提交整套试卷的数据详情
     submitAllQuestion(){
-        let endList = (this.state.sentAllList).ExamResult;
         if(confirm("确定提交吗？")){
             (this.state.sentAllList).FinishDate = moment().format();//结束时间
             (this.state.sentAllList).AllDone = "yes";
-            let endalllist = (this.state.sentAllList).ExamResult,allscore=0;
-            console.log(endalllist)
-            for(let ii in endalllist){
-                if(endalllist[ii]){
-                    allscore += Number(endalllist[ii].score);
+            let endalllist = (this.state.sentAllList).ExamResult;
+            let endnewlist = [] ,allscore=0;
+            let len = (this.state.allQuestionetails).length;
+            for(let ii=0;ii<len;ii++){
+                if(!endalllist[ii]){
+                    endnewlist[ii] = this.state.allQuestionetails[ii];
+                }else {
+                    endnewlist[ii] = endalllist[ii];
                 }
+                allscore += Number(endnewlist[ii].score);
             }
+            (this.state.sentAllList).ExamResult = endnewlist;
             (this.state.sentAllList).Score = allscore;
             let sentItems = this.state.sentAllList;
+            console.log("全部提交的内容：：====》》》》",sentItems);
             this.props.actions.sentUserPaperData({
                 body:{data:sentItems},
                 success:(data)=>{
@@ -643,12 +652,12 @@ class Question extends Component{
         console.log($(e.target)[0].innerText)
         let knowledge = $(e.target)[0].innerText;
         console.log("getKnowledge-----constructor--------props--->",this.props.location.pathname)
-        this.setState({knowledgeFlag:true,knowledgeName:knowledge})
+        this.setState({DialogMaskFlag:true,knowledgeName:knowledge})
         //this.props.actions.push(`/home/math/knowledge/${knowledge}`)
     }
     closeKnowledgeBox(){
-        console.log("closeKnowledgeBox")
-        this.setState({knowledgeFlag:false})
+        UE.delEditor('knowledgeContainer');
+        this.setState({DialogMaskFlag:false})
     }
     _analysisQtxt(data,type){
         let num = this.state.current;
@@ -659,18 +668,25 @@ class Question extends Component{
             let knowledge = item.knowledge;
             let questionType=false;
             let ddd_content = (ddd && ddd.length>0) ? ddd[index].content : [];//解析的某部分的第几个content所有内容（比如考点中的第一个小题全部内容）
-            let regex=/\{\@(.+?)\@\}/g;
+            let regex=/@.+?@/g;
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                 content = content.replace(/\s/g,'');
                 content = content.replace(/<u>blank<\/u>|blank|BLANK/g,'<span contenteditable="true" class="div_input"></span>')
             }
-            content = content.replace(regex,'<span class="mustText">※</span>')//标记必填空
+            let knowledgelist = content.match(regex);//找出知识点
+            if(knowledgelist && knowledgelist.length>0){
+                for(let i in knowledgelist){
+                    let knowname = knowledgelist[i].replace(/\s|@/g,'');
+                    console.warn("knowname====>>>>>",knowname)
+                    content = content.replace(new RegExp(knowledgelist[i],'g'),'<span class="mustText" id="knowledgeText">'+knowname+'</span>')//标记必填空
+                }
+            }
             if(item.questiontemplate == '选择题'){
                 questionType = true;
             }
             if(knowledge){
                 knowledge = (knowledge.replace(/["\[\]\s]/g,""));
-                knowledge = knowledge.replace(/；|;|\|\|/g,"@&").split('@&');
+                knowledge = knowledge.replace(/；|\@\#|;|\|\|/g,"@&").split('@&');
             }
             return (
                 <div className="analysisContent" style={{padding: "10px",borderBottom: '1px dashed gray'}} key={index} >
@@ -685,7 +701,7 @@ class Question extends Component{
                         <span style={{margin:"0 10px"}}>答案：<span dangerouslySetInnerHTML={{__html:item.answer}}></span></span>
                         <button className="marginl10" onClick={(e)=>{this.submitOne(e,item,index,type,questionType)}}>提交</button>
                     </ul>}
-                    {!this.state.knowledgeFlag?"":<Knowledge knowledgeName={this.state.knowledgeName} closeKnowledge={this.closeKnowledgeBox.bind(this)}></Knowledge>}
+                    {!this.state.DialogMaskFlag?"":<DialogMask title={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()}><Knowledge knowledgeName={this.state.knowledgeName} /></DialogMask>}
                 </div>
             )
         },this)
@@ -754,6 +770,7 @@ class Question extends Component{
         if(!olddata){//没有此题缓存，则取出一测的做题答案信息
             newChildList = JSON.parse(everyChildInfo)//先全部给空，初始化
             newChildList.Contents = data.Contents;
+            newChildList.knowledge = data.knowledge;
             newChildList.score = data.score;
         }else {
             newChildList = olddata;
@@ -783,7 +800,7 @@ class Question extends Component{
         this.getData(this.state.allQuestionetails[page-1],page-1)
     }
     exitBack(){
-        UE.delEditor('container');//退出的时候删除实例化的编辑器
+        UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
         this.props.actions.push("/home/math/exams")
     }
     onOpenChange = (openKeys) => {
@@ -895,7 +912,7 @@ class Question extends Component{
                     <br/>
                     <hr/>
                     <section className="QtxtContent" style={contH}>
-                        <MathJaxEditor position={this.state.position} target_id={this.state.target_id} showEditor={this.state.showEditor}/>
+                        <MathJaxEditor position={this.state.position} editorId="questionContainer" target_id={this.state.target_id} showEditor={this.state.showEditor}/>
                         {!this.state.mainContent?"":<div className="QtxtContent_main">
                             <div id="Content_Qtxt">
                                 {this._contentQtxt(this.state.currentQuesData,this.state.current)}

@@ -28,7 +28,7 @@
 .formDialog .editor-container{
     border: none;
 }
-#container{
+.editorContainer{
     position: relative;
     width: 36px;
     border: 1px solid #ddd;

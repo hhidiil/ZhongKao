@@ -27,18 +27,22 @@ class Pagination extends Component{
         }
     }
     componentDidMount(){
-        this.setBackgroudcolor(this.state.errorList);
+        console.log("componentDidMount====>>>>",this.state.errorList)
         this.addClassHandle(this.state.current);
     }
     componentWillReceiveProps(nextProps) {
         if (nextProps) {
            this.addClassHandle(nextProps.current)
+            this.setBackgroudcolor(nextProps.errorList);
         }
     }
     setBackgroudcolor(list){
-        for(let i=0;i<list.length;i++){
-            let _this = this.refs[list[i]];
-            $(_this).find('a').css("color","red")
+        console.log("setBackgroudcolor====>>>>",list)
+        if(list){
+            for(let i=0;i<list.length;i++){
+                let _this = this.refs[list[i]];
+                $(_this).find('a').css("color","red")
+            }
         }
     }
     addClassHandle(num){
