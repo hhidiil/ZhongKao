@@ -4,24 +4,25 @@
  */
 import React,{Component} from 'react'
 import './style.css'
-import { Menu, Icon,Button,Modal,Collapse } from 'antd'
+import { Menu, Icon,Button,Modal } from 'antd'
 // redux
 import { bindActionCreators } from 'redux'
 import PureRenderMixin from '../../method_public/pure-render'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import {getAllChildOfQuestion} from '../../redux/actions/math'
+import {getAllChildOfQuestion,getChildQuestionsForQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion} from '../../redux/actions/math'
 import {updateMarkExamInfo,getDataOfPaper} from '../../redux/actions/teacher'
 import {Pagination} from '../../components/pagination'
+import MyCollapse from '../../components/collapse/index'
 import MultipleChoice from '../../components/multipleChoice/index'
+import UpLoadFile from '../../components/upload/index'
 import * as Modals from '../../method_public/antd-modal'
 import {Storage_S} from '../../config'
 
-function callback(key) {
-    console.log(key);
-}
-const Panel = Collapse.Panel;
-const sectionParts = ["观察部分试题","分析部分试题","考点部分试题","解析部分试题","巩固练习部分试题","拓展练习部分试题"];
+const sectionParts = ["观察部分试题","考点部分试题","分析部分试题","解析部分试题","巩固练习部分试题","拓展练习部分试题"];
+const sectionParts2 = ["Objective","Review","Analysis","Explain","Exercise1","Exercise2"];
+var allDataOfItem={};
+var num = 0;
 class PaperDetail extends Component {
     constructor(props) {
         super(props)
@@ -33,19 +34,20 @@ class PaperDetail extends Component {
             current: 0,//当前是第几题
             allQuestionetails:[],
             currentQuesData:[],
+            allDataOfItem:[],//某个试题的所有部分的数据
             errorArray:[],
             previewVisible:false,
             examInfoID:'',//试卷唯一ID
-            marktipsFlag:false
+            marktipsFlag:false,
+            nowAnalysisPart:'',
+            previewImage:''
         };
     };
     componentDidMount(){
-        console.log(this.state.userid,this.state.paperid);
         let userid = this.state.userid;
-        this.props.actions.getDataOfPaper({//获取最近一测考试的结果
+        this.props.actions.getDataOfPaper({//获取测试考试试卷的做题结果
             body:{id: this.state.paperid},
             success:(data)=>{
-                console.log("getDataOfPaper------->>>----->>>>",data);
                 let dealData = (data[0].ExamResult).replace(/\\/g,"@&@")//json中有\的时候会出错
                 let datajson = JSON.parse(dealData);
                 let errorArray=[];//错误题号
@@ -80,23 +82,116 @@ class PaperDetail extends Component {
         })
     };
     getData(data,page){
-        console.log(data)
         if(data){
-            this.props.actions.getAllChildOfQuestion({body:[{id:data.QuesID}],
+            this.props.actions.getAllChildOfQuestion({
+                body:[{id:data.QuesID}],
                 success:(data)=>{
                     console.log("currentQuesData-------===---->>>",(data[0].data));
                     this.setState({
                         current: page+1,
                         currentQuesData:data[0].data
                     })
-                }})
+                    this.getAllDataOfChildItem()
+                },
+                error:(message)=>{console.error(message)}
+            })
         }
+    }
+    getAllDataOfChildItem(){
+        let typelist = ['Objective','Review','Analysis','Explain','Exercise1','Exercise2'];
+        for(let i in typelist){
+            this.onClickCallback(typelist[i]);
+        }
+    }
+    onClickCallback(type) {
+        let whichOne=[0,1];
+        let list = this.state.currentQuesData;
+        let childid = list[0].childsid;
+        let childs = list[0].childs;//大题的问题
+        whichOne = whichOne[0];//某个试题下的小题（解答题的小问）,默认没有
+        if(childs.length >0){
+            this.props.actions.getChildQuestionsForQuestion({
+                body:[{id:childs[whichOne].questionid}],
+                success:(data)=>{
+                    childid =  childid.concat(data[0].data);
+                    if(type == 'Exercise1' || type == 'Exercise2'){
+                        this.getDateOfPractice(type,childid)
+                    }else {
+                        this.getDateOfAnalysis(type,childid)
+                    }
+                },
+                error:(err)=>{console.error(err)}
+            })
+        }else {
+            if(type == 'Exercise1' || type == 'Exercise2'){
+                this.getDateOfPractice(type,childid)
+            }else {
+                this.getDateOfAnalysis(type,childid)
+            }
+        }
+    }
+    getDateOfAnalysis(type,alldata){
+        for(let i=0;i<alldata.length;i++){
+            if(alldata[i].parttype == type){//在返回值中查找对应部分的内容，有就查询数据
+                this.props.actions.getContentOfChildItems({
+                    body:[{id:alldata[i].itemid}],
+                    success:(data)=>{
+                        if(data[0].code == 200){
+                            let dataArray=[];
+                            for(let i=0;i<(data[0].data).length;i++){
+                                dataArray.push({id:(data[0].data)[i].itemid})
+                            }
+                            this.props.actions.getContentOfChildItemsForQues({
+                                body:dataArray,
+                                success:(data)=>{
+                                    if(data[0].code == 200){
+                                        allDataOfItem[type] = data[0].data;
+                                        if(Object.keys(allDataOfItem).length == 6){//表示所有的请求已经完毕
+                                            this.setState({allDataOfItem:allDataOfItem});
+                                        }
+                                    }else {
+                                        console.error(data[0].message)
+                                    }
+                                },
+                                error:(err)=>{console.error(err)}
+                            })
+                        }else {
+                            console.error(data[0].message)
+                        }
+                    },
+                    error:(err)=>{console.error(err)}
+                })
+            }
+        }
+    }
+    getDateOfPractice(type,data){//获取练习部分的试题
+        let exerciseArray = [];
+        for(let i=0;i<data.length;i++){
+            if(data[i].parttype == type){//在返回值中查找对应部分的内容，有就查询数据
+                exerciseArray.push({id:data[i].itemid})
+            }
+        }
+        this.props.actions.getQuestion({
+            body:exerciseArray,
+            success:(data)=>{
+                let newdata = [];
+                if(data){
+                    for (let i in data){
+                        newdata[i] = (data[i].data)[0];
+                    }
+                }
+                allDataOfItem[type] = newdata;
+                if(Object.keys(allDataOfItem).length == 6){//表示所有的请求已经完毕
+                    this.setState({allDataOfItem:allDataOfItem});
+                }
+            },
+            error:(err)=>{console.error(err)}
+        })
     }
     exitBack(){
         let _this = this;
         Modals.showConfirm("是否已经全部提交？", function () {
             let url = (_this.props.location.pathname).split('/');
-            //let tar = url.pop();
             url = url.splice(0,url.length-3);
             let endurl = url.join('/');
             _this.props.actions.push(endurl)
@@ -106,8 +201,14 @@ class PaperDetail extends Component {
         console.log("page--",page);
         this.getData(this.state.allQuestionetails[page-1],page-1)
     }
+    onClickOther(e){
+        if(e.target.className != 'pigaiTips'){
+            if(this.state.marktipsFlag){
+                this.setState({marktipsFlag:false})
+            }
+        }
+    }
     submitMark(){
-        console.log(this.state.allQuestionetails[this.state.current-1])
         this.setState({marktipsFlag:false})
     }
     submitAllQuestion(){
@@ -123,7 +224,6 @@ class PaperDetail extends Component {
             Score:allscore,
             marker:Storage_S.getItem("username")
         }
-        console.log(sentList)
         this.props.actions.updateMarkExamInfo({
             body:{data:sentList},
             success:(data)=>{
@@ -137,8 +237,11 @@ class PaperDetail extends Component {
     MarkTips(){
         this.setState({marktipsFlag:true})
     }
-    _studentAnwser(data){
-        console.log("_studentAnwser------------------->>>>>",data)
+    submitHandle(img_url){
+        console.warn(img_url)
+        this.uploadcontent.setAttribute('data-value',img_url)
+    }
+    _studentAnwser_Main(data){
         return (
             <div className="studentAnwser">
                 <div className="studenttext">
@@ -148,12 +251,43 @@ class PaperDetail extends Component {
                     <span dangerouslySetInnerHTML={{__html:data[0].content}}></span>
                     {!(data[0].url)?"":<div className="studentimg">
                         <img width="260px" src={data[0].url}/>
-                        <div className="chakan" onClick={()=>{this.setState({previewVisible: true})}}>查看</div>
+                        <div className="chakan" onClick={()=>{this.setState({previewVisible: true,previewImage:data[0].url})}}>查看</div>
                     </div>}
                     <Modal visible={this.state.previewVisible} footer={null} onCancel={()=>{this.setState({previewVisible: false})}}>
-                        <img alt="preview" style={{ width: '100%' }} src={data[0].url} />
+                        <img alt="preview" style={{ width: '100%' }} src={this.state.previewImage} />
                     </Modal>
                 </div>}
+            </div>
+        )
+    }
+    _studentAnwser_Child(list,type){
+        if(!list){return}
+        let data = list.content;
+        return (
+            <div className="studentAnwser">
+                <div className="studenttext">
+                    <span>学生答案：</span>
+                </div>
+                {data ? data.map((item,index)=>{
+                    return (
+                        <div key={index} style={{float:'left'}}>
+                            <span>{item.answer}</span>
+                            {!(item.url)?"":(
+                                <div>
+                                    <div className="studentimg">
+                                        <img width="100px" src={item.url}/>
+                                        <div className="chakan" onClick={()=>{this.setState({previewVisible: true,previewImage:data[0].url})}}>查看</div>
+                                    </div>
+                                    <Modal visible={this.state.previewVisible} footer={null} onCancel={()=>{this.setState({previewVisible: false})}}>
+                                        <img alt="preview" style={{ width: '100%' }} src={this.state.previewImage} />
+                                    </Modal>
+                                </div>
+                            )}
+                            <span>；</span>
+                        </div>
+                    )
+                },this):''}
+                <div className="clearfix"></div>
             </div>
         )
     }
@@ -165,10 +299,8 @@ class PaperDetail extends Component {
         }
     }
     _contentQtxt(data,index){
-        console.log("_contentQtext------||||||\\\\//////--------------------->>>>>",data)
-        if(data.length<1){
-            return ;
-        }
+        if(!data){return ;}
+        if(data.length<1){return ;}
         let items = data[0];
         let content = items.content;
         let questiontemplate = items.questiontemplate;
@@ -193,58 +325,59 @@ class PaperDetail extends Component {
                     <div>
                         <ul id="mainTopic" style={{padding:"8px 0"}}>
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
-                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer[0].content} isCando="false" index={index} choiceList={items.optionselect} />:''}
+                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer[0].content} isCando="false" index={"MainContent"+index} choiceList={items.optionselect} />:''}
                             {childs.length<1?"":this._childsList(childs)}
-                            {questionType?"":this._studentAnwser(oldanswer)}
+                            {questionType?"":this._studentAnwser_Main(oldanswer)}
                         </ul>
                     </div>
                 </div>
             )
         }
     }
-    _partQuestions(num){
-        const base = new Base64();
-        return (
-            <div>
-                <div key="1" className="erveryQuestion">
-                    <ul>
-                        <li>1.如图，数轴上两点A，B表示的数互为相反数，则点B表示的数为（    ）。</li>
-                        <MultipleChoice type="单选题" answer="A" isCando="false" index={num} choiceList="[MTA=,MjA=,MzA=,40]" />
-                    </ul>
-                    <div className="pigaiTips" onClick={()=>{this.MarkTips()}}>批改</div>
-                </div>
-                <div key="2" className="erveryQuestion">
-                    <ul>
-                        <li> 本题主要考查的知识点有:</li>
-                        <MultipleChoice type="多选题" answer="A,C" isCando="false" index={num} choiceList="[5peL6L2s5oCn6LSo,5YWo562J5LiJ6KeS5b2i55qE5oCn6LSo,5q2j5pa55b2i55qE5oCn6LSo]" />
-                    </ul>
-                    <div className="pigaiTips" onClick={()=>{this.MarkTips()}}>批改</div>
-                </div>
-                <div key="3" className="erveryQuestion">
-                    <ul>
-                        <li> 由旋转的性质，知点A不动，AD边绕点A顺时针旋转90°后，与_BC_（AB/BC/CD）边重合，不难知选项A符合题意。</li>
-                    </ul>
-                    <div className="pigaiTips" onClick={()=>{this.MarkTips()}}>批改</div>
-                </div>
-                <div key="4" className="erveryQuestion">
-                    <ul>
-                        <li>（1）、如图，AB是⊙O的直径，C是AD的中点，⊙O的切线BD交AC的延长线于点D，E是OB上一点，CE的延长线交DB的延长线于点F，AF交⊙O于点H，连接BH。</li>
-                        <li><img src="http://localhost:10000/all_images/admin/tDo3fh3Hc1530149490200.png" width="200px"/></li>
-                        <li>1）求证:AB=BD；</li>
-                        <li>2）若tan∠BEF=2，求证:E是CF的中点；</li>
-                        <li>3）在2）的条件下，若OB=2，求BH的值</li>
-                        <li>答案：<img src="http://localhost:10000/all_images/admin/tDo3fh3Hc1530149490200.png" width="200px"/></li>
-                    </ul>
-                    <div className="pigaiTips" onClick={()=>{this.MarkTips()}}>批改</div>
-                </div>
-            </div>
-        )
+    _partQuestionContent(data,type){
+        if(data){
+            let partlist = data[type];
+            let oldAnswer =[]
+            if(this.state.allQuestionetails[this.state.current-1]){
+                if((this.state.allQuestionetails[this.state.current-1].childs)){
+                    oldAnswer = (this.state.allQuestionetails[this.state.current-1].childs[0])[type];
+                }
+            }
+            if(partlist && partlist.length>0){
+                return partlist.map((item,index)=>{
+                    let content = item.content;
+                    let questionType = '';
+                    let childs = item.childs ? item.childs :[];
+                    let oldanswer = oldAnswer[index] ? oldAnswer[index]:null;//学生的答案
+
+                    if(item.questiontemplate == '选择题'){
+                        questionType = true;
+                    }
+                    if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
+                        content = content.replace(/\_|\s/g,"");
+                        let qqq =  '<span class="div_input"></span>';
+                        content = content.replace(/blank|BLANK/g,qqq);
+                    }
+                    return(
+                        <div key={index} className="erveryQuestion">
+                            <ul>
+                                <li dangerouslySetInnerHTML={{__html:content}}></li>
+                                {item.questiontemplate == '选择题'?<MultipleChoice type={item.questiontype} isCando="false" answer={oldanswer?(oldanswer.content[0]).answer:''} index={type+"-"+index} choiceList={item.optionselect} />:''}
+                                {childs.length<1?"":this._childsList(childs)}
+                                {questionType?"":this._studentAnwser_Child(oldanswer,type)}
+                            </ul>
+                            <div className="pigaiTips" onClick={()=>{this.MarkTips()}}>批改</div>
+                        </div>
+                    )
+                },this)
+            }
+        }
     }
     render() {
         let currentQuesData =  this.state.currentQuesData;
         return (
             <div className="mask3 paperDetail">
-                <div className="math-question-content">
+                <div className="math-question-content" onClick={(e)=>this.onClickOther(e)}>
                     <header>
                         <div className="title" id="title">{"2018年中考题"+"（一测试卷）"}</div>
                         <div className="exit" >
@@ -272,32 +405,45 @@ class PaperDetail extends Component {
                     <hr/>
                     <section>
                         <div className="childContent">
-                            {
-                                sectionParts.map((item,index)=>{
-                                    return (
-                                        <Collapse key={index} onChange={callback}>
-                                            <Panel header={item} key={index}>
-                                                {this._partQuestions(index)}
-                                            </Panel>
-                                        </Collapse>
-                                    )
-                                },this)
-                            }
+                            <MyCollapse title="观察部分试题">
+                                {this._partQuestionContent(this.state.allDataOfItem,'Objective')}
+                            </MyCollapse>
+                            <MyCollapse title="考点部分试题">
+                                {this._partQuestionContent(this.state.allDataOfItem,'Review')}
+                            </MyCollapse>
+                            <MyCollapse title="分析部分试题">
+                                {this._partQuestionContent(this.state.allDataOfItem,'Analysis')}
+                            </MyCollapse>
+                            <MyCollapse title="解答部分试题">
+                                {this._partQuestionContent(this.state.allDataOfItem,'Explain')}
+                            </MyCollapse>
+                            <MyCollapse title="巩固部分试题">
+                                {this._partQuestionContent(this.state.allDataOfItem,'Exercise1')}
+                            </MyCollapse>
+                            <MyCollapse title="拓展部分试题">
+                                {this._partQuestionContent(this.state.allDataOfItem,'Exercise2')}
+                            </MyCollapse>
                         </div>
                     </section>
-                    <section style={{display:"flex",justifyContent:"center"}}>
-                        {!this.state.marktipsFlag?"":(
-                            <div className="teacherMark">
-                                <div><span>评语:</span>
-                                    <textarea id="textarea" ref={(e)=>{this.textarea = e}} className="form-control" rows="3"></textarea>
-                                </div>
-                                <div className="margint5">
-                                    <label>打分:</label><input id="markscore" ref={(e)=>{this.markscore = e}} type="number" className="form-control markscore"/>
-                                    <Button type="primary" onClick={()=>{this.submitMark()}}>提交</Button>
-                                </div>
+                </div>
+                <div style={{display:"flex",justifyContent:"center"}}>
+                    {!this.state.marktipsFlag?"":(
+                        <div className="teacherMark">
+                            <div className="makescore">
+                                <label>打分:</label><input id="markscore" ref={(e)=>{this.markscore = e}} type="number" className="form-control markscore"/>
                             </div>
-                        )}
-                    </section>
+                            <div className="makecontent">
+                                <span>评语:</span>
+                                <textarea id="textarea" ref={(e)=>{this.textarea = e}} className="form-control" rows="3"></textarea>
+                            </div>
+                            <div className="uploadcontent" ref={(e)=>{this.uploadcontent = e}}>
+                                <UpLoadFile preview="false" personFlag="0"  submitHandle={this.submitHandle.bind(this)} />
+                            </div>
+                            <div className="submit">
+                                <Button type="primary" onClick={()=>{this.submitMark(currentQuesData)}}>提交</Button>
+                            </div>
+                        </div>
+                    )}
                 </div>
             </div>
         );
@@ -307,7 +453,7 @@ function mapStateToProps(state, ownProps) {
     return {}
 }
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getDataOfPaper,getAllChildOfQuestion,updateMarkExamInfo}, dispatch) }
+    return { actions: bindActionCreators({push,getDataOfPaper,getAllChildOfQuestion,updateMarkExamInfo,getChildQuestionsForQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaperDetail)

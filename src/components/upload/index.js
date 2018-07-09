@@ -42,7 +42,7 @@ class UpLoadFile extends Component{
                         Modals.success('','上传成功！')
                         _this.setState({ imageURL: `${WINDOW_HOST}/${data.file}` });
                         setTimeout(()=>{
-                            _this.props.submitHandle(_this.state.imageURL);
+                            _this.props.submitHandle(_this.state.imageURL,_this.props.id);
                         },1000)
                     }
                 })
@@ -50,17 +50,16 @@ class UpLoadFile extends Component{
             })
         }
     }
-    deleteSubmit = (e) =>{
-        e.preventDefault();
+    deleteSubmit = () =>{
         let file = this.uploadInput;
         file.value = '';
         $('#preview').empty()
     }
     preview =()=>{
         let file = this.uploadInput.files[0];
-        var img = new Image(), url = img.src = URL.createObjectURL(file);
+        let img = new Image(), url = img.src = URL.createObjectURL(file);
         $(img).addClass("img-responsive");
-        var $img = $(img);
+        let $img = $(img);
         img.onload = function() {
             URL.revokeObjectURL(url);
             $('#preview').empty().append($img);
@@ -72,7 +71,7 @@ class UpLoadFile extends Component{
             <div className="fileupload">
                 <form>
                     <label htmlFor="exampleInputFile">上传文件：</label>
-                    <input ref={(ref) => { this.uploadInput = ref; }} type="file" width="200px" onChange={this.preview} id="exampleInputFile" /><br/>
+                    <input id="exampleInputFile" ref={(ref) => { this.uploadInput = ref; }} type="file" width="200px" onChange={this.preview} /><br/>
                     {this.state.preview != 'false'?<div id="preview"></div>:''}
                     <button type="button" className="btn ant-btn-danger btn-sm" onClick={this.deleteSubmit}>删除</button>
                     <button type="button" className="btn btn-default btn-sm" onClick={this.upLoadSubmit}>开始上传</button>

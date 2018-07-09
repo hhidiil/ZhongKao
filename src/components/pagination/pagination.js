@@ -37,7 +37,6 @@ class Pagination extends Component{
         }
     }
     setBackgroudcolor(list){
-        console.log("setBackgroudcolor====>>>>",list)
         if(list){
             for(let i=0;i<list.length;i++){
                 let _this = this.refs[list[i]];

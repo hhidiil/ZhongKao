@@ -126,8 +126,8 @@ class Question extends Component{
             tar_id = $(e)[0];
         }
         let positions = getCoords(tar_id);//获取当前点击的元素在页面中的位置
-        top = (positions.top -210) + "px";
-        left = (positions.left - 10) + "px";
+        top = (positions.top-42) + "px";
+        left = (positions.left + 50) + "px";
 
         $(tar_id).addClass("inputfoucs-style");
         if(add_id != this.state.target_id){
@@ -231,7 +231,7 @@ class Question extends Component{
     }
     exitBack(){
         this.setState({cleartimeflag:true});
-        UE.delEditor('container');
+        UE.delEditor('practiceContainer');
         setTimeout(()=>{
             this.props.actions.push("/home/math/exams")
         },500)
@@ -426,7 +426,7 @@ class Question extends Component{
                         </div>
                     </div>
                     <section className="QtxtContent" style={contH}>
-                        <MathJaxEditor position={this.state.position} target_id={this.state.target_id} showEditor={this.state.showEditor}/>
+                        <MathJaxEditor position={this.state.position} editorId="practiceContainer" target_id={this.state.target_id} showEditor={this.state.showEditor}/>
                         <div className="QtxtContent_main">
                             <div id="Content_Qtxt">
                                 {this._contentQtxt(GetQuestion,this.state.current)}

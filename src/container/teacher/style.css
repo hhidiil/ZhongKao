@@ -246,7 +246,8 @@
 }
 .paperDetail .teacherMark{
     position: fixed;
-    display: inline-flex;
+    display:inline-flex;
+    justifyContent:center;
     padding: 10px 10px;
     border: 2px dashed;
     background-color: beige;

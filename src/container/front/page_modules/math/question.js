@@ -52,7 +52,7 @@ class Question extends Component{
             allQuestionetails:[],//一测所有试题做题结果
             currentQuesData:[],//当前试题的所有内容
             analysisLeftContent:[],//当前试题的分析部分
-            exerciseContent:[],//当前试题的分析部分
+            exerciseContent:[],//当前试题的练习部分
             current: !paperItems ? null : paperItems.currentquesid,//当前是第几题
             current1: !paperItems ? null : paperItems.currentquesid,
             current2:!paperItems ? null : paperItems.currentquesid,//错误题页码
@@ -62,7 +62,7 @@ class Question extends Component{
             mainContentH:0,//主题干显隐高度
             two_answer_flag:false,//主题干显隐，展开true闭合false
             two_answer_content:'',
-            exerciseIndex:'',
+            //exerciseIndex:'',
             AnalysisMenu:'0',//分析解答中左侧menu
             AnalysisFlag:true,//分析解答
             nowAnalysisPart:'',//当前解析的是那一部分
@@ -404,55 +404,6 @@ class Question extends Component{
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
         message.success("提交成功")
     }
-    _contentQtxt(data,index){
-        console.log("_contentQtext------||||||\\\\//////--------------------->>>>>",data)
-        let items = data[0];
-        let content = items.content;
-        let questiontemplate = items.questiontemplate;
-        let childs = items.childs;
-        let questionType=false;
-        //选择题的时候要处理返回的选项格式
-        if(questiontemplate == '选择题'){
-            questionType = true;
-        }
-        let oldcontent = this.state.sentAllList.ExamResult[index-1];//做过一次的数据
-        let oldanswer = (oldcontent && (oldcontent.Contents).length>0) ? oldcontent.Contents: this.state.allQuestionetails[index-1].Contents;
-        console.log("oldanswer=====>>>>>>>>",oldanswer)
-        if(content){
-            if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-                content = content.replace(/\_|\s/g,"");
-                let qqq =  '<span class="div_input"></span>';
-                content = content.replace(/blank|BLANK/g,qqq);
-            }
-            return (
-                <div>
-                    <div className="displayflex QtxtContent_main_title">
-                        <div className="QtxtContent_main_title_left">{questiontemplate}：</div>
-                        <div className="QtxtContent_main_title_right">
-                            <Button onClick={()=>this.doCollection()}>收藏</Button>
-                            <Button onClick={()=>this.redoIt()}>重做</Button>
-                            <Button id="redosubimt" onClick={()=>this.redoSubmit(data,items,index)}>提交</Button>
-                        </div>
-                    </div>
-                    <div>
-                        <ul id="mainTopic" style={{padding:"8px 0"}}>
-                            <li dangerouslySetInnerHTML={{__html:content}}></li>
-                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer.length>0?oldanswer[0].content:""} index={index} choiceList={items.optionselect} />:''}
-                            {childs.length<1?"":this._childsList(childs)}
-                        </ul>
-                        <ul>
-                            {items.isobjective == '主观'?(<div>
-                                <li id="solition" style={{paddingTop:"5px"}}>解：<span id="main-solution">
-                                     <img src={oldanswer[0].url} width="200px" />
-                                </span></li>
-                                <UpLoadFile submitHandle={this.getEditContent.bind(this)} />
-                            </div>):''}
-                        </ul>
-                    </div>
-                </div>
-            )
-        }
-    }
     getDateOfAnalysis(type,alldata){
         for(let i=0;i<alldata.length;i++){
             if(alldata[i].parttype == type){//在返回值中查找对应部分的内容，有就查询数据
@@ -503,34 +454,55 @@ class Question extends Component{
             error:(err)=>{console.error(err)}
         })
     }
-    getEditContent(url){
-        console.warn("getEditContent==>>",url)
-        $("#main-solution").find('img')[0].src = url;
+    getEditContent(url,id){
+        console.warn("getEditContent==>>",id,url)
+        $("#"+id).find('img')[0].src = url;
         //$("#"+dom).text('').append(cont);
     }
     seeAnswer (data){
         this.setState({two_answer_content:data})
     }
     submitAnwser(index,data){
-        let target_exe = "exerciseTopic"+index,target_value='',type = this.state.nowPart;
-        $("#"+target_exe).find("ul input:checked").each(function(ii){
-            target_value += $(this).val();
-        })
-        console.log("提交答案",index,target_value,this.state.nowPart,data.answer)
-        if(!target_value){
-           alert("请选择答案再提交！")
-            return;
+        let target_value='',type = this.state.nowPart,url='';
+        let target_exe = "exerciseTopic-"+type+"-"+index;//目标区块id
+        if(data.questiontemplate == '选择题'){
+            $("#"+target_exe).find("ul input:checked").each(function(ii){
+                target_value += $(this).val();
+            })
+            if(!target_value){
+                alert("请选择答案再提交！")
+                return;
+            }
+            newChildList.childs[0][type][index] = {
+                "itemid": data.questionid,
+                "content":[{
+                    "answer": target_value,
+                    "url":url,
+                    "isRight": (data.answer == target_value)?true:false,
+                    "knowledge":data.knowledge,
+                    "isdone":true
+                }]
+            };
+        }else {
+            let tarid = "solution-"+type+"-"+index;
+            url = $("#"+tarid).find('img')[0].src;//上传的图片的地址
+            newChildList.childs[0][type][index] = {
+                "itemid": data.questionid,
+                "content":[{
+                    "answer": '',
+                    "url":url,
+                    "isRight": false,
+                    "knowledge":data.knowledge,
+                    "isdone":true
+                }]
+            };
         }
-        newChildList.childs[0][type][index] = {
-            "questionid": data.questionid,
-            "answer": target_value,
-            "isRight": (data.answer == target_value)?true:false,
-            "isdone":true
-        };
+        console.log("提交的答案",type,index,target_value,url);
         (this.state.sentAllList).currentquesid = this.state.current;
         (this.state.sentAllList).ExamResult[this.state.current-1] = newChildList;
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
-        this.setState({exerciseIndex:index})
+        message.success("提交成功")
+        //this.setState({exerciseIndex:index})
     }
     makeScore(index,total){
         let tar = "makescore"+index,score = '';
@@ -542,7 +514,10 @@ class Question extends Component{
     }
     clickTip(index,olddata){
         if(olddata && olddata.isdone == true){
-            this.setState({two_answer_flag:!this.state.two_answer_flag,exerciseIndex:index})
+            this.setState(
+                {two_answer_flag:!this.state.two_answer_flag,
+                //exerciseIndex:index
+                })
         }else {
             alert("请先提交答案再查看提示!")
         }
@@ -647,6 +622,7 @@ class Question extends Component{
         (this.state.sentAllList).currentquesid = this.state.current;
         (this.state.sentAllList).ExamResult[this.state.current-1] = newChildList;
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
+        message.success("提交成功")
     }
     getKnowledge(e){
         console.log($(e.target)[0].innerText)
@@ -658,6 +634,55 @@ class Question extends Component{
     closeKnowledgeBox(){
         UE.delEditor('knowledgeContainer');
         this.setState({DialogMaskFlag:false})
+    }
+    _contentQtxt(data,index){
+        console.log("_contentQtext------||||||\\\\//////--------------------->>>>>",data)
+        let items = data[0];
+        let content = items.content;
+        let questiontemplate = items.questiontemplate;
+        let childs = items.childs;
+        let questionType=false;
+        //选择题的时候要处理返回的选项格式
+        if(questiontemplate == '选择题'){
+            questionType = true;
+        }
+        let oldcontent = this.state.sentAllList.ExamResult[index-1];//做过一次的数据
+        let oldanswer = (oldcontent && (oldcontent.Contents).length>0) ? oldcontent.Contents: this.state.allQuestionetails[index-1].Contents;
+        console.log("oldanswer=====>>>>>>>>",oldanswer)
+        if(content){
+            if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
+                content = content.replace(/\_|\s/g,"");
+                let qqq =  '<span class="div_input"></span>';
+                content = content.replace(/blank|BLANK/g,qqq);
+            }
+            return (
+                <div>
+                    <div className="displayflex QtxtContent_main_title">
+                        <div className="QtxtContent_main_title_left">{questiontemplate}：</div>
+                        <div className="QtxtContent_main_title_right">
+                            <Button onClick={()=>this.doCollection()}>收藏</Button>
+                            <Button onClick={()=>this.redoIt()}>重做</Button>
+                            <Button id="redosubimt" onClick={()=>this.redoSubmit(data,items,index)}>提交</Button>
+                        </div>
+                    </div>
+                    <div>
+                        <ul id="mainTopic" style={{padding:"8px 0"}}>
+                            <li dangerouslySetInnerHTML={{__html:content}}></li>
+                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer.length>0?oldanswer[0].content:""} index={index} choiceList={items.optionselect} />:''}
+                            {childs.length<1?"":this._childsList(childs)}
+                        </ul>
+                        <ul>
+                            {items.isobjective == '主观'?(<div>
+                                <li id="solition" style={{paddingTop:"5px"}}>解：<span id="main-solution">
+                                     <img src={oldanswer[0].url} width="200px" />
+                                </span></li>
+                                <UpLoadFile id="main-solution" submitHandle={this.getEditContent.bind(this)} />
+                            </div>):''}
+                        </ul>
+                    </div>
+                </div>
+            )
+        }
     }
     _analysisQtxt(data,type){
         let num = this.state.current;
@@ -721,35 +746,48 @@ class Question extends Component{
             if(items.questiontemplate == '选择题'){
                 questionType = true;//有两个选项以上
             }
+            console.log("_practicesQtxt---->>>",index,ddd_content)
             if(content){
                 return (
                     <div className="exercise2" key={index}>
                         <div className="exercise2-border">
                             <div className="exercise2_main_content">
-                                <div id={"exerciseTopic"+index}>
+                                <div id={"exerciseTopic-"+type+"-"+index}>
                                     <ul>
                                         <li style={{paddingTop:"6px"}} dangerouslySetInnerHTML={{__html:content}}></li>
-                                        {questionType?<MultipleChoice type={items.questiontype} answer={ddd_content?ddd_content.answer:''} index={index} choiceList={items.optionselect} />:''}
+                                        {questionType?<MultipleChoice type={items.questiontype} answer={ddd_content?(ddd_content.content)[0].answer:''} index={index} choiceList={items.optionselect} />:''}
                                         {items.childs.size<1?"":this._childsList(items.childs)}
-                                        {questionType ? "":<li id="solition" style={{paddingTop:"5px"}}>解：<span contentEditable="true" className="div_input"></span></li>}
+                                        {items.isobjective == '主观'?(<div>
+                                            <li className={"solution-"+type+"-"+index} style={{paddingTop:"5px"}}>解：
+                                                <span id={"solution-"+type+"-"+index}>
+                                                    <img src={ddd_content? (ddd_content.content)[0].url:''} width="200px" />
+                                                </span>
+                                                <UpLoadFile id={"solution-"+type+"-"+index} preview="false" submitHandle={this.getEditContent.bind(this)} />
+                                            </li>
+                                        </div>):''}
                                     </ul>
                                 </div>
-                                <div><span style={{cursor:'pointer',color:'palevioletred'}} onClick={()=>this.clickTip(index,ddd_content)}>解析:</span>
-                                    <Icon className="tips" type={this.state.exerciseIndex==index && this.state.two_answer_flag?"up":"down"}/>
+                                <div>
+                                    {/*
+                                    <span style={{cursor:'pointer',color:'palevioletred'}} onClick={()=>this.clickTip(index,ddd_content)}>解析:</span>
+                                     <Icon className="tips" type={this.state.exerciseIndex==index && this.state.two_answer_flag?"up":"down"}/>
+                                    */}
                                     <div className="submitAndscore">
                                         <Button type="primary" size="small" onClick={()=>this.submitAnwser(index,items)}>提交答案</Button>
                                     </div>
+                                    <div className="clearfix"></div>
                                 </div>
-                                <div className={this.state.exerciseIndex==index && this.state.two_answer_flag ?"exercise2_help":"displaynone"}>
-                                    <div className="exercise2_main_sites">
-                                        <Button type="dashed" size="small" onClick={()=>this.seeAnswer(items.knowledge)}>考点</Button>
-                                        <Button type="dashed" size="small" onClick={()=>this.seeAnswer(items.answer)}>答案</Button>
-                                        <Button type="dashed" size="small" onClick={()=>this.seeAnswer(items.analysis)}>解析</Button>
-                                    </div>
-                                    <div>
-                                        <p><span dangerouslySetInnerHTML={{__html:this.state.two_answer_content}}></span></p>
-                                    </div>
-                                </div>
+                                {/*<div className={this.state.exerciseIndex==index && this.state.two_answer_flag ?"exercise2_help":"displaynone"}>
+                                 <div className="exercise2_main_sites">
+                                 <Button type="dashed" size="small" onClick={()=>this.seeAnswer(items.knowledge)}>考点</Button>
+                                 <Button type="dashed" size="small" onClick={()=>this.seeAnswer(items.answer)}>答案</Button>
+                                 <Button type="dashed" size="small" onClick={()=>this.seeAnswer(items.analysis)}>解析</Button>
+                                 </div>
+                                 <div>
+                                 <p><span dangerouslySetInnerHTML={{__html:this.state.two_answer_content}}></span></p>
+                                 </div>
+                                 </div>
+                                */}
                             </div>
                         </div>
                     </div>

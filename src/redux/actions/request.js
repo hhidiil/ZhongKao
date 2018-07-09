@@ -63,12 +63,12 @@ export function requestSyn(route,params, dispatch, success=null, error=null, { m
                     if (response.status === 200) {
                         return response.json()
                     } else {
-                        return { code: response.status }
+                        return error && error(res.message)
                     }
                 })}
     )).then((res) => {
+        //console.log("respond===200=====>",res)
         if (res) {
-            //console.log("respond===200=====>",res)
             if (method !== 'GET') dispatch({ type: TYPES.REQUEST_SUCCESS })
             return success && success(res)
         } else {
