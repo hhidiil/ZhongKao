@@ -16,10 +16,10 @@ import ExciseTips from '../container/front/page_modules/exciseTips/index'
 import BasicInfo from '../container/front/page_modules/basic/basicInfo'
 import MyCollection from '../container/front/page_modules/basic/myCollection'
 import EchartsDetails from '../container/front/page_modules/basic/echartsDetails'
-import QuestionAll from '../container/front/page_modules/math/math-question-all'
+import ThematiceParts from '../container/front/page_modules/math/thematiceParts'
 import Question from '../container/front/page_modules/math/question'
 import Practice from '../container/front/page_modules/math/practice'
-import Exam from '../container/front/page_modules/math/exam'
+import ExamAllPaper from '../container/front/page_modules/math/exam'
 import Thematic from  '../container/front/page_modules/math/thematic'
 import ThematicQuesList from  '../container/front/page_modules/math/thematicQuesList'
 import QuestionDetail from '../container/front/page_modules/math/signQuestionDetail'
@@ -43,15 +43,16 @@ const routes = (
             <Route path="basic/basicInfo" component={BasicInfo}/>
             <Route path="basic/myCollection" component={MyCollection}/>
             <Route path="basic/echartsDetails" component={EchartsDetails}/>
+            <Route path="excisetip" component={ExciseTips}/>
             <Route path="math" component={Math}/>
-            <Route path="math/:quesParam" component={QuestionAll}/>
-            <Route path="math/knowledge/:name" component={Knowledge} />
+            <Route path="math/thematiceParts" component={ThematiceParts}/>
+            <Route path="math/thematiceParts/knowledge" component={Thematic} />
+            <Route path="math/thematiceParts/thematic" component={ThematicQuesList} />
+            <Route path="math/exams" component={ExamAllPaper}/>
             <Route path="math/exams/question/:id" component={Question} />
             <Route path="math/exams/practice/:id" component={Practice} />
-            <Route path="math/questions/:flag" component={Thematic} />
-            <Route path="math/questions/:flag/:index" component={ThematicQuesList} />
             <Route path="math/questionDetail/:id" component={QuestionDetail} />
-            <Route path="excisetip" component={ExciseTips}/>
+            <Route path="math/knowledge/:name" component={Knowledge} />
         </Route>
         <Route path="/test" component={Test} />
         <Route path="*" component={NoFound} />

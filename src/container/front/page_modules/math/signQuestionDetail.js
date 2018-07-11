@@ -3,7 +3,7 @@
  * Created by gaoju on 2017/11/29.
  */
 import React,{Component} from 'react'
-import './question2.css'
+import './question_style.css'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'

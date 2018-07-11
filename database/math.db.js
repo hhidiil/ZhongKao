@@ -149,6 +149,18 @@ Math.prototype.getKnowledgeIdList = function (callback) {
         callback:callback
     })
 }
+/*存储知识点对应的题的做题情况*/
+Math.prototype.setKnowledgeForQuestionInfo = function (callback) {
+    var _sql = `INSERT INTO tblStudentKnowledgeInfo (userId,knowledgeId,knowledgeName,questionId,examPaperId,questionNum,errorNum)
+                VALUES
+                ('${this.props.userId}','${this.props.knowledgeId}','${this.props.knowledgeName}','${this.props.questionId}','${this.props.examPaperId}','${this.props.questionNum}','${this.props.errorNum}');`;
+    helper.db_query({
+        connect:con,
+        sql:_sql,
+        name:'setKnowledgeForQuestionInfo',
+        callback:callback
+    })
+}
 /*在tblQuestion、tblQuestionItem两个表中查找某个试题id的详情。因为不知道存在于某个表中*/
 Math.prototype.getEveryQuestion = function (callback) {
     var _sql = `(select * from tblQuestion where questionid='${this.props.id}')

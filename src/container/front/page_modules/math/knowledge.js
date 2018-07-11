@@ -1,5 +1,5 @@
 /**
- * 知识点页面
+ * 知识点弹框页面
  * Created by gaoju on 2018/5/28.
  */
 
@@ -8,12 +8,15 @@ import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getKnowledgeIdList,getEveryQuestion} from '../../../../redux/actions/math'
+import {getKnowledgeIdList,sentKnowledgeForQuestionInfo,getEveryQuestion} from '../../../../redux/actions/math'
 import './question_style.css'
 import ShowMask from '../../../../components/Alter/showMask'
 import MultipleChoice from '../../../../components/multipleChoice/index'
 import {MathJaxEditor} from '../../../../components/editer'
+import DialogMask from '../../../../components/Alter/dialogMask/dialogmask'
 import {getCoords} from '../../../../method_public/public'
+import {Storage_S,Storage_L} from '../../../../config'
+import Knowledge2 from './knowledge.js'
 import { Menu, Icon,Button } from 'antd'
 
 
@@ -22,10 +25,14 @@ class Knowledge extends Component{
         super(props);
         this.state={
             knowledgeName:props.knowledgeName,//知识点名
+            knowledgeId:props.knowledgeId || '',
+            questionId:props.questionId ||'',
+            examPaperId:props.examPaperId || '',
             questionListOfKnowledge:[],//知识点对应的所有试题
             target_id:'',
             position:[],
-            showEditor:false
+            showEditor:false,
+            DialogMaskFlag2:false,
         }
     }
     componentDidMount(){
@@ -34,8 +41,8 @@ class Knowledge extends Component{
         this.props.actions.getKnowledgeIdList({
             body:[{knowledgeName:knowledgeName}],
             success:(data)=>{
-                console.log(data)
                 let newdata=[],alldata = data[0].data;
+                let knowledgeId = alldata[0].knowledgeid;
                 for(let i in alldata){
                     newdata[i] = {
                         id:alldata[i].questionid
@@ -49,7 +56,11 @@ class Knowledge extends Component{
                             newData.push((data[i].data)[0])
                         }
                         console.log("hahahahahhaha---33333333-->>>>",newData)
-                        this.setState({questionListOfKnowledge:newData})
+                        this.setState({
+                            questionListOfKnowledge:newData,
+                            knowledgeId:knowledgeId
+                        })
+                        this.addEvent();//为每一个空添加事件
                     },
                     error:(message)=>{
                         console.log(message)
@@ -60,10 +71,6 @@ class Knowledge extends Component{
                 console.log(message)
             }
         })
-    }
-    componentDidUpdate(prevProps,prevState){
-        //完成渲染新的props或者state后调用，此时可以访问到新的DOM元素。
-       this.addEvent();
     }
     addEvent(){
         console.log("12312321321321311321213")
@@ -95,7 +102,75 @@ class Knowledge extends Component{
     }
     handleSubmit=(e)=>{
         e.preventDefault();
-        console.log("submit")
+        let allListDom = $('form').find('.practice');
+        let arryList = [];
+        let sentList={};
+        allListDom.each(function (i) {
+            let answer='';
+            let isture = true;
+            let questiondata = ($(this).attr('data')).split(',');//获取试题的答案数组，第一个为类型，第二个是正确答案
+            if(questiondata[0] == '选择题'){
+                answer = $(this).find('ul p input:checked').val();
+                if(questiondata[1] != answer){
+                    isture = false;
+                }
+                arryList.push({
+                    "type":'选择题',
+                    "answer":answer,
+                    "isTure":isture
+                })
+            }else {
+                let mysrc = '';
+                let divInput = $(this).find('.div_input');
+                divInput.each(function(ii){
+                    let questionanswer = questiondata[1].split('||');//有多个空的时候判断每一个空的答案
+                    if($(this).children('img').length>0){//先查找公式编辑器输入的内容即用编辑器输入的会产生一个img标签，没有则直接查text
+                        mysrc = $(this).find('img')[0].src;
+                        answer = $(this).find('img')[0].dataset.latex;
+                    }else{
+                        answer = $(this).text().trim();
+                    }
+                    if(answer != questionanswer[ii]){//判断答案，只要有一个是错误的则此题为错误的
+                        isture = false;
+                    }
+                })
+                arryList.push({
+                    "type":'填空题',
+                    "answer":answer,
+                    "isTure":isture
+                })
+            }
+            console.log(answer);
+        })
+        sentList = {
+            "knowledgeName":this.state.knowledgeName,
+            "knowledgeId":this.state.knowledgeId,
+            "questionId":this.state.questionId,
+            "examPaperId":this.state.examPaperId,
+            "userId":Storage_S.getItem('userid'),
+            "infoList":arryList
+        }
+        console.log("arryList===>>>",sentList);
+        this.props.actions.sentKnowledgeForQuestionInfo({
+            body:sentList,
+            success:(data)=>{
+                console.log("提交成功！")
+            },
+            errror:(mes)=>{console.error(mes)}
+        })
+    }
+    getKnowledge(e){
+        console.log($(e.target)[0].innerText)
+        let knowledge = $(e.target)[0].innerText;
+        this.setState({DialogMaskFlag2:true,knowledgeName:knowledge})
+        //this.props.actions.push(`/home/math/knowledge/${knowledge}`)
+    }
+    closeKnowledgeBox(){
+        UE.delEditor('knowledgeContainer');
+        this.setState({DialogMaskFlag2:false})
+    }
+    onchangehandle(answer){
+        console.log("onchangehandle=====>>::::::::::>>>>>>",answer,this.choice)
     }
     _QuestionContent(data){
         if(data.length<1){return <div/>}
@@ -105,11 +180,12 @@ class Knowledge extends Component{
                 let qqq =  '<span class="div_input" contenteditable="true"></span>';
                 content = content.replace(/#blank#|#BLANK#/g,qqq);
             }
+            let questionanswer = [item.questiontemplate,(item.answer).trim()];
             return(
-                <div key={index} className="practice">
+                <div key={index} className="practice" data={questionanswer}>
                     <ul>
                         <li dangerouslySetInnerHTML={{__html:content}}></li>
-                        {item.questiontemplate == "选择题" ?<MultipleChoice type={item.questiontype} answer=""  index={index} choiceList={item.optionselect} />:''}
+                        {item.questiontemplate == "选择题" ?<MultipleChoice template="noRender" type={item.questiontype} answer="" changeSave={this.onchangehandle.bind(this)}  index={index} choiceList={item.optionselect} />:''}
                     </ul>
                 </div>
             )
@@ -124,6 +200,7 @@ class Knowledge extends Component{
                     {this._QuestionContent(quetionList)}
                     <button type="submit" className="btn btn-primary submit_btn">提交</button>
                 </form>
+                {/*!this.state.DialogMaskFlag2?"":<DialogMask title={this.state.knowledgeName} position={[20,20]} id="1" closeDialog={()=>this.closeKnowledgeBox()}><Knowledge2 knowledgeName={this.state.knowledgeName} /></DialogMask>*/}
             </div>
         )
     }
@@ -132,7 +209,7 @@ function mapStateToProps(state, ownProps) {
     return {}
 }
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getKnowledgeIdList,getEveryQuestion}, dispatch) }
+    return { actions: bindActionCreators({push,getKnowledgeIdList,sentKnowledgeForQuestionInfo,getEveryQuestion}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Knowledge)

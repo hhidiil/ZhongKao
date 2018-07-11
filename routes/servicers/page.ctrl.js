@@ -6,7 +6,8 @@ var Page = require('../../database/page.db');
 
 module.exports={
     init: function(app) {
-        app.get('/page/homelist', this.doGetDoorShowItems)
+        app.get('/page/homelist', this.doGetDoorShowItems);//获取首页展示学生列表信息
+        app.get('/provinceList',this.getProvinceList);//获取省份的列表
     },
     // 获取首页展示学生的列表信息
     doGetDoorShowItems: function(req, res) {
@@ -30,6 +31,22 @@ module.exports={
                     code: 500,
                     message: '出错了'
                 })
+            }
+        })
+    },
+    getProvinceList:function(req,res){
+        var page = new Page({props:{}});
+        page.getProvinceList(function(err,data){
+            if(!err){
+                return res.send({
+                    code: 200,
+                    data:data
+                });
+            }else {
+                return res.send({
+                    code: 501,
+                    message: '出错了0.0'
+                });
             }
         })
     }

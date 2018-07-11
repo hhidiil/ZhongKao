@@ -21,20 +21,28 @@ class Choice extends Component{
     }
     radioChange =(e)=>{
         let isCando = this.state.isCando;
+        console.log("radioChange===>>>>>",e.target.type,e.target.name)
         if(isCando != "false"){
             let endstr = '',tar = e.target.value;
-            if((this.state.radioState).split('').indexOf(tar) != -1){
-                endstr = this.state.radioState.replace(eval("/"+tar+"/"),"");
+            if(e.target.type == 'checkbox'){
+                if((this.state.radioState).split('').indexOf(tar) != -1){
+                    endstr = this.state.radioState.replace(eval("/"+tar+"/"),"");
+                }else {
+                    endstr = this.state.radioState + tar;
+                }
+                this.setState({radioState: endstr})
             }else {
-                endstr = this.state.radioState + tar;
+                this.setState({radioState: tar})
             }
-            this.setState({radioState: endstr})
         }
     }
     componentWillReceiveProps(nextProps){
         //this.props //当前的props,nextProps //下一阶段的props
-        if(nextProps.answer != this.state.radioState){
-            this.setState({radioState: nextProps.answer})
+        console.warn("componentWillReceiveProps----Choice--->>",nextProps.template != 'noRender')
+        if(nextProps.template != 'noRender'){
+            if(nextProps.answer != this.state.radioState){
+                this.setState({radioState: nextProps.answer})
+            }
         }
     }
     render(){

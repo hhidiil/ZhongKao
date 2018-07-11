@@ -5,6 +5,7 @@
 import React,{Component} from 'react'
 import ReactDOM from 'react-dom'
 import classnames from 'classnames'
+import './question_style.css'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
@@ -17,7 +18,6 @@ import NoThisPart from '../../../../components/defaultJPG/nothispart'
 import {Storage_S,Storage_L} from '../../../../config'
 import {EveryChildInfo} from '../../../../method_public/sentJson'
 import moment from 'moment'
-import './question_style.css'
 import {Menu, Icon,Button,Input,message } from 'antd'
 import {Pagination,Pagination2} from '../../../../components/pagination'
 import MultipleChoice from '../../../../components/multipleChoice/index'
@@ -47,7 +47,7 @@ class Question extends Component{
         let paperItems = JSON.parse(Storage_L.getItem(activeId+"-second"))//缓存中取出做题情况的对应数据
         this.state={
             collapsed: false,
-            activeId:activeId,
+            activeId:activeId,//试卷ID
             sentAllList: !paperItems? sentJson : paperItems,//组装答案列表，用来发送存储源数据
             allQuestionetails:[],//一测所有试题做题结果
             currentQuesData:[],//当前试题的所有内容
@@ -686,6 +686,7 @@ class Question extends Component{
     }
     _analysisQtxt(data,type){
         let num = this.state.current;
+        let mainQuestionId = this.state.allQuestionetails[this.state.current-1].QuesID;//当前某一个主试题的Id
         let childsLen = this.state.sentAllList.ExamResult[num-1];
         let ddd = !childsLen ? '':childsLen.childs[0][type];//某一部分，是数组形式
         return data.map(function(item,index){
@@ -726,7 +727,7 @@ class Question extends Component{
                         <span style={{margin:"0 10px"}}>答案：<span dangerouslySetInnerHTML={{__html:item.answer}}></span></span>
                         <button className="marginl10" onClick={(e)=>{this.submitOne(e,item,index,type,questionType)}}>提交</button>
                     </ul>}
-                    {!this.state.DialogMaskFlag?"":<DialogMask title={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()}><Knowledge knowledgeName={this.state.knowledgeName} /></DialogMask>}
+                    {!this.state.DialogMaskFlag?"":<DialogMask title={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()}><Knowledge questionId={mainQuestionId} examPaperId={this.state.activeId} knowledgeName={this.state.knowledgeName} /></DialogMask>}
                 </div>
             )
         },this)

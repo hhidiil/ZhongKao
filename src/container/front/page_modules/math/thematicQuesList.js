@@ -26,11 +26,8 @@ const modalParts = ["知识回顾","重点考点","备考思路","聚焦中考",
 class ThematicQuesList extends Component{
     constructor(props) {
         super(props)
-        let page_index = this.props.params.index;
-        console.log(page_index)
         this.state={
             modalVisible:false,
-            whichPart:page_index || '',
             currentPage:1,
             allQuestionList:[],//当前模块的所有试题
             totalNum:0,
@@ -214,7 +211,7 @@ class ThematicQuesList extends Component{
                         <p>分析：<span className="head" dangerouslySetInnerHTML={{__html:item.analysis}}></span></p>
                     </div>
                     <div className="parts part-thematic">
-                        <p><span className="head">专题：{modalParts[this.state.whichPart]}</span></p>
+                        <p><span className="head">专题：</span></p>
                     </div>
                     <div className="parts part-reslution">
                         <p>解答：<span className="head" dangerouslySetInnerHTML={{__html:item.answer}}></span></p>

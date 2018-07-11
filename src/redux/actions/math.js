@@ -130,14 +130,21 @@ export function getFirstDataOfPaper(opt) {
 export function getKnowledgeIdList(opt) {
     return (dispatch) => {
         const route = '/api/math/knowledgeIdList';
-        const success = (data) => {
-            dispatch({ type: TYPES.GETFIRSTDATAOFPAPER, result: {items: data} })
-            opt.success && opt.success(data)
-        }
-        requestSyn(route,{},dispatch,success, opt.error,
+        requestSyn(route,{},dispatch,opt.success, opt.error,
             { method: 'POST',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
                 body: opt.body })
+    }
+}
+//存储知识点做题的信息
+export function sentKnowledgeForQuestionInfo(opt){
+    let data = opt.body;
+    return (dispatch)=>{
+        const route = '/api/math/knowledgeForQuestionInfo';
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'},
+                body: JSON.stringify(data)})
     }
 }
 //存储用户试卷的做题数据

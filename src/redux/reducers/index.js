@@ -3,7 +3,7 @@
  * Created by gaoju on 2017/11/15.
  */
 
-export { currentPage,homeShowList } from './page'
+export { currentPage,homeShowList,provinceList } from './page'
 export {basicInfo,collectInfo} from './user'
 export {TimingFlag,PREROUTE} from './public'
 export {AllQuestionsList,QuestionList,ExamList,GetQuestion,SecondTestQuestions,GetFirstDataOfPaper} from './math'

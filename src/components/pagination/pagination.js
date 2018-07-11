@@ -27,7 +27,6 @@ class Pagination extends Component{
         }
     }
     componentDidMount(){
-        console.log("componentDidMount====>>>>",this.state.errorList)
         this.addClassHandle(this.state.current);
     }
     componentWillReceiveProps(nextProps) {

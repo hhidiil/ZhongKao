@@ -20,6 +20,7 @@ module.exports={
         app.post('/math/setCollection',this.doSetCollection);
         app.post('/math/allQuestionOfThematic',this.getAllQuestionOfThematic);
         app.post('/math/knowledgeIdList',this.getKnowledgeIdList);
+        app.post('/math/knowledgeForQuestionInfo',this.sentKnowledgeForQuestionInfo);
         app.post('/math/everyQuestion',this.getEveryQuestion);
         app.post('/math/thematicQuestionAnswerInfo',this.setThematicQuestionAnswerInfo)
     },
@@ -447,13 +448,40 @@ module.exports={
             }
         })
     },
+    sentKnowledgeForQuestionInfo:(req,res)=>{
+        var props = req.body;
+        var infoList = req.body.infoList;//所有的做题信息；
+        var questionNum = infoList.length;
+        var rightNum = 0;
+        for (let i in infoList){
+            if(infoList[i].isTrue){
+                rightNum = rightNum + 1;
+            }
+        }
+        props.questionNum = questionNum;
+        props.errorNum = questionNum-rightNum;
+        var math = new Math({props:props});
+        math.setKnowledgeForQuestionInfo(function(err,data){
+            if(!err){
+                return res.send({
+                    code:200,
+                    data:data
+                })
+            }else{
+                return res.send({
+                    code:501,
+                    message:'数据出错了'
+                })
+            }
+        })
+    },
     setThematicQuestionAnswerInfo:(req,res)=>{
         var props = req.body;
         var math = new Math({props:props});
         math.setThematicQuestionAnswerInfo(function(err,data){
             if(!err){
                 return res.send({
-                    code:500,
+                    code:200,
                     data:data
                 })
             }else{

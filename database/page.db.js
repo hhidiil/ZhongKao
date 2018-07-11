@@ -20,15 +20,15 @@ Page.prototype.getDoorShowItems = function(callback) {
         name: 'getDoorShowItems',
         callback: callback
     })
-}
-/*根据用户名和密码匹配否正确*/
-Page.prototype.getUserItemByUserName = function(callback) {
-    var _sql = `select * from tblUser where name='${this.props.name}' and pwd='${this.props.password}'`;
+};
+/*获取所有省份*/
+Page.prototype.getProvinceList = function(callback){
+    var _spl = "select province from tblProvince";
     helper.db_query({
-        connect: con,
-        sql: _sql,
-        name: 'getUserItemByUserName',
-        callback: callback
+        connect:con,
+        sql:_spl,
+        name:"getProvinceList",
+        callback:callback
     })
 }
 

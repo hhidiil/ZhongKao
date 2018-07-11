@@ -18,6 +18,17 @@ export function getHomeShowList(opt) {
         request(route,{},dispatch,success, opt.error)
     }
 }
+//首页展示列表
+export function getProvinceList(opt) {
+    return (dispatch) => {
+        const route = '/api/page/provinceList';//服务器数据
+        const success = (data) => {
+            dispatch({ type: TYPES.Province_LIST_UPDATA, result: {items: data} })
+            opt.success && opt.success(data)
+        }
+        request(route,{},dispatch,success, opt.error)
+    }
+}
 
 export function cleanCurrentPage(opt) {
     return (dispatch) => {

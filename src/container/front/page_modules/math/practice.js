@@ -188,7 +188,7 @@ class Question extends Component{
         let oldAnwers = this.state.oldAnwers[0] ? this.state.oldAnwers[0].content :'';
         if(content){
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-                //content = content.replace(/\s/g,'');
+                content = content.replace(/\s/g,'');
                 content = content.replace(/<u>blank<\/u>|blank|BLANK/g,'<span contenteditable="true" class="div_input"></span>')
             }
             return (

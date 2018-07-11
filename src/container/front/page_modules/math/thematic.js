@@ -46,36 +46,26 @@ class Thematic extends Component{
         }
     }
     componentDidMount(){
-        //用route的参数来判断是从那个页面进来，进而取对应页面数据和显示对应页面
-        if(this.props.params.flag=="one"){//模考试题
-            let _this = this;
-            requestData('../src/data/knowledge.json',{},function(data){
-                console.log("knowlege---->>>>",data)
-                _this.setState({knowledgeList:data})
-            })
-            this.props.actions.getAllQuestionOfThematic({
-                body:{},
-                success:(data)=>{
-                    console.log("getAllQuestionOfThematic--===-->",data)
-                    this.setState({
-                        allQuestionList:data,
-                        totalNum:(data.length),
-                    })
-                    this.getCurrentDate(1);
-                },
-                error:(mes)=>{
-                    console.error(mes)
-                }
-            })
-        }else if(this.props.params.quesParam=="two"){//专题
-
-        }
+        let _this = this;
+        requestData('../src/data/knowledge.json',{},function(data){
+            console.log("knowlege---->>>>",data)
+            _this.setState({knowledgeList:data})
+        })
+        this.props.actions.getAllQuestionOfThematic({
+            body:{},
+            success:(data)=>{
+                console.log("getAllQuestionOfThematic--===-->",data)
+                this.setState({
+                    allQuestionList:data,
+                    totalNum:(data.length),
+                })
+                this.getCurrentDate(1);
+            },
+            error:(mes)=>{
+                console.error(mes)
+            }
+        })
     };
-    goPage(data){
-        console.log(data,this.props.params.flag)
-        let flag = this.props.params.flag;
-        this.props.actions.push(`/home/math/questions/${flag}/${data}`);
-    }
     getCurrentDate(page){
         let list = (this.state.allQuestionList).slice((10*page-10),(10*page));
         this.setState({
@@ -235,7 +225,7 @@ class Thematic extends Component{
                         <p>分析：<span className="head" dangerouslySetInnerHTML={{__html:item.analysis}}></span></p>
                     </div>
                     <div className="parts part-thematic">
-                        <p><span className="head">专题：{modalParts[this.state.whichPart]}</span></p>
+                        <p><span className="head">专题：</span></p>
                     </div>
                     <div className="parts part-reslution">
                         <p>解答：<span className="head" dangerouslySetInnerHTML={{__html:item.answer}}></span></p>
