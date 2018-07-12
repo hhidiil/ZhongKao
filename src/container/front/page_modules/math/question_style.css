@@ -306,7 +306,7 @@
 .thematicQues-parts .partOne{
     text-align: center;
     font-size: 20px;
-    min-height: 200px;
+    min-height: 100px;
     margin-top: 15px;
     border: 1px solid gainsboro;
 }
@@ -409,4 +409,24 @@
 .knowledgeContent .submit_btn{
     float: right;
     margin: 10px 20px 10px 0;
+}
+.selectorLine{
+    margin: 5px 0;
+    font-size: 14px;
+    height: 28px;
+    line-height: 28px;
+}
+.selectorLine .selector-key{
+    width: 100px;
+    float: left;
+}
+.selectorLine .selector-value{
+    position: relative;
+    float: left;
+}
+.selectorLine .selector-value ul li{
+    float: left;
+    height: 20px;
+    margin: 0 6px;
+    display: inline-block;
 }

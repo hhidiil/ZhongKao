@@ -1,5 +1,5 @@
 /**
- * 专题模块页面，每一个模块代表不同知识块
+ * 考纲复习(知识点)页面
  * Created by gaoju on 2018/5/16.
  */
 import React,{Component} from 'react'
@@ -10,10 +10,13 @@ import './style.css'
 import {requestData} from '../../../../method_public/public'
 import {Pagination,Modal,message} from 'antd'
 import {Storage_S} from '../../../../config'
+import PureRenderMixin from '../../../../method_public/pure-render'
 import {getAllQuestionOfThematic,getAllChildOfQuestion,getKnowledgeIdList,setThematicQuestionAnswerInfo} from '../../../../redux/actions/math'
+import {getProvinceList} from '../../../../redux/actions/page'
 import MultipleChoice from '../../../../components/multipleChoice/index'
-import { Collapse } from 'antd';
+import { Collapse,Select } from 'antd';
 const Panel = Collapse.Panel;
+const Option = Select.Option;
 
 function callback(key) {
     console.log(key);
@@ -51,6 +54,8 @@ class Thematic extends Component{
             console.log("knowlege---->>>>",data)
             _this.setState({knowledgeList:data})
         })
+        //获取省份列表
+        this.props.actions.getProvinceList({});
         this.props.actions.getAllQuestionOfThematic({
             body:{},
             success:(data)=>{
@@ -91,6 +96,14 @@ class Thematic extends Component{
                 console.error(mes)
             }
         })
+    }
+    _optionList(data){
+        let options = data.get('items');
+        if(options.size>0){
+            return options.map((item,index)=>{
+                return <Option key={item.get('province')}>{item.get('province')}</Option>
+            })
+        }
     }
     setModalVisible(flag){
         this.setState({modalVisible:flag,jiexiFlag:flag})
@@ -191,6 +204,12 @@ class Thematic extends Component{
         console.log("getKnowledge-----constructor--------props--->",this.props.location.pathname)
         this.props.actions.push(`/home/math/knowledge/${knowledge}`)
     }
+    selectorChange(e,flag){
+        console.log("selectorChange====1111122222221111===》",e.target.value,flag)
+    }
+    handleChange(value){
+        console.log(`Selected: ${value}`);
+    }
     _fromContent(data){
         console.log("当前题的ID：",data[0])
         if(data.length<1) return;
@@ -235,6 +254,9 @@ class Thematic extends Component{
         )
     }
     render(){
+        let { provinceList } = this.props;
+        let error = PureRenderMixin.Compare([provinceList]);//优化render
+        if (error) return error
         const knowlist = this.state.knowledgeList;
         if(knowlist.length<1){
             return <div/>
@@ -270,8 +292,32 @@ class Thematic extends Component{
                                 <div className="parts" onClick={()=>{this.knowledgeSummary(4)}}><div>真题过关</div><div>（简单、中等、拔高）</div></div>
                             </div>
                             <div className="partOne">
-                                这里是每一部分的head内容。可能是表格也可能是其他的东西
-                            </div>
+                                <div className="selectorLine">
+                                    <div className="selector-key"><strong>地区：</strong></div>
+                                    <div className="selector-value">
+                                       <Select size="default" defaultValue="全部" onChange={this.handleChange} style={{ width: 100,height:26 }}>
+                                           <Option key="全部">全部</Option>
+                                           {this._optionList(provinceList)}
+                                       </Select>
+                                    </div>
+                                    <div className="clearfix"></div>
+                                </div>
+                                <div className="selectorLine">
+                                    <div className="selector-key"><strong>题型：</strong></div>
+                                    <div className="selector-value">
+                                        <ul>
+                                            <li><a href="javascript:void(0)" onClick={(e)=>this.selectorChange(e,'tx')}>全部</a></li>
+                                            <li><a href="javascript:void(0)" onClick={(e)=>this.selectorChange(e,'tx')}>选择题</a></li>
+                                            <li><a href="javascript:void(0)" onClick={(e)=>this.selectorChange(e,'tx')}>填空题</a></li>
+                                            <li><a href="javascript:void(0)" onClick={(e)=>this.selectorChange(e,'tx')}>简答题</a></li>
+                                        </ul>
+                                    </div>
+                                    <div className="clearfix"></div>
+                                </div>
+                             </div>
+                            {/*<div className="partOne">
+                             这里是每一部分的head内容。可能是表格也可能是其他的东西
+                             </div>*/}
                             <div className="partTwo">
                                 <div className="pageslist">
                                     <ul>
@@ -303,12 +349,14 @@ class Thematic extends Component{
     }
 }
 function mapStateToProps(state) {
-    return {}
+    return {
+        provinceList: state.provinceList
+    }
 }
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({push, getAllQuestionOfThematic,getAllChildOfQuestion,getKnowledgeIdList,setThematicQuestionAnswerInfo}, dispatch)
+        actions: bindActionCreators({push, getAllQuestionOfThematic,getProvinceList,getAllChildOfQuestion,getKnowledgeIdList,setThematicQuestionAnswerInfo}, dispatch)
     }
 }
 

@@ -15,6 +15,7 @@ import Math from '../container/front/page_modules/math'
 import ExciseTips from '../container/front/page_modules/exciseTips/index'
 import BasicInfo from '../container/front/page_modules/basic/basicInfo'
 import MyCollection from '../container/front/page_modules/basic/myCollection'
+import MyExamPaper from '../container/front/page_modules/basic/myExamPaper'
 import EchartsDetails from '../container/front/page_modules/basic/echartsDetails'
 import ThematiceParts from '../container/front/page_modules/math/thematiceParts'
 import Question from '../container/front/page_modules/math/question'
@@ -43,6 +44,7 @@ const routes = (
             <Route path="basic/basicInfo" component={BasicInfo}/>
             <Route path="basic/myCollection" component={MyCollection}/>
             <Route path="basic/echartsDetails" component={EchartsDetails}/>
+            <Route path="basic/myExamPaper" component={MyExamPaper}/>
             <Route path="excisetip" component={ExciseTips}/>
             <Route path="math" component={Math}/>
             <Route path="math/thematiceParts" component={ThematiceParts}/>

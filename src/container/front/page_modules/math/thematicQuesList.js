@@ -1,5 +1,5 @@
 /**
- * 专题子模块的所有试题列表页
+ * 考纲复习(专题模块)页面
  * Created by gaoju on 2018/5/17.
  */
 import React,{Component} from 'react'

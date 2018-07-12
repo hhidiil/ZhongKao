@@ -41,3 +41,67 @@
     -ms-filter: 'alpha(opacity=0)';
     font-size: 200px;
 }
+.myExamPaper{
+    position: relative;
+    padding:26px;
+}
+.myExamPaper .exampaperList{
+    display: inline-flex;
+    width: 100%;
+    margin: 6px 0;
+    padding: 12px 10px;
+    border: 1px solid #bfbbbb;
+}
+.myExamPaper .exampaperList .itemtitle{
+    width: 40%;
+}
+.myExamPaper .exampaperList .itemstatus{
+    text-align: right;
+    width: 60%;
+}
+.myExamPaper .exampaperList .itemstatus .status-span{
+    margin-right: 25px;
+}
+.myExamPaper .searchLine{
+    position: relative;
+    width: 100%;
+}
+.myExamPaper .searchLine .searchKey{
+    float: left;
+    height: 40px;
+    line-height: 40px;
+}
+.noDatalist{
+    text-align: center;
+    font-size: 26px;
+    margin-top: 20px;
+}
+.global-search-wrapper {
+    padding-right: 50px;
+}
+
+.global-search {
+    width: 100%;
+}
+
+.global-search.ant-select-auto-complete .ant-select-selection--single {
+    margin-right: -46px;
+}
+
+.global-search.ant-select-auto-complete .ant-input-affix-wrapper .ant-input:not(:last-child) {
+    padding-right: 62px;
+}
+
+.global-search.ant-select-auto-complete .ant-input-affix-wrapper .ant-input-suffix {
+    right: 0;
+}
+
+.global-search.ant-select-auto-complete .ant-input-affix-wrapper .ant-input-suffix button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.global-search-item-count {
+    position: absolute;
+    right: 16px;
+}

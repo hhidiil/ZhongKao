@@ -28,7 +28,6 @@ class Home extends Component {
         document.getElementById("section").style.height = (screenHeight-80-40)+'px';
     };
     handleClick = (e) => {
-        console.log('click ', e);
         let route='';
         let routeflag=e.keyPath.pop();
         if(routeflag == "basic"){
@@ -71,13 +70,14 @@ class Home extends Component {
                             defaultOpenKeys={['basic']}
                             mode="inline"
                         >
-                            <SubMenu key="basic" title={<span><Icon type="mail" /><span>我的栏目</span></span>}>
+                            <SubMenu key="basic" title={<span><Icon type="bars" /><span>我的栏目</span></span>}>
                                 <Menu.Item key="basicInfo">基本信息</Menu.Item>
                                 <Menu.Item key="myCollection">我的收藏</Menu.Item>
+                                <Menu.Item key="myExamPaper">已做试卷</Menu.Item>
                                 <Menu.Item key="echartsDetails">图表分析</Menu.Item>
                             </SubMenu>
-                            <Menu.Item key="math"><Icon type="mail" />数学栏目</Menu.Item>
-                            <Menu.Item key="excisetip"><Icon type="mail" />解题技巧</Menu.Item>
+                            <Menu.Item key="math"><Icon type="code-o" />数学栏目</Menu.Item>
+                            <Menu.Item key="excisetip"><Icon type="code-o" />解题技巧</Menu.Item>
                         </Menu>
                     </menu>
                     <section className="full-width section-left">

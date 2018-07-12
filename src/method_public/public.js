@@ -136,4 +136,50 @@ export function getCoords(el){
         top = box.top + (self.pageYOffset || html.scrollTop || body.scrollTop ) - clientTop,
         left = box.left + (self.pageXOffset || html.scrollLeft || body.scrollLeft) - clientLeft;
     return { 'top': top, 'left': left };
-};
+}
+//模糊查询，key为要匹配的字符；list为所有数据；obj为list中用来匹配的字段；
+export function searchMatch(key,list,obj){
+    var datalist = list,keyValue='';
+    var reg = '';
+    var endlist=[];
+    if(!key){
+        return '';
+    }else {
+        keyValue = key.replace('/\s/g','');//获取输入的值，去掉多有的空格
+        reg = new RegExp(keyValue);
+        for(let i in datalist){
+            if((datalist[i][obj]).match(reg)){
+                endlist.push(datalist[i]);
+            }
+        }
+        return endlist;
+    }
+}
+//模糊查询，key为要匹配的数组；list为所有数据
+export function searchChechboxMatch(keylist,list){
+    var datalist = list;
+    var endlist=[];
+    for(let i in datalist){
+        let isdone='未完成';
+        if(datalist[i].IsDone == 'yes'){
+            isdone='已完成'
+        }
+        let dataArry = [datalist[i].ExamType,isdone,datalist[i].markFlag];//每一项的三个标志值
+        if(subset(dataArry,keylist)){
+            endlist.push(datalist[i]);
+        }
+    }
+    return endlist;
+}
+//A是否包含B
+function subset(A,B){
+    A = A.slice();
+    for(var i=0, len=B.length; i<len; i++){
+        if(A.indexOf(B[i]) === -1){
+            return false;
+        }else{
+            A.splice(A.indexOf(B[i]),1);
+        }
+    }
+    return true;
+}
