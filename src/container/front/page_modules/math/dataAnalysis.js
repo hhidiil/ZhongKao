@@ -12,7 +12,6 @@ import DialodMask from '../../../../components/Alter/dialogMask/dialogmask'
 import {Button} from 'antd'
 //import echarts from 'echarts'
 // 引入 ECharts 主模块
-// 引入 ECharts 主模块
 var echarts = require('echarts/lib/echarts');
 // 引入柱状图
 require('echarts/lib/chart/bar');
@@ -26,7 +25,8 @@ class Analysis extends Component{
         let alldata = props.data;
         let questionDetails = [];
         if((alldata.doneDetails.data).length > 0){
-            questionDetails = JSON.parse(alldata.doneDetails.data[0].ExamResult);
+            let midData = (alldata.doneDetails.data[0].ExamResult).replace(/\\/g,"@&@");
+            questionDetails = JSON.parse(midData);
         }
         this.state={
             alldata:alldata,

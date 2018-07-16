@@ -39,6 +39,7 @@ class PaperDetail extends Component {
             previewVisible:false,
             examInfoID:'',//试卷唯一ID
             marktipsFlag:false,
+            markTipsid:'',//批改按钮的id可以用来找到具体某一题
             nowAnalysisPart:'',
             previewImage:''
         };
@@ -208,7 +209,31 @@ class PaperDetail extends Component {
             }
         }
     }
-    submitMark(){
+    MarkTips(e){
+        let target = e.target.id;
+        console.log("MarkTips=====>>>>>>>>>>",target)
+        this.setState({marktipsFlag:true,markTipsid:target})
+    }
+    submitMark(data){
+        let markTipsid = this.state.markTipsid;
+        let markTipsidList = markTipsid.split('-');//question-num-objective-index:['question','2','objective','0']
+        console.log("markTipsidList=====>>>>>>>>>>",markTipsidList)
+        if(data.length>0){
+            let allquestiontails = this.state.allQuestionetails[this.state.current-1];
+            if(markTipsidList[2] == 'main'){//主题干的批改
+                allquestiontails.teacherMark = this.textarea.value;
+                allquestiontails.score = this.markscore.value;
+                allquestiontails.teacherMarkUrl = this.uploadcontent.getAttribute('data-value');
+            }else{
+                if(allquestiontails.hasOwnProperty('childs')){
+                    allquestiontails.childs[0][markTipsidList[2]][markTipsidList[3]].teacherMark = this.textarea.value;
+                    allquestiontails.childs[0][markTipsidList[2]][markTipsidList[3]].score = this.markscore.value;
+                    allquestiontails.childs[0][markTipsidList[2]][markTipsidList[3]].teacherMarkUrl = this.uploadcontent.getAttribute('data-value');
+                }
+            }
+            console.log(this.state.allQuestionetails[this.state.current-1])
+            console.log(this.uploadcontent.getAttribute('data-value'))
+        }
         this.setState({marktipsFlag:false})
     }
     submitAllQuestion(){
@@ -233,9 +258,6 @@ class PaperDetail extends Component {
                 alert("提交出错！")
             }
         })
-    }
-    MarkTips(){
-        this.setState({marktipsFlag:true})
     }
     submitHandle(img_url){
         console.warn(img_url)
@@ -298,7 +320,7 @@ class PaperDetail extends Component {
             })
         }
     }
-    _contentQtxt(data,index){
+    _contentQtxt(data,current){
         if(!data){return ;}
         if(data.length<1){return ;}
         let items = data[0];
@@ -310,7 +332,7 @@ class PaperDetail extends Component {
         if(questiontemplate == '选择题'){
             questionType = true;
         }
-        let oldanswer = this.state.allQuestionetails[index-1].Contents ;//做过一次的数据
+        let oldanswer = this.state.allQuestionetails[current-1].Contents ;//做过一次的数据
         if(content){
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                 content = content.replace(/\_|\s/g,"");
@@ -325,10 +347,13 @@ class PaperDetail extends Component {
                     <div>
                         <ul id="mainTopic" style={{padding:"8px 0"}}>
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
-                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer[0].content} isCando="false" index={"MainContent"+index} choiceList={items.optionselect} />:''}
+                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer[0].content} isCando="false" index={"MainContent"+current} choiceList={items.optionselect} />:''}
                             {childs.length<1?"":this._childsList(childs)}
+                            <li><strong>正确答案：</strong><span dangerouslySetInnerHTML={{__html:items.answer}}></span></li>
                             {questionType?"":this._studentAnwser_Main(oldanswer)}
                         </ul>
+                        {items.isobjective == '主观' ? <div className="pigaiTips" id={'question-'+current+'-main'} onClick={(e)=>{this.MarkTips(e)}}>批改</div>:''}
+                        <div className="clearfix"></div>
                     </div>
                 </div>
             )
@@ -337,10 +362,11 @@ class PaperDetail extends Component {
     _partQuestionContent(data,type){
         if(data){
             let partlist = data[type];
-            let oldAnswer =[]
-            if(this.state.allQuestionetails[this.state.current-1]){
-                if((this.state.allQuestionetails[this.state.current-1].childs)){
-                    oldAnswer = (this.state.allQuestionetails[this.state.current-1].childs[0])[type];
+            let oldAnswer =[];
+            let current = this.state.current;
+            if(this.state.allQuestionetails[current-1]){
+                if((this.state.allQuestionetails[current-1].childs)){
+                    oldAnswer = (this.state.allQuestionetails[current-1].childs[0])[type];
                 }
             }
             if(partlist && partlist.length>0){
@@ -364,9 +390,10 @@ class PaperDetail extends Component {
                                 <li dangerouslySetInnerHTML={{__html:content}}></li>
                                 {item.questiontemplate == '选择题'?<MultipleChoice type={item.questiontype} isCando="false" answer={oldanswer?(oldanswer.content[0]).answer:''} index={type+"-"+index} choiceList={item.optionselect} />:''}
                                 {childs.length<1?"":this._childsList(childs)}
+                                <li><strong>正确答案：</strong><span dangerouslySetInnerHTML={{__html:item.answer}}></span></li>
                                 {questionType?"":this._studentAnwser_Child(oldanswer,type)}
                             </ul>
-                            <div className="pigaiTips" onClick={()=>{this.MarkTips()}}>批改</div>
+                            {item.isobjective == '主观' ? <div className="pigaiTips" id={'question-'+current+'-'+type+'-'+index} onClick={(e)=>{this.MarkTips(e)}}>批改</div>:''}
                         </div>
                     )
                 },this)
@@ -375,6 +402,7 @@ class PaperDetail extends Component {
     }
     render() {
         let currentQuesData =  this.state.currentQuesData;
+        let current =  this.state.current;
         return (
             <div className="mask3 paperDetail">
                 <div className="math-question-content" onClick={(e)=>this.onClickOther(e)}>
@@ -390,7 +418,7 @@ class PaperDetail extends Component {
                         <div className="pagination_all">
                             <div className="widthPrecent5 margint10">题号:</div>
                             <div className="padding0">
-                                <Pagination total={this.state.total} current={this.state.current} errorList={this.state.errorArray}   onChange={this.onChange}/></div>
+                                <Pagination total={this.state.total} current={current} errorList={this.state.errorArray}   onChange={this.onChange}/></div>
                         </div>
                         <div className="clearfix"></div>
                     </div>
@@ -398,7 +426,7 @@ class PaperDetail extends Component {
                     <section>
                         <div className="QtxtContent_main">
                             <div id="Content_Qtxt">
-                                {this._contentQtxt(currentQuesData,this.state.current)}
+                                {this._contentQtxt(currentQuesData,current)}
                             </div>
                         </div>
                     </section>

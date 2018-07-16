@@ -1,6 +1,5 @@
 /**
- * 预览查看试题
- * Created by gaoju on 2017/12/15.
+ * Created by gaoju on 2018/7/13.
  */
 import React,{Component} from 'react'
 import './style.css'
@@ -12,27 +11,23 @@ import ShowMask from '../../../../components/Alter/showMask'
 import {Button,Modal} from 'antd'
 
 
-class Preview extends Component{
+class PaperDetail extends Component{
     constructor(props){
         super(props)
         let alldata = props.data;
-        let questionDetails = [];
-        if((alldata.doneDetails.data).length > 0){
-            let midData = (alldata.doneDetails.data[0].ExamResult).replace(/\\/g,"@&@");
-            questionDetails = JSON.parse(midData);
-        }
-        console.log('this.state.alldata=========>',alldata,questionDetails)
+        let questionDetails = (alldata.ExamResult).replace(/\\/g,"@&@");
         this.state={
-            questionDetails:questionDetails,
-            JSON_aLL:alldata.examid,//某套题的试卷id，可取到某套试题的所有数据
-            paper_title:alldata.exampaper,//试卷标题
+            questionDetails:JSON.parse(questionDetails),
+            paperId:alldata.ExamPaperID,//某套题的试卷id，可取到某套试题的所有数据
+            paperAllData:alldata,
+            paper_title:alldata.ExamPaperTitle,//试卷标题
             questions:[],//每道试题的详情
             previewVisible:false
         }
     }
     componentDidMount(){
         this.props.actions.getQuestionList({
-            body:[{id:this.state.JSON_aLL}],
+            body:[{id:this.state.paperId}],
             success:(data)=>{
                 let all_question = data[0].data;//解析JSON
                 this.getData(all_question)
@@ -137,9 +132,8 @@ class Preview extends Component{
         },this)
     }
     render(){
-        let title = this.state.paper_title;
-        let dataitem = this.state.questions;
-        if(dataitem.length<1){
+        let {paperAllData,questions} = this.state;
+        if(questions.length<1){
             return <div/>;
         }
         return(
@@ -148,14 +142,15 @@ class Preview extends Component{
                 <div className="Preview-content">
                     <Button className="exit" onClick={this.props.closePreview}>退出</Button>
                     <div className="Preview_header">
-                        <div className="title">{title}</div>
+                        <div className="title">{paperAllData.ExamPaperTitle}</div>
                         <div className="second-title">
                             <div>总分: 120</div>
                             <div>难度: 中等</div>
                         </div>
+                        <div className="examPaperScore">{paperAllData.Score+'分'}</div>
                     </div>
                     <section>
-                        {this._showQuestionList(dataitem)}
+                        {this._showQuestionList(questions)}
                     </section>
                 </div>
             </div>
@@ -165,9 +160,7 @@ class Preview extends Component{
 function mapStateToProps(state) {
     return {}
 }
-
 function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators({getQuestionList,getQuestion}, dispatch) }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(Preview)
+export default connect(mapStateToProps, mapDispatchToProps)(PaperDetail)

@@ -9,6 +9,7 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import {getAllPaperOfStudent } from '../../../../redux/actions/teacher'
+import PaperDetail from './examPaperDetail'
 import {Storage_S} from '../../../../config'
 import {searchMatch,searchChechboxMatch} from '../../../../method_public/public'
 const Option = AutoComplete.Option;
@@ -25,6 +26,8 @@ class PaperList extends Component {
             seacherMatchList:[],//input查询匹配的试卷
             checkboxMatchList:[],//checkbox查询匹配的试卷
             dataSource: [],
+            previewData:'',
+            previewFlag : false
 
         };
     };
@@ -47,6 +50,13 @@ class PaperList extends Component {
                 this.setState({paperAllList:[]})
                 console.warn(message)}
         });
+    }
+    preview(data){
+        console.log("preview===>>>>",data)
+        this.setState({previewFlag : true,previewData:data});
+    }
+    closePreview(){
+        this.setState({previewFlag : false});
     }
     gotoPaper(item){
         let activeName = this.state.activeName;
@@ -78,7 +88,7 @@ class PaperList extends Component {
                     <div className="itemstatus">
                         <span className="status-span">完成进度：{item.IsDone=='yes'?"已完成":"未完成"}</span>
                         <span className="status-span">批改状态：{item.markFlag}</span>
-                        <Button type="primary" size="small" onClick={()=>{this.gotoPaper(item)}}>查看</Button>
+                        <Button type="primary" size="small" onClick={()=>this.preview(item)}>查看</Button>
                     </div>
                 </div>
             )
@@ -113,6 +123,7 @@ class PaperList extends Component {
                 <section>
                     {this._paperList(paperAllList)}
                 </section>
+                {this.state.previewFlag?<PaperDetail data={this.state.previewData} closePreview={()=>this.setState({previewFlag : false})} />:<div/>}
             </div>
         );
     }

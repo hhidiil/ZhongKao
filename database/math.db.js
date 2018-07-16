@@ -21,7 +21,7 @@ Math.prototype.getAllPapersList = function(callback) {
     })
 }
 Math.prototype.getAllQuestionOfThematic = function (callback) {
-    var _sql = "select * from tblQuestion where questiontype='单选题' and isobjective!='材料' LIMIT 0,20";
+    var _sql = "select * from tblQuestion where isobjective!='材料' LIMIT 0,100";
     helper.db_query({
         connect: con,
         sql: _sql,

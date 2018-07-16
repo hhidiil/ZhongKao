@@ -183,3 +183,20 @@ function subset(A,B){
     }
     return true;
 }
+//比较A和B的值是否相同
+export function compareDifferent(A,B){
+    try {
+        var expr1 = KAS.parse(A).expr;
+        var expr2 = KAS.parse(B).expr;
+        var end = KAS.compare(expr1, expr2).equal;
+        if(end){
+            return true;
+        }else {
+            return false;
+        }
+    }catch (e){
+        console.error("function compareDifferent is error: "+e.message+"; the params is : "+A+" and "+B);
+        return false;
+    }
+
+}

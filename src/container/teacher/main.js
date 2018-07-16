@@ -87,7 +87,7 @@ class Main extends Component {
                         </Menu>
                     </menu>
                     <section className="full-width section-left">
-                        <div>{this.props.children}</div>
+                        {this.props.children}
                     </section>
                 </section>
             </div>

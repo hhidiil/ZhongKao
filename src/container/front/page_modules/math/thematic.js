@@ -14,6 +14,8 @@ import PureRenderMixin from '../../../../method_public/pure-render'
 import {getAllQuestionOfThematic,getAllChildOfQuestion,getKnowledgeIdList,setThematicQuestionAnswerInfo} from '../../../../redux/actions/math'
 import {getProvinceList} from '../../../../redux/actions/page'
 import MultipleChoice from '../../../../components/multipleChoice/index'
+import DialogMask from '../../../../components/Alter/dialogMask/dialogmask'
+import Knowledge from './knowledge.js'
 import { Collapse,Select } from 'antd';
 const Panel = Collapse.Panel;
 const Option = Select.Option;
@@ -38,11 +40,14 @@ class Thematic extends Component{
         this.state = {
             knowledgeList:[],
             modalVisible:false,
+            DialogMaskFlag:false,
+            knowledgeName:'',
             whichPart:1,
             currentPage:1,
-            allQuestionList:[],//当前模块的所有试题
             totalNum:0,
-            currentQuestionList:[],//当前页面的所显示的试题
+            allQuestionList:[],//当前模块的所有试题
+            selectQuestionList:[],//条件选择后的所有试题
+            currentQuestionList:[],//当前页面所显示的试题
             currentQuestionId:'',
             questionDetails:[],//点击作答页面显示的试题详情
             jiexiFlag:false//解析按钮状态标志
@@ -62,24 +67,45 @@ class Thematic extends Component{
                 console.log("getAllQuestionOfThematic--===-->",data)
                 this.setState({
                     allQuestionList:data,
-                    totalNum:(data.length),
+                    totalNum:(data.length)
                 })
-                this.getCurrentDate(1);
+                this.getCurrentDate('全部')
             },
             error:(mes)=>{
                 console.error(mes)
             }
         })
     };
-    getCurrentDate(page){
-        let list = (this.state.allQuestionList).slice((10*page-10),(10*page));
+    getCurrentDate(type){
+        let list = (this.state.allQuestionList);
+        let newList = [];
+        if(type == '全部'){
+            newList = list;
+        }else {
+            for (let i in list){
+                if(list[i].questiontemplate == type){
+                    newList.push(list[i]);
+                }
+            }
+        }
+        let nowPageList = newList.slice(0,10);//默认取出前10条
         this.setState({
-            currentPage:page,
-            currentQuestionList:list
+            currentPage:1,
+            totalNum:newList.length,
+            selectQuestionList:newList,
+            currentQuestionList:nowPageList
         })
     }
-    onChange = (pagenum)=>{
-        this.getCurrentDate(pagenum);
+    onPageChange = (pagenum)=>{
+        let nowPageList = (this.state.selectQuestionList).slice((10*pagenum-10),(10*pagenum));
+        this.setState({
+            currentPage:pagenum,
+            currentQuestionList:nowPageList
+        })
+    }
+    closeKnowledgeBox(){
+        UE.delEditor('knowledgeContainer');
+        this.setState({DialogMaskFlag:false})
     }
     doIt(data){
         let id = data.questionid;
@@ -117,11 +143,19 @@ class Thematic extends Component{
             let options_end = options.trim().replace(/["\[\]]/g,"");
             let optionArray = options_end.split(",");
             let answerFlag = '';
+            let content = item.content;
+            if(!content){
+                return <div className="every-li-css" key={index}></div>
+            }
+            if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
+                content = content.replace(/\s/g,'');
+                content = content.replace(/<u>blank<\/u>|blank|BLANK/g,'____')
+            }
             return (
                 <div className="every-li-css" key={index}>
                     <li>
                         <fieldset className="fieldcontent">
-                            <div className="content" dangerouslySetInnerHTML={{__html:item.content}}>
+                            <div className="content" dangerouslySetInnerHTML={{__html:content}}>
                             </div>
                             <div className="options">
                                 { optionArray.length<4 ? "":<div>
@@ -196,16 +230,30 @@ class Thematic extends Component{
         })
     }
     knowledgeSummary(key){
-        this.getCurrentDate(key);
+        //this.getCurrentDate(key);
     }
     getKnowledge(e){
         console.log($(e.target)[0].innerText)
         let knowledge = $(e.target)[0].innerText;
         console.log("getKnowledge-----constructor--------props--->",this.props.location.pathname)
-        this.props.actions.push(`/home/math/knowledge/${knowledge}`)
+        //this.props.actions.push(`/home/math/knowledge/${knowledge}`)
+        this.setState({DialogMaskFlag:true,knowledgeName:knowledge})
     }
     selectorChange(e,flag){
-        console.log("selectorChange====1111122222221111===》",e.target.value,flag)
+        console.log("selectorChange====1111122222221111===》",e.target.text,flag)
+        let type = e.target.text;
+        switch (type){
+            case "全部": this.getCurrentDate('全部');
+                break;
+            case "选择题": this.getCurrentDate('选择题');
+                break;
+            case "填空题": this.getCurrentDate('填空题');
+                break;
+            case "简答题": this.getCurrentDate('简答题');
+                break;
+            default: this.getCurrentDate('全部');
+                break;
+        }
     }
     handleChange(value){
         console.log(`Selected: ${value}`);
@@ -250,6 +298,7 @@ class Thematic extends Component{
                         <p>解答：<span className="head" dangerouslySetInnerHTML={{__html:item.answer}}></span></p>
                     </div>
                 </div>}
+                {!this.state.DialogMaskFlag?"":<DialogMask title={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()}><Knowledge questionId={item.questionid}  knowledgeName={this.state.knowledgeName} /></DialogMask>}
             </fieldset>
         )
     }
@@ -262,7 +311,7 @@ class Thematic extends Component{
             return <div/>
         }
         return (
-            <div className="mask2">
+            <div className="mask2" style={{backgroundColor:'#eac28c'}}>
                 <div className="thematic-wapper">
                     <div className="thematic-parts-left">
                         <div className="menuList">
@@ -283,7 +332,7 @@ class Thematic extends Component{
                             </Collapse>
                         </div>
                     </div>
-                    <section className="thematic-parts-right">
+                    <section className="thematic-parts-right" style={{backgroundColor:'rgba(161, 101, 220, 0.76)'}}>
                         <div className="thematicQues-parts">
                             <div className="partTop">
                                 <div className="parts" onClick={()=>{this.knowledgeSummary(1)}}><div>知识点回顾</div><div>（考点梳理）</div></div>
@@ -291,7 +340,7 @@ class Thematic extends Component{
                                 <div className="parts" onClick={()=>{this.knowledgeSummary(3)}}><div>聚焦中考</div><div>（针对性训练）</div></div>
                                 <div className="parts" onClick={()=>{this.knowledgeSummary(4)}}><div>真题过关</div><div>（简单、中等、拔高）</div></div>
                             </div>
-                            <div className="partOne">
+                            <div className="partOne" style={{backgroundColor:'white'}}>
                                 <div className="selectorLine">
                                     <div className="selector-key"><strong>地区：</strong></div>
                                     <div className="selector-value">
@@ -314,6 +363,7 @@ class Thematic extends Component{
                                     </div>
                                     <div className="clearfix"></div>
                                 </div>
+                                <div className="questionNumber">找到<span style={{color:'red'}}>{this.state.totalNum}</span>个相关题</div>
                              </div>
                             {/*<div className="partOne">
                              这里是每一部分的head内容。可能是表格也可能是其他的东西
@@ -337,7 +387,7 @@ class Thematic extends Component{
                                     </Modal>
                                 </div>
                                 <div className="pagesfooter">
-                                    <Pagination showQuickJumper itemRender={itemRender} pageSize={10} current={this.state.currentPage} total={this.state.totalNum} onChange={this.onChange}></Pagination>
+                                    <Pagination showQuickJumper itemRender={itemRender} pageSize={10} current={this.state.currentPage} total={this.state.totalNum} onChange={this.onPageChange}></Pagination>
                                 </div>
                             </div>
                         </div>

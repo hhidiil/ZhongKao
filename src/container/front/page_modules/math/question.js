@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import {getFirstDataOfPaper,getAllChildOfQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData} from '../../../../redux/actions/math'
 import {setPreRoute} from '../../../../redux/actions/public'
-import {getCoords} from '../../../../method_public/public'
+import {getCoords,compareDifferent} from '../../../../method_public/public'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import SelectMenu from '../../../../components/selectMenu/selectMenu'
 import NoThisPart from '../../../../components/defaultJPG/nothispart'
@@ -93,7 +93,7 @@ class Question extends Component{
             }],
             success:(data)=>{
                 console.log("getFirstDataOfPaper------->>>----->>>>",data);
-                let datajson = JSON.parse((data[0].data)[0].ExamResult);
+                let datajson = JSON.parse((data[0].data)[0].ExamResult.replace(/\\/g,"@&@"));
                 let errorArray=[];//错误题号
                 var ii=0;
                 for(let ss in datajson){
@@ -356,7 +356,7 @@ class Question extends Component{
             answers.each(function(ii){
                 answer += $(this).val();//用户填写的答案
             });
-            if(data[0].answer.trim() == answer){
+            if(compareDifferent(data[0].answer,answer)){
                 istrue =true;
                 score = data[0].totalpoints;
             }
@@ -385,7 +385,7 @@ class Question extends Component{
                     }else{
                         myvalue = $(this).text();
                     }
-                    if(rightanswer[ii] == myvalue){
+                    if(compareDifferent(rightanswer[ii],myvalue)){
                         istrue =true;
                         score += Number(data[0].totalpoints)/len;
                     }
@@ -478,7 +478,7 @@ class Question extends Component{
                 "content":[{
                     "answer": target_value,
                     "url":url,
-                    "isRight": (data.answer == target_value)?true:false,
+                    "isRight": compareDifferent(data.answer,target_value),
                     "knowledge":data.knowledge,
                     "isdone":true
                 }]
@@ -570,7 +570,7 @@ class Question extends Component{
             inputList.each(function(ii){
                 value += $(this).val();//用户填写的答案
             })
-            isRight = value==rightanswer? true : false;
+            isRight = compareDifferent(value,rightanswer);
             if(knowledge.length>0){
                 for(let ss in knowledge){
                     knowledge_new[ss] = {
@@ -601,7 +601,7 @@ class Question extends Component{
                     value = $(this).text();
                 }
                 //value = $(this).attr("data")?$(this).attr("data"): $(this)[0].innerText;//用户填写的答案
-                isRight = rightanswer[ii]==value? true : false;
+                isRight = compareDifferent(rightanswer[ii],value);
                 if(knowledges.length>0){
                     for(let ss in knowledges){
                         knowledge_new[ss] = {

@@ -7,6 +7,7 @@ import moment from 'moment'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import PureRenderMixin from '../../../../method_public/pure-render'
+import {compareDifferent} from '../../../../method_public/public'
 import {getUserBasicInfo, updateUserInfo,updateHeadImg} from '../../../../redux/actions/user'
 import './style.css'
 import {Form, Select,Radio,Input, Button, Upload, Icon,Layout,DatePicker} from 'antd';
@@ -21,6 +22,7 @@ class Index extends Component{
         };
     }
     componentDidMount(){
+        console.log("compareDifferent()====>>>",compareDifferent('x*y+5','5 +(x y)'))
     };
     render(){
         return (

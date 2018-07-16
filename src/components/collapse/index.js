@@ -11,8 +11,6 @@ class Collapse extends Component{
             displayFlag:false
         }
     }
-    componentDidMount(){
-    }
     //componentWillReceiveProps(nextProps) {
     //    this.setState({
     //        clearTime: nextProps.clearTime

@@ -137,6 +137,8 @@
 }
 .PaperList{
     padding: 20px 30px;
+    height:100%;
+    overflow-y: auto;
 }
 .PaperList .listitem{
     border: 1px solid darkgray;
@@ -285,7 +287,7 @@
     margin:0 5px
 }
 .paperDetail .studentAnwser{
-    font-size: 16px;
+    font-size: 14px;
     font-weight: 600;
 }
 .paperDetail .studentAnwser .studentimg{
@@ -318,10 +320,13 @@
 .childContent .ant-collapse{
     background-color: #dfe6ecd1;
 }
-.childContent .erveryQuestion .pigaiTips{
+.pigaiTips{
     margin-top: -17px;
     float: right;
     cursor: pointer;
+    font-weight: bold;
+    font-size: 16px;
+    color: #e8461f;
 }
 .childContent .erveryQuestion .pigaiTips:hover{
     background-color: #cae6e6;

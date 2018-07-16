@@ -19,7 +19,7 @@ import {Modal} from 'antd'
 import * as Modals from '../../../../method_public/antd-modal'
 import Pagination from '../../../../components/pagination/pagination'
 import MultipleChoice from '../../../../components/multipleChoice/index'
-import {getCoords} from '../../../../method_public/public'
+import {getCoords,compareDifferent} from '../../../../method_public/public'
 
 var sentJson = {
     "ExamInfoID":"", "UserID":"", "ExamPaperID":"","ExamPaperTitle":"","ExamOrExercise":"",
@@ -66,6 +66,7 @@ class Question extends Component{
             success:(data)=>{
                 let newdata = data[0];
                 if(newdata.code == 200){
+                    console.log("getQuestionList-----====--->>>>>",newdata.data)
                     let all_question = newdata.data;//解析JSON
                     let data_len = all_question.length;//本套试题的所有题目数
                     this.getData(all_question[this.state.current-1]);
@@ -247,6 +248,7 @@ class Question extends Component{
         let type = dataItems.get('questiontemplate');
         let isobjective = dataItems.get('isobjective');
         let quesId = dataItems.get('questionid');
+        let quesScore = dataItems.get('totalpoints');
         let knowledge = dataItems.get('knowledge');
         let nexflag = true;
         let score = dataItems.get('totalpoints');//先把题的得分拿出来，错了在赋值为0
@@ -262,7 +264,7 @@ class Question extends Component{
             //选择答案后执行
             if(targetDom){
                 let myAnswer = targetDom.value;
-                if(myAnswer == answer){
+                if(compareDifferent(myAnswer,answer)){
                     isright = true;
                     console.log("选择正确")
                 }else{
@@ -274,7 +276,7 @@ class Question extends Component{
                     "domid":'',
                     "content": myAnswer,
                     "url":"",
-                    "IsTrue": isright,
+                    "IsTrue": isright
                 }]
                 this.state.AnswerContent = AnswerArr;
             }else {
@@ -302,7 +304,7 @@ class Question extends Component{
                         myAnswer = $(this).text();
                     }
                     myId = $(this).attr("id");
-                    if( myAnswer == answer){
+                    if(compareDifferent(myAnswer,answer)){
                         isright = true;
                         console.log("正确")
                     }else{
@@ -328,6 +330,7 @@ class Question extends Component{
                 "QuesType": type,
                 "Contents": this.state.AnswerContent,
                 "score":score,
+                "QuesScore": quesScore,
                 "knowledge":knowledge
             }
             Storage_L.setItem(this.state.activeId,JSON.stringify(this.state.sentList))//每做完一个题缓存一个

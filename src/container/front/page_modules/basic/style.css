@@ -105,3 +105,13 @@
     position: absolute;
     right: 16px;
 }
+.examPaperScore{
+    position: absolute;
+    top: 30px;
+    right: 18%;
+    font-size: 25px;
+    color: red;
+    font-family: monospace;
+    font-style: italic;
+    text-decoration: underline double;
+}

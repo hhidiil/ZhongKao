@@ -86,9 +86,9 @@ class Exam extends Component{
                                         <div className="col-md-4 title">摸 底</div>
                                         <div className="col-md-8 btn_list">
                                             {doneFlag?<span className="wancheng">已完成</span>:<span className="wancheng">未完成</span>}
-                                            {doneFlag?<span className="wancheng">总分：{doneDetails.Score}</span>:""}
-                                            {doneFlag?<span className="wancheng">批改状态：{doneDetails.markFlag}</span>:""}
-                                            <Button type="dashed" className="bttn " onClick={()=>this.preview(item,doneFlag)}>结果预览</Button>
+                                            {/*doneFlag?<span className="wancheng">总分：{doneDetails.Score}</span>:""*/}
+                                            {/*doneFlag?<span className="wancheng">批改状态：{doneDetails.markFlag}</span>:""*/}
+                                            {/*<Button type="dashed" className="bttn " onClick={()=>this.preview(item,doneFlag)}>结果预览</Button>*/}
                                             <Button type="dashed" className="marginr5" onClick={()=>this.dataAnalysis(item)}>数据分析</Button>
                                             <Button type="dashed" className="bttn " onClick={()=>this.gotoPractice(item)}>开始</Button>
                                         </div>
