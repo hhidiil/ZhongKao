@@ -10,6 +10,7 @@ import { push } from 'react-router-redux'
 import {login } from '../../redux/actions/user'
 import {Storage_S} from '../../config'
 import { Form, Icon, Input, Button, Checkbox, Modal} from 'antd'
+import {updateStoreHeadImg} from '../../redux/actions/public'
 import './style.css'
 
 const FormItem = Form.Item;
@@ -19,7 +20,8 @@ class LoginForm extends Component {
         const { getFieldDecorator, getFieldsError, getFieldError} = this.props.form;
         this.state={
             modalVisible: false,
-            title:props.title || "登录"
+            title:props.title || "登录",
+            style:props.style || ''
         }
     }
     setModalVisible(modalVisible) {
@@ -36,8 +38,12 @@ class LoginForm extends Component {
                         password: values.password
                     },
                     success: (data) => {
-                        Storage_S.setItem('username', values.userName)
+                        console.log("login====>>>>",data);
+                        Storage_S.setItem('username', data[0].username)
+                        Storage_S.setItem('loginstatus',true)
                         Storage_S.setItem('userid', data[0].userid)
+                        Storage_S.setItem('headimg', data[0].headimg)
+                        this.props.actions.updateStoreHeadImg({data:data[0].headimg,clear:false})
                         this.props.actions.push('home')
                     },
                     error: (message) => {
@@ -59,7 +65,7 @@ class LoginForm extends Component {
         };
         return (
             <div>
-                <a type="primary" onClick={() => this.setModalVisible(true)}>{this.state.title}</a>
+                <a type="primary" className={this.state.style} onClick={() => this.setModalVisible(true)}>{this.state.title}</a>
                 <Modal
                     title="登录"
                     footer=""
@@ -106,7 +112,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ push, login}, dispatch)
+        actions: bindActionCreators({ push, login,updateStoreHeadImg}, dispatch)
     }
 }
 

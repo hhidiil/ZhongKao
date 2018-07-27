@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import './style.css'
 import {requestData} from '../../../../method_public/public'
-import {Pagination,Modal,message} from 'antd'
+import {Pagination,Modal,message,Collapse,Select} from 'antd'
 import {Storage_S} from '../../../../config'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import {getAllQuestionOfThematic,getAllChildOfQuestion,getKnowledgeIdList,setThematicQuestionAnswerInfo} from '../../../../redux/actions/math'
@@ -16,7 +16,6 @@ import {getProvinceList} from '../../../../redux/actions/page'
 import MultipleChoice from '../../../../components/multipleChoice/index'
 import DialogMask from '../../../../components/Alter/dialogMask/dialogmask'
 import Knowledge from './knowledge.js'
-import { Collapse,Select } from 'antd';
 const Panel = Collapse.Panel;
 const Option = Select.Option;
 
@@ -33,7 +32,6 @@ function itemRender(current, type, originalElement) {
     return originalElement;
 }
 var base = new Base64();//base64对象
-const modalParts = ["知识回顾","重点考点","备考思路","聚焦中考","真题过关"]
 class Thematic extends Component{
     constructor(props) {
         super(props)
@@ -305,7 +303,7 @@ class Thematic extends Component{
     render(){
         let { provinceList } = this.props;
         let error = PureRenderMixin.Compare([provinceList]);//优化render
-        if (error) return error
+        if (!error) return <div/>
         const knowlist = this.state.knowledgeList;
         if(knowlist.length<1){
             return <div/>
@@ -365,9 +363,6 @@ class Thematic extends Component{
                                 </div>
                                 <div className="questionNumber">找到<span style={{color:'red'}}>{this.state.totalNum}</span>个相关题</div>
                              </div>
-                            {/*<div className="partOne">
-                             这里是每一部分的head内容。可能是表格也可能是其他的东西
-                             </div>*/}
                             <div className="partTwo">
                                 <div className="pageslist">
                                     <ul>

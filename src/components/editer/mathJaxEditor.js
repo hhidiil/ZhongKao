@@ -7,7 +7,6 @@ import './style.css'
 
 class MathJaxEditor extends Component{
     constructor(props){
-        console.log("2222222222222222222222222222222222222222222222")
         super(props)
         this.state={
             showEditor:props.showEditor||false,

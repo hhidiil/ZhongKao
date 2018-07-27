@@ -22,3 +22,11 @@ export const collectInfo = createReducer(Immutable.fromJS({preload: false}), {
         return state.clear().set('preload', false)
     },
 })
+export const userheadimg = createReducer(Immutable.fromJS({preload: false}), {
+    [TYPES.USERHEADIMG_UPDATA]: (state, action) => {
+        return state.set('preload', true).merge(Immutable.fromJS(action.result))
+    },
+    [TYPES.USERHEADIMG_CLEAN]: (state, action) => {
+        return state.clear().set('preload', false)
+    },
+})

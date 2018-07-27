@@ -34,7 +34,7 @@ User.prototype.getMaxUserId = function(callback) {
 }
 /*根据用户名和密码匹配否正确*/
 User.prototype.getUserItemByUserName = function(callback) {
-    var _sql = `select username,userid from tblUser where username='${this.props.name}' and pwd='${this.props.password}'`;
+    var _sql = `select username,userid,headimg from tblUser where username='${this.props.name}' and pwd='${this.props.password}'`;
     helper.db_query({
         connect: con,
         sql: _sql,

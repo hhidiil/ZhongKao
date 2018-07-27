@@ -183,8 +183,11 @@ class Knowledge extends Component{
             let questionanswer = [item.questiontemplate,(item.answer).trim()];
             return(
                 <div key={index} className="practice" data={questionanswer}>
+                    <div className="typeName">{"【"+(item.questiontemplate.replace(/\s/,'').substr(0,1))+"】"}</div>
                     <ul>
-                        <li dangerouslySetInnerHTML={{__html:content}}></li>
+                        <li>
+                            <div dangerouslySetInnerHTML={{__html:content}}></div>
+                        </li>
                         {item.questiontemplate == "选择题" ?<MultipleChoice template="noRender" type={item.questiontype} answer="" changeSave={this.onchangehandle.bind(this)}  index={index} choiceList={item.optionselect} />:''}
                     </ul>
                 </div>

@@ -157,9 +157,6 @@ class Question extends Component{
         if(prevState.analysisLeftContent != this.state.analysisLeftContent){
             this.addEventFuc();//为分析部分添加事件处理
         }
-        //if(prevState.solution != this.state.solution){
-        //    this.addEventFuc('1');//主题解答添加事件处理
-        //}
         if(prevState.currentQuesData != this.state.currentQuesData){
             this.addOldAnswer();//显示主题干一测试题的答案
         }
@@ -888,7 +885,7 @@ class Question extends Component{
         console.log("-------------num-------------->",num)
         const {SecondTestQuestions,GetFirstDataOfPaper} = this.props;
         let error = PureRenderMixin.Compare([SecondTestQuestions,GetFirstDataOfPaper]);
-        if (error) return error;
+        if (!error) return <div/>
         let title = JSON.parse(Storage_S.getItem(this.state.activeId)).exampaper;
         let errLength = (this.state.errorArray).length;
         let childslen=0;

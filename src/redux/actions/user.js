@@ -5,7 +5,7 @@
 import * as TYPES from '../types';
 import * as CONFIG from '../../config';
 import { request } from './request';
-import { bodyUrlencoded,requestData } from '../../method_public/public'
+import { bodyUrlencoded } from '../../method_public/public'
 
 //获取数据的方式先 全部使用 GET。用真实数据时使用POST方式----<<------看这里!!!------------
 export function auth(opt) {

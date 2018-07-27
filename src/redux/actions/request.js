@@ -14,7 +14,7 @@ import { bodyUrlencoded } from '../../method_public/public'
 export function request(route, params, dispatch, success=null, error=null, { method='GET', headers={}, body=null }={}) {
 
     dispatch({type: TYPES.REQUEST_LOADING, [ pendingTask ]: begin})
-    const p = params ? '?' + Object.entries(params).map((i) => `${i[0]}=${encodeURI(i[1])}`).join('&') : '';
+    const p = params ? '?' + Object.entries(params).map((i) => `${i[0]}=${encodeURI(i[1])}`).join('&') : '';//处理get请求有参数的，转换参数形式
     const url = `${ CONFIG.API_URI }${ route }${ p }`;
     let data = { method: method, headers: headers}
     if (method !== 'GET') data.body = body

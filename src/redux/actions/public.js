@@ -18,8 +18,25 @@ export function setTiming(type) {
 
 }
 //存储每次跳转的前一个路由地址
-export function setPreRoute(route) {
+export function setPreRoute(route,param) {
     return (dispatch) => {
-        dispatch({ type: TYPES.SET_PREROUTE,preRoute:route})
+        if(param == 'add'){
+            dispatch({ type: TYPES.ADD_PREROUTE,preRoute:route})
+        }else if(param == 'del'){
+            dispatch({ type: TYPES.DEL_PREROUTE,preRoute:route})
+        }
+    }
+}
+//更新store中的headimg
+export function updateStoreHeadImg(param) {
+    let head = param.data;
+    let flag = param.clear;
+    return (dispatch) => {
+        if(!flag){
+            dispatch({ type: TYPES.USERHEADIMG_UPDATA, result: {headimg:head} })
+        }else {
+            dispatch({ type: TYPES.USERHEADIMG_CLEAN, result: {} })
+        }
+
     }
 }

@@ -2,32 +2,42 @@
  * Created by gaoju on 2018/7/4.
  */
 import React,{Component} from 'react'
-import { connect } from 'react-redux'
-import moment from 'moment'
-import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
-import PureRenderMixin from '../../../../method_public/pure-render'
-import {compareDifferent} from '../../../../method_public/public'
-import {getUserBasicInfo, updateUserInfo,updateHeadImg} from '../../../../redux/actions/user'
 import './style.css'
-import {Form, Select,Radio,Input, Button, Upload, Icon,Layout,DatePicker} from 'antd';
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import {downloadFile} from '../../../../redux/actions/upload'
+import * as Modals from '../../../../method_public/antd-modal'
+import {Button} from 'antd';
 
 
 class Index extends Component{
     constructor(props){
         super(props);
         this.state={
-            userid:'',
-            head_img:''
+            name:'download'
         };
     }
-    componentDidMount(){
-        console.log("compareDifferent()====>>>",compareDifferent('x*y+5','5 +(x y)'))
-    };
+    downloadSubmit(name){
+        console.log("下载文件！！！",name,this.state.name)
+        this.props.actions.downloadFile({
+            body:{
+                "name": name
+            },
+            callback:(data)=>{
+                console.log(data)
+            }
+        })
+    }
     render(){
         return (
-            <div className="basic_All_css">
-                TipsTipsTipsTipsTipsTipsTipsTips
+            <div className="exciseTips">
+                <ul>
+                    <li><a href="javascript:void(0);">1、中考解题技巧</a>
+                        <a href="/api/download?name=readme.txt" className="btnDownload">action下载</a>
+                        <a href="http://localhost:10000/api/download?name=MongoDB安装配置.docx" className="btnDownload">document下载1</a>
+                        <a href="public/docs/MongoDB安装配置.docx" className="btnDownload">document下载2</a>
+                    </li>
+                </ul>
             </div>
         )
     }
@@ -37,7 +47,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({push}, dispatch)
+        actions: bindActionCreators({downloadFile}, dispatch)
     }
 }
-export default Index
+export default connect(mapStateToProps, mapDispatchToProps)(Index)

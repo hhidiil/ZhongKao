@@ -5,7 +5,7 @@
 import * as TYPES from '../types';
 import * as CONFIG from '../../config';
 import { request } from './request';
-import { bodyUrlencoded,requestData } from '../../method_public/public'
+import { bodyUrlencoded } from '../../method_public/public'
 
 //登录校验
 export function login(opt) {

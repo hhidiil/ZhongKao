@@ -19,11 +19,17 @@ class Math extends Component{
     render(){
         return(
             <div>
-                <div className="examAll-item">
-                    <div className="title" onClick={()=>this.goThematicQuestion('knowledge')}>知识点复习</div>
+                <div className="examAll-item-knowledge">
+                    <h3 className="center margint20">知识点复习</h3>
+                    <div className="item-knowledge">
+                        <div className="part1" onClick={()=>this.goThematicQuestion('chapters')}>课本复习</div>
+                        <div className="part1" style={{borderLeft:"1px solid darkgray"}} onClick={()=>this.goThematicQuestion('exampoint')}>考点复习</div>
+                    </div>
                 </div>
                 <div className="examAll-item">
-                    <div className="title" onClick={()=>this.goThematicQuestion('thematic')}>专题复习</div>
+                    <div className="title" onClick={()=>this.goThematicQuestion('thematic')}>
+                        <h3>专题复习</h3>
+                    </div>
                 </div>
             </div>
         )

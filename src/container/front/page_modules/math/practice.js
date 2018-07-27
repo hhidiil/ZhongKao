@@ -6,7 +6,7 @@ import React,{Component} from 'react'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
+import { push,goBack } from 'react-router-redux'
 import {getQuestionList,getQuestion,sentUserPaperData,sentUserQuestionDataOfPaper,getFirstDataOfPaper} from '../../../../redux/actions/math'
 import Timing from '../../../../components/timing'
 import {MathJaxEditor} from '../../../../components/editer'
@@ -95,6 +95,7 @@ class Question extends Component{
         // 返回 false 会继续停留当前页面，否则，返回一个字符串，会显示给用户，让其自己决定
         if(confirm('确认要离开？')){
             this.setState({cleartimeflag:true})
+            UE.delEditor('practiceContainer');
             setTimeout(()=>{
                 return true;
             },1000)
@@ -234,7 +235,7 @@ class Question extends Component{
         this.setState({cleartimeflag:true});
         UE.delEditor('practiceContainer');
         setTimeout(()=>{
-            this.props.actions.push("/home/math/exams")
+            this.props.actions.goBack();
         },500)
 
     }
@@ -399,7 +400,7 @@ class Question extends Component{
     render(){
         const {GetQuestion} = this.props;
         let error = PureRenderMixin.Compare([GetQuestion]);
-        if (error) return error;
+        if (!error) return <div/>
         if((this.state.totalNum)<1) return (<div />);
         let questiontype = ((GetQuestion.get('items')).get(0)).get('data').get(0).get('questiontemplate');
         let objective = ((GetQuestion.get('items')).get(0)).get('data').get(0).get('isobjective');
@@ -453,7 +454,7 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getQuestionList,getQuestion,sentUserPaperData,sentUserQuestionDataOfPaper,getFirstDataOfPaper}, dispatch) }
+    return { actions: bindActionCreators({push,goBack,getQuestionList,getQuestion,sentUserPaperData,sentUserQuestionDataOfPaper,getFirstDataOfPaper}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question)

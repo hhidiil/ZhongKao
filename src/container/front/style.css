@@ -10,7 +10,6 @@
     margin: 0px;
     width: 100%;
     z-index: 999;
-    background: #bd9260;
     color: #fff;
     border-bottom: 1px solid transparent;
     transition: border .5s cubic-bezier(0.455, 0.03, 0.515, 0.955), background .5s cubic-bezier(0.455, 0.03, 0.515, 0.955);
@@ -39,7 +38,7 @@
     min-width: 450px;
 }
 .color-white{
-    color: #ffffff !important;
+    color: #ffffff;
 }
 .position-relative{
     position: relative;
@@ -61,9 +60,23 @@
     background-size: cover;
 }
 .header-check-btn{
-    position: absolute;
+    display: inline-flex;
+    float: right;
     right: 10px;
-    bottom: 15px;
+    margin-top: 10px;
+    font-size: 16px;
+}
+.header-check-btn a:hover{
+    color: #3fe6ff;
+}
+.door-headerimg{
+    width: 48px;
+    height:48px;
+    border-radius: 25px;
+}
+.header-logout{
+    cursor: pointer;
+    margin: 10px 0 0 10px;
 }
 .mainWapper{
     position: relative;
@@ -74,6 +87,17 @@
     border-radius: 0;
     padding: 0;
     min-height: 500px;
+}
+.enterstart{
+    font-size: 26px;
+    width: 200px;
+    float: right;
+    border-radius: 5px;
+    box-shadow: 0px 0px 0px 2px #a08a55;
+}
+.enterstart:hover{
+    box-shadow: 0px 0px 0px 2px #d0c8b6;
+    cursor: pointer;
 }
 .banner-wapper1{
     position: relative;
@@ -121,7 +145,6 @@
     font-family: 'Open Sans', sans-serif;
 }
 .banner-wapper3{
-    background: #bd9260;
     padding: 4em 0 0 0;
 }
 .banner-wapper3 .content{
@@ -207,7 +230,6 @@
 }
 .banner-wapper5{
     text-align: center;
-    background: #bd9260;
     padding: 3em 0 4em 0;
 }
 .banner-wapper5 .content{

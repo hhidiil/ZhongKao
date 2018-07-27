@@ -15,7 +15,10 @@ export const TimingFlag = createReducer(Immutable.fromJS({preload:false}),{
     }
 })
 export const PREROUTE = createReducer(Immutable.fromJS({preload:false}),{
-    [TYPES.SET_PREROUTE]: (state, action) => {
+    [TYPES.ADD_PREROUTE]: (state=[], action) => {
+        return state.set('preload', true).merge(Immutable.fromJS(action.preRoute))
+    },
+    [TYPES.DEL_PREROUTE]: (state, action) => {
         return state.set('preload', true).merge(Immutable.fromJS(action.preRoute))
     }
 })

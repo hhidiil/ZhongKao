@@ -9,7 +9,7 @@ import { Menu, Icon,Button,Modal } from 'antd'
 import { bindActionCreators } from 'redux'
 import PureRenderMixin from '../../method_public/pure-render'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push,goBack } from 'react-router-redux'
 import {getAllChildOfQuestion,getChildQuestionsForQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion} from '../../redux/actions/math'
 import {updateMarkExamInfo,getDataOfPaper} from '../../redux/actions/teacher'
 import {Pagination} from '../../components/pagination'
@@ -195,7 +195,7 @@ class PaperDetail extends Component {
             let url = (_this.props.location.pathname).split('/');
             url = url.splice(0,url.length-3);
             let endurl = url.join('/');
-            _this.props.actions.push(endurl)
+            _this.props.actions.goBack()
         })
     }
     onChange = (page) => {
@@ -481,7 +481,7 @@ function mapStateToProps(state, ownProps) {
     return {}
 }
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getDataOfPaper,getAllChildOfQuestion,updateMarkExamInfo,getChildQuestionsForQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion}, dispatch) }
+    return { actions: bindActionCreators({push,goBack,getDataOfPaper,getAllChildOfQuestion,updateMarkExamInfo,getChildQuestionsForQuestion,getContentOfChildItems,getContentOfChildItemsForQues,getQuestion}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaperDetail)

@@ -9,6 +9,9 @@ import { bindActionCreators } from 'redux'
 import PureRenderMixin from '../../method_public/pure-render'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+import {handleImg} from '../../method_public/public'
+import {updateStoreHeadImg} from '../../redux/actions/public'
+import {Storage_S} from '../../config'
 
 const SubMenu = Menu.SubMenu;
 class Home extends Component {
@@ -21,11 +24,13 @@ class Home extends Component {
         this.exitOut = this.exitOut.bind(this);
     };
     componentDidMount(){
-        document.body.style.backgroundColor = '#F5F5F5';
+        let headimg = Storage_S.getItem('headimg');
         let screenHeight = document.documentElement.clientHeight;
         let screenWeight = document.documentElement.clientWidth;
         console.log(screenWeight,screenHeight)
+        document.body.style.backgroundColor = '#F5F5F5';
         document.getElementById("section").style.height = (screenHeight-80-40)+'px';
+        this.props.actions.updateStoreHeadImg({data:headimg,clear:false})//当页面刷新store会重置，需要重新更新store
     };
     handleClick = (e) => {
         let route='';
@@ -47,18 +52,23 @@ class Home extends Component {
     exitOut(){
         if(window.confirm("确定要退出吗？")){
             sessionStorage.clear();
+            this.props.actions.updateStoreHeadImg({data:'',clear:true})//清除store中的数据
             this.props.actions.push('/');
         }else {
             console.log("不想退出你点击干嘛？")
         }
     };
     render() {
+        let { userheadimg} = this.props;
         return (
             <div className="home">
                 <header id="header-home" className="flex-box box-align-center justify-center">
                     <div className="full-width position-relative width-max-xxlarge">
                         <div className="logolay"><a href="http://www.idiil.com.cn/index.html" ><img src="public/images/uu14.png"/></a></div>
-                        <div className="header-check-btn" onClick={this.exitOut}>退出</div>
+                        <div className="floatR displayflex">
+                            <div><img className="door-headerimg" src={handleImg(userheadimg.get('headimg'))} /></div>
+                            <div className="header-logout" onClick={this.exitOut}>退出</div>
+                        </div>
                     </div>
                 </header>
                 <section id="section" className="flex-box section-all">
@@ -89,10 +99,12 @@ class Home extends Component {
     }
 }
 function mapStateToProps(state, ownProps) {
-    return {}
+    return {
+        userheadimg: state.userheadimg
+    }
 }
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push}, dispatch) }
+    return { actions: bindActionCreators({push,updateStoreHeadImg}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

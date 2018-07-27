@@ -6,8 +6,13 @@ import 'babel-polyfill'
 import fetch from 'isomorphic-fetch'
 
 //简单版 fetch数据请求
-export function requestData(url,data,callback){
-    console.log(url,data)
+export function requestData(route,params,callback,{ method='GET', headers={}, body=null }={}){
+    //处理get请求有参数的，转换参数形式
+    const p = params ? '?' + Object.entries(params).map((i) => `${i[0]}=${encodeURI(i[1])}`).join('&') : '';
+    const url = `${ route }${ p }`;
+    let data = { method: method, headers: headers}
+    if (method !== 'GET') data.body = body
+    console.log(`[${method}]:${url}::${data}`,data)
     return fetch(url,data)
         .then((response) => {
             if (response.status >= 200 && response.status < 300) {
@@ -22,7 +27,7 @@ export function requestData(url,data,callback){
         })
         .catch((err) => {
             console.warn(err)
-            return err
+            return callback(err)
         })
 }
 //g改装版 fetch数据请求，使用promise.all 模拟同步加载数据
@@ -39,12 +44,11 @@ export function requestSyn(url,lists,callback){
 }
 //判断用户是否登录
 export function isAdmin(){
-    let token = sessionStorage.getItem('token');
     let username = sessionStorage.getItem('username');
-    console.log("session username------>",token,username)
+    console.log("session username------>",username)
     if(!username){
         return false;
-    }else{
+    }else {
         return true;
     }
 }
@@ -72,7 +76,7 @@ export function limitStringlength(str, length) {
 }
 //img加载处理，当没有正常加载显示时使用默认图片
 export function handleImg(url){
-    if(url){
+    if(url && url!='undefined'){
         return url;
     }else {
         return 'public/images/default.jpg';

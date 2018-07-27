@@ -21,7 +21,9 @@ import ThematiceParts from '../container/front/page_modules/math/thematiceParts'
 import Question from '../container/front/page_modules/math/question'
 import Practice from '../container/front/page_modules/math/practice'
 import ExamAllPaper from '../container/front/page_modules/math/exam'
-import Thematic from  '../container/front/page_modules/math/thematic'
+import Chapter from  '../container/front/page_modules/math/thematicChapter'
+import ChapterPart from  '../container/front/page_modules/math/thematicChapterPart'
+import ExamPoint from  '../container/front/page_modules/math/thematic'
 import ThematicQuesList from  '../container/front/page_modules/math/thematicQuesList'
 import QuestionDetail from '../container/front/page_modules/math/signQuestionDetail'
 import Knowledge from '../container/front/page_modules/math/knowledge'
@@ -48,7 +50,9 @@ const routes = (
             <Route path="excisetip" component={ExciseTips}/>
             <Route path="math" component={Math}/>
             <Route path="math/thematiceParts" component={ThematiceParts}/>
-            <Route path="math/thematiceParts/knowledge" component={Thematic} />
+            <Route path="math/thematiceParts/chapters" component={Chapter} />
+            <Route path="math/thematiceParts/chapters/:num" component={ChapterPart} />
+            <Route path="math/thematiceParts/exampoint" component={ExamPoint} />
             <Route path="math/thematiceParts/thematic" component={ThematicQuesList} />
             <Route path="math/exams" component={ExamAllPaper}/>
             <Route path="math/exams/question/:id" component={Question} />

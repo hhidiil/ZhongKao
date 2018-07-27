@@ -55,8 +55,7 @@ module.exports = {
         var user = new User({ props: props });
         user.getUserItemByUserName(function(err, data) {
             if(!err){
-                if (data.length) {
-                    console.log(data)
+                if (data.length>0) {
                     return res.send({
                         code: 200,
                         data: data
@@ -125,7 +124,6 @@ module.exports = {
                     })
                 }
             }else {
-                console.log(err)
                 return res.send({
                     code: 501,
                     message: '出错了'
@@ -139,7 +137,6 @@ module.exports = {
         user.getUserWithNameAndPwd(function (err,data) {
             if(!err){
                 if(data.length>0){
-                    console.log("getUserWithNameAndPwd=====>>>>>",data)
                     let props = {
                         id: data[0].id,
                         new_password: Helper.getMD5(req.body.new_password)
@@ -147,13 +144,11 @@ module.exports = {
                     let user = new User({props:props});
                     user.putUserPassword(function(err, data) {
                         if(!err){
-                            console.log(data)
                             return res.send({
                                 code: 200,
                                 message:data
                             })
                         }else {
-                            console.log(err)
                             return res.send({
                                 code: 500,
                                 message: '重置密码出错'
@@ -241,7 +236,6 @@ module.exports = {
         var props = {
             username: req.body.params
         };
-        debugger
         var user = new User({props:props});
         user.getUserBasicInfo(function(err,data){
             if(err){

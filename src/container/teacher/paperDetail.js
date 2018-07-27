@@ -9,7 +9,7 @@ import { Menu, Icon,Button,Modal } from 'antd'
 import { bindActionCreators } from 'redux'
 import PureRenderMixin from '../../method_public/pure-render'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push,goBack } from 'react-router-redux'
 import {getAllChildOfQuestion} from '../../redux/actions/math'
 import {updateMarkExamInfo,getDataOfPaper,updateMarkQuestionInfo} from '../../redux/actions/teacher'
 import {Pagination} from '../../components/pagination'
@@ -106,7 +106,8 @@ class PaperDetail extends Component {
             //let tar = url.pop();
             url = url.splice(0,url.length-3);
             let endurl = url.join('/');
-            _this.props.actions.push(endurl)
+            //_this.props.actions.push(endurl);
+            _this.props.actions.goBack()
         })
     }
     onChange = (page) => {
@@ -288,7 +289,7 @@ function mapStateToProps(state, ownProps) {
     return {}
 }
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getDataOfPaper,getAllChildOfQuestion,updateMarkExamInfo,updateMarkQuestionInfo}, dispatch) }
+    return { actions: bindActionCreators({push,goBack,getDataOfPaper,getAllChildOfQuestion,updateMarkExamInfo,updateMarkQuestionInfo}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(PaperDetail)

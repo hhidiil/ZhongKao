@@ -1,5 +1,5 @@
 /**
- * 上传文件
+ * 文件处理：上传、下载
  * Created by gaoju on 2018/1/16.
  */
 const CONFIG_MAP = require('../../config')
@@ -7,7 +7,8 @@ const Helper = require('../helper')
 
 module.exports={
     init: function(app) {
-        app.post('/upload',this.doUpLoadFile)
+        app.post('/upload',this.doUpLoadFile);//上传文件
+        app.get('/download',this.doDownLoadFile);//下载文件
     },
     doUpLoadFile: (req, res, next) => {
         let personflag = req.body.personflag;//那个角色上传的，有教师、学生。。教师为0，学生为1
@@ -32,5 +33,13 @@ module.exports={
             }
             res.json({file: `${whichfile}/${foldername}/${dateString}.png`});
         });
+    },
+    doDownLoadFile:(req,res,next) =>{
+        let file = req.query.name;
+        //let file = 'readme.txt';
+        let filepath = `${CONFIG_MAP.root_path}/docs/${file}`;
+        console.log("doDownLoadFile===>>>",filepath,file);
+        res.set('Content-Type','application/octet-stream');//D:\gaoju\Midexam\React\docs\readme.txt
+        res.download(filepath);
     }
 }

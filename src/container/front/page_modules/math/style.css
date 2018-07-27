@@ -95,6 +95,28 @@
     margin-right: 5px;
     float: right;
 }
+.examAll-item-knowledge{
+    position: relative;
+    height: 375px;
+    border-radius: 8px;
+    border: 1px solid darkgray;
+    margin-bottom: 5px;
+    background-color: lightyellow;
+}
+.examAll-item-knowledge .item-knowledge{
+    position: relative;
+    display: flex;
+}
+.item-knowledge .part1{
+    position: relative;
+    width: 50%;
+    height: 200px;
+    margin-top: 50px;
+    padding-top: 76px;
+    text-align: center;
+    font-size: 20px;
+    cursor: pointer;
+}
 .examAll-item{
     position: relative;
     display: flex;
@@ -276,3 +298,41 @@
 .dataAnalysis .part-three{
     min-height: 300px;
 }
+/*thematicChapter start*/
+.thematicChapter{
+    position: relative;
+    padding: 10px 40px;
+    height: 100%;
+}
+.thematicChapter .chapterMenu{
+    height: 40px;
+    margin: 0 5px 0 5px;
+    padding: 10px 0 5px 10px;
+    border-bottom: 1px solid gray
+}
+.thematicChapter .chapterMenuTree{
+    position: relative;
+    height: 660px;
+    min-width: 200px;
+    max-width: 350px;
+    overflow-y: auto;
+}
+.thematicChapter .menu{
+    display: block;
+    background-color: white;
+    height: 700px;
+}
+.thematicChapter .menu .menuList{
+    line-height:48px;
+    padding-left: 35px;
+    cursor: pointer;
+}
+.thematicChapter .article{
+    position: relative;
+    display: block;
+    width: 100%;
+    background-color: white;
+    margin-left: 20px;
+}
+
+/*thematicChapter end*/

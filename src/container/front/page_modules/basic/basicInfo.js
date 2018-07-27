@@ -9,6 +9,8 @@ import { push } from 'react-router-redux'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import {handleImg,exchangeGrade,beforeUpload,getBase64} from '../../../../method_public/public'
 import {getUserBasicInfo, updateUserInfo,updateHeadImg} from '../../../../redux/actions/user'
+import {updateStoreHeadImg} from '../../../../redux/actions/public'
+import {Storage_S} from '../../../../config'
 import './style.css'
 import {Form, Select,Radio,Input, Button, Upload, Icon,Layout,DatePicker} from 'antd';
 
@@ -59,6 +61,8 @@ class BasicInfo extends Component{
             body:{head:headimg,userid:this.state.userid},
             success:(data)=>{
                 console.log(data)
+                Storage_S.setItem('headimg',this.state.head_img);
+                this.props.actions.updateStoreHeadImg({data:this.state.head_img,clear:false});
                 alert("修改成功！")
             },
             error: (mes)=>{
@@ -78,7 +82,7 @@ class BasicInfo extends Component{
     render(){
         let { basicInfo } = this.props;
         let error = PureRenderMixin.Compare([basicInfo]);//优化render
-        if (error) return error
+        if (!error) return <div/>
         let items = (basicInfo.get('items')).get(0)
         let date_birthday = moment(items.get('birthday'))//moment对象用来格式化时间
         const { getFieldDecorator } = this.props.form;
@@ -221,7 +225,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({push, getUserBasicInfo,updateUserInfo,updateHeadImg}, dispatch)
+        actions: bindActionCreators({push, getUserBasicInfo,updateUserInfo,updateHeadImg,updateStoreHeadImg}, dispatch)
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Basic)

@@ -20,6 +20,7 @@ export default {
             if (!ren.get('preload'))
                 result=false;
         }
-        if(!result) return (<div />)
+        //if(!result) return result
+        return result
     }
 }

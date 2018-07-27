@@ -3,6 +3,7 @@
  */
 import React,{Component} from 'react'
 import './style.css'
+import PropTypes from 'prop-types'
 
 class Collapse extends Component{
     constructor(props){
@@ -34,5 +35,10 @@ class Collapse extends Component{
             </div>
         )
     }
+}
+Collapse.propTypes={
+    displayFlag:PropTypes.bool,
+    onClick:PropTypes.func,
+    title:PropTypes.string
 }
 export default Collapse

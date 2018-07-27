@@ -4,7 +4,7 @@
 
 import * as TYPES from '../types';
 import { request } from './request';
-import { bodyUrlencoded,requestData } from '../../method_public/public'
+import { bodyUrlencoded } from '../../method_public/public'
 
 //首页展示列表
 export function getHomeShowList(opt) {

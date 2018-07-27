@@ -25,7 +25,6 @@
     right: 0;
     left: 0;
     bottom: 0;
-    padding:20px 0 0 0 ;
     background-color: #ededed;
     -webkit-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
     -moz-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
@@ -412,8 +411,8 @@
 .knowledgeContent .practice{
     margin: 5px 0;
 }
-.knowledgeContent .practice p{
-    /*padding-left: 20px;*/
+.knowledgeContent .practice ul{
+    padding-left: 40px;
 }
 .knowledgeContent .practice img{
     max-width: 100%;
@@ -421,6 +420,10 @@
 .knowledgeContent .submit_btn{
     float: right;
     margin: 10px 20px 10px 0;
+}
+.typeName{
+    position: absolute;
+    margin-top: 20px;
 }
 .selectorLine{
     margin: 5px 0;
