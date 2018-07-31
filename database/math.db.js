@@ -140,12 +140,39 @@ Math.prototype.getThisCollection = function (callback) {
         callback:callback
     })
 }
+Math.prototype.getChapterTree = function (callback) {
+    var _sql = `select knowledgeid,knowledge,ordersn from tblKnowledgeArch where parentid='' ORDER BY ordersn`;
+    helper.db_query({
+        connect:con,
+        sql:_sql,
+        name:'getChapterTree',
+        callback:callback
+    })
+}
+Math.prototype.getAllKnowledgeOfChapter = function(callback){
+    var _sql = `select * from tblKnowledgeArch`;
+    helper.db_query({
+        connect:con,
+        sql:_sql,
+        name:'getAllKnowledgeOfChapter',
+        callback:callback
+    })
+}
 Math.prototype.getKnowledgeIdList = function (callback) {
     var _sql = `select * from tblKnowledge2Question where knowledgeid=(select knowledgeid from tblKnowledgeArch where knowledge='${this.props.knowledgeName}')`;
     helper.db_query({
         connect:con,
         sql:_sql,
         name:'getKnowledgeIdList',
+        callback:callback
+    })
+}
+Math.prototype.getKnowledgeIdListWithId = function (callback) {
+    var _sql = `select * from tblKnowledge2Question where knowledgeid=(select knowledgeid from tblKnowledgeArch where knowledgeid='${this.props.knowledgeId}')`;
+    helper.db_query({
+        connect:con,
+        sql:_sql,
+        name:'getKnowledgeIdListWithId',
         callback:callback
     })
 }

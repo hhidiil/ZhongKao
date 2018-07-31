@@ -4,7 +4,7 @@
 import { request,requestSyn } from './request';
 import * as TYPES from '../types';
 import * as CONFIG from '../../config';
-import { bodyUrlencoded } from '../../method_public/public'
+import { bodyUrlencoded ,requestData} from '../../method_public/public'
 
 //获取所有练习试卷
 export function getAllQuestionsList(opt) {
@@ -126,10 +126,30 @@ export function getFirstDataOfPaper(opt) {
                 body: opt.body })
     }
 }
-//获取知识点对应的试题
+//获取章节知识点目录结构
+export function getAllKnowledgeOfChapter(opt){
+    return (dispatch) => {
+        const route = '/api/math/allKnowledgeOfChapter';
+        request(route,{},dispatch,opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: (opt.body) })
+    }
+}
+//获取知识点对应的试题,通过名字查找(默认用名字)
 export function getKnowledgeIdList(opt) {
     return (dispatch) => {
         const route = '/api/math/knowledgeIdList';
+        requestSyn(route,{},dispatch,opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: opt.body })
+    }
+}
+//获取知识点对应的试题，通过Id查找
+export function getKnowledgeIdListWithId(opt) {
+    return (dispatch) => {
+        const route = '/api/math/knowledgeIdListWithId';
         requestSyn(route,{},dispatch,opt.success, opt.error,
             { method: 'POST',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},

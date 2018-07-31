@@ -2,7 +2,7 @@
  * 服务端--获取数学真题
  * Created by gaoju on 2018/1/19.
  */
-
+var fs = require('fs'),path = require('path');
 var Math = require('../../database/math.db');
 
 module.exports={
@@ -19,7 +19,9 @@ module.exports={
         app.post('/math/childQuestionsForQuestion',this.getChildQuestionsForQuestion);
         app.post('/math/setCollection',this.doSetCollection);
         app.post('/math/allQuestionOfThematic',this.getAllQuestionOfThematic);
+        app.post('/math/allKnowledgeOfChapter',this.getAllKnowledgeOfChapter);
         app.post('/math/knowledgeIdList',this.getKnowledgeIdList);
+        app.post('/math/knowledgeIdListWithId',this.getKnowledgeIdListWithId);
         app.post('/math/knowledgeForQuestionInfo',this.sentKnowledgeForQuestionInfo);
         app.post('/math/everyQuestion',this.getEveryQuestion);
         app.post('/math/thematicQuestionAnswerInfo',this.setThematicQuestionAnswerInfo)
@@ -414,10 +416,74 @@ module.exports={
             }
         })
     },
+    getAllKnowledgeOfChapter:(req,res)=>{
+        var props = req.body;
+        var math = new Math({props:props});
+        math.getAllKnowledgeOfChapter(function(err,data){
+            if(!err){
+                return res.send({
+                    code:200,
+                    data:fun1(data)
+                })
+            }else{
+                return res.send({
+                    code:501,
+                    message:'数据出错了'
+                })
+            }
+        })
+        //处理返回的数据，生成目录树，方便前端使用
+        function fun1(data){
+            var chapter = [];
+            for (let item in data){
+                if(data[item].parentid == ''){
+                    chapter.push(data[item])
+                }
+            }
+            //排序
+            chapter = chapter.sort(function(a,b){
+                return a.ordersn- b.ordersn;
+            })
+            //获取每一个节点的子节点
+            for(let i=0;i<chapter.length;i++){
+                chapter[i] = getchild(chapter[i],data)
+            }
+            return chapter
+        }
+        function getchild(chapterList,AllList){
+            chapterList.child = [];
+            for(let i=0;i<AllList.length;i++){
+                if(AllList[i] && AllList[i].parentid==chapterList.knowledgeid){
+                    chapterList.child.push(getchild(AllList[i],AllList));
+                }
+            }
+            chapterList.child = chapterList.child.sort(function(a,b){
+                return a.ordersn- b.ordersn;
+            })
+            return chapterList
+        }
+    },
     getKnowledgeIdList:(req,res)=>{
         var props = req.body;
         var math = new Math({props:props});
         math.getKnowledgeIdList(function(err,data){
+            if(!err){
+                return res.send({
+                    code:200,
+                    data:data
+                })
+            }else{
+                return res.send({
+                    code:501,
+                    message:'数据出错了'
+                })
+            }
+        })
+    },
+    getKnowledgeIdListWithId:(req,res)=>{
+        var props = req.body;
+        var math = new Math({props:props});
+        math.getKnowledgeIdListWithId(function(err,data){
             if(!err){
                 return res.send({
                     code:200,

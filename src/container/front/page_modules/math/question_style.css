@@ -354,6 +354,7 @@
 .thematicQues-parts .partTwo .pageslist .fieldtip span{
     margin: 0 5px;
     cursor: pointer;
+    color: #009fff;
 }
 .thematicQues-parts .partTwo .pageslist .fieldtip .right{
     text-align: right;

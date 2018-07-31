@@ -7,10 +7,9 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import './style.css'
 import './question_style.css'
-import PureRenderMixin from '../../../../method_public/pure-render'
-import {Storage_S} from '../../../../config'
-import {getAllQuestionOfThematic,getAllChildOfQuestion,getKnowledgeIdList,getEveryQuestion,setThematicQuestionAnswerInfo} from '../../../../redux/actions/math'
-import {Pagination,Modal,message,Select,Tree} from 'antd'
+import {Storage_S,Storage_L} from '../../../../config'
+import {getAllChildOfQuestion,getAllKnowledgeOfChapter,getKnowledgeIdListWithId,getEveryQuestion,setThematicQuestionAnswerInfo} from '../../../../redux/actions/math'
+import {Pagination,Modal,message,Select,Tree,Spin } from 'antd'
 import MultipleChoice from '../../../../components/multipleChoice/index'
 import DialogMask from '../../../../components/Alter/dialogMask/dialogmask'
 import Knowledge from './knowledge.js'
@@ -36,6 +35,8 @@ class Chapter extends Component{
             knowledgeName:'',
             currentPage:1,
             totalNum:0,
+            Pending : false,//加载转圈标志
+            chapterList:[],//章节目录
             allQuestionList:[],//当前模块的所有试题
             selectQuestionList:[],//条件选择后的所有试题
             currentQuestionList:[],//当前页面所显示的试题(当前10条)
@@ -45,26 +46,25 @@ class Chapter extends Component{
         }
     }
     componentDidMount(){
-        this.props.actions.getAllQuestionOfThematic({
+        //查找章节知识点目录
+        this.props.actions.getAllKnowledgeOfChapter({
             body:{},
             success:(data)=>{
-                console.log("getAllQuestionOfThematic--===-->",data)
-                this.setState({
-                    allQuestionList:data,
-                    totalNum:(data.length)
-                })
-                this.getCurrentDate('全部')
+                console.log("getAllKnowledgeOfChapter--===-->",data)
+                setTimeout(()=>{
+                    this.setState({
+                        chapterList:data,
+                    })
+                },1000)
             },
-            error:(mes)=>{
-                console.error(mes)
-            }
+            error:(message)=>{ console.error("getChapterTree--===-->",message)}
         })
     };
-    getKnowledgeQuestion(name){
-        this.props.actions.getKnowledgeIdList({
-            body:[{knowledgeName:name}],
+    getKnowledgeQuestion(id){
+        this.props.actions.getKnowledgeIdListWithId({
+            body:[{knowledgeId:id}],
             success:(data)=>{
-                console.log("hahahahahhaha---222222222222222-->>>>",name,data)
+                console.log("hahahahahhaha---222222222222222-->>>>",id,data)
                 let alldata = data[0].data;
                 if(alldata.length>0){
                     let newdata=[];
@@ -86,7 +86,9 @@ class Chapter extends Component{
                                 currentPage:1,
                                 totalNum:newData.length,
                                 selectQuestionList:newData,
-                                currentQuestionList:newData.slice(0,10)//默认取出前10条
+                                currentQuestionList:newData.slice(0,10),//默认取出前10条
+                                questionDetails:[],
+                                Pending:false
                             })
                         },
                         error:(message)=>{
@@ -99,7 +101,9 @@ class Chapter extends Component{
                         currentPage:1,
                         totalNum:0,
                         selectQuestionList:[],
-                        currentQuestionList:[]//默认取出前10条
+                        currentQuestionList:[],//默认取出前10条，
+                        questionDetails:[],
+                        Pending:false
                     })
                 }
             },
@@ -116,7 +120,8 @@ class Chapter extends Component{
                 currentPage:1,
                 totalNum:0,
                 selectQuestionList:[],
-                currentQuestionList:[]
+                currentQuestionList:[],
+                questionDetails:[]
             })
         }else {
             if(type == '全部'){
@@ -133,19 +138,26 @@ class Chapter extends Component{
                 currentPage:1,
                 totalNum:newList.length,
                 selectQuestionList:newList,
-                currentQuestionList:nowPageList
+                currentQuestionList:nowPageList,
+                questionDetails:[]
             })
         }
     }
     onSelect = (selectedKeys, info) => {
         console.log('selected', selectedKeys);
-        this.getKnowledgeQuestion(selectedKeys)
+        this.setState({
+            Pending:true
+        })
+        setTimeout(()=>{
+            this.getKnowledgeQuestion(selectedKeys)
+        },1000)
     }
     onPageChange = (pagenum)=>{
         let nowPageList = (this.state.selectQuestionList).slice((10*pagenum-10),(10*pagenum));
         this.setState({
             currentPage:pagenum,
-            currentQuestionList:nowPageList
+            currentQuestionList:nowPageList,
+            questionDetails:[]
         })
     }
     closeKnowledgeBox(){
@@ -158,10 +170,12 @@ class Chapter extends Component{
             body:[{id:id}],
             success:(data)=>{
                 console.log("getAllChildOfQuestion--===-->",data);
-                this.setState({
-                    modalVisible:true,
-                    currentQuestionId:id,
-                    questionDetails:data[0].data})
+                if(data[0].code == 200){
+                    this.setState({
+                        modalVisible:true,
+                        currentQuestionId:id,
+                        questionDetails:data[0].data})
+                }
             },
             error:(mes)=>{
                 console.error(mes)
@@ -347,15 +361,23 @@ class Chapter extends Component{
             })
         }
     }
+    _chapterMenu(list){
+        if(list.length<1)return <Spin />;
+        return list.map(function(item,index){
+            return (
+                <TreeNode title={item.knowledge} key={item.knowledgeid}>
+                    {item.child.length>0?this._chapterMenu(item.child):""}
+                </TreeNode>
+            )
+        },this)
+    }
     render(){
-        let { provinceList } = this.props;
-        let error = PureRenderMixin.Compare([provinceList]);//优化render
+        let {chapterList,Pending} = this.state;
         let height_h = $(window).height()-180;
         const sentionH = {
             height:height_h+"px",
             overflowY:"auto"
         }
-        console.log("999999999999999999999999999999==>",sentionH)
         return (
             <div className="mask2" style={{backgroundColor:'rgb(193, 223, 249)'}}>
                 <div className="thematicChapter flex-box">
@@ -365,34 +387,7 @@ class Chapter extends Component{
                             <Tree
                                 onSelect={this.onSelect}
                             >
-                                <TreeNode title="第一章 有理数" key="有理数">
-                                    <TreeNode title="知识框架" key="知识框架" />
-                                    <TreeNode title="有理数有关概念" key="有理数有关概念">
-                                        <TreeNode title="正数和负数" key="正数和负数" />
-                                        <TreeNode title="有理数" key="有理数" />
-                                        <TreeNode title="数轴" key="数轴" />
-                                    </TreeNode>
-                                    <TreeNode title="有理数的大小比较" key="有理数的大小比较">
-                                        <TreeNode title="有理数比大小" key="有理数比大小" />
-                                    </TreeNode>
-                                    <TreeNode title="有理数的运算" key="有理数的运算">
-                                        <TreeNode title="有理数的加减法" key="有理数的加减法">
-                                            <TreeNode title="有理数的加法" key="有理数的加法" />
-                                            <TreeNode title="有理数的减法" key="有理数的减法" />
-                                        </TreeNode>
-                                        <TreeNode title="有理数的乘除法" key="0-0-2-1">
-                                            <TreeNode title="有理数的乘法" key="有理数的乘法" />
-                                            <TreeNode title="有理数的除法" key="有理数的除法" />
-                                        </TreeNode>
-                                    </TreeNode>
-                                </TreeNode>
-                                <TreeNode title="第二章 实数" key="1-0">
-                                    <TreeNode title="知识框架" key="22" />
-                                    <TreeNode title="有理数" key="0-0-0">
-                                        <TreeNode title="正数和负数" key="正数和负数" />
-                                        <TreeNode title="有理数" key="有理数" />
-                                    </TreeNode>
-                                </TreeNode>
+                                {this._chapterMenu(chapterList)}
                             </Tree>
                         </div>
                     </div>
@@ -417,7 +412,7 @@ class Chapter extends Component{
                             <div className="partTwo" style={sentionH}>
                                 <div className="pageslist">
                                     <ul>
-                                        {this._questionList(this.state.currentQuestionList)}
+                                        {!Pending ? this._questionList(this.state.currentQuestionList):<Spin />}
                                     </ul>
                                     <Modal
                                         title="试题详情"
@@ -449,7 +444,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({push,getAllQuestionOfThematic,getAllChildOfQuestion,setThematicQuestionAnswerInfo,getKnowledgeIdList,getEveryQuestion}, dispatch)
+        actions: bindActionCreators({push,getAllChildOfQuestion,setThematicQuestionAnswerInfo,getAllKnowledgeOfChapter,getKnowledgeIdListWithId,getEveryQuestion}, dispatch)
     }
 }
 
