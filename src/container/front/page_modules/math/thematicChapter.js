@@ -253,10 +253,14 @@ class Chapter extends Component{
         if(item.questiontemplate == '选择题'){
             questionType = true;//有两个选项以上
         }
+        let content = item.content;
+        if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
+            content = content.replace(/blank|BLANK|#BLANK#|#blank#/g,'__')
+        }
         return(
             <fieldset id="modalQuestion" className="modal-main-content">
                 <div className="parts">
-                    <div className="content" dangerouslySetInnerHTML={{__html:item.content}}>
+                    <div className="content" dangerouslySetInnerHTML={{__html:content}}>
                     </div>
                     <div className="options">
                         <ul>
@@ -306,8 +310,7 @@ class Chapter extends Component{
                 return <div className="every-li-css" key={index}></div>
             }
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-                content = content.replace(/\s/g,'');
-                content = content.replace(/<u>blank<\/u>|blank|BLANK/g,'____')
+                content = content.replace(/blank|BLANK|#BLANK#|#blank#/g,'____')
             }
             return (
                 <div className="every-li-css" key={index}>
