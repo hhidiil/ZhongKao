@@ -7,7 +7,7 @@ import './question_style.css'
 import classnames from 'classnames'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
-import { push } from 'react-router-redux'
+import { push,goBack } from 'react-router-redux'
 import {getQuestion,getContentOfChildItems,getContentOfChildItemsForQues} from '../../../../redux/actions/math'
 import MultipleChoice from '../../../../components/multipleChoice/index'
 import { Menu, Icon,Button,Tooltip } from 'antd'
@@ -80,9 +80,7 @@ class SignQuestion extends Component{
 
     }
     exitBack(){
-        setTimeout(()=>{
-            this.props.actions.push("/home/basic/myCollection")
-        },1000)
+        this.props.actions.goBack()
     }
     _childsList(data){
         return data.map(function(item,index){
@@ -99,7 +97,6 @@ class SignQuestion extends Component{
         let explain = this.state.explainContent;
         console.log(observe,review,analysis,explain)
         if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-            content = content.replace(/\s/g,'');
             content = content.replace(/<u>blank<\/u>|blank|BLANK/g,'<span class="div_input"></span>')
         }
         return (
@@ -139,7 +136,7 @@ function mapStateToProps(state, ownProps) {
     return {}
 }
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getQuestion,getContentOfChildItems,getContentOfChildItemsForQues}, dispatch) }
+    return { actions: bindActionCreators({push,goBack,getQuestion,getContentOfChildItems,getContentOfChildItemsForQues}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(SignQuestion)

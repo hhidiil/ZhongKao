@@ -288,23 +288,6 @@
     padding: 0 20px;
     margin: 0 auto;
 }
-.thematicQues-parts .partTop{
-    display: flex;
-    margin-top: 15px;
-    font-size: 20px;
-    min-height: 110px;
-    border: 1px solid gainsboro;
-    flex-wrap:nowrap;
-    justify-content: space-around;
-}
-.thematicQues-parts .partTop .parts{
-    border: 1px solid gainsboro;
-    padding: 11px;
-    cursor: pointer;
-    border-radius: 30%;
-    background-color: #7db739;
-    text-align: center;
-}
 .thematicQues-parts .partOne{
     position: relative;
     text-align: center;
@@ -380,30 +363,54 @@
 .thematic-wapper{
     width: 1200px;
     margin: 0 auto;
+    padding: 20px 0;
+    height: 100%;
+}
+.thematic-wapper .thematic-parts-header {
+    width: 100%;
+    height: 48px;
+    margin-bottom: 10px;
+    background-color: white;
+    display: flex;
+}
+.thematic-wapper .thematic-parts-header .part{
+    line-height: 48px;
+    margin: 0 10px;
+}
+.thematic-wapper .thematic-parts-section{
+    width: 100%;
+    height: 100%;
 }
 .thematic-parts-left{
     float: left;
     width: 280px;
     margin-right: 15px;
+    background-color: white;
+    height: 450px;
+    overflow-y: auto;
+}
+.thematic-parts-left .ant-spin-spinning{
+    margin: 0 auto;
+    padding: 50px;
+    display: block;
+}
+.thematic-parts-left .examPointMenu{
+    height: 40px;
+    margin: 0 5px 0 5px;
+    padding: 10px 0 5px 10px;
+    border-bottom: 1px solid gray
 }
 .thematic-parts-left .menuList{
     position: relative;
 }
-.thematic-parts-left .menuList .ant-collapse{
-    background-color: #6ebfd6;
-}
-.thematic-parts-left .ant-collapse > .ant-collapse-item > .ant-collapse-header{
-    padding: 5px 0 5px 30px;
-}
-.thematic-parts-left .ant-collapse > .ant-collapse-item > .ant-collapse-header .arrow{
-    line-height: 33px;
-    left: 12px;
+.thematic-parts-left .menuList ul li ul{
+    padding: 0 20px;
 }
 .thematic-parts-right{
     float: left;
     width: 900px;
     background-color: white;
-    height: 1000px;
+    height: 100%;
     overflow-y: auto;
 }
 .knowledgeContent{

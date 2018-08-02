@@ -95,32 +95,11 @@
     margin-right: 5px;
     float: right;
 }
-.examAll-item-knowledge{
-    position: relative;
-    height: 375px;
-    border-radius: 8px;
-    border: 1px solid darkgray;
-    margin-bottom: 5px;
-    background-color: lightyellow;
-}
-.examAll-item-knowledge .item-knowledge{
-    position: relative;
-    display: flex;
-}
-.item-knowledge .part1{
-    position: relative;
-    width: 50%;
-    height: 200px;
-    margin-top: 50px;
-    padding-top: 76px;
-    text-align: center;
-    font-size: 20px;
-    cursor: pointer;
-}
 .examAll-item{
     position: relative;
     display: flex;
-    height: 375px;
+    height: 200px;
+    line-height: 200px;
     border-radius: 8px;
     border: 1px solid darkgray;
     margin-bottom: 5px;
@@ -131,7 +110,7 @@
     width: 100%;
     text-align: center;
     font-size: 20px;
-    margin-top: 100px ;
+    font-weight: bold;
     cursor: pointer;
 }
 .examAll-item .btnContainer{

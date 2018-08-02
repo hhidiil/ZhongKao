@@ -1,4 +1,5 @@
 /**
+ *
  * Created by gaoju on 2018/7/26.
  */
 import React,{Component} from 'react'
@@ -53,9 +54,9 @@ class Chapter extends Component{
                 console.log("getAllKnowledgeOfChapter--===-->",data)
                 setTimeout(()=>{
                     this.setState({
-                        chapterList:data,
+                        chapterList:data
                     })
-                },1000)
+                },500)
             },
             error:(message)=>{ console.error("getChapterTree--===-->",message)}
         })
@@ -150,7 +151,7 @@ class Chapter extends Component{
         })
         setTimeout(()=>{
             this.getKnowledgeQuestion(selectedKeys)
-        },1000)
+        },500)
     }
     onPageChange = (pagenum)=>{
         let nowPageList = (this.state.selectQuestionList).slice((10*pagenum-10),(10*pagenum));
@@ -365,7 +366,6 @@ class Chapter extends Component{
         }
     }
     _chapterMenu(list){
-        if(list.length<1)return <Spin />;
         return list.map(function(item,index){
             return (
                 <TreeNode title={item.knowledge} key={item.knowledgeid}>
@@ -387,11 +387,9 @@ class Chapter extends Component{
                     <div className="menu">
                         <div className="chapterMenu">章节目录</div>
                         <div className="chapterMenuTree">
-                            <Tree
-                                onSelect={this.onSelect}
-                            >
+                            {chapterList.length>0 ? <Tree onSelect={this.onSelect}>
                                 {this._chapterMenu(chapterList)}
-                            </Tree>
+                            </Tree>:<Spin />}
                         </div>
                     </div>
                     <div className="article" >

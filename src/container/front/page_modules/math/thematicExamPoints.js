@@ -1,5 +1,5 @@
 /**
- * 考纲复习(知识点)页面
+ * 考纲复习--按照考点复习页面
  * Created by gaoju on 2018/5/16.
  */
 import React,{Component} from 'react'
@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import './style.css'
 import {requestData} from '../../../../method_public/public'
-import {Pagination,Modal,message,Collapse,Select} from 'antd'
+import {Pagination,Menu,Modal,message,Tree,Spin,Select,Icon} from 'antd'
 import {Storage_S} from '../../../../config'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import {getAllQuestionOfThematic,getAllChildOfQuestion,getKnowledgeIdList,setThematicQuestionAnswerInfo} from '../../../../redux/actions/math'
@@ -16,12 +16,10 @@ import {getProvinceList} from '../../../../redux/actions/page'
 import MultipleChoice from '../../../../components/multipleChoice/index'
 import DialogMask from '../../../../components/Alter/dialogMask/dialogmask'
 import Knowledge from './knowledge.js'
-const Panel = Collapse.Panel;
 const Option = Select.Option;
+const TreeNode = Tree.TreeNode;
+const SubMenu = Menu.SubMenu;
 
-function callback(key) {
-    console.log(key);
-}
 //修改翻页文字链接
 function itemRender(current, type, originalElement) {
     if (type === 'prev') {
@@ -32,15 +30,17 @@ function itemRender(current, type, originalElement) {
     return originalElement;
 }
 var base = new Base64();//base64对象
-class Thematic extends Component{
+var fourPartOfChapter = ["知识点回顾","重点考点、备考思路","聚焦中考","真题过关"]
+class ThematicExamPoints extends Component{
     constructor(props) {
         super(props)
         this.state = {
-            knowledgeList:[],
+            allChapterList:[],//左右章节
+            childOfChapterList:{},//每一章的子集
+            selectedKeys:[],//选择的章和讲
             modalVisible:false,
             DialogMaskFlag:false,
             knowledgeName:'',
-            whichPart:1,
             currentPage:1,
             totalNum:0,
             allQuestionList:[],//当前模块的所有试题
@@ -55,7 +55,9 @@ class Thematic extends Component{
         let _this = this;
         requestData('../src/data/knowledge.json',{},function(data){
             console.log("knowlege---->>>>",data)
-            _this.setState({knowledgeList:data})
+            setTimeout(()=>{
+                _this.setState({allChapterList:data})
+            },1000)
         })
         //获取省份列表
         this.props.actions.getProvinceList({});
@@ -256,6 +258,9 @@ class Thematic extends Component{
     handleChange(value){
         console.log(`Selected: ${value}`);
     }
+    onSelect = (selectedKeys, info) => {
+        console.log('selected', selectedKeys);
+    }
     _fromContent(data){
         console.log("当前题的ID：",data[0])
         if(data.length<1) return;
@@ -300,94 +305,160 @@ class Thematic extends Component{
             </fieldset>
         )
     }
+    _chapterMenu(list){
+        if(list.length<1) return;
+        return list.map(function(item,index){
+            return (
+                <TreeNode title={item.knowledge} key={item.knowledgeid}>
+            {item.child.length>0?item.child.map(function(item2,index2){
+                return (
+                    <TreeNode title={item2.knowledge} key={item2.knowledgeid}></TreeNode>
+                )
+            }):""}
+            </TreeNode>
+            )
+        },this)
+    }
+    handleClick = (e) => {
+        console.log('click ', e);
+    }
+    handleSelectChange1 = (value)=>{
+        let data = this.state.allChapterList[value];
+        let selectedKeys = [];
+        selectedKeys[0] = this.state.allChapterList[value].knowledge;
+        console.log('handleSelectChange1111 ', value,selectedKeys);
+        this.setState({childOfChapterList:data,selectedKeys:selectedKeys})
+    }
+    handleSelectChange2 = (value)=>{
+        console.log('select ', value);
+        let selectedKeys = this.state.selectedKeys;
+        selectedKeys[1] = "--"+(this.state.childOfChapterList.child)[value].knowledge;
+        console.log('handleSelectChange2222 ', value,selectedKeys);
+        this.setState({selectedKeys:selectedKeys})
+    }
     render(){
         let { provinceList } = this.props;
+        let {childOfChapterList,allChapterList,selectedKeys} = this.state;
         let error = PureRenderMixin.Compare([provinceList]);//优化render
         if (!error) return <div/>
-        const knowlist = this.state.knowledgeList;
-        if(knowlist.length<1){
-            return <div/>
-        }
         return (
-            <div className="mask2" style={{backgroundColor:'#eac28c'}}>
+            <div className="mask2" style={{backgroundColor:'#ead4ae'}}>
                 <div className="thematic-wapper">
-                    <div className="thematic-parts-left">
-                        <div className="menuList">
-                            <Collapse onChange={callback}>
-                                {knowlist.map((item,index)=>{
-                                    return <Panel header={item.name} key={index}>
-                                        {(item.list).map((item2,index2)=>{
-                                            return <Collapse key={index2}>
-                                                <Panel header={item2.name} key={index2}>
-                                                    {(item2.list).map((item3,index3)=>{
-                                                        return <p key={index3}><a>{item3}</a></p>
-                                                    },this)}
-                                                </Panel>
-                                            </Collapse>
-                                        },this)}
-                                    </Panel>
-                                },this)}
-                            </Collapse>
+                    <div className="thematic-parts-header">
+                        <div className="part">
+                            <Menu
+                                onClick={this.handleClick}
+                                mode="horizontal"
+                            >
+                                <SubMenu title="章节目录">
+                                    {allChapterList.length>0 ? allChapterList.map((item,index)=>{
+                                        return (
+                                            <SubMenu title={item.knowledge} key={index+1}>
+                                                {item.child.length>0 ? item.child.map((item2,index2)=>{
+                                                    return <Menu.Item key={item2.knowledgeid}>{item2.knowledge}</Menu.Item>
+                                                }):""}
+                                            </SubMenu>
+                                        )
+                                    }):""}
+                                </SubMenu>
+                            </Menu>
                         </div>
+                        <div className="part">
+                            章节：<Select style={{ width: 200 }} onChange={this.handleSelectChange1}>
+                                    {allChapterList.length>0 ? allChapterList.map((item,index)=>{
+                                        return <Option value={index} key={index}>{item.knowledge}</Option>
+                                    }):""}
+                                </Select>
+                        </div>
+                        <div className="part">
+                            讲：<Select style={{ width: 200 }} onChange={this.handleSelectChange2}>
+                                {childOfChapterList.knowledge && childOfChapterList.child.length>0 ? childOfChapterList.child.map((item,index)=>{
+                                    return <Option value={index} key={index}>{item.knowledge}</Option>
+                                }):""}
+                            </Select>
+                        </div>
+                        <div className="part">{selectedKeys.length>0 ? selectedKeys.map((item,index)=>{
+                            return <span key={index}>{item}</span>
+                        }):""}</div>
                     </div>
-                    <section className="thematic-parts-right" style={{backgroundColor:'rgba(161, 101, 220, 0.76)'}}>
-                        <div className="thematicQues-parts">
-                            <div className="partTop">
-                                <div className="parts" onClick={()=>{this.knowledgeSummary(1)}}><div>知识点回顾</div><div>（考点梳理）</div></div>
-                                <div className="parts" onClick={()=>{this.knowledgeSummary(2)}}><div>重点考点、备考思路</div><div>（例题解析+习题训练）</div></div>
-                                <div className="parts" onClick={()=>{this.knowledgeSummary(3)}}><div>聚焦中考</div><div>（针对性训练）</div></div>
-                                <div className="parts" onClick={()=>{this.knowledgeSummary(4)}}><div>真题过关</div><div>（简单、中等、拔高）</div></div>
-                            </div>
-                            <div className="partOne" style={{backgroundColor:'white'}}>
-                                <div className="selectorLine">
-                                    <div className="selector-key"><strong>地区：</strong></div>
-                                    <div className="selector-value">
-                                       <Select size="default" defaultValue="全部" onChange={this.handleChange} style={{ width: 100,height:26 }}>
-                                           <Option key="全部">全部</Option>
-                                           {this._optionList(provinceList)}
-                                       </Select>
-                                    </div>
-                                    <div className="clearfix"></div>
-                                </div>
-                                <div className="selectorLine">
-                                    <div className="selector-key"><strong>题型：</strong></div>
-                                    <div className="selector-value">
-                                        <ul>
-                                            <li><a href="javascript:void(0)" onClick={(e)=>this.selectorChange(e,'tx')}>全部</a></li>
-                                            <li><a href="javascript:void(0)" onClick={(e)=>this.selectorChange(e,'tx')}>选择题</a></li>
-                                            <li><a href="javascript:void(0)" onClick={(e)=>this.selectorChange(e,'tx')}>填空题</a></li>
-                                            <li><a href="javascript:void(0)" onClick={(e)=>this.selectorChange(e,'tx')}>简答题</a></li>
-                                        </ul>
-                                    </div>
-                                    <div className="clearfix"></div>
-                                </div>
-                                <div className="questionNumber">找到<span style={{color:'red'}}>{this.state.totalNum}</span>个相关题</div>
-                             </div>
-                            <div className="partTwo">
-                                <div className="pageslist">
-                                    <ul>
-                                        {this._questionList(this.state.currentQuestionList)}
-                                    </ul>
-                                    <Modal
-                                        title="试题详情"
-                                        wrapClassName="vertical-center-modal resetCss"
-                                        visible={this.state.modalVisible}
-                                        maskClosable={false}
-                                        closable={false}
-                                        destroyOnClose={true}
-                                        onOk={() => this.setModalVisible(false)}
-                                        onCancel={() => this.setModalVisible(false)}
-                                    >
-                                        {this._fromContent(this.state.questionDetails)}
-                                    </Modal>
-                                </div>
-                                <div className="pagesfooter">
-                                    <Pagination showQuickJumper itemRender={itemRender} pageSize={10} current={this.state.currentPage} total={this.state.totalNum} onChange={this.onPageChange}></Pagination>
-                                </div>
+                    <div className="thematic-parts-section">
+                        <div className="thematic-parts-left">
+                            <div className="examPointMenu">考点目录</div>
+                            <div className="menuList">
+                                <Menu
+                                    onClick={this.handleClick}
+                                    style={{ width: "100%"}}
+                                    mode="inline"
+                                >
+                                    <SubMenu key="1" title={<span><Icon type="bars" /><span>知识点回顾</span></span>}>
+                                        <Tree
+                                            onSelect={this.onSelect}
+                                        >
+                                            {this._chapterMenu(allChapterList)}
+                                        </Tree>
+                                    </SubMenu>
+                                    <SubMenu key="2" title={<span><Icon type="bars" /><span>重点考点、备考思路</span></span>}>
+                                    </SubMenu>
+                                    <SubMenu key="3" title={<span><Icon type="bars" /><span>聚焦中考</span></span>}>
+                                    </SubMenu>
+                                    <SubMenu key="4" title={<span><Icon type="bars" /><span>真题过关</span></span>}>
+                                    </SubMenu>
+                                </Menu>
                             </div>
                         </div>
-                    </section>
-                    <div className="clearfix"></div>
+                        <section className="thematic-parts-right" style={{backgroundColor:'#dbf5ef'}}>
+                            <div className="thematicQues-parts">
+                                <div className="partOne" style={{backgroundColor:'white'}}>
+                                    <div className="selectorLine">
+                                        <div className="selector-key"><strong>地区：</strong></div>
+                                        <div className="selector-value">
+                                            <Select size="default" defaultValue="全部" onChange={this.handleChange} style={{ width: 100,height:26 }}>
+                                                <Option key="全部">全部</Option>
+                                                {this._optionList(provinceList)}
+                                            </Select>
+                                        </div>
+                                        <div className="clearfix"></div>
+                                    </div>
+                                    <div className="selectorLine">
+                                        <div className="selector-key"><strong>题型：</strong></div>
+                                        <div className="selector-value">
+                                            <ul>
+                                                <li><a href="javascript:void(0)" onClick={(e)=>this.selectorChange(e,'tx')}>全部</a></li>
+                                                <li><a href="javascript:void(0)" onClick={(e)=>this.selectorChange(e,'tx')}>选择题</a></li>
+                                                <li><a href="javascript:void(0)" onClick={(e)=>this.selectorChange(e,'tx')}>填空题</a></li>
+                                                <li><a href="javascript:void(0)" onClick={(e)=>this.selectorChange(e,'tx')}>简答题</a></li>
+                                            </ul>
+                                        </div>
+                                        <div className="clearfix"></div>
+                                    </div>
+                                    <div className="questionNumber">找到<span style={{color:'red'}}>{this.state.totalNum}</span>个相关题</div>
+                                </div>
+                                <div className="partTwo">
+                                    <div className="pageslist">
+                                        <ul>
+                                            {this._questionList(this.state.currentQuestionList)}
+                                        </ul>
+                                        <Modal
+                                            title="试题详情"
+                                            wrapClassName="vertical-center-modal resetCss"
+                                            visible={this.state.modalVisible}
+                                            maskClosable={false}
+                                            closable={false}
+                                            destroyOnClose={true}
+                                            onOk={() => this.setModalVisible(false)}
+                                            onCancel={() => this.setModalVisible(false)}
+                                        >
+                                            {this._fromContent(this.state.questionDetails)}
+                                        </Modal>
+                                    </div>
+                                    <div className="pagesfooter">
+                                        <Pagination showQuickJumper itemRender={itemRender} pageSize={10} current={this.state.currentPage} total={this.state.totalNum} onChange={this.onPageChange}></Pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+                        <div className="clearfix"></div>
+                    </div>
                 </div>
             </div>
         )
@@ -398,11 +469,9 @@ function mapStateToProps(state) {
         provinceList: state.provinceList
     }
 }
-
 function mapDispatchToProps(dispatch) {
     return {
         actions: bindActionCreators({push, getAllQuestionOfThematic,getProvinceList,getAllChildOfQuestion,getKnowledgeIdList,setThematicQuestionAnswerInfo}, dispatch)
     }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(Thematic)
+export default connect(mapStateToProps, mapDispatchToProps)(ThematicExamPoints)
