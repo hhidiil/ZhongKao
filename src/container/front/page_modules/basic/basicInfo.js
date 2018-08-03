@@ -122,7 +122,7 @@ class BasicInfo extends Component{
                                     rules: [{ required: false}],
                                     initialValue:items.get('phone'),
                                 })(
-                                    <Input placeholder="Please input your phone" />
+                                    <Input autoComplete="tel" placeholder="Please input your phone" />
                                 )}
                             </FormItem>
                             <FormItem {...formItemLayout} label="真实姓名">
@@ -130,7 +130,7 @@ class BasicInfo extends Component{
                                     rules: [{ required: false}],
                                     initialValue:items.get('actualname')
                                 })(
-                                    <Input placeholder="Please input your name" />
+                                    <Input autoComplete="name" placeholder="Please input your name" />
                                 )}
                             </FormItem>
                             <FormItem{...formItemLayout} label="性别">
@@ -184,7 +184,7 @@ class BasicInfo extends Component{
                                     rules: [{ required: false}],
                                     initialValue:items.get('email')
                                 })(
-                                    <Input placeholder="Please input your name" />
+                                    <Input autoComplete="text" placeholder="Please input your name" />
                                 )}
                             </FormItem>
                             <FormItem {...formItemLayout} label="生日">

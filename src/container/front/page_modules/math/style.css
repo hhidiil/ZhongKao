@@ -280,8 +280,21 @@
 /*thematicChapter start*/
 .thematicChapter{
     position: relative;
-    padding: 10px 40px;
+    padding: 10px 100px;
     height: 100%;
+}
+.thematicExitBtn{
+    position: absolute;
+    height: 80px;
+    width: 48px;
+    font-size: 22px;
+    padding-left: 8px;
+    padding-top: 5px;
+    left: 2px;
+    background-color: #0c7dcaa8;
+    cursor: pointer;
+    border-top-right-radius: 35px;
+    border-bottom-right-radius: 35px;
 }
 .thematicChapter .chapterMenu{
     height: 40px;

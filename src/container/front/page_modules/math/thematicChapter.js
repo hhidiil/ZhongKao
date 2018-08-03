@@ -3,12 +3,12 @@
  * Created by gaoju on 2018/7/26.
  */
 import React,{Component} from 'react'
-import { push } from 'react-router-redux'
+import { push,goBack } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import './style.css'
 import './question_style.css'
-import {Storage_S,Storage_L} from '../../../../config'
+import {Storage_S} from '../../../../config'
 import {getAllChildOfQuestion,getAllKnowledgeOfChapter,getKnowledgeIdListWithId,getEveryQuestion,setThematicQuestionAnswerInfo} from '../../../../redux/actions/math'
 import {Pagination,Modal,message,Select,Tree,Spin } from 'antd'
 import MultipleChoice from '../../../../components/multipleChoice/index'
@@ -43,7 +43,6 @@ class Chapter extends Component{
             currentQuestionList:[],//当前页面所显示的试题(当前10条)
             currentQuestionId:'',
             questionDetails:[],//点击作答页面显示的试题详情
-            jiexiFlag:false//解析按钮状态标志
         }
     }
     componentDidMount(){
@@ -208,32 +207,47 @@ class Chapter extends Component{
     }
     //做题详情页面，弹框显示的内容
     showAnalysis(data){
-        this.setState({jiexiFlag:true})
+        //this.setState({jiexiFlag:!this.state.jiexiFlag})
+        $("#jiexiFlag").css("display","block")
     }
     setModalVisible(flag){
-        this.setState({modalVisible:flag,jiexiFlag:flag})
+        this.setState({modalVisible:flag})
+    }
+    exitOut(){
+        setTimeout(()=>{
+            this.props.actions.goBack();
+        },500)
     }
     submitAnswer(data){
-        let target_value='',sentdata={},isright = false,score = 0;
-        $("#modalQuestion .parts .options").find("ul input:checked").each(function(ii){
-            target_value += $(this).val();
-        })
+        let target_value='',mysrc = '',sentdata={},isright = false,score = 0;
+        if(data.questiontemplate == '选择题'){
+            $("#modalQuestion .parts .options").find("ul input:checked").each(function(ii){
+                target_value += $(this).val();
+            })
+        }else {
+            $("#solition ").find(".div_input").each(function(i){
+                if($(this).children('img').length>0){//先查找公式编辑器输入的内容即用编辑器输入的会产生一个img标签，没有则直接查text
+                    mysrc = $(this).find('img')[0].src;
+                    target_value = $(this).find('img')[0].dataset.latex;
+                }else{
+                    target_value = $(this).text();
+                }
+            })
+        }
         if(!target_value){
             alert("请选择或填写答案！")
             return ;
         }
         isright = ((data.answer).trim() == target_value) ? true:false
         score = isright ? data.totalpoints : 0;
-        console.log(target_value);
         sentdata = {
             userId: Storage_S.getItem('userid'),
-            questionId: this.state.currentQuestionId,
-            whereFrom:"专题",
-            exerciseDetailInfo:{
-                answer:target_value,
-                isRight:isright,
-                score:score
-            }
+            questionData: JSON.stringify(data),
+            whereFrom:"章节复习",
+            answer:target_value,
+            isRight:isright,
+            score:score,
+            url:mysrc
         }
         this.props.actions.setThematicQuestionAnswerInfo({
             body:sentdata,
@@ -275,21 +289,21 @@ class Chapter extends Component{
                 <hr/>
                 <div className="parts btn-jiexi">
                     <button onClick={()=>this.submitAnswer(item)}>提交</button>
-                    <button onClick={()=>this.showAnalysis(item)}>解析</button></div>
-                {!this.state.jiexiFlag?'':<div>
+                    <button onClick={()=>this.showAnalysis(item)}>解析</button>
+                </div>
+                <div id="jiexiFlag" style={{display:"none"}}>
                     <div className="parts part-review">
-                        <p>考点：<span className="head" onClick={(e)=>this.getKnowledge(e)}>有理数</span></p>
+                        <p>考点：{item.knowledge && (item.knowledge.split('；')).length>0 ? (item.knowledge.split('；')).map((item,index)=>{
+                            return <span className="head" key={index} onClick={(e)=>this.getKnowledge(e)}>{item}</span>
+                        }):""}</p>
                     </div>
                     <div className="parts part-analysis">
                         <p>分析：<span className="head" dangerouslySetInnerHTML={{__html:item.analysis}}></span></p>
                     </div>
-                    <div className="parts part-thematic">
-                        <p><span className="head">专题：</span></p>
-                    </div>
                     <div className="parts part-reslution">
                         <p>解答：<span className="head" dangerouslySetInnerHTML={{__html:item.answer}}></span></p>
                     </div>
-                </div>}
+                </div>
                 {!this.state.DialogMaskFlag?"":<DialogMask title={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()}><Knowledge questionId={item.questionid}  knowledgeName={this.state.knowledgeName} /></DialogMask>}
             </fieldset>
         )
@@ -384,6 +398,7 @@ class Chapter extends Component{
         return (
             <div className="mask2" style={{backgroundColor:'rgb(193, 223, 249)'}}>
                 <div className="thematicChapter flex-box">
+                    <div className="thematicExitBtn treeNodeUnselectable" onClick={()=>{this.exitOut()}}>返回</div>
                     <div className="menu">
                         <div className="chapterMenu">章节目录</div>
                         <div className="chapterMenuTree">
@@ -445,7 +460,7 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({push,getAllChildOfQuestion,setThematicQuestionAnswerInfo,getAllKnowledgeOfChapter,getKnowledgeIdListWithId,getEveryQuestion}, dispatch)
+        actions: bindActionCreators({push,goBack,getAllChildOfQuestion,setThematicQuestionAnswerInfo,getAllKnowledgeOfChapter,getKnowledgeIdListWithId,getEveryQuestion}, dispatch)
     }
 }
 

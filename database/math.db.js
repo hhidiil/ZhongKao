@@ -201,9 +201,11 @@ Math.prototype.getEveryQuestion = function (callback) {
     })
 }
 Math.prototype.setThematicQuestionAnswerInfo = function (callback) {
-    var _sql = `INSERT INTO tblStudentThematicExerciseInfo (userid,questionid,wherefrom,exercisedetailinfo)
+    var _sql = `INSERT INTO tblStudentThematicQuestionInfo (userid,questionid,wherefrom,questionType,knowledge,isobjective,difficulty,score,answercontent,trueorfalse,url)
                 VALUES
-                ('${this.props.userId}','${this.props.questionId}','${this.props.whereFrom}','${this.props.exerciseDetailInfo}');`;
+                ('${this.props.userId}','${this.props.questionId}','${this.props.whereFrom}','${this.props.questionType}',
+                '${this.props.knowledge}','${this.props.isobjective}','${this.props.difficulty}','${this.props.score}',
+                '${this.props.answer}','${this.props.isRight}','${this.props.url}');`;
     helper.db_query({
         connect:con,
         sql:_sql,

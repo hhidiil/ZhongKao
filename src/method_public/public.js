@@ -76,7 +76,7 @@ export function limitStringlength(str, length) {
 }
 //img加载处理，当没有正常加载显示时使用默认图片
 export function handleImg(url){
-    if(url && url!='undefined'){
+    if(url && url!='undefined' && url!='null'){
         return url;
     }else {
         return 'public/images/default.jpg';

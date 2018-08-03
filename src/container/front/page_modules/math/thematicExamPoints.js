@@ -3,7 +3,7 @@
  * Created by gaoju on 2018/5/16.
  */
 import React,{Component} from 'react'
-import { push } from 'react-router-redux'
+import { push,goBack } from 'react-router-redux'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import './style.css'
@@ -48,7 +48,6 @@ class ThematicExamPoints extends Component{
             currentQuestionList:[],//当前页面所显示的试题
             currentQuestionId:'',
             questionDetails:[],//点击作答页面显示的试题详情
-            jiexiFlag:false//解析按钮状态标志
         }
     }
     componentDidMount(){
@@ -132,7 +131,7 @@ class ThematicExamPoints extends Component{
         }
     }
     setModalVisible(flag){
-        this.setState({modalVisible:flag,jiexiFlag:flag})
+        this.setState({modalVisible:flag})
     }
     //试题列表
     _questionList(list){
@@ -194,29 +193,39 @@ class ThematicExamPoints extends Component{
     }
     //做题详情页面，弹框显示的内容
     showAnalysis(data){
-        this.setState({jiexiFlag:true})
+        $("#jiexiFlag").css("display","block")
     }
     submitAnswer(data){
-        let target_value='',sentdata={},isright = false,score = 0;
-        $("#modalQuestion .parts .options").find("ul input:checked").each(function(ii){
-            target_value += $(this).val();
-        })
+        let target_value='',mysrc = '',sentdata={},isright = false,score = 0;
+        if(data.questiontemplate == '选择题'){
+            $("#modalQuestion .parts .options").find("ul input:checked").each(function(ii){
+                target_value += $(this).val();
+            })
+        }else {
+            $("#solition ").find(".div_input").each(function(i){
+                console.log("target_value--->",$(this));
+                if($(this).children('img').length>0){//先查找公式编辑器输入的内容即用编辑器输入的会产生一个img标签，没有则直接查text
+                    mysrc = $(this).find('img')[0].src;
+                    target_value = $(this).find('img')[0].dataset.latex;
+                }else{
+                    target_value = $(this).text();
+                }
+            })
+        }
         if(!target_value){
             alert("请选择或填写答案！")
             return ;
         }
         isright = ((data.answer).trim() == target_value) ? true:false
         score = isright ? data.totalpoints : 0;
-        console.log(target_value);
         sentdata = {
             userId: Storage_S.getItem('userid'),
-            questionId: this.state.currentQuestionId,
-            whereFrom:"专题",
-            exerciseDetailInfo:{
-                answer:target_value,
-                isRight:isright,
-                score:score
-            }
+            questionData: JSON.stringify(data),
+            whereFrom:"考点复习",
+            answer:target_value,
+            isRight:isright,
+            score:score,
+            url:mysrc
         }
         this.props.actions.setThematicQuestionAnswerInfo({
             body:sentdata,
@@ -229,9 +238,6 @@ class ThematicExamPoints extends Component{
             }
         })
     }
-    knowledgeSummary(key){
-        //this.getCurrentDate(key);
-    }
     getKnowledge(e){
         console.log($(e.target)[0].innerText)
         let knowledge = $(e.target)[0].innerText;
@@ -240,7 +246,6 @@ class ThematicExamPoints extends Component{
         this.setState({DialogMaskFlag:true,knowledgeName:knowledge})
     }
     selectorChange(e,flag){
-        console.log("selectorChange====1111122222221111===》",e.target.text,flag)
         let type = e.target.text;
         switch (type){
             case "全部": this.getCurrentDate('全部');
@@ -287,20 +292,19 @@ class ThematicExamPoints extends Component{
                 <div className="parts btn-jiexi">
                     <button onClick={()=>this.submitAnswer(item)}>提交</button>
                     <button onClick={()=>this.showAnalysis(item)}>解析</button></div>
-                {!this.state.jiexiFlag?'':<div>
+                <div id="jiexiFlag" style={{display:"none"}}>
                     <div className="parts part-review">
-                        <p>考点：<span className="head" onClick={(e)=>this.getKnowledge(e)}>有理数</span></p>
+                        <p>考点：{(item.knowledge.split('；')).length>0 ? (item.knowledge.split('；')).map((item,index)=>{
+                            return <span className="head" key={index} onClick={(e)=>this.getKnowledge(e)}>{item}</span>
+                        }):""}</p>
                     </div>
                     <div className="parts part-analysis">
                         <p>分析：<span className="head" dangerouslySetInnerHTML={{__html:item.analysis}}></span></p>
                     </div>
-                    <div className="parts part-thematic">
-                        <p><span className="head">专题：</span></p>
-                    </div>
                     <div className="parts part-reslution">
                         <p>解答：<span className="head" dangerouslySetInnerHTML={{__html:item.answer}}></span></p>
                     </div>
-                </div>}
+                </div>
                 {!this.state.DialogMaskFlag?"":<DialogMask title={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()}><Knowledge questionId={item.questionid}  knowledgeName={this.state.knowledgeName} /></DialogMask>}
             </fieldset>
         )
@@ -322,6 +326,11 @@ class ThematicExamPoints extends Component{
     handleClick = (e) => {
         console.log('click ', e);
     }
+    exitOut(){
+        setTimeout(()=>{
+            this.props.actions.goBack();
+        },500)
+    }
     handleSelectChange1 = (value)=>{
         let data = this.state.allChapterList[value];
         let selectedKeys = [];
@@ -340,29 +349,16 @@ class ThematicExamPoints extends Component{
         let { provinceList } = this.props;
         let {childOfChapterList,allChapterList,selectedKeys} = this.state;
         let error = PureRenderMixin.Compare([provinceList]);//优化render
-        if (!error) return <div/>
+        let height_h = $(window).height()-90;
+        const sentionH = {
+            height:height_h+"px",
+            backgroundColor:'#dbf5ef'
+        }
         return (
             <div className="mask2" style={{backgroundColor:'#ead4ae'}}>
                 <div className="thematic-wapper">
+                    <div className="thematicExitBtn treeNodeUnselectable" onClick={()=>{this.exitOut()}}>返回</div>
                     <div className="thematic-parts-header">
-                        <div className="part">
-                            <Menu
-                                onClick={this.handleClick}
-                                mode="horizontal"
-                            >
-                                <SubMenu title="章节目录">
-                                    {allChapterList.length>0 ? allChapterList.map((item,index)=>{
-                                        return (
-                                            <SubMenu title={item.knowledge} key={index+1}>
-                                                {item.child.length>0 ? item.child.map((item2,index2)=>{
-                                                    return <Menu.Item key={item2.knowledgeid}>{item2.knowledge}</Menu.Item>
-                                                }):""}
-                                            </SubMenu>
-                                        )
-                                    }):""}
-                                </SubMenu>
-                            </Menu>
-                        </div>
                         <div className="part">
                             章节：<Select style={{ width: 200 }} onChange={this.handleSelectChange1}>
                                     {allChapterList.length>0 ? allChapterList.map((item,index)=>{
@@ -406,7 +402,7 @@ class ThematicExamPoints extends Component{
                                 </Menu>
                             </div>
                         </div>
-                        <section className="thematic-parts-right" style={{backgroundColor:'#dbf5ef'}}>
+                        <section className="thematic-parts-right" style={sentionH}>
                             <div className="thematicQues-parts">
                                 <div className="partOne" style={{backgroundColor:'white'}}>
                                     <div className="selectorLine">
@@ -414,7 +410,7 @@ class ThematicExamPoints extends Component{
                                         <div className="selector-value">
                                             <Select size="default" defaultValue="全部" onChange={this.handleChange} style={{ width: 100,height:26 }}>
                                                 <Option key="全部">全部</Option>
-                                                {this._optionList(provinceList)}
+                                                {error ? this._optionList(provinceList):""}
                                             </Select>
                                         </div>
                                         <div className="clearfix"></div>
@@ -471,7 +467,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({push, getAllQuestionOfThematic,getProvinceList,getAllChildOfQuestion,getKnowledgeIdList,setThematicQuestionAnswerInfo}, dispatch)
+        actions: bindActionCreators({push,goBack,getAllQuestionOfThematic,getProvinceList,getAllChildOfQuestion,getKnowledgeIdList,setThematicQuestionAnswerInfo}, dispatch)
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(ThematicExamPoints)

@@ -111,7 +111,6 @@ module.exports={
                     let props = {
                         id:data[0].questionid
                     };
-                    console.log("getQuestionItems---////----->",data[0].id,data)
                     let math = new Math({props: props});
                     math.getQuestionChild(function(err, data){
                         olddata[0].childs = data;
@@ -343,7 +342,6 @@ module.exports={
             str = str.substring(0, str.lastIndexOf(','));//最后一个|去掉
         }
         props.list = str;
-        console.log("sentUserQuestionDataOfPaper===>>>",props.list);
         let math2 = new Math({props: props});
         //添加试卷中每个试题的记录信息
         math2.addUserQuestionDataOfPaper(function(err, data){
@@ -549,6 +547,12 @@ module.exports={
     },
     setThematicQuestionAnswerInfo:(req,res)=>{
         var props = req.body;
+        var data = JSON.parse(req.body.questionData);
+        props.questionId = data.questionid;
+        props.questionType = data.questiontemplate;
+        props.knowledge = data.knowledge;
+        props.isobjective = data.isobjective;
+        props.difficulty = data.difficulty;
         var math = new Math({props:props});
         math.setThematicQuestionAnswerInfo(function(err,data){
             if(!err){

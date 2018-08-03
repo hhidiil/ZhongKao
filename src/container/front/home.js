@@ -8,7 +8,7 @@ import { Menu, Icon } from 'antd'
 import { bindActionCreators } from 'redux'
 import PureRenderMixin from '../../method_public/pure-render'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push ,replace} from 'react-router-redux'
 import {handleImg} from '../../method_public/public'
 import {updateStoreHeadImg} from '../../redux/actions/public'
 import {Storage_S} from '../../config'
@@ -53,7 +53,7 @@ class Home extends Component {
         if(window.confirm("确定要退出吗？")){
             sessionStorage.clear();
             this.props.actions.updateStoreHeadImg({data:'',clear:true})//清除store中的数据
-            this.props.actions.push('/');
+            this.props.actions.replace('/');
         }else {
             console.log("不想退出你点击干嘛？")
         }
@@ -104,7 +104,7 @@ function mapStateToProps(state, ownProps) {
     }
 }
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,updateStoreHeadImg}, dispatch) }
+    return { actions: bindActionCreators({push,replace,updateStoreHeadImg}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Home)

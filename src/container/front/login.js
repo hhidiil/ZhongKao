@@ -6,7 +6,7 @@ import { Link } from 'react-router'
 // redux
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push,replace } from 'react-router-redux'
 import {login } from '../../redux/actions/user'
 import {Storage_S} from '../../config'
 import { Form, Icon, Input, Button, Checkbox, Modal} from 'antd'
@@ -44,7 +44,7 @@ class LoginForm extends Component {
                         Storage_S.setItem('userid', data[0].userid)
                         Storage_S.setItem('headimg', data[0].headimg)
                         this.props.actions.updateStoreHeadImg({data:data[0].headimg,clear:false})
-                        this.props.actions.push('home')
+                        this.props.actions.replace('home')
                     },
                     error: (message) => {
                         this.props.form.setFields({
@@ -79,7 +79,7 @@ class LoginForm extends Component {
                             {getFieldDecorator('userName', {
                                 rules: [{ required: true, message: '请输入用户名!' }]
                             })(
-                                <Input prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="请输入用户名" />
+                                <Input autoComplete="text" prefix={<Icon type="user" style={{ fontSize: 13 }} />} placeholder="请输入用户名" />
                             )}
                         </FormItem>
                         <FormItem {...formItemLayout} label="密码">
@@ -112,7 +112,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({ push, login,updateStoreHeadImg}, dispatch)
+        actions: bindActionCreators({ push,replace,login,updateStoreHeadImg}, dispatch)
     }
 }
 

@@ -648,9 +648,8 @@ class Question extends Component{
         console.log("oldanswer=====>>>>>>>>",oldanswer)
         if(content){
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-                content = content.replace(/\_|\s/g,"");
                 let qqq =  '<span class="div_input"></span>';
-                content = content.replace(/blank|BLANK/g,qqq);
+                content = content.replace(/blank|BLANK|#blank#|#BLANK#/g,qqq);
             }
             return (
                 <div>
@@ -693,8 +692,8 @@ class Question extends Component{
             let ddd_content = (ddd && ddd.length>0) ? ddd[index].content : [];//解析的某部分的第几个content所有内容（比如考点中的第一个小题全部内容）
             let regex=/@.+?@/g;
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-                content = content.replace(/\s/g,'');
-                content = content.replace(/<u>blank<\/u>|blank|BLANK/g,'<span contenteditable="true" class="div_input"></span>')
+                //content = content.replace(/\s/g,'');
+                content = content.replace(/<u>blank<\/u>|blank|BLANK|#blank#|#BLANK#/g,'<span contenteditable="true" class="div_input"></span>')
             }
             let knowledgelist = content.match(regex);//找出知识点
             if(knowledgelist && knowledgelist.length>0){
@@ -739,7 +738,7 @@ class Question extends Component{
             let questionType = false;
             let ddd_content = (ddd && ddd[index]) ? ddd[index] : '';//解析的某部分的第几个content所有内容（比如考点中的第一个小题全部内容）
             if (content.indexOf("blank") != -1) {//如果有则去掉所有空格和blank
-                content = content.replace(/blank/g,'<input type="text" class="input_blank"/>');
+                content = content.replace(/blank|BLANK|#blank#|#BLANK#/g,'<input type="text" class="input_blank"/>');
             }
             if(items.questiontemplate == '选择题'){
                 questionType = true;//有两个选项以上
@@ -894,7 +893,6 @@ class Question extends Component{
         }else {return <div/>}
         //获取各部分的高度
         let hh = ($(window).height()-$('.Question_content').height()-$('header').height() -140)+'px';
-        //console.log("height-------height----------<>>>>>",$(window).height(),$('.Question_content').height(),$('header').height(),this.state.mainContentH,hh)
         const contH = {
             height:hh,
             overflowY:'auto'

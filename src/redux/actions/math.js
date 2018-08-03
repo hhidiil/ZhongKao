@@ -190,13 +190,13 @@ export function sentUserQuestionDataOfPaper(opt) {
     }
 }
 export function setThematicQuestionAnswerInfo(opt){
-    let data = opt.body.data;
+    let data = opt.body;
     return (dispatch) => {
         const route = '/api/math/thematicQuestionAnswerInfo';
         request(route, {}, dispatch, opt.success, opt.error,
             { method: 'POST',
-                headers: { 'Accept': 'application/json', 'Content-Type': 'application/json'},
-                body: JSON.stringify(data)})
+                headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+                body: bodyUrlencoded(data)})
     }
 }
 //收藏试卷或者试题
