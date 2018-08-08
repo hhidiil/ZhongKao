@@ -13,6 +13,7 @@ import {MathJaxEditor} from '../../../../components/editer'
 import UpLoadFile from '../../../../components/upload/index'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import {Storage_S,Storage_L} from '../../../../config'
+import {CONFIG_MAP} from '../../../../../config'
 import './question_style.css'
 import moment from 'moment'
 import {Modal} from 'antd'
@@ -190,7 +191,7 @@ class Question extends Component{
         let oldAnwers = this.state.oldAnwers[0] ? this.state.oldAnwers[0].content :'';
         if(content){
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-                content = content.replace(/blank|BLANK|#blank#|#BLANK#/g,'<span contenteditable="true" class="div_input"></span>')
+                content = content.replace(/<u>blank<\/u>|blank|BLANK|#blank#|#BLANK#/g,'<span contenteditable="true" class="div_input"></span>')
             }
             return (
                 <div>
@@ -248,10 +249,15 @@ class Question extends Component{
         let type = dataItems.get('questiontemplate');
         let isobjective = dataItems.get('isobjective');
         let quesId = dataItems.get('questionid');
-        let quesScore = dataItems.get('totalpoints');
         let knowledge = dataItems.get('knowledge');
         let nexflag = true;
-        let score = dataItems.get('totalpoints');//先把题的得分拿出来，错了在赋值为0
+        let quesScore = dataItems.get('totalpoints');
+        if(!quesScore){//判断试题是否有分数，如果数据库中的试题没有分数 则为其赋一个分数。
+            if(type == "选择题"){quesScore = CONFIG_MAP.questionScore[0]}
+            if(type == "填空题"){quesScore = CONFIG_MAP.questionScore[1]}
+            if(type == "简答题"){quesScore = CONFIG_MAP.questionScore[2]}
+        }
+        let score = quesScore;//先把题的得分拿出来，错了在赋值为0
         console.log(page,nextpage,"正确答案：",answer,GetQuestion)
         if(type == "选择题"){
             let doms = document.getElementsByTagName("input");
@@ -295,6 +301,7 @@ class Question extends Component{
                 }]
                 score = 0;
             }else{
+                answer = answer ? answer.split("||") : answer;//处理答案是多的空的情况
                 $(".div_input").each(function(i){
                     let myAnswer='',myId='',mysrc='';
                     if($(this).children('img').length>0){//先查找公式编辑器输入的内容即用编辑器输入的会产生一个img标签，没有则直接查text
@@ -304,7 +311,7 @@ class Question extends Component{
                         myAnswer = $(this).text();
                     }
                     myId = $(this).attr("id");
-                    if(compareDifferent(myAnswer,answer)){
+                    if(compareDifferent(myAnswer,answer[i])){
                         isright = true;
                         console.log("正确")
                     }else{
@@ -323,7 +330,7 @@ class Question extends Component{
             this.state.AnswerContent = AnswerArr;
         }
         if(nexflag){
-            let nowList = (this.state.sentList).ExamResult,endscore=0;
+            let nowList = (this.state.sentList).ExamResult;
             (this.state.sentList).currentquesid = page;//当前题号，断点续做
             nowList[page-1] = {
                 "QuesID": quesId,
@@ -344,6 +351,7 @@ class Question extends Component{
                     current: nextpage,
                     oldAnwers:'',
                     img_url:'',
+                    AnswerContent:[],
                     showEditor:false
                 })
                 this.getData(this.state.all_question[page])
@@ -393,15 +401,22 @@ class Question extends Component{
         })
     }
     getEditContent(url){
-        console.warn(url)
+        console.warn("上传图片的地址",url)
         this.setState({img_url: url})
     }
     render(){
         const {GetQuestion} = this.props;
         let error = PureRenderMixin.Compare([GetQuestion]);
-        if (!error) return <div/>
-        if((this.state.totalNum)<1) return (<div />);
-        let questiontype = ((GetQuestion.get('items')).get(0)).get('data').get(0).get('questiontemplate');
+        if (!error || this.state.totalNum<1){
+            return (
+                <div className="mask math-question-content">
+                    <header>
+                        <div className="title" id="title">没有找到试卷对应试题</div>
+                        <div className="exit" onClick={()=>this.exitBack(this)}><button type="button" className="btn btn-default">退出</button></div>
+                    </header>
+                </div>
+            )
+        }
         let objective = ((GetQuestion.get('items')).get(0)).get('data').get(0).get('isobjective');
         let objectiveFlag = (objective== "主观") ? true:false;
         let title = (this.state.dataAll).exampaper;//试卷标题

@@ -32,7 +32,8 @@ class UpLoadFile extends Component{
                 data.append("personflag", _this.state.personFlag);
                 data.append("file", file);
                 data.append("username", sessionStorage.getItem('username'));
-                data.append("preurl",_this.state.imageURL);//前一个上传的答案，如果从新上传一张则删除上传的前一张
+                //data.append("preurl",_this.state.imageURL);//前一个上传的答案，如果从新上传一张则删除上传的前一张
+                data.append("preurl",'');
                 _this.props.actions.upload({
                     body:{
                         method: 'POST',
@@ -40,6 +41,7 @@ class UpLoadFile extends Component{
                     },
                     callback:(data)=>{
                         Modals.success('','上传成功！')
+                        _this.deleteSubmit();
                         _this.setState({ imageURL: `${WINDOW_HOST}/${data.file}` });
                         setTimeout(()=>{
                             _this.props.submitHandle(_this.state.imageURL,_this.props.id);

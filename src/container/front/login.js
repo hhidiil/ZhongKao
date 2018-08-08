@@ -89,7 +89,7 @@ class LoginForm extends Component {
                                     message: '请输入密码!'
                                 }]
                             })(
-                                <Input prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码" />
+                                <Input autoComplete="text" prefix={<Icon type="lock" style={{ fontSize: 13 }} />} type="password" placeholder="请输入密码" />
                             )}
                         </FormItem>
                         <FormItem wrapperCol={{ span: 15, offset: 5 }}>

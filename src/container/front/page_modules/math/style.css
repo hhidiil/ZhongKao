@@ -243,6 +243,10 @@
     margin-bottom: 20px ;
     margin-left: 20px;
 }
+.modal-main-content .parts .reslutimg{
+    position: absolute;
+    right: 25px;
+}
 .modal-main-content .btn-jiexi{
     padding: 10px 0;
 }
@@ -264,14 +268,22 @@
     background-color: beige;
     padding: 5px;
 }
+.dataAnalysis{
+    position: relative;
+    width: 100%;
+}
 .dataAnalysis .part-one{
     margin: 10px 0;
+    width: 40%;
+    float: left;
     min-height: 300px;
     border-bottom: 2px solid #86b7c5;
 }
 .dataAnalysis .part-two{
     margin: 10px 0;
     min-height: 300px;
+    width: 60%;
+    float: left;
     border-bottom: 2px solid #86b7c5;
 }
 .dataAnalysis .part-three{

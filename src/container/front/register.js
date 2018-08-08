@@ -33,15 +33,6 @@ class RegisterForm extends Component {
             callback();
         }
     }
-    checkPhone = (rule, value, callback) => {
-        console.log("phone:"+value)
-        debugger
-        if (value && value.length !== 11 ) {
-            callback('请输入正确手机号（11位数字）!');
-        } else {
-            callback();
-        }
-    }
     checkConfirm = (rule, value, callback) => {
         const form = this.props.form;
         if (value && this.state.confirmDirty) {
@@ -54,6 +45,10 @@ class RegisterForm extends Component {
         this.props.form.validateFields((err, values) => {
             if (!err) {
                 console.log('Received values of form: ', values);
+                if(!values.agreement){
+                    alert("请先阅读协议并勾选已阅读！")
+                    return;
+                }
                 this.props.actions.register({
                     body: {
                         username: values.nickname,
@@ -63,7 +58,7 @@ class RegisterForm extends Component {
                     success: (data) => {
                         console.log("register success:"+data)
                         alert("恭喜您，注册成功！！！")
-                        this.props.actions.push('door')
+                        this.props.actions.push('/')
                     },
                     error: (message) => {
                         this.props.form.setFields({
@@ -122,7 +117,7 @@ class RegisterForm extends Component {
                             {getFieldDecorator('nickname', {
                                 rules: [{ required: true, message: '请输入用户名!', whitespace: true }],
                             })(
-                                <Input />
+                                <Input autoComplete="text" />
                             )}
                         </FormItem>
                         <FormItem
@@ -137,7 +132,7 @@ class RegisterForm extends Component {
                                     validator: this.checkConfirm,
                                 }],
                             })(
-                                <Input type="password" />
+                                <Input autoComplete="text" type="password" />
                             )}
                         </FormItem>
                         <FormItem
@@ -152,7 +147,7 @@ class RegisterForm extends Component {
                                     validator: this.checkPassword
                                 }],
                             })(
-                                <Input type="password" onBlur={this.handleConfirmBlur} />
+                                <Input autoComplete="text" type="password" onBlur={this.handleConfirmBlur} />
                             )}
                         </FormItem>
                         <FormItem
@@ -160,11 +155,9 @@ class RegisterForm extends Component {
                             label="手机号"
                         >
                             {getFieldDecorator('phone', {
-                                rules: [{ required: true, message: '请输入手机号!' }],
-                            },{
-                                validator: this.checkPhone
+                                rules: [{ required: true, message: '请输入11位正确的手机号!',len:11 }],
                             })(
-                                <Input type="number" min={11} max={11} style={{ width: '100%' }} />
+                                <Input autoComplete="tel" type="number" style={{ width: '100%' }} />
                             )}
                         </FormItem>
                         {/*
@@ -189,7 +182,7 @@ class RegisterForm extends Component {
                         */}
                         <FormItem {...tailFormItemLayout} style={{ marginBottom: 8 }}>
                             {getFieldDecorator('agreement', {
-                                valuePropName: 'checked',
+                                valuePropName: 'checked'
                             })(
                                 <Checkbox>我已阅读 <a href="">协议</a></Checkbox>
                             )}

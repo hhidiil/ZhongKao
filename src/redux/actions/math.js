@@ -4,7 +4,7 @@
 import { request,requestSyn } from './request';
 import * as TYPES from '../types';
 import * as CONFIG from '../../config';
-import { bodyUrlencoded ,requestData} from '../../method_public/public'
+import { bodyUrlencoded } from '../../method_public/public'
 
 //获取所有练习试卷
 export function getAllQuestionsList(opt) {
@@ -189,6 +189,7 @@ export function sentUserQuestionDataOfPaper(opt) {
                 body: JSON.stringify(data)})
     }
 }
+//存储用户做专题时的某一个试题答案数据
 export function setThematicQuestionAnswerInfo(opt){
     let data = opt.body;
     return (dispatch) => {

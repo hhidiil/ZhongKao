@@ -6,14 +6,14 @@ import 'babel-polyfill'
 import fetch from 'isomorphic-fetch'
 
 //简单版 fetch数据请求
-export function requestData(route,params,callback,{ method='GET', headers={}, body=null }={}){
+export function requestData(route,params,callback){
     //处理get请求有参数的，转换参数形式
-    const p = params ? '?' + Object.entries(params).map((i) => `${i[0]}=${encodeURI(i[1])}`).join('&') : '';
-    const url = `${ route }${ p }`;
-    let data = { method: method, headers: headers}
-    if (method !== 'GET') data.body = body
-    console.log(`[${method}]:${url}::${data}`,data)
-    return fetch(url,data)
+    //const p = params ? '?' + Object.entries(params).map((i) => `${i[0]}=${encodeURI(i[1])}`).join('&') : '';
+    //const url = `${ route }${ p }`;
+    //let data = { method: method, headers: headers}
+    //if (method !== 'GET') data.body = body
+    //console.log(`[${method}]:${url}::${data}`,data)
+    return fetch(route,params)
         .then((response) => {
             if (response.status >= 200 && response.status < 300) {
                 return response.json();
@@ -29,18 +29,6 @@ export function requestData(route,params,callback,{ method='GET', headers={}, bo
             console.warn(err)
             return callback(err)
         })
-}
-//g改装版 fetch数据请求，使用promise.all 模拟同步加载数据
-export function requestSyn(url,lists,callback){
-    console.log("requestSyn---->",url,lists)
-    Promise.all(lists.map((list) =>{
-        let data = { method: 'POST',
-                    headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                    body:bodyUrlencoded({paperid:list})};
-        return fetch(url,data).then(resp => resp.json())}
-    )).then(res => {
-        return callback(res)
-    })
 }
 //判断用户是否登录
 export function isAdmin(){
@@ -189,9 +177,11 @@ function subset(A,B){
 }
 //比较A和B的值是否相同
 export function compareDifferent(A,B){
+    var numA = A ? (A.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>/g,'') : A;
+    var numB = B ? (B.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>/g,'') : B;
     try {
-        var expr1 = KAS.parse(A).expr;
-        var expr2 = KAS.parse(B).expr;
+        var expr1 = KAS.parse(numA).expr;
+        var expr2 = KAS.parse(numB).expr;
         var end = KAS.compare(expr1, expr2).equal;
         if(end){
             return true;
@@ -199,7 +189,10 @@ export function compareDifferent(A,B){
             return false;
         }
     }catch (e){
-        console.error("function compareDifferent is error: "+e.message+"; the params is : "+A+" and "+B);
+        if(numA == numB){//处理KAS插件无法处理特殊字符的情况，在报错前先普通比较一下
+            return true;
+        }
+        console.error("function compareDifferent is error: "+e.message+"; the params is : "+numA+" and "+numB);
         return false;
     }
 

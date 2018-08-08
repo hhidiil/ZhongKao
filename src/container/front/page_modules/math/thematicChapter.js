@@ -10,7 +10,7 @@ import './style.css'
 import './question_style.css'
 import {Storage_S} from '../../../../config'
 import {getAllChildOfQuestion,getAllKnowledgeOfChapter,getKnowledgeIdListWithId,getEveryQuestion,setThematicQuestionAnswerInfo} from '../../../../redux/actions/math'
-import {Pagination,Modal,message,Select,Tree,Spin } from 'antd'
+import {Pagination,Modal,message,Select,Tree,Spin,Icon } from 'antd'
 import MultipleChoice from '../../../../components/multipleChoice/index'
 import DialogMask from '../../../../components/Alter/dialogMask/dialogmask'
 import Knowledge from './knowledge.js'
@@ -238,7 +238,12 @@ class Chapter extends Component{
             alert("请选择或填写答案！")
             return ;
         }
-        isright = ((data.answer).trim() == target_value) ? true:false
+        isright = ((data.answer).trim() == target_value) ? true:false;
+        if(!isright){
+            $("#modalQuestion .reslutimg").append('<span style="color:red">做错了。。。</span>')
+        }else{
+            $("#modalQuestion .reslutimg").append('<span>做对了！</span>')
+        }
         score = isright ? data.totalpoints : 0;
         sentdata = {
             userId: Storage_S.getItem('userid'),
@@ -275,6 +280,7 @@ class Chapter extends Component{
         return(
             <fieldset id="modalQuestion" className="modal-main-content">
                 <div className="parts">
+                    <div className="reslutimg"></div>
                     <div className="content" dangerouslySetInnerHTML={{__html:content}}>
                     </div>
                     <div className="options">

@@ -714,7 +714,7 @@ class Question extends Component{
                 <div className="analysisContent" style={{padding: "10px",borderBottom: '1px dashed gray'}} key={index} >
                     <ul className="main_cont">
                         <li dangerouslySetInnerHTML={{__html:content}}></li>
-                        {questionType?<MultipleChoice type={item.questiontype} answer={ddd_content.length>0?ddd_content[0].answer:''} index={index} choiceList={item.optionselect} />:''}
+                        {questionType?<MultipleChoice type="多选题" answer={ddd_content.length>0?ddd_content[0].answer:''} index={index} choiceList={item.optionselect} />:''}
                     </ul>
                     {(item.answer).length<1?"":<ul>
                         {knowledge.length>0 ? <span>知识点回顾：{knowledge.map((itm,index)=>{

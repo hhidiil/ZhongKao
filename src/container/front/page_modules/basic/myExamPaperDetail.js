@@ -22,7 +22,8 @@ class PaperDetail extends Component{
             paperAllData:alldata,
             paper_title:alldata.ExamPaperTitle,//试卷标题
             questions:[],//每道试题的详情
-            previewVisible:false
+            previewVisible:false,
+            previewUrl:''
         }
     }
     componentDidMount(){
@@ -36,9 +37,6 @@ class PaperDetail extends Component{
                 console.error('数据接收发生错误');
             }
         })
-    }
-    shouldComponentUpdate(nextProps,nextState){
-        return true;
     }
     getData(data){
         var dataArray=[];
@@ -59,9 +57,10 @@ class PaperDetail extends Component{
             }
         })
     }
-    handlePreview(){
+    handlePreview(url){
         this.setState({
-            previewVisible: true
+            previewVisible: true,
+            previewUrl: url
         });
     }
     _childsList(data){
@@ -69,23 +68,19 @@ class PaperDetail extends Component{
             return <li key={index} dangerouslySetInnerHTML={{__html:item.content}}></li>
         })
     }
-    _doAndAnswer(data){
+    _doAndAnswer(data,index){
         let imgurl =data.Contents[0].url?data.Contents[0].url:"";
         return (
             <div>
                 <div>解：__</div>
                 <div>附件(提交的答案)：
-                    <img className="preview_img" src={imgurl}/><span onClick={()=>this.handlePreview()}>查看</span>
-                    <Modal visible={this.state.previewVisible} footer={null} onCancel={()=>this.setState({previewVisible: false})}>
-                        <img alt="preview" style={{ width: '100%' }} src={imgurl} />
-                    </Modal>
+                    <img className="preview_img" src={imgurl}/><span onClick={()=>this.handlePreview(imgurl)}>查看</span>
                 </div>
             </div>
         )
     }
     _showQuestionList(data){
         return data.map(function(item,index){
-            console.log(item)
             let detail = item.details;
             let newitem = item.data[0];
             let content = (newitem.content);
@@ -103,8 +98,8 @@ class PaperDetail extends Component{
             }
             if(content){
                 if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-                    content = content.replace(/\s|_/g, '');
-                    content = content.replace(/<u>blank<\/u>|blank|BLANK/g, answerFlag);
+                    //content = content.replace(/\s|_/g, '');
+                    content = content.replace(/<u>blank<\/u>|blank|BLANK|#blank#|#BLANK#/g, `<span style="text-decoration:underline; ">${answerFlag}</span>`);
                 }
                 return(
                     <div key={index} className={detailFlag?'question-css':'question-css-err'}>
@@ -124,7 +119,7 @@ class PaperDetail extends Component{
                                 </p>}
                             </li>
                             {childs.length<1?"":this._childsList(childs)}
-                            {newitem.questiontemplate == '简答题' ? this._doAndAnswer(detail) :''}
+                            {newitem.questiontemplate == '简答题' ? this._doAndAnswer(detail,index) :''}
                         </ul>
                     </div>
                 )
@@ -132,7 +127,7 @@ class PaperDetail extends Component{
         },this)
     }
     render(){
-        let {paperAllData,questions} = this.state;
+        let {paperAllData,questions,previewVisible, previewUrl } = this.state;
         if(questions.length<1){
             return <div/>;
         }
@@ -151,6 +146,9 @@ class PaperDetail extends Component{
                     </div>
                     <section>
                         {this._showQuestionList(questions)}
+                        <Modal visible={previewVisible} footer={null} onCancel={()=>this.setState({previewVisible: false})}>
+                            <img alt="preview" style={{ width: '100%' }} src={previewUrl} />
+                        </Modal>
                     </section>
                 </div>
             </div>

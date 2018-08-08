@@ -9,7 +9,9 @@ import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import {getAllPaperOfStudent } from '../../../../redux/actions/teacher'
-import PaperDetail from './examPaperDetail'
+import DialogMask from '../../../../components/Alter/dialogMask/dialogmask'
+import PaperDetail from './myExamPaperDetail'
+import ExamPaperAnalysis from './myExamPaperAnalysis'
 import {Storage_S} from '../../../../config'
 import {searchMatch,searchChechboxMatch} from '../../../../method_public/public'
 const Option = AutoComplete.Option;
@@ -27,7 +29,9 @@ class PaperList extends Component {
             checkboxMatchList:[],//checkbox查询匹配的试卷
             dataSource: [],
             previewData:'',
-            previewFlag : false
+            previewFlag : false,
+            analysiReportsFlagData:'',//数据分析数据
+            DialogMaskFlag:false
 
         };
     };
@@ -57,6 +61,9 @@ class PaperList extends Component {
     }
     closePreview(){
         this.setState({previewFlag : false});
+    }
+    dataAnalysis(data){
+        this.setState({DialogMaskFlag : true,analysiReportsFlagData:data});
     }
     gotoPaper(item){
         let activeName = this.state.activeName;
@@ -89,6 +96,7 @@ class PaperList extends Component {
                         <span className="status-span">完成进度：{item.IsDone=='yes'?"已完成":"未完成"}</span>
                         <span className="status-span">批改状态：{item.markFlag}</span>
                         <Button type="primary" size="small" onClick={()=>this.preview(item)}>查看</Button>
+                        <Button type="primary" size="small" className="marginl10" onClick={()=>this.dataAnalysis(item)}>分析报告</Button>
                     </div>
                 </div>
             )
@@ -124,6 +132,7 @@ class PaperList extends Component {
                     {this._paperList(paperAllList)}
                 </section>
                 {this.state.previewFlag?<PaperDetail data={this.state.previewData} closePreview={()=>this.setState({previewFlag : false})} />:<div/>}
+                {this.state.DialogMaskFlag?<DialogMask title="做题分析" closeDialog={()=>this.setState({DialogMaskFlag : false})}><ExamPaperAnalysis data={this.state.analysiReportsFlagData}/></DialogMask>:<div/>}
             </div>
         );
     }

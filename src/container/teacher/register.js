@@ -33,15 +33,6 @@ class RegisterForm extends Component {
             callback();
         }
     }
-    checkPhone = (rule, value, callback) => {
-        console.log("phone:"+value)
-        debugger
-        if (value && value.length !== 11 ) {
-            callback('请输入正确手机号（11位数字）!');
-        } else {
-            callback();
-        }
-    }
     checkConfirm = (rule, value, callback) => {
         const form = this.props.form;
         if (value && this.state.confirmDirty) {
