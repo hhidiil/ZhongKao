@@ -446,7 +446,16 @@ class Question extends Component{
             body:exerciseArray,
             success:(data)=>{
                 console.log("getQuestion---->>",data)
-                this.setState({exerciseContent:data})
+                let newdata = [];
+                for(let i in data){
+                    let content = data[i].data[0].content;
+                    //去掉数据库查回来的无效数据
+                    if(content.indexOf('巩固练习')==-1 && content.indexOf('拓展练习')==-1){
+                        newdata.push(data[i])
+                    }
+                }
+                console.log("练习的试题----》》》》》》》",newdata)
+                this.setState({exerciseContent:newdata})
             },
             error:(err)=>{console.error(err)}
         })
@@ -459,6 +468,7 @@ class Question extends Component{
     seeAnswer (data){
         this.setState({two_answer_content:data})
     }
+    //巩固练习，拓展练习的提交答案
     submitAnwser(index,data){
         let target_value='',type = this.state.nowPart,url='';
         let target_exe = "exerciseTopic-"+type+"-"+index;//目标区块id
@@ -551,8 +561,9 @@ class Question extends Component{
             })
         }
     }
+    //分析部分每个部分小题的提交按钮
     submitOne(e,data,index,type,questionType){
-        console.log("提交的答案：=======",data,this.state.current,type,index,questionType);
+        console.log("此题的信息：=======",data,this.state.current,type,index,questionType);
         if(!(newChildList.childs[0][type][index])){//先初始化
             newChildList.childs[0][type][index] = {
                 "itemid": "",
@@ -624,9 +635,7 @@ class Question extends Component{
     getKnowledge(e){
         console.log($(e.target)[0].innerText)
         let knowledge = $(e.target)[0].innerText;
-        console.log("getKnowledge-----constructor--------props--->",this.props.location.pathname)
         this.setState({DialogMaskFlag:true,knowledgeName:knowledge})
-        //this.props.actions.push(`/home/math/knowledge/${knowledge}`)
     }
     closeKnowledgeBox(){
         UE.delEditor('knowledgeContainer');
@@ -692,7 +701,6 @@ class Question extends Component{
             let ddd_content = (ddd && ddd.length>0) ? ddd[index].content : [];//解析的某部分的第几个content所有内容（比如考点中的第一个小题全部内容）
             let regex=/@.+?@/g;
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-                //content = content.replace(/\s/g,'');
                 content = content.replace(/<u>blank<\/u>|blank|BLANK|#blank#|#BLANK#/g,'<span contenteditable="true" class="div_input"></span>')
             }
             let knowledgelist = content.match(regex);//找出知识点

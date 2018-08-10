@@ -249,7 +249,9 @@ class Question extends Component{
         let type = dataItems.get('questiontemplate');
         let isobjective = dataItems.get('isobjective');
         let quesId = dataItems.get('questionid');
-        let knowledge = dataItems.get('knowledge');
+        let childs = dataItems.get('childs');
+        let knowledge = '';
+        let difficulty = dataItems.get('difficulty');
         let nexflag = true;
         let quesScore = dataItems.get('totalpoints');
         if(!quesScore){//判断试题是否有分数，如果数据库中的试题没有分数 则为其赋一个分数。
@@ -257,8 +259,16 @@ class Question extends Component{
             if(type == "填空题"){quesScore = CONFIG_MAP.questionScore[1]}
             if(type == "简答题"){quesScore = CONFIG_MAP.questionScore[2]}
         }
+        if(childs.size>0){//判断试题是否有子题，如果有 取出对应子题的知识点
+            childs.map((item,index)=>{
+                console.log("childs--------------------->>>>>>>>>>>>",index,item.get('knowledge'))
+                knowledge = knowledge + item.get('knowledge') + '；';
+            })
+        }else {
+            knowledge = dataItems.get('knowledge');
+        }
         let score = quesScore;//先把题的得分拿出来，错了在赋值为0
-        console.log(page,nextpage,"正确答案：",answer,GetQuestion)
+        console.log(page,nextpage,"正确答案：",answer,knowledge)
         if(type == "选择题"){
             let doms = document.getElementsByTagName("input");
             //获取选择的答案
@@ -338,7 +348,8 @@ class Question extends Component{
                 "Contents": this.state.AnswerContent,
                 "score":score,
                 "QuesScore": quesScore,
-                "knowledge":knowledge
+                "knowledge":knowledge,
+                "difficulty":difficulty
             }
             Storage_L.setItem(this.state.activeId,JSON.stringify(this.state.sentList))//每做完一个题缓存一个
             if(nextpage>this.state.totalNum){//最后一个题做完了

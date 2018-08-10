@@ -2,7 +2,7 @@
  *数据配置
  * Created by gaoju on 2018/8/8.
  */
-export var TableDataMap = {
+export var TableDataMap1 = {
     dataSource : [{
         key: '0',
         name: '选择题',
@@ -24,16 +24,64 @@ export var TableDataMap = {
     }],
     columns : [{
         title: '名称',
-        dataIndex: 'name',
+        dataIndex: 'name'
     }, {
         title: '题数',
-        dataIndex: 'num',
+        dataIndex: 'num'
     }, {
         title: '错题',
+        dataIndex: 'errorNum'
+    }, {
+        title: '正确率',
+        dataIndex: 'percent'
+    }]
+}
+export var TableDataMap2 = {
+    dataSource : [],
+    columns : [{
+        title: '题号',
+        dataIndex: 'questionNum',
+        width: 50
+    }, {
+        title: '知识点',
+        dataIndex: 'knowledge',
+        width: 150
+    }, {
+        title: '难易程度',
+        dataIndex: 'difficulty',
+        width: 50
+    }, {
+        title: '对错',
+        dataIndex: 'isOrRight',
+        width: 50
+    }]
+}
+export var TableDataMap3 = {
+    dataSource : [],
+    columns : [{
+        title: '知识点',
+        dataIndex: 'knowledge',
+        width: 100
+    }, {
+        title: '总数',
+        dataIndex: 'num',
+        width: 50
+    }, {
+        title: '错误数',
         dataIndex: 'errorNum',
+        width: 50
     }, {
         title: '正确率',
         dataIndex: 'percent',
+        width: 50,
+        onCell:(record)=>{
+            let num = record.percent.replace(/%/,"")
+            if(num-50 <0){
+                return {
+                    className:'color-red'
+                }
+            }
+        }
     }]
 }
 //饼状图pie1

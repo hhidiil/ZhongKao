@@ -90,3 +90,6 @@ input::-webkit-inner-spin-button {
   -o-user-select:none;
   -ms-user-select:none;
 }
+.color-red{
+  color: red;
+}

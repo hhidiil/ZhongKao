@@ -272,23 +272,28 @@
     position: relative;
     width: 100%;
 }
+.dataAnalysis .section{
+    display: inline-block;
+    /*min-height: 250px;*/
+    width: 100%;
+    margin: 5px 0;
+    padding: 10px 0;
+    border-bottom: 2px solid #86b7c5;
+}
 .dataAnalysis .part-one{
-    margin: 10px 0;
     width: 40%;
     float: left;
     min-height: 300px;
-    border-bottom: 2px solid #86b7c5;
 }
 .dataAnalysis .part-two{
-    margin: 10px 0;
-    min-height: 300px;
     width: 60%;
     float: left;
-    border-bottom: 2px solid #86b7c5;
 }
 .dataAnalysis .part-three{
-    min-height: 300px;
+    position: relative;
+    width: 100%;
 }
+
 /*thematicChapter start*/
 .thematicChapter{
     position: relative;
