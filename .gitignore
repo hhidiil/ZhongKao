@@ -4,3 +4,4 @@ public/build
 bundle.js
 .idea
 uploadImages
+server.js
