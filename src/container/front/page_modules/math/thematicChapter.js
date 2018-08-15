@@ -364,7 +364,7 @@ class Chapter extends Component{
                         {objective == "材料" ? "":(
                             <div className="fieldtip">
                             <div className="col-md-5">
-                            <span>真题：1</span><span>难度：0.5</span>
+                            <span>真题</span><span>难度：{item.difficulty}</span>
                             </div>
                             <div className="col-md-7 right">
                             <span onClick={()=>this.doIt(item)}>作答</span>
