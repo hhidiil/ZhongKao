@@ -32,9 +32,12 @@ class Index extends Component{
         return (
             <div className="exciseTips">
                 <ul>
-                    <li><a href="javascript:void(0);">1、中考解题技巧</a>
-                        <a href="/api/download?name=2018年广东省中考数学考试大纲.pdf" className="btnDownload">2018年广东省中考数学考试大纲(下载)</a>
-                        <a href="/api/download?name=广东省中考数学试卷结构和命题规律(2016年~2018年).pdf" className="btnDownload">广东省中考数学试卷结构和命题规律(下载)</a>
+                    <li>
+                        <div><a href="javascript:void(0);">1、考试相关文档:</a></div>
+                        <ul style={{margin:'0 20px',padding:'0 20px'}}>
+                            <li>2018年广东省中考数学考试大纲<a href="/api/download?name=2018年广东省中考数学考试大纲.pdf" className="btnDownload">下载</a></li>
+                            <li>广东省中考数学试卷结构和命题规律<a href="/api/download?name=广东省中考数学试卷结构和命题规律(2016年~2018年).pdf" className="btnDownload">下载</a></li>
+                        </ul>
                         {/*<a href="public/docs/readme.txt" className="btnDownload">广东省中考数学试卷结构和命题规律(下载)</a>*/}
                     </li>
                 </ul>

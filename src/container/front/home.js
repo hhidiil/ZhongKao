@@ -87,7 +87,7 @@ class Home extends Component {
                                 <Menu.Item key="echartsDetails">图表分析</Menu.Item>
                             </SubMenu>
                             <Menu.Item key="math"><Icon type="code-o" />数学栏目</Menu.Item>
-                            <Menu.Item key="excisetip"><Icon type="code-o" />解题技巧</Menu.Item>
+                            <Menu.Item key="excisetip"><Icon type="code-o" />中考资讯</Menu.Item>
                         </Menu>
                     </menu>
                     <section className="full-width section-left">
