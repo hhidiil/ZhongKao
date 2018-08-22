@@ -4,6 +4,7 @@
  */
 var fs = require('fs'),path = require('path');
 var Math = require('../../database/math.db');
+var doGetAllChildOfExam = require('../mathModule/getAllChildOfExam')
 
 module.exports={
     init: function(app) {
@@ -13,6 +14,7 @@ module.exports={
         app.post('/math/sentUserPaperData',this.sentUserPaperData);
         app.post('/math/sentUserQuestionDataOfPaper',this.sentUserQuestionDataOfPaper);
         app.post('/math/firstDataOfPaper',this.getFirstDataOfPaper);
+        app.post('/math/allChildDetailsOfQuestion',this.getAllChildDetailsOfQuestion)
         app.post('/math/allChildOfQuestion',this.getAllChildOfQuestion);
         app.post('/math/contentOfChildItems',this.getContentOfChildItems);
         app.post('/math/contentOfChildItemsForQues',this.getContentOfChildItemsForQues);
@@ -24,7 +26,8 @@ module.exports={
         app.post('/math/knowledgeIdListWithId',this.getKnowledgeIdListWithId);
         app.post('/math/knowledgeForQuestionInfo',this.sentKnowledgeForQuestionInfo);
         app.post('/math/everyQuestion',this.getEveryQuestion);
-        app.post('/math/thematicQuestionAnswerInfo',this.setThematicQuestionAnswerInfo)
+        app.post('/math/thematicQuestionAnswerInfo',this.setThematicQuestionAnswerInfo);
+        app.post('/math/getAllChildOfExam',doGetAllChildOfExam);
     },
     getAllPapers: (req, res) => {
         let props = {};
@@ -227,6 +230,13 @@ module.exports={
             }
         })
     },
+    getAllChildDetailsOfQuestion:(req,res)=>{
+        let props = {
+            id:req.body.id
+        };
+        let math = new Math({props: props});
+    }
+    ,
     getAllChildOfQuestion: (req,res) => {
         let props = {
             id:req.body.id
@@ -241,8 +251,8 @@ module.exports={
                     };
                     let math = new Math({props: props});
                     math.getQuestionChild(function(err, data){
-                        olddata[0].childs = data;
                         if(!err){
+                            olddata[0].childs = data;
                             let props = {
                                 id:olddata[0].questionid
                             };
@@ -331,7 +341,7 @@ module.exports={
                             url = url + Contents[j].url + "@$";
                         }
                         answer = answer.substring(0, answer.lastIndexOf('|'));//最后一个|去掉
-                        url = url.substring(0, url.lastIndexOf('@$'));//最后一个|去掉
+                        url = url.substring(0, url.lastIndexOf('@$'));//最后一个@$去掉
                     }
                     everystr = "("+ "'"+ExamResult[i].QuesID+"'" +","+"'"+data.ExamInfoID+"'"+","+"'"+data.ExamPaperID+"'"+","
                         +"'"+data.UserID+"'"+","+"'"+data.ExamOrExercise+"'"+"," + "'"+ExamResult[i].QuesType+"'"+","+"'"+trueOrfalse+"'"+","+"'"+ExamResult[i].knowledge+"'"+","
@@ -524,7 +534,7 @@ module.exports={
         var questionNum = infoList.length;
         var rightNum = 0;
         for (let i in infoList){
-            if(infoList[i].isTrue){
+            if(infoList[i].isTure || infoList[i].isTure == "true"){
                 rightNum = rightNum + 1;
             }
         }

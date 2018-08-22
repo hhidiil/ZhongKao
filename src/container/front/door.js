@@ -14,6 +14,7 @@ import PureRenderMixin from '../../method_public/pure-render'
 import {handleImg} from '../../method_public/public'
 import { getHomeShowList} from '../../redux/actions/page'
 import {updateStoreHeadImg} from '../../redux/actions/public'
+import {getAllChildOfExam} from '../../redux/actions/math'
 import {Storage_S} from '../../config'
 
 const colorList=["mediumorchid","cornflowerblue","chocolate","yellowgreen","tomato","gold"];
@@ -29,6 +30,14 @@ class Door extends Component {
         let headimg = Storage_S.getItem('headimg');
         this.props.actions.getHomeShowList({});
         this.props.actions.updateStoreHeadImg({data:headimg,clear:false})//当页面刷新store会重置，需要重新更新store
+        this.props.actions.getAllChildOfExam({
+            body:{id:"6306179e-56af-484a-a2f2-92e20cd1295c"},
+            success:(data)=>{
+                console.log("getAllChildOfExam--->>>",data)
+                window.localStorage.setItem("idlist",JSON.stringify(data))
+            },
+            error:(mes)=>{console.error(mes)}
+        })
     };
     enterSystem(){
         if(this.state.loginstatus){
@@ -189,7 +198,7 @@ function mapStateToProps(state,ownProps) {
 }
 //使用bindActionCreators绑定action
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getHomeShowList,updateStoreHeadImg}, dispatch) }
+    return { actions: bindActionCreators({push,getHomeShowList,updateStoreHeadImg,getAllChildOfExam}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Door)

@@ -1,4 +1,5 @@
 /**
+ * 公共方法，里面的anction 都是可以用来设置全局 state的
  * Created by gaoju on 2018/5/28.
  */
 import * as TYPES from '../types';

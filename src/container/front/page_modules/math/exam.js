@@ -129,11 +129,11 @@ class Exam extends Component{
         this.props.actions.push(`/home/math/exams/practice/${id}`);
     }
     practiceAgain(){
-        alert("此部分的试题是根据模块试卷结构知识点新出的试题，用来检测训练的效果")
+        alert("此部分的试题是根据模块试卷结构知识点新出的试题，用来检测训练的效果，目前还没有开放！！！敬请期待")
     }
     preview(data,flag){
         if(!flag){
-            alert("您还没有做完本套试题,无法查看，请先做完试卷在查看！")
+            alert("您还没有做完本套试卷的摸底考试,请先做完摸底部分，再来强化练习！")
             return;
         }
         this.setState({previewFlag : true,previewData:data});

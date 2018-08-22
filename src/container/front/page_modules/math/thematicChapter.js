@@ -224,36 +224,45 @@ class Chapter extends Component{
             $("#modalQuestion .parts .options").find("ul input:checked").each(function(ii){
                 target_value += $(this).val();
             })
-        }else {
+            isright = ((data.answer).trim() == target_value) ? true:false
+        }else {//先统一当做选择题来做
+            let truethAnswer = data.answer.split("||");//题目的真实答案
+            let myvalue = '',myanswerright=true;
             $("#solition ").find(".div_input").each(function(i){
                 if($(this).children('img').length>0){//先查找公式编辑器输入的内容即用编辑器输入的会产生一个img标签，没有则直接查text
-                    mysrc = $(this).find('img')[0].src;
-                    target_value = $(this).find('img')[0].dataset.latex;
+                    mysrc = mysrc + $(this).find('img')[0].src +"||";
+                    myvalue = $(this).find('img')[0].dataset.latex;
                 }else{
-                    target_value = $(this).text();
+                    myvalue = $(this).text() ;
                 }
+                console.log("myvalue--->",myvalue);
+                if(!(truethAnswer[i].trim() == myvalue)){//只要有一个空的答案错了 则此题为错
+                    myanswerright = false;
+                }
+                target_value = target_value + myvalue + "||";//将填写的答案拼接起来
             })
+            isright = myanswerright;
         }
         if(!target_value){
             alert("请选择或填写答案！")
             return ;
         }
-        isright = ((data.answer).trim() == target_value) ? true:false;
         if(!isright){
-            $("#modalQuestion .reslutimg").append('<span style="color:red">做错了。。。</span>')
+            $("#modalQuestion .reslutimg").empty().append('<span style="color:red">做错了。。。</span>')
         }else{
-            $("#modalQuestion .reslutimg").append('<span>做对了！</span>')
+            $("#modalQuestion .reslutimg").empty().append('<span>做对了！</span>')
         }
         score = isright ? data.totalpoints : 0;
         sentdata = {
             userId: Storage_S.getItem('userid'),
             questionData: JSON.stringify(data),
             whereFrom:"章节复习",
-            answer:target_value,
+            answer: target_value.substring(0, target_value.lastIndexOf('||')),//最后一个||去掉
             isRight:isright,
             score:score,
-            url:mysrc
+            url:mysrc.substring(0, mysrc.lastIndexOf('||')),//最后一个||去掉
         }
+        console.log("最终得答案结果集合------>",sentdata);
         this.props.actions.setThematicQuestionAnswerInfo({
             body:sentdata,
             success:(data)=>{
@@ -274,9 +283,19 @@ class Chapter extends Component{
             questionType = true;//有两个选项以上
         }
         let content = item.content;
+        let count = 0;//填空题空的个数
+        let answerList=[];
         if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
+            let mathStr = "blank|BLANK|#BLANK#|#blank#";
+            let regex = new RegExp(mathStr, 'g'); // 使用g表示整个字符串都要匹配
+            let result = content.match(regex);
+            count = !result ? 0 : result.length;
             content = content.replace(/blank|BLANK|#BLANK#|#blank#/g,'__')
+            for(let i=0;i<count;i++){
+                answerList.push(<span contentEditable="true" className="div_input"></span>)
+            }
         }
+        console.log("填空题 空的个数：：",count)
         return(
             <fieldset id="modalQuestion" className="modal-main-content">
                 <div className="parts">
@@ -290,7 +309,7 @@ class Chapter extends Component{
                     </div>
                 </div>
                 <div className="parts answerContent">
-                    {questionType ? "":<li id="solition" style={{paddingTop:"5px"}}>解：<span contentEditable="true" className="div_input"></span></li>}
+                    {questionType ? "":<li id="solition" style={{paddingTop:"5px"}}>解：{answerList}</li>}
                 </div>
                 <hr/>
                 <div className="parts btn-jiexi">

@@ -1,4 +1,5 @@
 /**
+ * 收藏试题页
  * Created by gaoju on 2017/12/12.
  */
 import React,{Component} from 'react'
@@ -7,7 +8,6 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import { Link } from 'react-router'
-import PureRenderMixin from '../../../../method_public/pure-render'
 import {getCollectInfo } from '../../../../redux/actions/user'
 import { Collapse } from 'antd';
 import {Storage_S} from '../../../../config'
@@ -36,10 +36,6 @@ class Collect extends Component{
                 </div>
             )
         })
-    }
-    gotoPractice(data){
-        let id = data.examid;
-        this.props.actions.push(`/home/math/questions/practice/${id}`);
     }
     render(){
         let quesTypeX=[],quesTypeT=[],quesTypeJ=[],quesTypeQ=[],list = this.state.collectList;

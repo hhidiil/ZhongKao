@@ -8,6 +8,7 @@ export const USER_KEY = '@GAOJU:USER';
 export const WINDOW_HOST = window.location.origin;
 export const Storage_S = window.sessionStorage;//session存储
 export const Storage_L = window.localStorage;//本地存储缓存
+export const QuestionScore=[3,3,5]//试题的分数，questionScore[0]：选择题分数，questionScore[1]：填空题，questionScore[2]：简答题
 
 export const HEADERS = {
     'Accept': 'application/json',

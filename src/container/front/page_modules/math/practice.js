@@ -12,8 +12,8 @@ import Timing from '../../../../components/timing'
 import {MathJaxEditor} from '../../../../components/editer'
 import UpLoadFile from '../../../../components/upload/index'
 import PureRenderMixin from '../../../../method_public/pure-render'
-import {Storage_S,Storage_L} from '../../../../config'
-import {CONFIG_MAP} from '../../../../../config'
+import {Storage_S,Storage_L,QuestionScore} from '../../../../config'
+//import {CONFIG_MAP} from '../../../../../config'
 import './question_style.css'
 import moment from 'moment'
 import {Modal} from 'antd'
@@ -255,9 +255,9 @@ class Question extends Component{
         let nexflag = true;
         let quesScore = dataItems.get('totalpoints');
         if(!quesScore){//判断试题是否有分数，如果数据库中的试题没有分数 则为其赋一个分数。
-            if(type == "选择题"){quesScore = CONFIG_MAP.questionScore[0]}
-            if(type == "填空题"){quesScore = CONFIG_MAP.questionScore[1]}
-            if(type == "简答题"){quesScore = CONFIG_MAP.questionScore[2]}
+            if(type == "选择题"){quesScore = QuestionScore[0]}
+            if(type == "填空题"){quesScore = QuestionScore[1]}
+            if(type == "简答题"){quesScore = QuestionScore[2]}
         }
         if(childs.size>0){//判断试题是否有子题，如果有 取出对应子题的知识点
             childs.map((item,index)=>{

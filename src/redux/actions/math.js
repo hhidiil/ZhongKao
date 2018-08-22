@@ -54,11 +54,31 @@ export function getQuestion(opt) {
                 body: opt.body })
     }
 }
+//
+export function getAllChildOfExam(opt) {
+    return (dispatch) => {
+        const route = '/api/math/getAllChildOfExam';
+        request(route,{},dispatch,opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
+    }
+}
 //获取某个知识点中所有的试题的详情:
 export function getEveryQuestion(opt) {
     return (dispatch) => {
         //const route = 'src/data/ExamsData/JSON/Question/'+opt.param;//本地数据
         const route = '/api/math/everyQuestion';
+        requestSyn(route,{},dispatch,opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: opt.body })
+    }
+}
+//获取某个试题的所有子试题（即：主题，观察，考点，分析。。。），的所有内容详情，有多少查多少个
+export function getAllChildDetailsOfQuestion(opt) {
+    return (dispatch) => {
+        const route = '/api/math/allChildDetailsOfQuestion';
         requestSyn(route,{},dispatch,opt.success, opt.error,
             { method: 'POST',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
@@ -79,7 +99,7 @@ export function getAllChildOfQuestion(opt) {
                 body: opt.body })
     }
 }
-//查询二测中某个试题的子题内容（观察or分析or 。。。）
+//查询二测中某个试题的子题内容（观察or分析or 。。。）,比如观察部分的题，有可能有多个题
 export function getContentOfChildItems(opt) {
     return (dispatch) => {
         const route = '/api/math/contentOfChildItems';
@@ -89,6 +109,7 @@ export function getContentOfChildItems(opt) {
                 body: opt.body })
     }
 }
+//查询二测中某个试题的子题内容（观察or分析or 。。。）,比如观察部分多个题的题的详情
 export function getContentOfChildItemsForQues(opt) {
     return (dispatch) => {
         const route = '/api/math/contentOfChildItemsForQues';

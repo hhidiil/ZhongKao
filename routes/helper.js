@@ -105,6 +105,29 @@ var helper = {
         }
         console.log("IDIIL"+num)
         return "IDIIL"+num
+    },
+    syncGetData:function(){
+        var list = [];
+        var p = new Promise(function(resolve, reject){resolve()})
+        for(var i=0;i<10;i++){
+            p = p.then(runAsync(i));
+        }
+        p.then(function(){
+            console.log("最后一个完了",list)
+        })
+        function runAsync(i){
+            var pro = function (){
+                return new Promise(function(resolve, reject){
+                    //做一些异步操作
+                    setTimeout(function(){
+                        console.log('异步执行----(2)--->'+i);
+                        list.push(i)
+                        resolve();
+                    }, Math.round(Math.random()*1000))
+                });
+            }
+            return pro;
+        }
     }
 
 };

@@ -29,11 +29,6 @@ class DialogMask extends React.Component {
             dom.css('margin-top',(position[1]+nowpositionT) + 'px');
         }
     }
-    componentWillReceiveProps(nextProps){
-        //if(nextProps.position){
-        //    this.setState({position:nextProps.position})
-        //}
-    }
     render() {
         let {title,children,closeDialog} = this.props;
         return (

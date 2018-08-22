@@ -201,22 +201,34 @@ class ThematicExamPoints extends Component{
             $("#modalQuestion .parts .options").find("ul input:checked").each(function(ii){
                 target_value += $(this).val();
             })
-        }else {
+            isright = ((data.answer).trim() == target_value) ? true:false
+        }else {//先统一当做选择题来做
+            let truethAnswer = data.answer.split("||");//题目的真实答案
+            let myvalue = '',myanswerright=true;
             $("#solition ").find(".div_input").each(function(i){
                 console.log("target_value--->",$(this));
                 if($(this).children('img').length>0){//先查找公式编辑器输入的内容即用编辑器输入的会产生一个img标签，没有则直接查text
-                    mysrc = $(this).find('img')[0].src;
-                    target_value = $(this).find('img')[0].dataset.latex;
+                    mysrc = mysrc + $(this).find('img')[0].src +"||";
+                    myvalue = $(this).find('img')[0].dataset.latex;
                 }else{
-                    target_value = $(this).text();
+                    myvalue = $(this).text() ;
+                }
+                target_value = target_value + myvalue + "||";//将填写的答案拼接起来
+                if(!(truethAnswer[i].trim() == target_value)){//只要有一个空的答案错了 则此题为错
+                    myanswerright = false;
                 }
             })
+            isright = myanswerright;
         }
         if(!target_value){
             alert("请选择或填写答案！")
             return ;
         }
-        isright = ((data.answer).trim() == target_value) ? true:false
+        if(!isright){
+            $("#modalQuestion .reslutimg").append('<span style="color:red">做错了。。。</span>')
+        }else{
+            $("#modalQuestion .reslutimg").append('<span>做对了！</span>')
+        }
         score = isright ? data.totalpoints : 0;
         sentdata = {
             userId: Storage_S.getItem('userid'),
@@ -274,10 +286,24 @@ class ThematicExamPoints extends Component{
         if(item.questiontemplate == '选择题'){
             questionType = true;//有两个选项以上
         }
+        let content = item.content;
+        let count = 0;//填空题空的个数
+        let answerList=[];
+        if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
+            let mathStr = "blank|BLANK|#BLANK#|#blank#";
+            let regex = new RegExp(mathStr, 'g'); // 使用g表示整个字符串都要匹配
+            let result = content.match(regex);
+            count = !result ? 0 : result.length;
+            content = content.replace(/blank|BLANK|#BLANK#|#blank#/g,'__')
+            for(let i=0;i<count;i++){
+                answerList.push(<span contentEditable="true" className="div_input"></span>)
+            }
+        }
+        console.log("填空题 空的个数：：",count)
         return(
             <fieldset id="modalQuestion" className="modal-main-content">
                 <div className="parts">
-                    <div className="content" dangerouslySetInnerHTML={{__html:item.content}}>
+                    <div className="content" dangerouslySetInnerHTML={{__html:content}}>
                     </div>
                     <div className="options">
                         <ul>
@@ -286,7 +312,7 @@ class ThematicExamPoints extends Component{
                     </div>
                 </div>
                 <div className="parts answerContent">
-                    {questionType ? "":<li id="solition" style={{paddingTop:"5px"}}>解：<span contentEditable="true" className="div_input"></span></li>}
+                    {questionType ? "":<li id="solition" style={{paddingTop:"5px"}}>解：<span contentEditable="true" className="div_input"></span><span className="answerTips">(有两个答案的用分号"；"隔开奥)</span></li>}
                 </div>
                 <hr/>
                 <div className="parts btn-jiexi">

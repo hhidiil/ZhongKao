@@ -40,6 +40,7 @@ var sentJson = {
     "currentquesid":1,
     "AllDone":'no'
 }
+var autoKnowledgeList=[];//每个试题 分析部分 小题或填空题的 相关考点。用来自动弹出知识点复习框的
 class Question extends Component{
     constructor(props){
         super(props);
@@ -207,7 +208,7 @@ class Question extends Component{
         let childs = list[0].childs;//大题的问题
         whichOne = whichOne?whichOne.replace(/sub/g,''):whichOne;//某个试题下的小题（解答题的小问）
         console.warn(whichOne,type,childid,childs)
-        if(childs.length >0){
+        if(childs.length >0){//简答题有小问的话 每个小问有对应的解析、考点、观察、解答四个部分
             this.props.actions.getChildQuestionsForQuestion({
                 body:[{id:childs[whichOne].questionid}],
                 success:(data)=>{
@@ -260,7 +261,7 @@ class Question extends Component{
     }
     addEventFuc(type){
         let _this = this;
-        $('#knowledgeText').on('click',function(e){
+        $('.mustText').on('click',function(e){
             _this.getKnowledge(e);
         });
         $("#Analysis_Qtxt").find('.div_input').each(function(i){
@@ -345,6 +346,7 @@ class Question extends Component{
         })
         this.setState({solution: true})
     }
+    //主试题重新做的提交按钮
     redoSubmit(data,items,index){
         let contents =[],istrue=false,score=0;
         if(items.questiontemplate == '选择题'){//选择题
@@ -401,6 +403,7 @@ class Question extends Component{
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
         message.success("提交成功")
     }
+    //获取分析、考点、解答、观察四个部分的数据
     getDateOfAnalysis(type,alldata){
         for(let i=0;i<alldata.length;i++){
             if(alldata[i].parttype == type){//在返回值中查找对应部分的内容，有就查询数据
@@ -460,13 +463,25 @@ class Question extends Component{
             error:(err)=>{console.error(err)}
         })
     }
+    //上传图片的回调函数，返回图片地址
     getEditContent(url,id){
         console.warn("getEditContent==>>",id,url)
         $("#"+id).find('img')[0].src = url;
         //$("#"+dom).text('').append(cont);
     }
+    //查看巩固练习或者拓展练习部分 试题的答案解析
     seeAnswer (data){
         this.setState({two_answer_content:data})
+    }
+    clickTip(index,olddata){
+        if(olddata && olddata.isdone == true){
+            this.setState(
+                {two_answer_flag:!this.state.two_answer_flag,
+                    //exerciseIndex:index
+                })
+        }else {
+            alert("请先提交答案再查看提示!")
+        }
     }
     //巩固练习，拓展练习的提交答案
     submitAnwser(index,data){
@@ -519,16 +534,6 @@ class Question extends Component{
         }
         console.log("打分",tar,$("#"+tar).val(),total)
     }
-    clickTip(index,olddata){
-        if(olddata && olddata.isdone == true){
-            this.setState(
-                {two_answer_flag:!this.state.two_answer_flag,
-                //exerciseIndex:index
-                })
-        }else {
-            alert("请先提交答案再查看提示!")
-        }
-    }
     //提交整套试卷的数据详情
     submitAllQuestion(){
         if(confirm("确定提交吗？")){
@@ -561,15 +566,17 @@ class Question extends Component{
             })
         }
     }
-    //分析部分每个部分小题的提交按钮
+    //解答分析部分中每个部分小题的提交按钮处理逻辑
     submitOne(e,data,index,type,questionType){
         console.log("此题的信息：=======",data,this.state.current,type,index,questionType);
-        if(!(newChildList.childs[0][type][index])){//先初始化
+        if(!(newChildList.childs[0][type][index])){//先初始化每个部分小题答案信息，方便后面存储新的信息
             newChildList.childs[0][type][index] = {
                 "itemid": "",
                 "content":[]
             };
         }
+        let isOrRight = false;//当前题的最终正确与否
+        let lastKnowledge = [];//当前题的最终自动弹框需要的知识点
         if(questionType){//当前题目是选择题
             let value = '', isRight = false, knowledgesCont=[],knowledge_new = [];
             let knowledge = ((data.knowledge).replace(/\<B\>|\<\/B\>/g,"")).split("；");//知识点
@@ -580,7 +587,7 @@ class Question extends Component{
             })
             isRight = compareDifferent(value,rightanswer);
             if(knowledge.length>0){
-                for(let ss in knowledge){
+                for(let ss in knowledge){//每一个知识点独立出来，当知识点复习之后需要记录每一个知识点做题的情况，rightRank为知识点的正确率
                     knowledge_new[ss] = {
                         "name":knowledge[ss]?knowledge[ss]:"",
                         "rightRank":"0"
@@ -593,23 +600,32 @@ class Question extends Component{
                 "isRight": isRight,
                 "knowledges":knowledge_new
             };
+            isOrRight = isRight;
+            lastKnowledge = knowledge;
         }else{
             let knowledge = ((data.knowledge).replace(/["\[\]\s]/g,"")).split('||');//知识点
             let inputList = $(e.target).parent().parent().find(".div_input");
+            let endRigth = true;//有多个空的时候 只要错一个就当这道题是错误的。
             inputList.each(function(ii){
                 let value = '',mysrc='', isRight = false, knowledgesCont=[];
                 let rightanswer = (data.answer).trim().replace(/\s/g,"").split("||");//正确答案
+                let everyRightanswer = '';//每一个空的正确答案
                 let knowledges = knowledge[ii] ? knowledge[ii].split('@#'):[];//每一个空所包含的知识点
-                let knowledge_new = [];
+                let knowledge_new = [];//要存储的知识点
 
-                if($(this).children('img').length>0){//先查找公式编辑器输入的内容即用编辑器输入的会产生一个img标签，没有则直接查text
+                if($(this).children('img').length>0){//先查找公式编辑器输入的内容，即用编辑器输入的会产生一个img标签，没有则直接查text
                     mysrc = $(this).find('img')[0].src;
                     value = $(this).find('img')[0].dataset.latex;
                 }else{
                     value = $(this).text();
                 }
                 //value = $(this).attr("data")?$(this).attr("data"): $(this)[0].innerText;//用户填写的答案
-                isRight = compareDifferent(rightanswer[ii],value);
+                everyRightanswer = rightanswer[ii].replace(/$/g,'');//格式化正确答案，去除多余的其他字符
+                isRight = compareDifferent(everyRightanswer,value);
+                if(!isRight){//有错误的空，则这道题为错
+                    endRigth = false;
+                    lastKnowledge = lastKnowledge.concat(knowledges);
+                }
                 if(knowledges.length>0){
                     for(let ss in knowledges){
                         knowledge_new[ss] = {
@@ -625,6 +641,12 @@ class Question extends Component{
                     "knowledges":knowledge_new
                 };
             });
+            isOrRight = endRigth;
+            //lastKnowledge = knowledge;
+        }
+        if(!isOrRight){//如果做错了 则自动弹框知识点复习
+            autoKnowledgeList = lastKnowledge;
+            this.autoGetKnowledge()
         }
         newChildList.childs[0][type][index].itemid = data.itemid;
         (this.state.sentAllList).currentquesid = this.state.current;
@@ -632,9 +654,15 @@ class Question extends Component{
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
         message.success("提交成功")
     }
+    //点击显示知识点弹框
     getKnowledge(e){
-        console.log($(e.target)[0].innerText)
         let knowledge = $(e.target)[0].innerText;
+        this.setState({DialogMaskFlag:true,knowledgeName:knowledge})
+    }
+    //当点击提交按钮 题目做错了之后 自动显示知识点弹框
+    autoGetKnowledge(){
+        console.log("autoGetKnowledge---------自动弹框的知识点列表---》",autoKnowledgeList)
+        let knowledge = autoKnowledgeList[0];
         this.setState({DialogMaskFlag:true,knowledgeName:knowledge})
     }
     closeKnowledgeBox(){
@@ -642,7 +670,7 @@ class Question extends Component{
         this.setState({DialogMaskFlag:false})
     }
     _contentQtxt(data,index){
-        console.log("_contentQtext------||||||\\\\//////--------------------->>>>>",data)
+        console.log("_contentQtext------//////--------------------->>>>>",data)
         let items = data[0];
         let content = items.content;
         let questiontemplate = items.questiontemplate;
@@ -699,16 +727,20 @@ class Question extends Component{
             let knowledge = item.knowledge;
             let questionType=false;
             let ddd_content = (ddd && ddd.length>0) ? ddd[index].content : [];//解析的某部分的第几个content所有内容（比如考点中的第一个小题全部内容）
-            let regex=/@.+?@/g;
+            let regex=/{@.+?@}/g;
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                 content = content.replace(/<u>blank<\/u>|blank|BLANK|#blank#|#BLANK#/g,'<span contenteditable="true" class="div_input"></span>')
             }
-            let knowledgelist = content.match(regex);//找出知识点
+            let knowledgelist = content.match(regex);//找出必填空的知识点
             if(knowledgelist && knowledgelist.length>0){
                 for(let i in knowledgelist){
-                    let knowname = knowledgelist[i].replace(/\s|@/g,'');
+                    content = content.replace(/{@|@}/g,'');
+                    let knowname = knowledgelist[i].replace(/\s|{@|@}/g,'');
                     console.warn("knowname====>>>>>",knowname)
-                    content = content.replace(new RegExp(knowledgelist[i],'g'),'<span class="mustText" id="knowledgeText">'+knowname+'</span>')//标记必填空
+                    let knownamelist = knowname.split('；');//处理一个空有多个知识点的情况
+                    for(let j in knownamelist){
+                        content = content.replace(new RegExp(knownamelist[j],'g'),'<span class="mustText">'+knownamelist[j]+'</span>')//标记必填空
+                    }
                 }
             }
             if(item.questiontemplate == '选择题'){
@@ -729,7 +761,7 @@ class Question extends Component{
                             return <a key={index} style={{marginLeft:"5px"}} onClick={(e)=>this.getKnowledge(e)} dangerouslySetInnerHTML={{__html:itm.replace(/\@\#/g,',')}}></a>
                         })}</span> :''}
                         <span style={{margin:"0 10px"}}>答案：<span dangerouslySetInnerHTML={{__html:item.answer}}></span></span>
-                        <button className="marginl10" onClick={(e)=>{this.submitOne(e,item,index,type,questionType)}}>提交</button>
+                        <button className="marginl10" onClick={(e)=>{this.submitOne(e,item,index,type,questionType,knowledge)}}>提交</button>
                     </ul>}
                     {!this.state.DialogMaskFlag?"":<DialogMask title={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()}><Knowledge questionId={mainQuestionId} examPaperId={this.state.activeId} knowledgeName={this.state.knowledgeName} /></DialogMask>}
                 </div>
