@@ -78,7 +78,7 @@ Math.prototype.getQuestionChild = function(callback){
         callback: callback
     })
 }
-/*查询试题的所有关联的子题（考点，扩展，分析。。。）*/
+/*查询试题的所有关联的子题（考点，扩展，分析。。。扩展、练习）*/
 Math.prototype.getQuestionChildItems = function(callback){
     var _sql = `select t1.parttype,t2.itemid,t1.questionid from tblQuestion2Part t1,tblQuestionPart2Item t2 where t1.partid=t2.partid and t1.questionid='${this.props.id}' ORDER BY t2.ordersn`;
     helper.db_query({
@@ -90,7 +90,7 @@ Math.prototype.getQuestionChildItems = function(callback){
 }
 /*查询试题的小题的相关子题（考点，扩展，分析。。。）*/
 Math.prototype.getChildQuestionsForQuestion = function(callback){
-    var _sql = `select parttype,itemid,questionid from tblQuestion2Part where questionid='${this.props.id}' ORDER BY ordersn`;
+    var _sql = `select * from tblQuestion2Part where questionid='${this.props.id}' ORDER BY ordersn`;
     helper.db_query({
         connect: con,
         sql: _sql,

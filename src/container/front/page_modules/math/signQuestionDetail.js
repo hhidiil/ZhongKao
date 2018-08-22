@@ -1,5 +1,5 @@
 /**
- * 试题
+ * 单个试题的展示页面，即试题详情页面
  * Created by gaoju on 2017/11/29.
  */
 import React,{Component} from 'react'
@@ -95,7 +95,7 @@ class SignQuestion extends Component{
         let review = this.state.reviewContent;
         let analysis = this.state.analysisContent;
         let explain = this.state.explainContent;
-        console.log(observe,review,analysis,explain)
+        console.log("题目的四个部分：：",observe,review,analysis,explain)
         if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
             content = content.replace(/<u>blank<\/u>|blank|BLANK/g,'<span class="div_input"></span>')
         }
@@ -106,7 +106,7 @@ class SignQuestion extends Component{
                     {questiontype == "选择题" ?<MultipleChoice type={data[0].questiontype} answer='' index={0} choiceList={data[0].optionselect} />:''}
                     {childs.length<1?"":this._childsList(childs)}
                 </ul>
-                <ul>答案：{data[0].answer}</ul>
+                <ul>答案：<li dangerouslySetInnerHTML={{__html:data[0].answer}}></li></ul>
                 <ul>{observe.length>0 ?<li dangerouslySetInnerHTML={{__html:observe[0].content}}></li>:''}</ul>
                 <ul>{review.length>0 ?<li dangerouslySetInnerHTML={{__html:review[0].content}}></li>:''}</ul>
                 <ul>{analysis.length>0 ?<li dangerouslySetInnerHTML={{__html:analysis[0].content}}></li>:''}</ul>

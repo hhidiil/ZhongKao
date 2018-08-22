@@ -14,10 +14,11 @@ import ShowMask from '../../../../components/Alter/showMask'
 import MultipleChoice from '../../../../components/multipleChoice/index'
 import {MathJaxEditor} from '../../../../components/editer'
 import DialogMask from '../../../../components/Alter/dialogMask/dialogmask'
+import Loading from '../../../../components/loading/index'
 import {getCoords} from '../../../../method_public/public'
 import {Storage_S,Storage_L} from '../../../../config'
 import Knowledge2 from './knowledge.js'
-import { Menu, Icon,Button } from 'antd'
+import { Menu, Icon,Button,Spin } from 'antd'
 
 
 class Knowledge extends Component{
@@ -33,6 +34,7 @@ class Knowledge extends Component{
             position:[],
             showEditor:false,
             DialogMaskFlag2:false,
+            Pending : true,//加载转圈标志
         }
     }
     componentDidMount(){
@@ -41,6 +43,14 @@ class Knowledge extends Component{
         this.props.actions.getKnowledgeIdList({
             body:[{knowledgeName:knowledgeName}],
             success:(data)=>{
+                if(data[0].code != 200){
+                    setTimeout(()=>{
+                        this.setState({
+                            Pending:false
+                        })
+                    },500)
+                    return ;
+                }
                 let newdata=[],alldata = data[0].data;
                 let knowledgeId = alldata[0].knowledgeid;
                 for(let i in alldata){
@@ -56,10 +66,13 @@ class Knowledge extends Component{
                             newData.push((data[i].data)[0])
                         }
                         console.log("hahahahahhaha---33333333-->>>>",newData)
-                        this.setState({
-                            questionListOfKnowledge:newData,
-                            knowledgeId:knowledgeId
-                        })
+                        setTimeout(()=>{
+                            this.setState({
+                                questionListOfKnowledge:newData,
+                                knowledgeId:knowledgeId,
+                                Pending:false
+                            })
+                        },500)
                         this.addEvent();//为每一个空添加事件
                     },
                     error:(message)=>{
@@ -163,7 +176,6 @@ class Knowledge extends Component{
         console.log($(e.target)[0].innerText)
         let knowledge = $(e.target)[0].innerText;
         this.setState({DialogMaskFlag2:true,knowledgeName:knowledge})
-        //this.props.actions.push(`/home/math/knowledge/${knowledge}`)
     }
     closeKnowledgeBox(){
         UE.delEditor('knowledgeContainer');
@@ -173,7 +185,7 @@ class Knowledge extends Component{
         console.log("onchangehandle=====>>::::::::::>>>>>>",answer,this.choice)
     }
     _QuestionContent(data){
-        if(data.length<1){return <div/>}
+        if(data.length<1){return <div className="center">没有找到对应的数据。。。。</div>}
         return data.map((item,index)=>{
             let content = item.content;
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
@@ -195,13 +207,13 @@ class Knowledge extends Component{
         })
     }
     render(){
-        let quetionList = this.state.questionListOfKnowledge;
+        let {questionListOfKnowledge,Pending} = this.state;
         return(
             <div className="knowledgeContent">
                 <MathJaxEditor position={this.state.position} editorId="knowledgeContainer" target_id={this.state.target_id} showEditor={this.state.showEditor}/>
                 <form onSubmit={this.handleSubmit}>
-                    {this._QuestionContent(quetionList)}
-                    <button type="submit" className="btn btn-primary submit_btn">提交</button>
+                    {Pending ? <Loading tip="loading" size="large" /> : this._QuestionContent(questionListOfKnowledge)}
+                    <div className="submitBtn"><button type="submit" className="btn btn-primary submit_btn">提交</button></div>
                 </form>
                 {/*!this.state.DialogMaskFlag2?"":<DialogMask title={this.state.knowledgeName} position={[20,20]} id="1" closeDialog={()=>this.closeKnowledgeBox()}><Knowledge2 knowledgeName={this.state.knowledgeName} /></DialogMask>*/}
             </div>

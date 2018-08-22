@@ -18,7 +18,6 @@ export function request(route, params, dispatch, success=null, error=null, { met
     const url = `${ CONFIG.API_URI }${ route }${ p }`;
     let data = { method: method, headers: headers}
     if (method !== 'GET'){
-        console.log("body---body---body------------>",body)
         data.body = ($.isEmptyObject(body)) ? {} : body.replace(/&nbsp;/g,'');
     }
     console.log(`[${method}]:${url}::${data}`,data)

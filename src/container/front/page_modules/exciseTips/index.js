@@ -33,9 +33,9 @@ class Index extends Component{
             <div className="exciseTips">
                 <ul>
                     <li><a href="javascript:void(0);">1、中考解题技巧</a>
-                        <a href="/api/download?name=readme.txt" className="btnDownload">action下载</a>
-                        <a href="http://localhost:10000/api/download?name=MongoDB安装配置.docx" className="btnDownload">document下载1</a>
-                        <a href="public/docs/MongoDB安装配置.docx" className="btnDownload">document下载2</a>
+                        <a href="http://localhost:10000/api/download?name=2018年广东省中考数学考试大纲.pdf" className="btnDownload">2018年广东省中考数学考试大纲(下载)</a>
+                        <a href="/api/download?name=广东省中考数学试卷结构和命题规律(2016年~2018年).pdf" className="btnDownload">广东省中考数学试卷结构和命题规律(下载)</a>
+                        {/*<a href="public/docs/readme.txt" className="btnDownload">广东省中考数学试卷结构和命题规律(下载)</a>*/}
                     </li>
                 </ul>
             </div>
