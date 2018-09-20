@@ -54,7 +54,7 @@ export function getQuestion(opt) {
                 body: opt.body })
     }
 }
-//
+//获取某套试卷的所有关联的子题。所有！！！（子题下面的子题。。。）
 export function getAllChildOfExam(opt) {
     return (dispatch) => {
         const route = '/api/math/getAllChildOfExam';

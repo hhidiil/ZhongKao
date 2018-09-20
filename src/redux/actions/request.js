@@ -67,7 +67,8 @@ export function requestSyn(route,params, dispatch, success=null, error=null, { m
                     } else {
                         return error && error(res.message)
                     }
-                })}
+                })
+    }
     )).then((res) => {
         //console.log("respond===200=====>",res)
         if (res) {

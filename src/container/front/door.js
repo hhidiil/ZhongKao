@@ -34,7 +34,6 @@ class Door extends Component {
             body:{id:"6306179e-56af-484a-a2f2-92e20cd1295c"},
             success:(data)=>{
                 console.log("getAllChildOfExam--->>>",data)
-                window.localStorage.setItem("idlist",JSON.stringify(data))
             },
             error:(mes)=>{console.error(mes)}
         })

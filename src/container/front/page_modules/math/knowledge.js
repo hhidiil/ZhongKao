@@ -5,6 +5,7 @@
 
 import React,{Component} from 'react'
 import classnames from 'classnames'
+import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
@@ -66,14 +67,13 @@ class Knowledge extends Component{
                             newData.push((data[i].data)[0])
                         }
                         console.log("hahahahahhaha---33333333-->>>>",newData)
-                        setTimeout(()=>{
                             this.setState({
                                 questionListOfKnowledge:newData,
                                 knowledgeId:knowledgeId,
                                 Pending:false
+                            },()=>{
+                                this.addEvent();//为每一个空添加事件
                             })
-                        },500)
-                        this.addEvent();//为每一个空添加事件
                     },
                     error:(message)=>{
                         console.log(message)
@@ -86,7 +86,6 @@ class Knowledge extends Component{
         })
     }
     addEvent(){
-        console.log("12312321321321311321213")
         let _this = this;
         $(".knowledgeContent .practice").find('.div_input').each(function(i){
             let add_id='';
@@ -219,6 +218,12 @@ class Knowledge extends Component{
             </div>
         )
     }
+}
+Knowledge.propTypes = {
+    knowledgeName:PropTypes.string,//知识点名
+    knowledgeId:PropTypes.string,//知识ID号
+    questionId:PropTypes.string,//知识所属试题的ID号
+    examPaperId:PropTypes.string,//知识所属试卷的ID号
 }
 function mapStateToProps(state, ownProps) {
     return {}

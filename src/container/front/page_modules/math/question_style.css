@@ -98,9 +98,9 @@
 }
 .QtxtContent .QtxtContent_main{
     overflow: hidden;
-    margin: 10px 0;
+    margin: 0 0 10px 0;
     background-color: white;
-    border: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
     padding: 10px;
 }
 .QtxtContent_main_title{
@@ -168,7 +168,8 @@
 .QtxtContent .content_three_right{
     width: 100%;
     padding: 15px;
-    border: 1px solid darkgray;
+    /*border: 1px solid darkgray;*/
+    border-top: 1px solid #ddd;
     background-color: white;
     overflow-y: auto;
 }
@@ -450,4 +451,31 @@
     height: 20px;
     margin: 0 6px;
     display: inline-block;
+}
+/*2018-09-13 修改布局*/
+.ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected{
+    background-color: transparent !important;
+}
+.QtxtContent-left{
+    position: relative;
+    margin-right: 5px;
+    padding-top: 10px;
+    padding-left: 8px;
+    background-color: white;
+    height: 400px;
+    overflow-y: auto;
+}
+.nextQuestionBtn{
+    position: absolute;
+    width: 130px;
+    height: 60px;
+    line-height: 60px;
+    text-align: center;
+    background-color: #3fbef8;
+    color: #030303;
+    bottom: 30px;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    z-index: 100;
 }

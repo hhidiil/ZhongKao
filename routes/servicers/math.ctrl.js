@@ -178,13 +178,15 @@ module.exports={
         let props = {
             id:req.body.id
         };
+        let requestdata = req.body;
         let math = new Math({props: props});
         math.getContentOfChildItemsForQues(function(err, data) {
             if(!err){
                 if (data.length>0) {
                     return res.send({
                         code: 200,
-                        data: data
+                        data: data,
+                        reqdata:requestdata,//把请求的数据再返回去
                     })
                 } else {
                     console.log(err);

@@ -94,7 +94,7 @@ class Exam extends Component{
                                         </div>
                                     </div>
                                     <div className="questionsAll-item-content-child row">
-                                        <div className="col-md-4 title">强 化</div>
+                                        <div className="col-md-4 title">解 析</div>
                                         <div className="col-md-8 btn_list">
                                             <Button type="dashed" className="marginr5">数据分析</Button>
                                             <Button type="dashed" className="bttn " onClick={()=>this.expand_goto(item,index,doneFlag)}>开始</Button>
@@ -159,10 +159,9 @@ class Exam extends Component{
         this.props.actions.push(`/home/math/exams/question/${id}`);
     }
     render(){
-        console.log("模 考====>>>",this.state.allList)
         return(
             <div className="questionsAll">
-                <header><h2>模 考</h2></header>
+                <header><h2>试卷列表</h2></header>
                 <section>
                     {this._renderExamPage(this.state.allList)}
                     {this.props.children}

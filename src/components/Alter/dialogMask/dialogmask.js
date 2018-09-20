@@ -19,12 +19,10 @@ class DialogMask extends React.Component {
         let position = this.state.position;
         let nowpositionL = dom.css('margin-left');
         let nowpositionT = dom.css('margin-top');
-        console.log("DialogMask-----------<>>>>><<<<>>>>>>",dom,position,nowpositionL,nowpositionT)
         if(position.length>0){
             nowpositionL = Number(nowpositionL.replace(/px/,''));
             nowpositionT = Number(nowpositionT.replace(/px/,''));
             console.log("DialogMask-----new------<>>>>><<<<>>>>>>",position,nowpositionL,nowpositionT)
-            console.log("DialogMask-----new222------<>>>>><<<<>>>>>>",position[0]+nowpositionL,position[1]+nowpositionT)
             dom.css('margin-left',(position[0]+nowpositionL) + 'px');
             dom.css('margin-top',(position[1]+nowpositionT) + 'px');
         }
