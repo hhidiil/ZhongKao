@@ -9,8 +9,7 @@ import './question_style.css'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getFirstDataOfPaper,getAllChildOfExam,getAllChildOfQuestion,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData} from '../../../../redux/actions/math'
-import {setPreRoute} from '../../../../redux/actions/public'
+import {getFirstDataOfPaper,getSecendDataOfPaper,getAllChildOfExam,getAllChildOfQuestion,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData} from '../../../../redux/actions/math'
 import {getCoords,compareDifferent} from '../../../../method_public/public'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import SelectMenu from '../../../../components/selectMenu/selectMenu'
@@ -31,32 +30,33 @@ const { Link } = Anchor;
 var num = 0;
 var everyChildInfo = JSON.stringify(EveryChildInfo);
 var newChildList = JSON.parse(everyChildInfo);
+var DoExamInfo_foot = null;
 var sentJson = {
     "ExamInfoID":"", "UserID":"", "ExamPaperID":"","ExamPaperTitle":"",
-    "StartDate":null, "FinishDate":null, "SpendTime":0, "ExamType":"", "Score":0,
+    "StartDate":null,"UpdateDate":null, "FinishDate":null, "SpendTime":0, "ExamType":"", "Score":0,
     "ExamResult":[],
-    "DoExamInfo":[],
+    "DoExamInfo":null,
     "currentquesid":1,
     "AllDone":'no',
     "errorArray":[]
 }
+var allDoneFlag = false;//做完提交标志
 var autoKnowledgeList=[];//每个试题 分析部分 小题或填空题的 相关考点。用来自动弹出知识点复习框的
 class Question extends Component{
     constructor(props){
         super(props);
         let activeId = window.location.hash.split('/')[window.location.hash.split('/').length-1];//当前页面的id
-        let paperItems = JSON.parse(Storage_L.getItem(activeId+"-second"))//缓存中取出做题情况的对应数据
         this.state={
             activeId:activeId,//试卷ID
-            sentAllList: !paperItems? sentJson : paperItems,//组装答案列表，用来发送存储源数据
+            sentAllList: {},//组装答案列表，用来发送存储源数据
+            current: null,//当前是第几题
+            errorArray : [],//一测做错的题
             allQuestionetails:[],//一测所有试题做题结果
             allChildQuestionOfExam:[],//试卷的所有试题（包括所有子试题和相关的试题）
             currentQuesData:[],//当前试题的所有内容
             analysisLeftContent:[],//当前试题的分析部分
             exerciseContent:[],//当前试题的练习部分
-            current: !paperItems ? null : paperItems.currentquesid,//当前是第几题
             total:0,
-            errorArray : !paperItems ? [] : paperItems.errorArray,//一测做错的题
             AnalysisFlag:true,//分析解答
             nowPart:'',//当前显示的是那一部分：解析，答案，巩固，拓展
             AnswerFlag:false,//标准答案
@@ -72,71 +72,76 @@ class Question extends Component{
         }
     }
     componentDidMount(){
-        sentJson.ExamInfoID = moment().format('x');//当前时间戳作为此次做题id
-        sentJson.UserID =Storage_S.getItem('userid');
-        sentJson.ExamPaperID = this.state.activeId;
-        sentJson.StartDate = moment().format();
-        sentJson.ExamType = "二测";
-        sentJson.ExamPaperTitle = JSON.parse(Storage_S.getItem(this.state.activeId)).exampaper;
-        this.props.actions.getFirstDataOfPaper({//获取最近一测考试的结果
-            body:[{
-                userid: Storage_S.getItem('userid'),
-                id: this.state.activeId
-            }],
-            success:(data)=>{
-                let datajson = JSON.parse((data[0].data)[0].ExamResult.replace(/\\/g,"@&@"));
-                let errorArray=[];//错误题号
-                if(this.state.errorArray.length>0){
-                    errorArray = this.state.errorArray;
-                }else {
-                    let ii=0;
-                    for(let ss in datajson){
-                        if(datajson[ss] && datajson[ss]!= "null"){
-                            if(datajson[ss].Contents.length>0){
-                                if(!(datajson[ss].Contents[0].IsTrue)){//获取错题列表
-                                    errorArray[ii] =  Number(ss)+1;
-                                    ii = ii+1;
-                                };
+        //先查看本地缓存
+        let paperItems = JSON.parse(Storage_L.getItem(this.state.activeId +"-second"))//缓存中取出做题情况的对应数据
+        if(!paperItems){//没有
+            this.props.actions.getSecendDataOfPaper({//再查看数据库中最近二测考试的结果
+                body:[{userid: Storage_S.getItem('userid'), id: this.state.activeId}],
+                success:(datas)=>{
+                    console.warn(datas)
+                    if((datas[0].data).length>0){//有缓存的数据
+                        let ExamResult = JSON.parse((datas[0].data)[0].ExamResult.replace(/\\/g,"@&@"));
+                        let DoExamInfo = JSON.parse((datas[0].data)[0].DoExamInfo);
+                        DoExamInfo_foot = (datas[0].data)[0].DoExamInfo;
+                        this.getAllChildOfExamList(ExamResult,DoExamInfo.currentquesid,DoExamInfo.errorArray)
+                    }else {
+                        sentJson.ExamInfoID = moment().format('x');//当前时间戳作为此次做题id
+                        sentJson.UserID =Storage_S.getItem('userid');
+                        sentJson.ExamPaperID = this.state.activeId;
+                        sentJson.StartDate = moment().format();
+                        sentJson.ExamType = "二测";
+                        sentJson.ExamPaperTitle = JSON.parse(Storage_S.getItem(this.state.activeId)).exampaper;
+                        this.props.actions.getFirstDataOfPaper({//如果没有数据 就获取最近一测考试的结果
+                            body:[{
+                                userid: Storage_S.getItem('userid'),
+                                id: this.state.activeId
+                            }],
+                            success:(data)=>{
+                                let datajson = JSON.parse((data[0].data)[0].ExamResult.replace(/\\/g,"@&@"));
+                                let DoExamInfo = sentJson;
+                                DoExamInfo.ExamResult = datajson;
+                                DoExamInfo_foot = JSON.stringify(DoExamInfo);
+                                console.log("allQuestionetails--一测试题的信息->>>",datajson)
+                                let errorArray=[];//错误题号
+                                let ii=0;
+                                for(let ss in datajson){
+                                    if(datajson[ss] && datajson[ss]!= "null"){
+                                        if(datajson[ss].Contents.length>0){
+                                            if(!(datajson[ss].Contents[0].IsTrue)){//获取错题列表
+                                                errorArray[ii] =  Number(ss)+1;
+                                                ii = ii+1;
+                                            };
+                                        }
+                                    }else {
+                                        errorArray[ii] =  Number(ss)+1;
+                                        ii = ii+1;
+                                    }
+                                }
+                                this.getAllChildOfExamList(datajson,DoExamInfo,errorArray[0],errorArray)
+                            },
+                            error:(message)=>{
+                                console.error(message)
                             }
-                        }else {
-                            errorArray[ii] =  Number(ss)+1;
-                            ii = ii+1;
-                        }
-                    }
-                }
-                console.log("allQuestionetails--一测试题的信息->>>",datajson)
-                this.props.actions.getAllChildOfExam({
-                    body:{id : this.state.activeId},
-                    success:(data)=>{
-                        console.log("getAllChildOfExam--所有试题的信息->>>",data)
-                        let nowNum = null;
-                        if(errorArray.length>0){//有错题则先显示错题
-                            nowNum = !this.state.current ? errorArray[0] : this.state.current ;
-                        }else {
-                            nowNum = !this.state.current ? 1 : this.state.current ;
-                        }
-                        this.getData(datajson[nowNum-1],nowNum-1,data)
-                        this.setState({
-                            total:datajson.length,
-                            errorArray:errorArray,
-                            allQuestionetails:datajson,
-                            current:nowNum,
-                            allChildQuestionOfExam:data,
                         })
-                    },
-                    error:(mes)=>{console.error(mes)}
-                })
+                    }
+                },
+                error:(message)=>{console.error(message)}
+            })
+        }else {
+            let currentquesid = paperItems.currentquesid;
+            let errorArray = paperItems.errorArray;
+            let ExamResult = paperItems.ExamResult;
+            //let DoExamInfo = !paperItems.DoExamInfo ? sentJson : JSON.parse(paperItems.DoExamInfo);
+            let DoExamInfo = paperItems;
+            DoExamInfo_foot = JSON.stringify(paperItems);
+            this.getAllChildOfExamList(ExamResult,DoExamInfo,currentquesid,errorArray)
+        }
 
-            },
-            error:(message)=>{
-                console.error(message)
-            }
-        })
         //离开route的钩子处理事件
-        //this.props.router.setRouteLeaveHook(
-        //    this.props.route,
-        //    this.routerWillLeave
-        //)
+        this.props.router.setRouteLeaveHook(
+            this.props.route,
+            this.routerWillLeave
+        )
     }
     shouldComponentUpdate(nextProps,nextState){
         //当切换题的时候如果新的数据还没有加载出来则不需要render
@@ -151,22 +156,35 @@ class Question extends Component{
         //完成渲染新的props或者state后调用，此时可以访问到新的DOM元素。
         if(prevState.analysisLeftContent != this.state.analysisLeftContent){
             this.addEventFuc();//为分析部分添加事件处理
+            this.addAnswer();//为解析部分添加已有的答案以及事件处理
         }
         if(prevState.currentQuesData != this.state.currentQuesData){
             this.addOldAnswer();//显示主题干一测试题的答案
         }
-        this.addAnswer();//为解析部分添加已有的答案以及事件处理
     }
     routerWillLeave=(nextLocation)=> {
         // 返回 false 会继续停留当前页面，否则，返回一个字符串，会显示给用户，让其自己决定
-        if(confirm('确认要离开？')){
-            UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
-            setTimeout(()=>{
-                return true;
-            },1000)
-        }else {
-            return false;
-        }
+        //this.submitAllQuestion('cache');//退出的时候在发送数据库缓存一次
+        UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
+        return true;
+    }
+    getAllChildOfExamList(ExamResult,DoExamInfo,currentNum,errorArray){
+        this.props.actions.getAllChildOfExam({
+            body:{id : this.state.activeId},
+            success:(data)=>{
+                console.log("getAllChildOfExam--所有试题的信息->>>",data)
+                this.setState({
+                    total:ExamResult.length,
+                    errorArray:errorArray,
+                    sentAllList:DoExamInfo,
+                    allQuestionetails:ExamResult,
+                    current:currentNum,
+                    allChildQuestionOfExam:data,
+                })
+                this.getData(ExamResult[currentNum-1],currentNum-1,data)
+            },
+            error:(mes)=>{console.error(mes)}
+        })
     }
     requestQuestion(type,data){
         if(data.length<1){return}
@@ -357,6 +375,7 @@ class Question extends Component{
         newChildList.score = score;
         newChildList.isOrRight = isOrRight;
         (this.state.sentAllList).ExamResult[index-1] = newChildList;
+        (this.state.sentAllList).errorArray = this.state.errorArray;//把错误题号也缓存下来
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
         message.success("提交成功")
     }
@@ -469,36 +488,49 @@ class Question extends Component{
         console.log("打分",tar,$("#"+tar).val(),total)
     }
     //提交整套试卷的数据详情
-    submitAllQuestion(){
-        if(confirm("确定提交吗？")){
-            (this.state.sentAllList).FinishDate = moment().format();//结束时间
-            (this.state.sentAllList).AllDone = "yes";
-            let endalllist = (this.state.sentAllList).ExamResult;
-            let endnewlist = [] ,allscore=0;
-            let len = (this.state.allQuestionetails).length;
-            for(let ii=0;ii<len;ii++){
-                if(!endalllist[ii]){
-                    endnewlist[ii] = this.state.allQuestionetails[ii];
-                }else {
-                    endnewlist[ii] = endalllist[ii];
-                }
-                allscore += Number(endnewlist[ii].score);
+    submitAllQuestion(flag){
+        if(flag == 'cache'){//判断是不是缓存操作
+            if(!allDoneFlag){
+                (this.state.sentAllList).AllDone = "no";
             }
-            (this.state.sentAllList).ExamResult = endnewlist;
-            (this.state.sentAllList).Score = allscore;
-            let sentItems = this.state.sentAllList;
-            console.log("全部提交的内容：：====》》》》",sentItems);
-            this.props.actions.sentUserPaperData({
-                body:{data:sentItems},
-                success:(data)=>{
-                    alert("提交成功")
-                    Storage_L.clear()
-                },
-                error:(mes)=>{
-                    console.error('数据接收发生错误');
-                }
-            })
+        }else{
+            allDoneFlag = true;
+            (this.state.sentAllList).AllDone = "yes";
+            (this.state.sentAllList).FinishDate = moment().format();//结束时间
         }
+        (this.state.sentAllList).UpdateDate = moment().format();//数据更新de时间
+        let endalllist = (this.state.sentAllList).ExamResult;
+        let endnewlist = [] ,allscore=0;
+        let len = (this.state.allQuestionetails).length;
+        for(let ii=0;ii<len;ii++){
+            if(!endalllist[ii]){
+                endnewlist[ii] = this.state.allQuestionetails[ii];
+            }else {
+                endnewlist[ii] = endalllist[ii];
+            }
+            allscore += Number(endnewlist[ii].score);
+        }
+        (this.state.sentAllList).ExamResult = endnewlist;
+        (this.state.sentAllList).currentquesid = this.state.current;
+        (this.state.sentAllList).errorArray = this.state.errorArray;//把错误题号也缓存下来
+        (this.state.sentAllList).Score = allscore;
+        Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
+
+        let sentJson = JSON.stringify(this.state.sentAllList);
+        let sentItems = JSON.parse(sentJson);
+        sentItems.DoExamInfo = Storage_L.getItem(this.state.activeId +"-second");
+        console.log("全部提交的内容：：====》》》》",sentItems);
+        this.props.actions.sentUserPaperData({
+            body:{data:sentItems},
+            success:(data)=>{
+                if(flag != 'cache'){
+                    Storage_L.clear()
+                }
+            },
+            error:(mes)=>{
+                console.error('数据接收发生错误');
+            }
+        })
     }
     //解答分析部分中每个部分小题的提交按钮处理逻辑
     submitOne(e,data,questionType){
@@ -590,6 +622,7 @@ class Question extends Component{
         newChildList.childs[childNum][type][index].itemid = data.itemid;
         (this.state.sentAllList).currentquesid = this.state.current;
         (this.state.sentAllList).ExamResult[this.state.current-1] = newChildList;
+        (this.state.sentAllList).errorArray = this.state.errorArray;//把错误题号也缓存下来
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
         message.success("提交成功")
     }
@@ -767,15 +800,18 @@ class Question extends Component{
         )
     }
     getData(data,page,data2){
-        let olddata = this.state.sentAllList.ExamResult[page];
-        if(!olddata){//没有此题缓存，则取出一测的做题答案信息
+        //let olddata =  this.state.sentAllList.ExamResult[page];
+        if(!this.state.sentAllList.ExamResult[page]){//没有此题缓存，则取出一测的做题答案信息
             newChildList = JSON.parse(everyChildInfo)//先全部给空，初始化
             newChildList.Contents = data.Contents;
             newChildList.knowledge = data.knowledge;
             newChildList.isOrRight = data.isOrRight;
             newChildList.score = data.score;
         }else {
-            newChildList = olddata;
+            newChildList = this.state.sentAllList.ExamResult[page];
+            if(!newChildList.childs){
+                newChildList.childs = JSON.parse(everyChildInfo).childs;
+            }
         }
         let ChildQuestionOfExam = data2[page];
         let allChildsItem = [];
@@ -830,7 +866,7 @@ class Question extends Component{
                 }})
         }
     }
-    nextQuestionHandle(){
+    updateErrorArray(){
         let errArray = [];
         let {errorArray,current,sentAllList} = this.state;
         errArray = errArray.concat(errorArray)//重新设置一个错误数组，不能直接复制指向this.state。否则无法render
@@ -842,15 +878,23 @@ class Question extends Component{
             }
         }
         (this.state.sentAllList).errorArray = errArray;//把错误题号也缓存下来
-        Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))
+        this.submitAllQuestion('cache');//发送数据库缓存
+        Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//本地缓存
         this.setState({errorArray:errArray})
+    }
+    nextQuestionHandle(){
+        let current = this.state.current;
+        this.updateErrorArray();
         this.getData(this.state.allQuestionetails[current],current,this.state.allChildQuestionOfExam)
     }
     onChange = (page) => {
         console.log("page--",page)
+        this.updateErrorArray();
         this.getData(this.state.allQuestionetails[page-1],page-1,this.state.allChildQuestionOfExam)
     }
     exitBack(){
+        this.submitAllQuestion('cache');//发送数据库缓存
+        Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//本地缓存
         UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
         this.props.actions.push("/home/math/exams")
     }
@@ -928,7 +972,7 @@ class Question extends Component{
                     <header>
                         <div className="title" id="title">{title+"（检测提升）"}</div>
                         <div className="exit" >
-                            <button type="button" className="btn btn-default" onClick={()=>this.submitAllQuestion()}>全部提交</button>
+                            <button type="button" className="btn btn-default" onClick={()=>this.submitAllQuestion('allsubmit')}>全部提交</button>
                             <button type="button" className="btn btn-default" onClick={()=>this.exitBack()}>退出</button>
                         </div>
                     </header>
@@ -1011,7 +1055,7 @@ function mapStateToProps(state, ownProps) {
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,setPreRoute,getFirstDataOfPaper,getAllChildOfExam,getAllChildOfQuestion,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData}, dispatch) }
+    return { actions: bindActionCreators({push,getFirstDataOfPaper,getSecendDataOfPaper,getAllChildOfExam,getAllChildOfQuestion,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question)

@@ -25,7 +25,7 @@ var sentJson = {
     "ExamInfoID":"", "UserID":"", "ExamPaperID":"","ExamPaperTitle":"","ExamOrExercise":"",
     "StartDate":null, "FinishDate":null, "SpendTime":0, "ExamType":"", "Score":0,
     "ExamResult":[],
-    "DoExamInfo":[],
+    "DoExamInfo":null,
     "currentquesid":0,
     "AllDone":'no'
 }

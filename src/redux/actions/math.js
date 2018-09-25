@@ -147,6 +147,16 @@ export function getFirstDataOfPaper(opt) {
                 body: opt.body })
     }
 }
+//获取一测试卷的做题详情
+export function getSecendDataOfPaper(opt) {
+    return (dispatch) => {
+        const route = '/api/math/secendDataOfPaper';
+        requestSyn(route,{},dispatch,opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: opt.body })
+    }
+}
 //获取章节知识点目录结构
 export function getAllKnowledgeOfChapter(opt){
     return (dispatch) => {
