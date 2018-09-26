@@ -83,7 +83,7 @@ class Question extends Component{
                         let ExamResult = JSON.parse((datas[0].data)[0].ExamResult.replace(/\\/g,"@&@"));
                         let DoExamInfo = JSON.parse((datas[0].data)[0].DoExamInfo);
                         DoExamInfo_foot = (datas[0].data)[0].DoExamInfo;
-                        this.getAllChildOfExamList(ExamResult,DoExamInfo.currentquesid,DoExamInfo.errorArray)
+                        this.getAllChildOfExamList(ExamResult,DoExamInfo,DoExamInfo.currentquesid,DoExamInfo.errorArray)
                     }else {
                         sentJson.ExamInfoID = moment().format('x');//当前时间戳作为此次做题id
                         sentJson.UserID =Storage_S.getItem('userid');

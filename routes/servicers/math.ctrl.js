@@ -302,7 +302,7 @@ module.exports={
     },
     sentUserPaperData: (req,res)=>{
         var props = req.body;
-        props.DoExamInfo = JSON.stringify(req.body.DoExamInfo);
+        //props.DoExamInfo = JSON.stringify(req.body.DoExamInfo);
         props.ExamResult = JSON.stringify(req.body.ExamResult);
         props.userid = req.body.UserID;
         props.id = req.body.ExamPaperID;
