@@ -187,6 +187,15 @@
     margin: 0px 3px;
     text-decoration: underline double red;
 }
+.Preview-content section ul{
+    margin: 0 !important;
+}
+.Preview-content section .ant-collapse .ant-collapse-header{
+    font-size: 14px !important;
+}
+.Preview-content section .ant-collapse-borderless>.ant-collapse-item>.ant-collapse-header:hover{
+    background: none !important;
+}
 .wancheng{
     margin-right: 15px;
     color: chocolate;

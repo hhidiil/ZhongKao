@@ -11,6 +11,7 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import {getFirstDataOfPaper,getSecendDataOfPaper,getAllChildOfExam,getAllChildOfQuestion,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData} from '../../../../redux/actions/math'
 import {getCoords,compareDifferent} from '../../../../method_public/public'
+import {showConfirm} from '../../../../method_public/antd-modal'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import SelectMenu from '../../../../components/selectMenu/selectMenu'
 import NoThisPart from '../../../../components/defaultJPG/nothispart'
@@ -45,6 +46,7 @@ var autoKnowledgeList=[];//每个试题 分析部分 小题或填空题的 相�
 class Question extends Component{
     constructor(props){
         super(props);
+        //let activeId = window.location.pathname.split('/')[window.location.pathname.split('/').length-1];//如果点击锚点定位改变了location的值 可以使用 browserHistory，改为pathname获取
         let activeId = window.location.hash.split('/')[window.location.hash.split('/').length-1];//当前页面的id
         this.state={
             activeId:activeId,//试卷ID
@@ -244,24 +246,25 @@ class Question extends Component{
         });
     }
     addAnswer(){
-        let childsLen = this.state.sentAllList.ExamResult[this.state.current-1];
+        let childsDom = this.state.sentAllList.ExamResult[this.state.current-1];
         $(".analysisContent").each(function(ii){
             let domTargetId = ($(this)[0].id).split('-');
-            let childsType = domTargetId[0];
-            let childsNum = domTargetId[1];
-            let childsTypeIndex = domTargetId[2];
-            let ddd = !childsLen ? '':childsLen.childs[childsNum-1][childsType];
+            let childsNum = domTargetId[1];//属于第几问
+            let childsType = domTargetId[0];//属于那一部分
+            let childsTypeIndex = domTargetId[2];//属于某部分的第几题
+            let ddd = !childsDom ? '':childsDom.childs[childsNum-1][childsType];
             $(this).find('.div_input').each(function(i){
                 if(ddd && ddd.length>0){
-                    let answers = ddd[childsTypeIndex].content[i];
+                    let answers = null;
+                    if(ddd[childsTypeIndex]){
+                        answers = ddd[childsTypeIndex].content[i];
+                    }
                     if(answers){
                         if(answers.url){//有图片的话,添加img
                             $(this).append('<img src='+answers.url+' data-latex='+answers.content+'/>');
                         }else{
                             $(this).text(answers.answer);
                         }
-                    }else{
-                        $(this).text(answers.answer);
                     }
                 }
             })
@@ -493,11 +496,20 @@ class Question extends Component{
             if(!allDoneFlag){
                 (this.state.sentAllList).AllDone = "no";
             }
+            this.sentAllJsonData(flag)
         }else{
-            allDoneFlag = true;
-            (this.state.sentAllList).AllDone = "yes";
-            (this.state.sentAllList).FinishDate = moment().format();//结束时间
+            if(this.state.errorArray.length>0){
+                let _this = this;
+                showConfirm("还有错题没有做完呢！！！确定要全部提交吗？提交之后不能修改，只能重做！",function(){
+                    allDoneFlag = true;
+                    (_this.state.sentAllList).AllDone = "yes";
+                    (_this.state.sentAllList).FinishDate = moment().format();//结束时间
+                    _this.sentAllJsonData(flag)
+                })
+            }
         }
+    }
+    sentAllJsonData(flag){
         (this.state.sentAllList).UpdateDate = moment().format();//数据更新de时间
         let endalllist = (this.state.sentAllList).ExamResult;
         let endnewlist = [] ,allscore=0;
@@ -524,7 +536,8 @@ class Question extends Component{
             body:{data:sentItems},
             success:(data)=>{
                 if(flag != 'cache'){
-                    Storage_L.clear()
+                    Storage_L.clear();
+                    this.props.actions.push("/home/math/exams")
                 }
             },
             error:(mes)=>{
@@ -699,7 +712,12 @@ class Question extends Component{
             let knowledge = item.knowledge;
             let questionType=false;
             let ddd = !childsLen ? '':childsLen.childs[item.childNum-1][item.parttype];//某一部分，是数组形式
-            let ddd_content = (ddd && ddd.length>0) ? ddd[item.indexNum].content : [];//解析的某部分的第几个content所有内容（比如考点中的第一个小题全部内容）
+            let ddd_content = [];
+            if(ddd && ddd.length>0){
+                if(ddd[item.indexNum]){
+                    ddd_content = (ddd && ddd.length>0) ? ddd[item.indexNum].content : [];//解析的某部分的第几个content所有内容（比如考点中的第一个小题全部内容）
+                }
+            }
             let regex=/{@.+?@}/g;
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                 content = content.replace(/<u>blank<\/u>|blank|BLANK|#blank#|#BLANK#/g,'<span contenteditable="true" class="div_input"></span>')
@@ -801,6 +819,7 @@ class Question extends Component{
     }
     getData(data,page,data2){
         //let olddata =  this.state.sentAllList.ExamResult[page];
+        let ChildQuestionOfExam = data2[page];
         if(!this.state.sentAllList.ExamResult[page]){//没有此题缓存，则取出一测的做题答案信息
             newChildList = JSON.parse(everyChildInfo)//先全部给空，初始化
             newChildList.Contents = data.Contents;
@@ -810,10 +829,16 @@ class Question extends Component{
         }else {
             newChildList = this.state.sentAllList.ExamResult[page];
             if(!newChildList.childs){
-                newChildList.childs = JSON.parse(everyChildInfo).childs;
+                if(ChildQuestionOfExam.childs.length>1){//判断有没有小问题
+                    newChildList.childs = [];
+                    for(let i in ChildQuestionOfExam.childs){
+                        newChildList.childs[i] = JSON.parse(everyChildInfo).childs[0];
+                    }
+                }else {
+                    newChildList.childs = JSON.parse(everyChildInfo).childs;
+                }
             }
         }
-        let ChildQuestionOfExam = data2[page];
         let allChildsItem = [];
         if(ChildQuestionOfExam.childs.length>0){//有小问的情况
             let childsNode = ChildQuestionOfExam.childs;
@@ -893,9 +918,9 @@ class Question extends Component{
         this.getData(this.state.allQuestionetails[page-1],page-1,this.state.allChildQuestionOfExam)
     }
     exitBack(){
+        UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
         this.submitAllQuestion('cache');//发送数据库缓存
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//本地缓存
-        UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
         this.props.actions.push("/home/math/exams")
     }
     _menuList(currentQuesData){
