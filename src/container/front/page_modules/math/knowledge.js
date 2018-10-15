@@ -167,6 +167,7 @@ class Knowledge extends Component{
             body:sentList,
             success:(data)=>{
                 console.log("提交成功！")
+                this.props.closeDialog()
             },
             errror:(mes)=>{console.error(mes)}
         })

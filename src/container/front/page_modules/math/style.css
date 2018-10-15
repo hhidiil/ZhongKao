@@ -38,8 +38,8 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    padding: 10px;
-    background-color: aliceblue;
+    padding: 20px;
+    background-color: #fff1dd;
     overflow-y: scroll;
 }
 .questionsAll header{
