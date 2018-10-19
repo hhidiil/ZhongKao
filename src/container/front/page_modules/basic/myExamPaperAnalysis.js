@@ -71,7 +71,7 @@ class ExamPaperAnalysis extends Component{
                 }
                 if(questionDetails[i].knowledge){
                     let item = (questionDetails[i].knowledge).split('；');
-                    let istrue = questionDetails[i].Contents[0].IsTrue;//对错
+                    let istrue = questionDetails[i].isOrRight;//对错
                     let number = istrue?0:1;
                     for(let j=0;j<item.length;j++){
                         if(knowledge.length>0){//存在

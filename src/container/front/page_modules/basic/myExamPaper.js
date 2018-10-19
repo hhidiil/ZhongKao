@@ -3,7 +3,7 @@
  */
 import React,{Component} from 'react'
 import './style.css'
-import { Menu, Icon,Button,Checkbox , Input, AutoComplete} from 'antd'
+import { Menu, Icon,Button,Checkbox , Input, AutoComplete } from 'antd'
 // redux
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'

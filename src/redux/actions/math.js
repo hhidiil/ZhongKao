@@ -54,7 +54,7 @@ export function getQuestion(opt) {
                 body: opt.body })
     }
 }
-//
+//获取某套试卷的所有关联的子题。所有！！！（子题下面的子题。。。）
 export function getAllChildOfExam(opt) {
     return (dispatch) => {
         const route = '/api/math/getAllChildOfExam';
@@ -142,6 +142,16 @@ export function getFirstDataOfPaper(opt) {
             opt.success && opt.success(data)
         }
         requestSyn(route,{},dispatch,success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: opt.body })
+    }
+}
+//获取一测试卷的做题详情
+export function getSecendDataOfPaper(opt) {
+    return (dispatch) => {
+        const route = '/api/math/secendDataOfPaper';
+        requestSyn(route,{},dispatch,opt.success, opt.error,
             { method: 'POST',
                 headers: {"Content-Type": "application/x-www-form-urlencoded"},
                 body: opt.body })

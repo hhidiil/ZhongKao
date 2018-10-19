@@ -8,9 +8,16 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import {getQuestionList,getQuestion} from '../../../../redux/actions/math'
 import ShowMask from '../../../../components/Alter/showMask'
-import {Button,Modal} from 'antd'
+import {Button,Modal,Collapse,Row,Col} from 'antd'
+const Panel = Collapse.Panel;
 
-
+const customPanelStyle = {
+    background: 'rgb(238, 236, 236)',
+    fontSize:14,
+    borderRadius: 4,
+    border: 0,
+    overflow: 'hidden',
+};
 class PaperDetail extends Component{
     constructor(props){
         super(props)
@@ -98,7 +105,6 @@ class PaperDetail extends Component{
             }
             if(content){
                 if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-                    //content = content.replace(/\s|_/g, '');
                     content = content.replace(/<u>blank<\/u>|blank|BLANK|#blank#|#BLANK#/g, `<span style="text-decoration:underline; ">${answerFlag}</span>`);
                 }
                 return(
@@ -120,6 +126,16 @@ class PaperDetail extends Component{
                             </li>
                             {childs.length<1?"":this._childsList(childs)}
                             {newitem.questiontemplate == '简答题' ? this._doAndAnswer(detail,index) :''}
+                            <Collapse bordered={false} style={{margin:0}}>
+                                <Panel header="试题解析详情" key="1" style={customPanelStyle}>
+                                    <Row>
+                                        <Col span={3}>正确答案：</Col>
+                                        <Col span={21}><p dangerouslySetInnerHTML={{__html:newitem.answer}}></p></Col></Row>
+                                    <Row>
+                                        <Col span={3}>知识点：</Col>
+                                        <Col span={21}><p>{newitem.knowledge}</p></Col></Row>
+                                </Panel>
+                            </Collapse>
                         </ul>
                     </div>
                 )
@@ -131,6 +147,8 @@ class PaperDetail extends Component{
         if(questions.length<1){
             return <div/>;
         }
+        console.log("paperAllData-------->>>>",paperAllData)
+        console.log("questions-------->>>>",questions)
         return(
             <div>
                 <ShowMask></ShowMask>
@@ -142,7 +160,7 @@ class PaperDetail extends Component{
                             <div>总分: 120</div>
                             <div>难度: 中等</div>
                         </div>
-                        <div className="examPaperScore">{paperAllData.Score+'分'}</div>
+                        {paperAllData.ExamType == '一测' ? <div className="examPaperScore">{paperAllData.Score+'分'}</div> : ''}
                     </div>
                     <section>
                         {this._showQuestionList(questions)}

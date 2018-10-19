@@ -13,7 +13,6 @@ import {MathJaxEditor} from '../../../../components/editer'
 import UpLoadFile from '../../../../components/upload/index'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import {Storage_S,Storage_L,QuestionScore} from '../../../../config'
-//import {CONFIG_MAP} from '../../../../../config'
 import './question_style.css'
 import moment from 'moment'
 import {Modal} from 'antd'
@@ -26,7 +25,7 @@ var sentJson = {
     "ExamInfoID":"", "UserID":"", "ExamPaperID":"","ExamPaperTitle":"","ExamOrExercise":"",
     "StartDate":null, "FinishDate":null, "SpendTime":0, "ExamType":"", "Score":0,
     "ExamResult":[],
-    "DoExamInfo":[],
+    "DoExamInfo":null,
     "currentquesid":0,
     "AllDone":'no'
 }
@@ -294,13 +293,12 @@ class Question extends Component{
                     "url":"",
                     "IsTrue": isright
                 }]
-                this.state.AnswerContent = AnswerArr;
+                //this.state.AnswerContent = AnswerArr;
             }else {
                 nexflag = false;
                 alert('请选择一个答案！')
             }
         }else {//除了选择题，其他的先统一按照简答题来处理
-            //nexflag = false;
             let _this = this;//全局this赋给新的值
             if(isobjective == '主观'){//如果是主观题则按照错题来处理
                 AnswerArr = [{
@@ -337,15 +335,24 @@ class Question extends Component{
                     }
                 });
             }
-            this.state.AnswerContent = AnswerArr;
+
+            //this.state.AnswerContent = AnswerArr;
         }
         if(nexflag){
             let nowList = (this.state.sentList).ExamResult;
+            let isOrRight = true;
             (this.state.sentList).currentquesid = page;//当前题号，断点续做
+            if(AnswerArr.length>0){//如果某道试题有多个空，则只要有错的 则此题为错
+                for(let ii in AnswerArr){
+                    if(!(AnswerArr[ii].IsTrue)){
+                        isOrRight = false;
+                    }
+                }}
             nowList[page-1] = {
                 "QuesID": quesId,
                 "QuesType": type,
-                "Contents": this.state.AnswerContent,
+                "Contents": AnswerArr,
+                "isOrRight":isOrRight,
                 "score":score,
                 "QuesScore": quesScore,
                 "knowledge":knowledge,

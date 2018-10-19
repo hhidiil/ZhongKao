@@ -38,8 +38,8 @@
     position: absolute;
     height: 100%;
     width: 100%;
-    padding: 10px;
-    background-color: aliceblue;
+    padding: 20px;
+    background-color: #fff1dd;
     overflow-y: scroll;
 }
 .questionsAll header{
@@ -186,6 +186,15 @@
 .Preview-content section .question-answer-2{
     margin: 0px 3px;
     text-decoration: underline double red;
+}
+.Preview-content section ul{
+    margin: 0 !important;
+}
+.Preview-content section .ant-collapse .ant-collapse-header{
+    font-size: 14px !important;
+}
+.Preview-content section .ant-collapse-borderless>.ant-collapse-item>.ant-collapse-header:hover{
+    background: none !important;
 }
 .wancheng{
     margin-right: 15px;

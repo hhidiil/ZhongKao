@@ -66,6 +66,7 @@ class UpLoadFile extends Component{
             URL.revokeObjectURL(url);
             $('#preview').empty().append($img);
         }
+        //<input id="exampleInputFile" ref={(ref) => { this.uploadInput = ref; }} type="file" width="200px" onChange={this.preview} /><br/>
     }
     render(){
         console.log("this.state.preview====>>>>>>",this.state.preview)

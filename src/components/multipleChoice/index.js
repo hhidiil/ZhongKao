@@ -4,6 +4,7 @@
  */
 import React,{Component} from 'react'
 import './style.css'
+import PropTypes from 'prop-types'
 
 const base = new Base64();
 const optionName=['A','B','C','D','E','F','G'];
@@ -37,13 +38,14 @@ class Choice extends Component{
         }
     }
     componentWillReceiveProps(nextProps){
-        //this.props //当前的props,nextProps //下一阶段的props
-        console.warn("componentWillReceiveProps----Choice--->>",nextProps.template != 'noRender')
         if(nextProps.template != 'noRender'){
             if(nextProps.answer != this.state.radioState){
                 this.setState({radioState: nextProps.answer})
             }
         }
+    }
+    shouldComponentUpdate(nextProps,nextState){
+        return true;
     }
     render(){
         let optionArray=[],option = this.props.choiceList,type = this.props.type;
@@ -70,5 +72,12 @@ class Choice extends Component{
                 </li>
         )
     }
+}
+Choice.propTypes = {
+    type:PropTypes.string,//选择类型。单选或者多选
+    choiceList:PropTypes.string,//选项
+    index:PropTypes.number,//编号
+    radioState:PropTypes.string || '',//答案
+    isCando: PropTypes.bool//是否可以选择答案
 }
 export default Choice

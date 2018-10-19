@@ -45,9 +45,9 @@ class Home extends Component {
             route = e.key;
             this.props.actions.push(`/home/${route}`)
         }
-        this.setState({
-            activeName: route
-        })
+        //this.setState({
+        //    activeName: route
+        //})
     };
     exitOut(){
         if(window.confirm("确定要退出吗？")){

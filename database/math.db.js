@@ -110,6 +110,23 @@ Math.prototype.addUserPaperData = function (callback) {
         callback: callback
     })
 }
+/*更新用户试卷做题记录*/
+Math.prototype.updateUserPaperData = function (callback) {
+    var _sql = `update tblStudentExamInfo set
+                    Score='${this.props.Score}',
+                    ExamResult='${this.props.ExamResult}',
+                    IsDone='${this.props.AllDone}',
+                    FinishDate='${this.props.FinishDate}',
+                    SpendTime='${this.props.SpendTime}',
+                    UpdateDate='${this.props.UpdateDate}',
+                    DoExamInfo='${this.props.DoExamInfo}' where ExamInfoID='${this.props.ExamInfoID}';`
+    helper.db_query({
+        connect: con,
+        sql: _sql,
+        name: 'updateUserPaperData',
+        callback: callback
+    })
+}
 /*记录用户每题做题记录*/
 Math.prototype.addUserQuestionDataOfPaper = function (callback) {
     var _sql = `INSERT INTO tblStudentExamQuestionInfo (questionId,examInfoId,examPaperId,userId,examOrExercise,questionType,trueOrfalse,knowledge,questionScore,answerContent,url)
@@ -128,6 +145,16 @@ Math.prototype.getFirstDataOfPaper = function (callback) {
         connect: con,
         sql: _sql,
         name: 'getFirstDataOfPaper',
+        callback: callback
+    })
+}
+/*获取用户最近二测数据的做题数据(最新的一条数据)*/
+Math.prototype.getDoingSecendDataOfPaper = function (callback) {
+    var _sql = `select * from tblStudentExamInfo where UserID='${this.props.userid}' and ExamPaperID='${this.props.id}' and ExamType='二测' and IsDone='no' ORDER BY ExamInfoID DESC LIMIT 0,1;`;
+    helper.db_query({
+        connect: con,
+        sql: _sql,
+        name: 'getDoingSecendDataOfPaper',
         callback: callback
     })
 }

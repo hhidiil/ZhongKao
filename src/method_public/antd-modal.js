@@ -32,7 +32,7 @@ export function showConfirm(content,callback) {
             return callback();
         },
         onCancel(){
-            console.log("cancel")
+            return;
         }
     });
 }

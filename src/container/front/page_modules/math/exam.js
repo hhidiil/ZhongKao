@@ -6,7 +6,7 @@ import React,{Component} from 'react'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
-import {getAllQuestionsList,getFirstDataOfPaper} from '../../../../redux/actions/math'
+import {getAllQuestionsList,getFirstDataOfPaper,getSecendDataOfPaper} from '../../../../redux/actions/math'
 import {Storage_S} from '../../../../config'
 import Preview from './preview'
 import Analysis from './dataAnalysis.js'
@@ -94,7 +94,7 @@ class Exam extends Component{
                                         </div>
                                     </div>
                                     <div className="questionsAll-item-content-child row">
-                                        <div className="col-md-4 title">强 化</div>
+                                        <div className="col-md-4 title">解 析</div>
                                         <div className="col-md-8 btn_list">
                                             <Button type="dashed" className="marginr5">数据分析</Button>
                                             <Button type="dashed" className="bttn " onClick={()=>this.expand_goto(item,index,doneFlag)}>开始</Button>
@@ -125,8 +125,20 @@ class Exam extends Component{
     }
     gotoPractice(data){
         let id = data.examid;
-        Storage_S.setItem(id,JSON.stringify(data))
-        this.props.actions.push(`/home/math/exams/practice/${id}`);
+        //查询试卷有没有未做完的二测试卷，有的话不能重新开始做 必须先把二测未做完的做完
+        this.props.actions.getSecendDataOfPaper({//再查看数据库中最近二测考试的结果
+            body:[{userid: Storage_S.getItem('userid'), id: id}],
+            success:(datas)=>{
+                console.warn(datas)
+                if((datas[0].data).length>0){//有缓存的数据
+                    return alert('还有正在做的解析部分试卷，请先做完再重新开始摸底！！！')
+                }else {
+                    Storage_S.setItem(id,JSON.stringify(data))
+                    this.props.actions.push(`/home/math/exams/practice/${id}`);
+                }
+            },
+            error:(message)=>{console.error(message)}
+        })
     }
     practiceAgain(){
         alert("此部分的试题是根据模块试卷结构知识点新出的试题，用来检测训练的效果，目前还没有开放！！！敬请期待")
@@ -159,10 +171,9 @@ class Exam extends Component{
         this.props.actions.push(`/home/math/exams/question/${id}`);
     }
     render(){
-        console.log("模 考====>>>",this.state.allList)
         return(
             <div className="questionsAll">
-                <header><h2>模 考</h2></header>
+                <header><h2>试卷列表</h2></header>
                 <section>
                     {this._renderExamPage(this.state.allList)}
                     {this.props.children}
@@ -178,7 +189,7 @@ function mapStateToProps(state) {
 }
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({push, getAllQuestionsList ,getFirstDataOfPaper}, dispatch)
+        actions: bindActionCreators({push, getAllQuestionsList ,getFirstDataOfPaper,getSecendDataOfPaper}, dispatch)
     }
 }
 export default connect(mapStateToProps, mapDispatchToProps)(Exam)

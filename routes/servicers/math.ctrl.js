@@ -14,6 +14,7 @@ module.exports={
         app.post('/math/sentUserPaperData',this.sentUserPaperData);
         app.post('/math/sentUserQuestionDataOfPaper',this.sentUserQuestionDataOfPaper);
         app.post('/math/firstDataOfPaper',this.getFirstDataOfPaper);
+        app.post('/math/secendDataOfPaper',this.getSecendDataOfPaper);
         app.post('/math/allChildDetailsOfQuestion',this.getAllChildDetailsOfQuestion)
         app.post('/math/allChildOfQuestion',this.getAllChildOfQuestion);
         app.post('/math/contentOfChildItems',this.getContentOfChildItems);
@@ -178,13 +179,15 @@ module.exports={
         let props = {
             id:req.body.id
         };
+        let requestdata = req.body;
         let math = new Math({props: props});
         math.getContentOfChildItemsForQues(function(err, data) {
             if(!err){
                 if (data.length>0) {
                     return res.send({
                         code: 200,
-                        data: data
+                        data: data,
+                        reqdata:requestdata,//把请求的数据再返回去
                     })
                 } else {
                     console.log(err);
@@ -299,23 +302,58 @@ module.exports={
     },
     sentUserPaperData: (req,res)=>{
         var props = req.body;
-        props.DoExamInfo = JSON.stringify(req.body.DoExamInfo);
+        //props.DoExamInfo = JSON.stringify(req.body.DoExamInfo);
         props.ExamResult = JSON.stringify(req.body.ExamResult);
+        props.userid = req.body.UserID;
+        props.id = req.body.ExamPaperID;
         var math = new Math({props: props});
-        math.addUserPaperData(function(err, data){
+        //先判断数据库中有没有近期没有做完的试卷数据
+        math.getDoingSecendDataOfPaper(function(err,data){
             if(!err){
-                return res.send({
-                    code: 200,
-                    data: data
-                })
+                if(data.length>0){//有数据就更新
+                    let props2 = req.body;
+                    props2.ExamInfoID = data[0].ExamInfoID;
+                    let math2 = new Math({props: props2});
+                    math2.updateUserPaperData(function(err, data){
+                        if(!err){
+                            return res.send({
+                                code: 200,
+                                data: data,
+                                message:'更新成功'
+                            })
+                        }else {
+                            console.log(err);
+                            return res.send({
+                                code: 501,
+                                message: '数据获取出错了^@^'
+                            })
+                        }
+                    });
+                }else {//否则就添加一条新的数据
+                    math.addUserPaperData(function(err, data){
+                        if(!err){
+                            return res.send({
+                                code: 200,
+                                data: data,
+                                message:'添加成功'
+                            })
+                        }else {
+                            console.log(err);
+                            return res.send({
+                                code: 501,
+                                message: '数据获取出错了^@^'
+                            })
+                        }
+                    });
+                }
             }else {
                 console.log(err);
                 return res.send({
-                    code: 501,
-                    message: '数据获取出错了^@^'
+                    code:501,
+                    message:'数据获取出错了^@^'
                 })
             }
-        });
+        })
     },
     sentUserQuestionDataOfPaper:(req,res)=>{
         //先处理一测的情况
@@ -389,7 +427,27 @@ module.exports={
                 })
             }
         })
-
+    },
+    getSecendDataOfPaper:(req,res)=>{
+        let props = {
+            userid:req.body.userid,
+            id:req.body.id
+        };
+        var math = new Math({props:props});
+        math.getDoingSecendDataOfPaper(function(err,data){
+            if(!err){
+                return res.send({
+                    code:200,
+                    data:data
+                })
+            }else {
+                console.log(err);
+                return res.send({
+                    code:501,
+                    message:'数据获取出错了^@^'
+                })
+            }
+        })
     },
     doSetCollection: (req,res)=>{
         var props = req.body;
