@@ -44,7 +44,7 @@ class Knowledge extends Component{
         this.props.actions.getKnowledgeIdList({
             body:[{knowledgeName:knowledgeName}],
             success:(data)=>{
-                if(data[0].code != 200){
+                if(data[0].code != 200 || data[0].data.length<1){
                     setTimeout(()=>{
                         this.setState({
                             Pending:false
@@ -82,6 +82,11 @@ class Knowledge extends Component{
             },
             error:(message)=>{
                 console.log(message)
+                this.setState({
+                    questionListOfKnowledge:[],
+                    knowledgeId:'',
+                    Pending:false
+                })
             }
         })
     }
@@ -185,7 +190,7 @@ class Knowledge extends Component{
         console.log("onchangehandle=====>>::::::::::>>>>>>",answer,this.choice)
     }
     _QuestionContent(data){
-        if(data.length<1){return <div className="center">没有找到对应的数据。。。。</div>}
+        if(data.length<1){return <div className="center" style={{fontSize: '28px'}}>没有找到对应的数据。。。。</div>}
         return data.map((item,index)=>{
             let content = item.content;
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank

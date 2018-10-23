@@ -71,6 +71,7 @@ class Question extends Component{
             DialogMaskFlag:false,
             knowledgeName:'',
             Pending : true,//加载转圈标志
+            dispalyAnswerFlag:false
         }
     }
     componentDidMount(){
@@ -233,7 +234,7 @@ class Question extends Component{
     }
     addEventFuc(type){
         let _this = this;
-        $('.mustText').on('click',function(e){
+        $('.mustText').on('click',function(e){//为每一个空对应的知识点 添加点击事件
             _this.getKnowledge(e);
         });
         $("#Analysis_Qtxt").find('.div_input').each(function(i){
@@ -295,6 +296,9 @@ class Question extends Component{
                 return <li key={index} dangerouslySetInnerHTML={{__html:item.content}}></li>
             })
         }
+    }
+    displayAnwser(){
+        this.setState({dispalyAnswerFlag:!this.state.dispalyAnswerFlag})
     }
     doCollection(){
         let ques = this.state.allQuestionetails[this.state.current-1];
@@ -680,6 +684,7 @@ class Question extends Component{
                     <div className="displayflex QtxtContent_main_title">
                         <div className="QtxtContent_main_title_left" id="aaaaaa">{questiontemplate}：</div>
                         <div className="QtxtContent_main_title_right">
+                            <Button onClick={()=>this.displayAnwser()}>{this.state.dispalyAnswerFlag?'隐藏答案':'显示答案'}</Button>
                             <Button onClick={()=>this.doCollection()}>收藏</Button>
                             <Button onClick={()=>this.redoIt()}>重做</Button>
                             <Button id="redosubimt" onClick={()=>this.redoSubmit(data,items,index)}>提交</Button>
@@ -751,8 +756,8 @@ class Question extends Component{
                             {knowledge.length>0 ? <span>知识点回顾：{knowledge.map((itm,index)=>{
                                 return <a key={index} style={{marginLeft:"5px"}} onClick={(e)=>this.getKnowledge(e)} dangerouslySetInnerHTML={{__html:itm.replace(/\@\#/g,',')}}></a>
                             })}</span> :''}
-                            <span style={{margin:"0 10px"}}>答案：<span dangerouslySetInnerHTML={{__html:item.answer}}></span></span>
                             <button className="marginl10" onClick={(e)=>{this.submitOne(e,item,questionType)}}>提交</button>
+                            {this.state.dispalyAnswerFlag?<p><span style={{margin:"0 10px 0 0",color: 'coral'}}>答 案：<span dangerouslySetInnerHTML={{__html:item.answer}}></span></span></p>:''}
                         </ul>
                     )}
                 </div>
@@ -885,6 +890,7 @@ class Question extends Component{
                         solution: false,
                         currentQuesData:data[0].data,
                         Pending:false,
+                        dispalyAnswerFlag:false
                     })
                     //查询此题分析部分的所有题目
                     this.getDateOfAnalysis(allChildsItem)
@@ -914,6 +920,7 @@ class Question extends Component{
     }
     onChange = (page) => {
         console.log("page--",page)
+        document.getElementById("Explain_exer").click();//切换试题的时候，自动模拟点击一下解答分析。使其切换到主题显示部分
         this.updateErrorArray();
         this.getData(this.state.allQuestionetails[page-1],page-1,this.state.allChildQuestionOfExam)
     }
@@ -976,6 +983,7 @@ class Question extends Component{
             minWidth: '800px',
             border: '1px solid #ddd',
             backgroundColor: 'white',
+            overflowY: 'auto'
         };
         if(Pending){
             return (
