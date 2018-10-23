@@ -33,6 +33,8 @@
 }
 .math-question-content{
     padding: 10px 20px;
+    max-width: 1500px;
+    margin: 0 auto;
 }
 .math-question-content header{
     display: flex;

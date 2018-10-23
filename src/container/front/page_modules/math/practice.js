@@ -159,7 +159,9 @@ class Question extends Component{
     }
     _childsList(data){
         return data.map(function(item,index){
-            return <li key={index} dangerouslySetInnerHTML={{__html:item.get('content')}}></li>
+            let content = item.get('content');
+            content = content.replace(/<u>blank<\/u>|blank|BLANK|#blank#|#BLANK#/g,'<span class="div_input"></span>')
+            return <li key={index} dangerouslySetInnerHTML={{__html:content}}></li>
         })
     }
     _doAndAnswer(data){
