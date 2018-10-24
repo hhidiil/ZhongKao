@@ -730,13 +730,16 @@ class Question extends Component{
             let knowledgelist = content.match(regex);//找出必填空的知识点
             if(knowledgelist && knowledgelist.length>0){
                 for(let i in knowledgelist){
-                    content = content.replace(/{@|@}/g,'');
-                    let knowname = knowledgelist[i].replace(/\s|{@|@}/g,'');
+                    //content = content.replace(/{@|@}/g,'');
+                    content = content.replace(new RegExp(knowledgelist[i],'g'),'<span class="mustText">'+knowledgelist[i]+'</span>')//标记必填空
+                    let knowname = knowledgelist[i].replace(/\s|{@|@}/g,'');//knowname = "切线的性质", knowledgelist = (2) ["{@切线的性质@}", "{@直线和圆的位置关系@}"],
                     let knownamelist = knowname.split('；');//处理一个空有多个知识点的情况
                     for(let j in knownamelist){
-                        content = content.replace(new RegExp(knownamelist[j],'g'),'<span class="mustText">'+knownamelist[j]+'</span>')//标记必填空
+                        content = content.replace(new RegExp(knownamelist[j],'g'),'<span>'+knownamelist[j]+'</span>')//标记必填空
                     }
                 }
+                content = content.replace(/{@/g,'[');
+                content = content.replace(/@}/g,']');
             }
             if(item.questiontemplate == '选择题'){
                 questionType = true;
@@ -892,6 +895,8 @@ class Question extends Component{
                         Pending:false,
                         dispalyAnswerFlag:false
                     })
+                    //切换试题的时候，自动模拟点击一下解答分析。使其切换到主题显示部分
+                    this.requestQuestion("AnalyContent",this.state.currentQuesData)
                     //查询此题分析部分的所有题目
                     this.getDateOfAnalysis(allChildsItem)
                 }})
@@ -920,7 +925,6 @@ class Question extends Component{
     }
     onChange = (page) => {
         console.log("page--",page)
-        document.getElementById("Explain_exer").click();//切换试题的时候，自动模拟点击一下解答分析。使其切换到主题显示部分
         this.updateErrorArray();
         this.getData(this.state.allQuestionetails[page-1],page-1,this.state.allChildQuestionOfExam)
     }
