@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": " npm run build && cross-env NODE_ENV=production node ./bin/www",
+    "start": "cross-env NODE_ENV=production node ./bin/www",
     "dev": "node ./bin/www",
     "devinspect": "node --inspect ./bin/www",
     "devbuild": "webpack --config webpack.config.js",
