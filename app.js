@@ -36,7 +36,7 @@ app.use('/teacher', index);
 
 //热更新模块
 console.log("process.env.NODE_ENV====>>",process.env.NODE_ENV)
-if (process.env.NODE_ENV !== "production") {
+if (process.env.NODE_ENV == "development") {
   console.log("热更新进来了")
   var webpackDevMiddleware = require('webpack-dev-middleware');
   var webpackHotMiddleware = require('webpack-hot-middleware');

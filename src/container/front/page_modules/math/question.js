@@ -121,7 +121,11 @@ class Question extends Component{
                                         ii = ii+1;
                                     }
                                 }
-                                this.getAllChildOfExamList(datajson,DoExamInfo,errorArray[0],errorArray)
+                                if(errorArray.length>0){
+                                    this.getAllChildOfExamList(datajson,DoExamInfo,errorArray[0],errorArray)
+                                }else {
+                                    this.getAllChildOfExamList(datajson,DoExamInfo,1,errorArray)
+                                }
                             },
                             error:(message)=>{
                                 console.error(message)
@@ -884,23 +888,36 @@ class Question extends Component{
         if(data){
             this.props.actions.getAllChildOfQuestion({body:[{id:data.QuesID}],
                 success:(data)=>{
-                    console.log("currentQuesData-------===---->>>",(data[0].data));
-                    newChildList.QuesID = (data[0].data)[0].questionid;
-                    newChildList.QuesType = (data[0].data)[0].questiontemplate;
-                    this.setState({
-                        current: page+1,
-                        analysisLeftContent:[],
-                        exerciseContent:[],
-                        showEditor:false,
-                        solution: false,
-                        currentQuesData:data[0].data,
-                        Pending:false,
-                        dispalyAnswerFlag:false
-                    })
-                    //切换试题的时候，自动模拟点击一下解答分析。使其切换到主题显示部分
-                    this.requestQuestion("AnalyContent",this.state.currentQuesData)
-                    //查询此题分析部分的所有题目
-                    this.getDateOfAnalysis(allChildsItem)
+                    if(data[0].code == 200){
+                        console.log("currentQuesData-------===---->>>",(data[0].data));
+                        newChildList.QuesID = (data[0].data)[0].questionid;
+                        newChildList.QuesType = (data[0].data)[0].questiontemplate;
+                        this.setState({
+                            current: page+1,
+                            analysisLeftContent:[],
+                            exerciseContent:[],
+                            showEditor:false,
+                            solution: false,
+                            currentQuesData:data[0].data,
+                            Pending:false,
+                            dispalyAnswerFlag:false
+                        })
+                        //切换试题的时候，自动模拟点击一下解答分析。使其切换到主题显示部分
+                        this.requestQuestion("AnalyContent",this.state.currentQuesData)
+                        //查询此题分析部分的所有题目
+                        this.getDateOfAnalysis(allChildsItem)
+                    }else {
+                        this.setState({
+                            current: page+1,
+                            analysisLeftContent:[],
+                            exerciseContent:[],
+                            showEditor:false,
+                            solution: false,
+                            currentQuesData:[],
+                            Pending:false,
+                            dispalyAnswerFlag:false
+                        })
+                    }
                 }})
         }
     }
