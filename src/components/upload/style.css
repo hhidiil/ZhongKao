@@ -13,8 +13,8 @@
     max-width: 400px;
     max-height: 400px;
 }
-.preview_img{
-    width: 150px;
-    max-height: 150px;
+#preview img{
+    max-width: 400px;
+    max-height: 400px;
     background-size:cover ;
 }

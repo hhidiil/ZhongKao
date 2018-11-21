@@ -81,13 +81,14 @@ class Question extends Component{
             this.props.actions.getSecendDataOfPaper({//再查看数据库中最近二测考试的结果
                 body:[{userid: Storage_S.getItem('userid'), id: this.state.activeId}],
                 success:(datas)=>{
-                    console.warn(datas)
+                    console.warn("11111111111111111111111",datas)
                     if((datas[0].data).length>0){//有缓存的数据
                         let ExamResult = JSON.parse((datas[0].data)[0].ExamResult.replace(/\\/g,"@&@"));
                         let DoExamInfo = JSON.parse((datas[0].data)[0].DoExamInfo);
                         DoExamInfo_foot = (datas[0].data)[0].DoExamInfo;
                         this.getAllChildOfExamList(ExamResult,DoExamInfo,DoExamInfo.currentquesid,DoExamInfo.errorArray)
                     }else {
+                        console.warn("2222222222222222222")
                         sentJson.ExamInfoID = moment().format('x');//当前时间戳作为此次做题id
                         sentJson.UserID =Storage_S.getItem('userid');
                         sentJson.ExamPaperID = this.state.activeId;
@@ -131,6 +132,7 @@ class Question extends Component{
                 error:(message)=>{console.error(message)}
             })
         }else {
+            console.warn("33333333333333333333333")
             let currentquesid = paperItems.currentquesid;
             let errorArray = paperItems.errorArray;
             let ExamResult = paperItems.ExamResult;
