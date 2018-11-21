@@ -60,7 +60,9 @@ Math.prototype.getContentOfChildItems = function(callback){
     })
 }
 Math.prototype.getContentOfChildItemsForQues = function(callback){
-    var _sql = `select * from tblQuestionItem where itemid='${this.props.id}'`;
+    //var _sql = `select * from tblQuestionItem where itemid='${this.props.id}'`;
+    var _sql = `select * from tblQuestion where questionid='${this.props.id}' UNION ALL
+                select * from tblQuestionItem where itemid='${this.props.id}'`;
     helper.db_query({
         connect: con,
         sql: _sql,
