@@ -10,6 +10,7 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import {getFirstDataOfPaper,getSecendDataOfPaper,getAllChildOfExam,getAllChildOfQuestion,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData} from '../../../../redux/actions/math'
+import {createEditIndex} from '../../../../redux/actions/public'
 import {getCoords,compareDifferent} from '../../../../method_public/public'
 import {showConfirm} from '../../../../method_public/antd-modal'
 import PureRenderMixin from '../../../../method_public/pure-render'
@@ -75,6 +76,7 @@ class Question extends Component{
         }
     }
     componentDidMount(){
+        this.props.actions.createEditIndex('set')
         //先查看本地缓存
         let paperItems = JSON.parse(Storage_L.getItem(this.state.activeId +"-second"))//缓存中取出做题情况的对应数据
         if(!paperItems){//没有
@@ -1028,6 +1030,7 @@ class Question extends Component{
                     <header>
                         <div className="title" id="title">{title+"（检测提升）"}</div>
                         <div className="exit" >
+                            <button type="button" className="btn btn-default" onClick={()=> this.props.actions.createEditIndex('add')}>redux</button>
                             <button type="button" className="btn btn-default" onClick={()=>this.submitAllQuestion('allsubmit')}>全部提交</button>
                             <button type="button" className="btn btn-default" onClick={()=>this.exitBack()}>退出</button>
                         </div>
@@ -1106,12 +1109,13 @@ class Question extends Component{
 }
 function mapStateToProps(state, ownProps) {
     return {
-        GetFirstDataOfPaper:state.GetFirstDataOfPaper
+        GetFirstDataOfPaper:state.GetFirstDataOfPaper,
+        ueEditIndex:state.ueEditIndex
     }
 }
 
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getFirstDataOfPaper,getSecendDataOfPaper,getAllChildOfExam,getAllChildOfQuestion,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData}, dispatch) }
+    return { actions: bindActionCreators({push,getFirstDataOfPaper,createEditIndex,getSecendDataOfPaper,getAllChildOfExam,getAllChildOfQuestion,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Question)

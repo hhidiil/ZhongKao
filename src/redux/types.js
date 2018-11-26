@@ -39,5 +39,9 @@ export const GETCONTENTOFCHILDQUES_UPDATA = 'GETCONTENTOFCHILDQUES_UPDATA';
 export const SET_TIMING = 'SET_TIMING';
 export const CLEAR_TIMING = 'CLEAR_TIMING';
 //记录路由状态，每一次跳转的前一个路由地址
-export const ADD_PREROUTE = 'ADD_PREROUTE'
-export const DEL_PREROUTE = 'DEL_PREROUTE'
+export const ADD_PREROUTE = 'ADD_PREROUTE';
+export const DEL_PREROUTE = 'DEL_PREROUTE';
+//编辑器的创建编号
+export const UE_EDITOR_SET = 'UE_EDITOR_SET'
+export const UE_EDITOR_ADD = 'UE_EDITOR_ADD';
+export const UE_EDITOR_DEL = 'UE_EDITOR_DEL';

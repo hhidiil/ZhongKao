@@ -4,6 +4,8 @@
  */
 import React,{Component} from 'react'
 import './style.css'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
 
 class MathJaxEditor extends Component{
     constructor(props){
@@ -12,13 +14,16 @@ class MathJaxEditor extends Component{
             showEditor:props.showEditor||false,
             position:props.position,
             target_id:props.target_id,
+            editorId:props.editorId,
             content:''
         }
         window.setLatexValue = this.setLatexValue.bind(this);//设置全局回调，子页面来调用
     }
     componentDidMount(){
         //编辑框
-        let editorname = this.props.editorId;
+        //let editorname = this.props.editorId;
+        let editorname = this.state.editorId;
+        console.warn("编辑器的ID--->>>",editorname)
         var ue = UE.getEditor(editorname, {
             toolbars: [['kityformula']],
             elementPathEnabled:false,
@@ -47,8 +52,9 @@ class MathJaxEditor extends Component{
     }
     render(){
         const displayCss=[{display:"inline-flex",top:this.props.position[0],left:this.props.position[1]},{display:"none"}];
-        let editorid = this.props.editorId;
-        console.log("editorid---1111111111------->",editorid)
+        //let editorid = this.props.editorId;
+        let editorid = this.state.editorId;
+        console.log("editorid---1111111111------->",editorid,this.state.editorId)
         return(
             <div className="mathEditorTip" style={this.props.showEditor?displayCss[0]:displayCss[1]}>
                 <div id={editorid} className="editorContainer" type="text/plain"></div>
@@ -57,4 +63,5 @@ class MathJaxEditor extends Component{
         )
     }
 }
+
 export default MathJaxEditor

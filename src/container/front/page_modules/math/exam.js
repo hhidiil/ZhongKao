@@ -166,9 +166,21 @@ class Exam extends Component{
             alert("你还没有做完本套试题一测，请先做完一测！")
             return;
         }
+        console.log("8888888888888888----->>>",data)
         let id = data.examid;
-        Storage_S.setItem(id,JSON.stringify(data))
-        this.props.actions.push(`/home/math/exams/question/${id}`);
+        this.props.actions.getSecendDataOfPaper({//再查看数据库中最近二测考试的结果
+            body:[{userid: Storage_S.getItem('userid'), id: id}],
+            success:(datas)=>{
+                console.warn("11111111111111111111111",datas)
+                if((datas[0].data).length>0){
+                    if((datas[0].data.IsDone =='yes')){
+                        return alert("此部分需要先做摸底部分！")
+                    }
+                }
+                Storage_S.setItem(id,JSON.stringify(data))
+                this.props.actions.push(`/home/math/exams/question/${id}`);
+            },
+        })
     }
     render(){
         return(

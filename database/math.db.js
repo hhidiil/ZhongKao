@@ -12,7 +12,7 @@ var Math = function(param) {
 
 /*查询全部练习试卷*/
 Math.prototype.getAllPapersList = function(callback) {
-    var _sql = "select * from tblExamPaper;";
+    var _sql = "select * from tblExamPaper ORDER BY ordersn ;";
     helper.db_query({
         connect: con,
         sql: _sql,

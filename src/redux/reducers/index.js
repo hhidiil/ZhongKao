@@ -5,5 +5,5 @@
 
 export { currentPage,homeShowList,provinceList } from './page'
 export {basicInfo,collectInfo,userheadimg} from './user'
-export {TimingFlag,PREROUTE} from './public'
+export {TimingFlag,PREROUTE,ueEditIndex} from './public'
 export {AllQuestionsList,QuestionList,ExamList,GetQuestion,SecondTestQuestions,GetFirstDataOfPaper} from './math'

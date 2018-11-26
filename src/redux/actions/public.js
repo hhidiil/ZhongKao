@@ -38,6 +38,23 @@ export function updateStoreHeadImg(param) {
         }else {
             dispatch({ type: TYPES.USERHEADIMG_CLEAN, result: {} })
         }
-
+    }
+}
+/*
+ * 做二测的时候，知识点弹框显示试题，可以多次弹框，此处添加全局index，
+ * 每次弹框加1，设置不同的id，用来处理每一个弹框中编辑器UE.Editor的创建与销毁，
+ * 因为不同页面不能共用同一个编辑器
+ * */
+export function createEditIndex(type,param=0) {
+    return (dispatch) => {
+        if(type=='set') {
+            dispatch({type: TYPES.UE_EDITOR_SET, payload: param})
+        }
+        if(type=='add'){
+            dispatch({ type: TYPES.UE_EDITOR_ADD})
+        }
+        if(type=='delete') {
+            dispatch({ type: TYPES.UE_EDITOR_DEL})
+        }
     }
 }

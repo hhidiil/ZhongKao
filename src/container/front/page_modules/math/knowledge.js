@@ -4,12 +4,12 @@
  */
 
 import React,{Component} from 'react'
-import classnames from 'classnames'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import {getKnowledgeIdList,sentKnowledgeForQuestionInfo,getEveryQuestion} from '../../../../redux/actions/math'
+import {createEditIndex} from '../../../../redux/actions/public'
 import './question_style.css'
 import ShowMask from '../../../../components/Alter/showMask'
 import MultipleChoice from '../../../../components/multipleChoice/index'
@@ -36,11 +36,13 @@ class Knowledge extends Component{
             showEditor:false,
             DialogMaskFlag2:false,
             Pending : true,//加载转圈标志
+            nextKnowledgeName:"",
         }
     }
     componentDidMount(){
         let knowledgeName = this.state.knowledgeName;
         console.log("knowledgeName:::-22222->",knowledgeName)
+        this.props.actions.createEditIndex('add');
         this.props.actions.getKnowledgeIdList({
             body:[{knowledgeName:knowledgeName}],
             success:(data)=>{
@@ -89,6 +91,15 @@ class Knowledge extends Component{
                 })
             }
         })
+    }
+    componentDidUpdate(prevProps,prevState){
+        this.addEventFuc();//为分析部分添加事件处理
+    }
+    addEventFuc(type){
+        let _this = this;
+        $('.mustText').on('click',function(e){//为每一个空对应的知识点 添加点击事件
+            _this.getTheKnowledge(e);
+        });
     }
     addEvent(){
         let _this = this;
@@ -177,17 +188,29 @@ class Knowledge extends Component{
             errror:(mes)=>{console.error(mes)}
         })
     }
-    getKnowledge(e){
-        console.log($(e.target)[0].innerText)
-        let knowledge = $(e.target)[0].innerText;
-        this.setState({DialogMaskFlag2:true,knowledgeName:knowledge})
-    }
     closeKnowledgeBox(){
-        UE.delEditor('knowledgeContainer');
+        this.props.actions.createEditIndex('delete');
+        console.log("销毁的编辑器：：knowledgeContainer"+(this.props.ueEditIndex-1))
+        UE.delEditor("knowledgeContainer"+(this.props.ueEditIndex-1));
         this.setState({DialogMaskFlag2:false})
     }
     onchangehandle(answer){
         console.log("onchangehandle=====>>::::::::::>>>>>>",answer,this.choice)
+    }
+    answerHideShow(num){
+        console.log("answerHideShow=====>>::::::::::>>>>>>",num)
+        if(this.refs["answer"+num].style.display == "none"){
+            this.refs["answer"+num].style.display = "inline-block";
+        }else {
+            this.refs["answer"+num].style.display = "none";
+        }
+    }
+    //点击显示知识点弹框
+    getTheKnowledge(e){
+        //let knowledge = $(e.target)[0].innerText;
+        let knowledge = "圆";
+        console.log("knowledge----看这里----------->>>>>",knowledge)
+        this.setState({DialogMaskFlag2:true,nextKnowledgeName:knowledge})
     }
     _QuestionContent(data){
         if(data.length<1){return <div className="center" style={{fontSize: '28px'}}>没有找到对应的数据。。。。</div>}
@@ -195,32 +218,54 @@ class Knowledge extends Component{
             let content = item.content;
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                 let qqq =  '<span class="div_input" contenteditable="true"></span>';
-                content = content.replace(/#blank#|#BLANK#/g,qqq);
+                content = content.replace(/<u>blank<\/u>|blank|BLANK|#blank#|#BLANK#/g,qqq);
             }
             let questionanswer = [item.questiontemplate,(item.answer).trim()];
+            let regex=/{@.+?@}/g;
+            let knowledgelist = content.match(regex);//找出必填空的知识点
+            if(knowledgelist && knowledgelist.length>0){
+                for(let i in knowledgelist){
+                    content = content.replace(new RegExp(knowledgelist[i],'g'),'<span class="mustText">'+knowledgelist[i]+'</span>')//标记必填空
+                    let knowname = knowledgelist[i].replace(/\s|{@|@}/g,'');//knowname = "切线的性质", knowledgelist = (2) ["{@切线的性质@}", "{@直线和圆的位置关系@}"],
+                    let knownamelist = knowname.split('；');//处理一个空有多个知识点的情况
+                    for(let j in knownamelist){
+                        content = content.replace(new RegExp(knownamelist[j],'g'),'<span>'+knownamelist[j]+'</span>')//标记必填空
+                    }
+                }
+                content = content.replace(/{@/g,'[');
+                content = content.replace(/@}/g,']');
+            }
             return(
                 <div key={index} className="practice" data={questionanswer}>
-                    <div className="typeName">{"【"+(item.questiontemplate.replace(/\s/,'').substr(0,1))+"】"}</div>
+                    <div onClick={(e)=>this.getTheKnowledge(e)} className="typeName">{"【"+(item.questiontemplate.replace(/\s/,'').substr(0,1))+"】"}</div>
                     <ul>
                         <li>
                             <div dangerouslySetInnerHTML={{__html:content}}></div>
                         </li>
                         {item.questiontemplate == "选择题" ?<MultipleChoice template="noRender" type={item.questiontype} answer="" changeSave={this.onchangehandle.bind(this)}  index={index} choiceList={item.optionselect} />:''}
                     </ul>
+                    <div style={{marginLeft:20}}>
+                        <span style={{cursor:"pointer",fontSize:12,border:"1px solid",padding:2,borderRadius:12}} onClick={()=>{this.answerHideShow(index)}}>提示</span>
+                        <span ref={"answer"+index} style={{marginLeft:20,display:"none"}}>{item.answer.replace(/\|\|/g,'；')}</span>
+                    </div>
                 </div>
             )
         })
     }
     render(){
         let {questionListOfKnowledge,Pending} = this.state;
+        let {ueEditIndex} = this.props;
+        console.log("进入 knowledge 的编辑器ID ueEditIndex",this.props.ueEditIndex)
         return(
             <div className="knowledgeContent">
-                <MathJaxEditor position={this.state.position} editorId="knowledgeContainer" target_id={this.state.target_id} showEditor={this.state.showEditor}/>
+                <MathJaxEditor position={this.state.position} editorId={"knowledgeContainer"+ueEditIndex} target_id={this.state.target_id} showEditor={this.state.showEditor}/>
                 <form onSubmit={this.handleSubmit}>
                     {Pending ? <Loading tip="loading" size="large" /> : this._QuestionContent(questionListOfKnowledge)}
                     <div className="submitBtn"><button type="submit" className="btn btn-primary submit_btn">提交</button></div>
                 </form>
-                {/*!this.state.DialogMaskFlag2?"":<DialogMask title={this.state.knowledgeName} position={[20,20]} id="1" closeDialog={()=>this.closeKnowledgeBox()}><Knowledge2 knowledgeName={this.state.knowledgeName} /></DialogMask>*/}
+                {!this.state.DialogMaskFlag2?"":<DialogMask title={this.state.nextKnowledgeName} position={[0,10]} id="1" closeDialog={()=>this.closeKnowledgeBox()}>
+                    <Knowledge2 questionId={this.state.questionId} examPaperId={this.state.examPaperId} knowledgeName={this.state.nextKnowledgeName} closeDialog={()=>this.closeKnowledgeBox()} />
+                </DialogMask>}
             </div>
         )
     }
@@ -232,10 +277,12 @@ Knowledge.propTypes = {
     examPaperId:PropTypes.string,//知识所属试卷的ID号
 }
 function mapStateToProps(state, ownProps) {
-    return {}
+    return {
+        ueEditIndex:state.ueEditIndex
+    }
 }
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getKnowledgeIdList,sentKnowledgeForQuestionInfo,getEveryQuestion}, dispatch) }
+    return { actions: bindActionCreators({push,createEditIndex,getKnowledgeIdList,sentKnowledgeForQuestionInfo,getEveryQuestion}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Knowledge)

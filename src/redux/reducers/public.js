@@ -22,3 +22,23 @@ export const PREROUTE = createReducer(Immutable.fromJS({preload:false}),{
         return state.set('preload', true).merge(Immutable.fromJS(action.preRoute))
     }
 })
+//export const ueEditIndex = createReducer(Immutable.fromJS({preload:false}),{
+//    [TYPES.UE_EDITOR_ADD]: (state=0, action) => {
+//        return state.set('preload', true).merge(Immutable.fromJS(action.preRoute))
+//    },
+//    [TYPES.UE_EDITOR_CLEAN]: (state, action) => {
+//        return state.set('preload', true).merge(Immutable.fromJS(action.preRoute))
+//    }
+//})
+export const ueEditIndex = (state = 0, action) => {
+    switch (action.type) {
+        case TYPES.UE_EDITOR_SET:
+            return action.payload;
+        case TYPES.UE_EDITOR_ADD:
+            return state + 1;
+        case TYPES.UE_EDITOR_DEL:
+            return state - 1;
+        default:
+            return state
+    }
+}
