@@ -301,7 +301,11 @@ class Question extends Component{
     _childsList(data){
         if(data.length>0){
             return data.map(function(item,index){
-                return <li key={index} dangerouslySetInnerHTML={{__html:item.content}}></li>
+                let content = item.content;
+                if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
+                    content = content.replace(/blank|BLANK|#blank#|#BLANK#/g,'<span class="div_input"></span>');
+                }
+                return <li key={index} dangerouslySetInnerHTML={{__html:content}}></li>
             })
         }
     }
@@ -784,7 +788,7 @@ class Question extends Component{
             let content = items.content;
             let questionType = false;
             let ddd_content = (ddd && ddd[index]) ? ddd[index] : '';//解析的某部分的第几个content所有内容（比如考点中的第一个小题全部内容）
-            if (content.indexOf("blank") != -1) {//如果有则去掉所有空格和blank
+            if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                 content = content.replace(/blank|BLANK|#blank#|#BLANK#/g,'<input type="text" class="input_blank"/>');
             }
             if(items.questiontemplate == '选择题'){
