@@ -188,7 +188,7 @@ Math.prototype.getAllKnowledgeOfChapter = function(callback){
     })
 }
 Math.prototype.getKnowledgeIdList = function (callback) {
-    var _sql = `select * from tblKnowledge2Question where knowledgeid=(select knowledgeid from tblKnowledgeArch where knowledge='${this.props.knowledgeName}')`;
+    var _sql = `select * from tblKnowledge2Question where knowledgeid=(select knowledgeid from tblKnowledgeArch where knowledge='${this.props.knowledgeName}') ORDER BY ordersn`;
     helper.db_query({
         connect:con,
         sql:_sql,

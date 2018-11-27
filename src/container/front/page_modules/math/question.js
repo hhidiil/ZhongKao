@@ -1030,7 +1030,6 @@ class Question extends Component{
                     <header>
                         <div className="title" id="title">{title+"（检测提升）"}</div>
                         <div className="exit" >
-                            <button type="button" className="btn btn-default" onClick={()=> this.props.actions.createEditIndex('add')}>redux</button>
                             <button type="button" className="btn btn-default" onClick={()=>this.submitAllQuestion('allsubmit')}>全部提交</button>
                             <button type="button" className="btn btn-default" onClick={()=>this.exitBack()}>退出</button>
                         </div>
