@@ -30,6 +30,7 @@ class Knowledge extends Component{
             knowledgeId:props.knowledgeId || '',
             questionId:props.questionId ||'',
             examPaperId:props.examPaperId || '',
+            Zindex:props.Zindex || 0,
             questionListOfKnowledge:[],//知识点对应的所有试题
             target_id:'',
             position:[],
@@ -207,8 +208,8 @@ class Knowledge extends Component{
     }
     //点击显示知识点弹框
     getTheKnowledge(e){
-        //let knowledge = $(e.target)[0].innerText;
-        let knowledge = "圆";
+        //let knowledge = "圆";
+        let knowledge = $(e.target)[0].innerText;
         console.log("knowledge----看这里----------->>>>>",knowledge)
         this.setState({DialogMaskFlag2:true,nextKnowledgeName:knowledge})
     }
@@ -237,7 +238,7 @@ class Knowledge extends Component{
             }
             return(
                 <div key={index} className="practice" data={questionanswer}>
-                    <div onClick={(e)=>this.getTheKnowledge(e)} className="typeName">{"【"+(item.questiontemplate.replace(/\s/,'').substr(0,1))+"】"}</div>
+                    <div onClick={(e)=>{this.getTheKnowledge(e)}} className="typeName">{"【"+(item.questiontemplate.replace(/\s/,'').substr(0,1))+"】"}</div>
                     <ul>
                         <li>
                             <div dangerouslySetInnerHTML={{__html:content}}></div>
@@ -255,7 +256,10 @@ class Knowledge extends Component{
     render(){
         let {questionListOfKnowledge,Pending} = this.state;
         let {ueEditIndex} = this.props;
-        console.log("进入 knowledge 的编辑器ID ueEditIndex",this.props.ueEditIndex)
+        const displayFlag = {
+            display:this.state.DialogMaskFlag2?'block':'none'
+        }
+        console.log("进入 knowledge 的编辑器ID ueEditIndex",this.props.ueEditIndex,displayFlag)
         return(
             <div className="knowledgeContent">
                 <MathJaxEditor position={this.state.position} editorId={"knowledgeContainer"+ueEditIndex} target_id={this.state.target_id} showEditor={this.state.showEditor}/>
@@ -263,8 +267,8 @@ class Knowledge extends Component{
                     {Pending ? <Loading tip="loading" size="large" /> : this._QuestionContent(questionListOfKnowledge)}
                     <div className="submitBtn"><button type="submit" className="btn btn-primary submit_btn">提交</button></div>
                 </form>
-                {!this.state.DialogMaskFlag2?"":<DialogMask title={this.state.nextKnowledgeName} position={[0,10]} id="1" closeDialog={()=>this.closeKnowledgeBox()}>
-                    <Knowledge2 questionId={this.state.questionId} examPaperId={this.state.examPaperId} knowledgeName={this.state.nextKnowledgeName} closeDialog={()=>this.closeKnowledgeBox()} />
+                {!this.state.DialogMaskFlag2?"":<DialogMask title={this.state.nextKnowledgeName} position={[0,10]} id={ueEditIndex} closeDialog={()=>this.closeKnowledgeBox()}>
+                    <Knowledge2 Zindex={ueEditIndex} questionId={this.state.questionId} examPaperId={this.state.examPaperId} knowledgeName={this.state.nextKnowledgeName} closeDialog={()=>this.closeKnowledgeBox()} />
                 </DialogMask>}
             </div>
         )

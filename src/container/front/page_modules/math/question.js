@@ -733,17 +733,17 @@ class Question extends Component{
             }
             let regex=/{@.+?@}/g;
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-                content = content.replace(/<u>blank<\/u>|blank|BLANK|#blank#|#BLANK#/g,'<span contenteditable="true" class="div_input"></span>')
+                content = content.replace(/blank|BLANK|#blank#|#BLANK#/g,'<span contenteditable="true" class="div_input"></span>')
             }
             let knowledgelist = content.match(regex);//找出必填空的知识点
             if(knowledgelist && knowledgelist.length>0){
                 for(let i in knowledgelist){
-                    //content = content.replace(/{@|@}/g,'');
-                    content = content.replace(new RegExp(knowledgelist[i],'g'),'<span class="mustText">'+knowledgelist[i]+'</span>')//标记必填空
+                    //content = content.replace(new RegExp(knowledgelist[i],'g'),'<span class="mustText">'+knowledgelist[i]+'</span>')//标记必填空
+                    content = content.replace(knowledgelist[i],'<span class="mustText">'+knowledgelist[i]+'</span>')//标记必填空
                     let knowname = knowledgelist[i].replace(/\s|{@|@}/g,'');//knowname = "切线的性质", knowledgelist = (2) ["{@切线的性质@}", "{@直线和圆的位置关系@}"],
                     let knownamelist = knowname.split('；');//处理一个空有多个知识点的情况
                     for(let j in knownamelist){
-                        content = content.replace(new RegExp(knownamelist[j],'g'),'<span>'+knownamelist[j]+'</span>')//标记必填空
+                        content = content.replace(knownamelist[j],'<span>'+knownamelist[j]+'</span>')//标记必填空
                     }
                 }
                 content = content.replace(/{@/g,'[');
@@ -754,7 +754,7 @@ class Question extends Component{
             }
             if(knowledge){
                 knowledge = (knowledge.replace(/["\[\]\s]/g,""));
-                knowledge = knowledge.replace(/；|\@\#|;|\|\|/g,"@&").split('@&');
+                knowledge = knowledge.replace(/\|\||；|\@\#|;/g,"@&").split('@&');
             }
             return (
                 <div className="analysisContent" style={{padding: "10px",borderBottom: '1px dashed gray'}} id={item.parttype+ "-" + item.childNum+ "-" + item.indexNum} key={index} >
@@ -1082,7 +1082,7 @@ class Question extends Component{
                                                 <span style={{color:"darkgoldenrod",fontSize:"12px"}}>(标有红色的空必须填写奥！)</span></p>
                                             <div id="analysusQuesCont">
                                                 {(this.state.analysisLeftContent).length>0?this._analysisQtxt(this.state.analysisLeftContent):<NoThisPart/>}
-                                                {!this.state.DialogMaskFlag?"":<DialogMask title={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()}><Knowledge questionId={this.state.allQuestionetails[this.state.current-1].QuesID} examPaperId={this.state.activeId} knowledgeName={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()} /></DialogMask>}
+                                                {!this.state.DialogMaskFlag?"":<DialogMask id={this.props.ueEditIndex} title={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()}><Knowledge questionId={this.state.allQuestionetails[this.state.current-1].QuesID} examPaperId={this.state.activeId} knowledgeName={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()} /></DialogMask>}
                                             </div>
                                         </div>
                                     </div>
