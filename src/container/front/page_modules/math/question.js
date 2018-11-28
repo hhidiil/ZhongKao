@@ -747,7 +747,7 @@ class Question extends Component{
                     let knowname = knowledgelist[i].replace(/\s|{@|@}/g,'');//knowname = "切线的性质", knowledgelist = (2) ["{@切线的性质@}", "{@直线和圆的位置关系@}"],
                     let knownamelist = knowname.split('；');//处理一个空有多个知识点的情况
                     for(let j in knownamelist){
-                        content = content.replace(knownamelist[j],'<span>'+knownamelist[j]+'</span>')//标记必填空
+                        content = content.replace(new RegExp(knownamelist[j],'g'),'<span>'+knownamelist[j]+'</span>')//标记必填空
                     }
                 }
                 content = content.replace(/{@/g,'[');
