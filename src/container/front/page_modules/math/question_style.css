@@ -8,12 +8,16 @@
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: aliceblue;;
-    border: 50px solid;
-    -webkit-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
-    -moz-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
-    -o-border-image: url("/public/images/1111.jpg") 40 40 round stretch;
-    border-image: url("/public/images/1111.jpg") 40 40 round stretch;
+    background-color: aliceblue;
+    padding: 50px 0;
+    /*border: 50px solid;*/
+    /*-webkit-border-image: url("/public/images/1111.jpg") 40 40 round stretch;*/
+    /*-moz-border-image: url("/public/images/1111.jpg") 40 40 round stretch;*/
+    /*-o-border-image: url("/public/images/1111.jpg") 40 40 round stretch;*/
+    /*border-image: url("/public/images/1111.jpg") 40 40 round stretch;*/
+    background-image: url("/public/images/1111.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 .mask2{
     position: fixed;
@@ -35,9 +39,14 @@
     padding: 10px 20px;
     max-width: 1500px;
     margin: 0 auto;
+    height: 100%;
+    border-left: 1px solid gray;
+    border-right: 1px solid gray;
+    background-color: white;
 }
 .math-question-content header{
-    display: flex;
+    /*display: flex;*/
+    position: relative;
 }
 .math-question-content header .title{
     width: 100%;
@@ -48,10 +57,11 @@
 }
 .math-question-content header .exit{
     position: absolute;
-    right: 20px;
+    right: 0px;
     top: 10px;
     font-size: 16px;
     cursor: pointer;
+    width: 178px;
 }
 .math-question-content .pagination_css{
     display: flex;
@@ -66,12 +76,22 @@
 .pagination_all{
     display: flex;
     width: 100%;
-    padding: 0 15px;
+    padding: 0 38px;
 }
 .pagination_content{
-    position: relative;
-    /*display: flex;*/
-    width: 100%;
+    /*position:absolute;*/
+    /*!*display: flex;*!*/
+    /*width: 120px;*/
+    position: absolute;
+    width: 130px;
+    text-align: center;
+    bottom: 30px;
+    border-radius: 8px;
+    font-size: 20px;
+    cursor: pointer;
+    line-height: 35px;
+    z-index: 100;
+
 }
 .pagination_content .pagination_before{
     position: relative;
@@ -97,6 +117,7 @@
 .QtxtContent{
     padding: 0 10px;
     position: relative;
+    border-top: 1px solid gray;
 }
 .QtxtContent .QtxtContent_main{
     overflow: hidden;
@@ -460,7 +481,7 @@
 }
 .QtxtContent-left{
     position: relative;
-    margin-right: 5px;
+    /*margin-right: 5px;*/
     padding-top: 10px;
     padding-left: 8px;
     background-color: white;
@@ -480,4 +501,9 @@
     font-size: 20px;
     cursor: pointer;
     z-index: 100;
+}
+#Analysis_Qtxt .ant-anchor-link .ant-anchor-link-title{
+    color:#337ab7;
+    fontSize:16;
+    font-weight: 600;
 }

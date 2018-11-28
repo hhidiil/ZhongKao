@@ -202,16 +202,20 @@ class Question extends Component{
         let childid = data[0].childsid;
         switch (type){
             case 'AnalyContent' :
+                $('.pagination_content').css("top","")
                 this.setState({AnalysisFlag:true, AnswerFlag:false, Exercise1Flag:false,showEditor:false,nowPart:type});
                 break;
             case 'Answer' :
+                $('.pagination_content').css("top","0px")
                 this.setState({AnalysisFlag:false, AnswerFlag:true, Exercise1Flag:false,showEditor:false,nowPart:type});
                 break;
             case 'Exercise1' :
+                $('.pagination_content').css("top","0px")
                 this.getDateOfPractice(type,childid);
                 this.setState({AnalysisFlag:false, AnswerFlag:false, Exercise1Flag:true,showEditor:false,nowPart:type});
                 break;
             case 'Exercise2':
+                $('.pagination_content').css("top","0px")
                 this.getDateOfPractice(type,childid);
                 this.setState({AnalysisFlag:false, AnswerFlag:false, Exercise1Flag:true,showEditor:false,nowPart:type});
                 break;
@@ -354,7 +358,7 @@ class Question extends Component{
             }
         }else{
             let mysrc = '',myvalue = '';
-            let rightanswer = data[0].answer.trim().split(',')//处理填空题可能有两个答案的情况，每空平分总分
+            let rightanswer = data[0].answer.trim().split('\|\|')//处理填空题可能有两个答案的情况，每空平分总分,答案之间是用||分开
             if(items.questiontemplate == '简答题'){
                 mysrc = $("#main-solution").find('img')[0].src;
                 contents[0] = {
@@ -696,10 +700,9 @@ class Question extends Component{
                     <div className="displayflex QtxtContent_main_title">
                         <div className="QtxtContent_main_title_left" id="aaaaaa">{questiontemplate}：</div>
                         <div className="QtxtContent_main_title_right">
-                            <Button onClick={()=>this.displayAnwser()}>{this.state.dispalyAnswerFlag?'隐藏答案':'显示答案'}</Button>
                             <Button onClick={()=>this.doCollection()}>收藏</Button>
                             <Button onClick={()=>this.redoIt()}>重做</Button>
-                            <Button id="redosubimt" onClick={()=>this.redoSubmit(data,items,index)}>提交</Button>
+                            <button id="redosubimt" type="button" className="btn btn-primary" onClick={()=>this.redoSubmit(data,items,index)}>提交</button>
                         </div>
                     </div>
                     <div>
@@ -771,7 +774,9 @@ class Question extends Component{
                             {knowledge.length>0 ? <span>知识点回顾：{knowledge.map((itm,index)=>{
                                 return <a key={index} style={{marginLeft:"5px"}} onClick={(e)=>this.getKnowledge(e)} dangerouslySetInnerHTML={{__html:itm.replace(/\@\#/g,',')}}></a>
                             })}</span> :''}
-                            <button className="marginl10" onClick={(e)=>{this.submitOne(e,item,questionType)}}>提交</button>
+                            <div style={{textAlign:'right',paddingRight: '4%'}}>
+                                <button type="button" className="btn btn-primary" size="small" onClick={(e)=>{this.submitOne(e,item,questionType)}}>提交</button>
+                            </div>
                             {this.state.dispalyAnswerFlag?<p><span style={{margin:"0 10px 0 0",color: 'coral'}}>答 案：<span dangerouslySetInnerHTML={{__html:item.answer}}></span></span></p>:''}
                         </ul>
                     )}
@@ -979,16 +984,16 @@ class Question extends Component{
         if(len>0){
             return(
                 <Anchor affix={false}>
-                    <Link href="javascript:void(10)" title="页面导航:" />
-                    <Link href="#Content_Qtxt" title="主题干" />
+                    <Link href="javascript:void(10)" click="alert(123123)" title="页面导航" />
+                    <Link href="#Content_Qtxt" title="题干" />
                     {menulist(len)}
                 </Anchor>
             );
         }else {
             return (
                 <Anchor affix={false}>
-                    <Link href="javascript:void(5)" title="页面导航:" >
-                        <Link href="#Content_Qtxt" title="主题干" />
+                    <Link href="javascript:void(5)" click="alert(123123)"  title="页面导航" >
+                        <Link href="#Content_Qtxt" title="题干" />
                         <Link href="#Objective-1-0" title="观察" />
                         <Link href="#Review-1-0" title="考点" />
                         <Link href="#Analysis-1-0" title="分析" />
@@ -1010,7 +1015,6 @@ class Question extends Component{
             position:'relative',
             height:hh,
             minWidth: '800px',
-            border: '1px solid #ddd',
             backgroundColor: 'white',
             overflowY: 'auto'
         };
@@ -1034,46 +1038,51 @@ class Question extends Component{
                     <header>
                         <div className="title" id="title">{title+"（检测提升）"}</div>
                         <div className="exit" >
-                            <button type="button" className="btn btn-default" onClick={()=>this.submitAllQuestion('allsubmit')}>全部提交</button>
-                            <button type="button" className="btn btn-default" onClick={()=>this.exitBack()}>退出</button>
+                            <button type="button" className="btn btn-primary" onClick={()=>this.submitAllQuestion('allsubmit')}>全部提交</button>
+                            <button type="button" className="btn btn-primary" onClick={()=>this.exitBack()}>退出</button>
                         </div>
                     </header>
-                    <center><hr width="90%" size={2}  color="black"></hr></center>
+                    {/*<center><hr width="90%" size={2}  color="black"></hr></center>*/}
                     <div className="Question_content">
                         <div className="pagination_all">
-                            <div className="widthPrecent5 margint10">题号:</div>
-                            <div className="padding0">
-                                <Pagination2 total={this.state.total} errorArray={this.state.errorArray} current={this.state.current}  onChange={this.onChange}/></div>
-                        </div>
-                        <div className="pagination_content">
-                            <div className="btnContainer col-md-12" id="btnContainer">
-                                <button id="Explain_exer" type="button" className="btn btn-primary"
-                                        onClick={()=>this.requestQuestion("AnalyContent",currentQuesData)}>解答分析
-                                </button>
-                                <button id="Anwser_exer" type="button" className="btn btn-primary"
-                                        onClick={()=>this.requestQuestion("Answer",currentQuesData)}>标准答案
-                                </button>
-                                <button id="Exercise1_exer" type="button" className="btn btn-primary"
-                                        onClick={()=>this.requestQuestion("Exercise1",currentQuesData)}>巩固练习
-                                </button>
-                                <button id="Exercise2_exer" type="button" className="btn btn-primary"
-                                        onClick={()=>this.requestQuestion("Exercise2",currentQuesData)}>拓展练习
-                                </button>
+                            <div className="padding0" style={{width:'100%',display:'flex'}}>
+                                <div style={{width:50}}>
+                                    <div className='margint10'>题号:</div>
+                                    <div className='margint10'>分数:</div>
+                                </div>
+                                <div style={{width:'100%'}}>
+                                    <Pagination2 total={this.state.total} scoreArraylist={[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]} errorArray={this.state.errorArray} current={this.state.current}  onChange={this.onChange}/>
+                                </div>
                             </div>
                         </div>
                         <div className="clearfix"></div>
                     </div>
                     <br/>
-                    <hr/>
                     <section className="QtxtContent">
                         <MathJaxEditor position={this.state.position} editorId="questionContainer" target_id={this.state.target_id} showEditor={this.state.showEditor}/>
+                        <div className="pagination_content">
+                            <div className="btnContainer col-md-12" id="btnContainer">
+                                <button id="Explain_exer" type="button" className="btn"
+                                        onClick={()=>this.requestQuestion("AnalyContent",currentQuesData)}>解答分析
+                                </button>
+                                <button id="Anwser_exer" type="button" className="btn"
+                                        onClick={()=>this.requestQuestion("Answer",currentQuesData)}>标准答案
+                                </button>
+                                <button id="Exercise1_exer" type="button" className="btn"
+                                        onClick={()=>this.requestQuestion("Exercise1",currentQuesData)}>巩固练习
+                                </button>
+                                <button id="Exercise2_exer" type="button" className="btn"
+                                        onClick={()=>this.requestQuestion("Exercise2",currentQuesData)}>拓展练习
+                                </button>
+                            </div>
+                        </div>
                         <div id="Analysis_Qtxt" className={this.state.AnalysisFlag?'':'displaynone'}>
                             <Row>
                                 <Col span={3} className="QtxtContent-left">
                                     {this._menuList(currentQuesData)}
                                 </Col>
-                                <div className="nextQuestionBtn" onClick={()=>{this.nextQuestionHandle()}}>下一题</div>
-                                <Col span={20} style={{overflow:'auto'}}>
+                                {/*<div className="nextQuestionBtn" onClick={()=>{this.nextQuestionHandle()}}>下一题</div>*/}
+                                <Col span={21} style={{overflow:'auto',borderLeft: '1px solid #b3b2b2'}}>
                                     <div style={contH} id="QtxtContent_main">
                                         <div className="QtxtContent_main">
                                             <div id="Content_Qtxt">
@@ -1082,27 +1091,40 @@ class Question extends Component{
                                         </div>
                                         <div className="content_three_right">
                                             <p style={{fontSize:"16px"}}><b>解析部分：</b>
-                                                <span style={{color:"darkgoldenrod",fontSize:"12px"}}>(标有红色的空必须填写奥！)</span></p>
+                                                <span style={{color:"darkgoldenrod",fontSize:"12px"}}>(标有红色的空必须填写奥！)</span>
+                                            </p>
                                             <div id="analysusQuesCont">
                                                 {(this.state.analysisLeftContent).length>0?this._analysisQtxt(this.state.analysisLeftContent):<NoThisPart/>}
                                                 {!this.state.DialogMaskFlag?"":<DialogMask id={this.props.ueEditIndex} title={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()}><Knowledge questionId={this.state.allQuestionetails[this.state.current-1].QuesID} examPaperId={this.state.activeId} knowledgeName={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()} /></DialogMask>}
                                             </div>
+                                            <div><Button size="small" style={{fontSize:12}} onClick={()=>this.displayAnwser()}>{this.state.dispalyAnswerFlag?'隐藏答案':'显示答案'}</Button></div>
                                         </div>
                                     </div>
                                 </Col>
                             </Row>
                         </div>
                         <div id="AnswerFlag" className={this.state.AnswerFlag?'':'displaynone'} style={contH}>
-                            <div className="content_three_right">
-                                {this._AnswerFlag('Exercise1',currentQuesData)}
-                            </div>
-                            <div style={{clear:"both"}}></div>
+                            <Row style={{height:'100%'}}>
+                                <Col span={3}>
+                                </Col>
+                                <Col span={21} style={{overflow:'auto',borderLeft: '1px solid #b3b2b2',height: '100%'}}>
+                                    <div className="content_three_right">
+                                        {this._AnswerFlag('Exercise1',currentQuesData)}
+                                    </div>
+                                    <div style={{clear:"both"}}></div>
+                                </Col>
+                            </Row>
                         </div>
                         <div id="Exercise1_Qtxt" className={this.state.Exercise1Flag?'':'displaynone'} style={contH}>
-                            <div className="content_three_right">
-                                {(this.state.exerciseContent).length>0?this._practicesQtxt(this.state.exerciseContent):''}
-                            </div>
-                            <div style={{clear:"both"}}></div>
+                            <Row style={{height:'100%'}}>
+                                <Col span={3}></Col>
+                                <Col span={21} style={{overflow:'auto',borderLeft: '1px solid #b3b2b2',height: '100%'}}>
+                                    <div className="content_three_right">
+                                        {(this.state.exerciseContent).length>0?this._practicesQtxt(this.state.exerciseContent):''}
+                                    </div>
+                                    <div style={{clear:"both"}}></div>
+                                </Col>
+                            </Row>
                         </div>
                     </section>
                 </div>
