@@ -567,10 +567,11 @@ class Question extends Component{
     }
     //解答分析部分中每个部分小题的提交按钮处理逻辑
     submitOne(e,data,questionType){
+        let parentID = data.parttype+ "-" + data.childNum+ "-" + data.indexNum;
         let type = data.parttype;
         let index = data.indexNum;
         let childNum = data.childNum -1;//主题的第几问小题
-        console.log("此题的信息：=======",data,this.state.current,type,index,questionType);
+        console.log("此题的信息：=======",data,this.state.current,type,index,questionType,parentID);
         if(!(newChildList.childs[childNum][type][index])){//先初始化每个部分小题答案信息，方便后面存储新的信息
             newChildList.childs[childNum][type][index] = {
                 "itemid": "",
@@ -583,7 +584,8 @@ class Question extends Component{
             let value = '', isRight = false, knowledgesCont=[],knowledge_new = [];
             let knowledge = ((data.knowledge).replace(/\<B\>|\<\/B\>/g,"")).split("；");//知识点
             let rightanswer = (data.answer).trim().replace(/\s|，/g,"");//正确答案
-            let inputList = $(e.target).parent().parent().find(".main_cont input:checked");//选项
+            //let inputList = $(e.target).parent().parent().find(".main_cont input:checked");//选项
+            let inputList = $("#"+parentID).find(".main_cont input:checked");//选项
             inputList.each(function(ii){
                 value += $(this).val();//用户填写的答案
             })
@@ -607,7 +609,8 @@ class Question extends Component{
             lastKnowledge = knowledge;
         }else{
             let knowledge = ((data.knowledge).replace(/["\[\]\s]|\<B\>|\<\/B\>/g,"")).split('；');//知识点
-            let inputList = $(e.target).parent().parent().find(".div_input");
+            //let inputList = $(e.target).parent().parent().find(".div_input");
+            let inputList = $("#"+parentID).find(".div_input");
             let endRigth = true;//有多个空的时候 只要错一个就当这道题是错误的。
             inputList.each(function(ii){
                 let value = '',mysrc='', isRight = false, knowledgesCont=[];
