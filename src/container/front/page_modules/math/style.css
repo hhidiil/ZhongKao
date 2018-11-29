@@ -366,6 +366,7 @@
     width: 100%;
     background-color: white;
     margin-left: 20px;
+    min-height:780px
 }
 
 /*thematicChapter end*/

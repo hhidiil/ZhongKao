@@ -418,7 +418,8 @@ class Chapter extends Component{
         let height_h = $(window).height()-180;
         const sentionH = {
             height:height_h+"px",
-            overflowY:"auto"
+            overflowY:"auto",
+            minHeight:(780-180)+'px'
         }
         return (
             <div className="mask2" style={{backgroundColor:'rgb(193, 223, 249)'}}>

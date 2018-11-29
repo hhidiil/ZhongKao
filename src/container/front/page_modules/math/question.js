@@ -202,20 +202,20 @@ class Question extends Component{
         let childid = data[0].childsid;
         switch (type){
             case 'AnalyContent' :
-                $('.pagination_content').css("top","")
+                $('.btnContainer').css("top","")
                 this.setState({AnalysisFlag:true, AnswerFlag:false, Exercise1Flag:false,showEditor:false,nowPart:type});
                 break;
             case 'Answer' :
-                $('.pagination_content').css("top","0px")
+                $('.btnContainer').css("top","0px")
                 this.setState({AnalysisFlag:false, AnswerFlag:true, Exercise1Flag:false,showEditor:false,nowPart:type});
                 break;
             case 'Exercise1' :
-                $('.pagination_content').css("top","0px")
+                $('.btnContainer').css("top","0px")
                 this.getDateOfPractice(type,childid);
                 this.setState({AnalysisFlag:false, AnswerFlag:false, Exercise1Flag:true,showEditor:false,nowPart:type});
                 break;
             case 'Exercise2':
-                $('.pagination_content').css("top","0px")
+                $('.btnContainer').css("top","0px")
                 this.getDateOfPractice(type,childid);
                 this.setState({AnalysisFlag:false, AnswerFlag:false, Exercise1Flag:true,showEditor:false,nowPart:type});
                 break;
@@ -1013,11 +1013,13 @@ class Question extends Component{
         let title = JSON.parse(Storage_S.getItem(this.state.activeId)).exampaper;
         //获取各部分的高度
         let hh = ($(window).height()-$('.Question_content').height()-$('header').height() -130)+'px';
+        let minh = (780-$('.Question_content').height()-$('header').height() -130)+'px';
         console.log("----hh----hh--hh---hh--hh-----hh---hh---->",hh)
         const contH = {
             position:'relative',
             height:hh,
             minWidth: '800px',
+            minHeight:minh,
             backgroundColor: 'white',
             overflowY: 'auto'
         };
@@ -1063,21 +1065,19 @@ class Question extends Component{
                     <br/>
                     <section className="QtxtContent">
                         <MathJaxEditor position={this.state.position} editorId="questionContainer" target_id={this.state.target_id} showEditor={this.state.showEditor}/>
-                        <div className="pagination_content">
-                            <div className="btnContainer col-md-12" id="btnContainer">
-                                <button id="Explain_exer" type="button" className="btn"
-                                        onClick={()=>this.requestQuestion("AnalyContent",currentQuesData)}>解答分析
-                                </button>
-                                <button id="Anwser_exer" type="button" className="btn"
-                                        onClick={()=>this.requestQuestion("Answer",currentQuesData)}>标准答案
-                                </button>
-                                <button id="Exercise1_exer" type="button" className="btn"
-                                        onClick={()=>this.requestQuestion("Exercise1",currentQuesData)}>巩固练习
-                                </button>
-                                <button id="Exercise2_exer" type="button" className="btn"
-                                        onClick={()=>this.requestQuestion("Exercise2",currentQuesData)}>拓展练习
-                                </button>
-                            </div>
+                        <div className="btnContainer col-md-12" id="btnContainer">
+                            <button id="Explain_exer" type="button" className="btn"
+                                    onClick={()=>this.requestQuestion("AnalyContent",currentQuesData)}>解答分析
+                            </button>
+                            <button id="Anwser_exer" type="button" className="btn"
+                                    onClick={()=>this.requestQuestion("Answer",currentQuesData)}>标准答案
+                            </button>
+                            <button id="Exercise1_exer" type="button" className="btn"
+                                    onClick={()=>this.requestQuestion("Exercise1",currentQuesData)}>巩固练习
+                            </button>
+                            <button id="Exercise2_exer" type="button" className="btn"
+                                    onClick={()=>this.requestQuestion("Exercise2",currentQuesData)}>拓展练习
+                            </button>
                         </div>
                         <div id="Analysis_Qtxt" className={this.state.AnalysisFlag?'':'displaynone'}>
                             <Row>
