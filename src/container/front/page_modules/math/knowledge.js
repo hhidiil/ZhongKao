@@ -214,7 +214,7 @@ class Knowledge extends Component{
         this.setState({DialogMaskFlag2:true,nextKnowledgeName:knowledge})
     }
     _QuestionContent(data){
-        if(data.length<1){return <div className="center" style={{fontSize: '28px'}}>没有找到对应的数据。。。。</div>}
+        if(data.length<1){return <div className="center" style={{fontSize: '28px'}}>没有找到对应的数据（可以关闭再重新打开试试奥）。。。。</div>}
         return data.map((item,index)=>{
             let content = item.content;
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank

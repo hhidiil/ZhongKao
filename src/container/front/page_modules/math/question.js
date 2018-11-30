@@ -763,7 +763,7 @@ class Question extends Component{
                     let newlist = knowledgelist[i].replace(/\s|{@|@}/g,'');
                     let knownamelist = newlist.split('；')
                         for(let j in knownamelist){
-                            knownamelist[j] = '[<span>'+knownamelist[j]+'</span>]'//标记必填空
+                            knownamelist[j] = '&nbsp;[<span>'+knownamelist[j]+'</span>]'//标记必填空
                         }
                     content = content.replace(knowledgelist[i],knownamelist.join(''))//标记必填空
                 }
