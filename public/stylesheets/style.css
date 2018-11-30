@@ -36,6 +36,9 @@ input::-webkit-inner-spin-button {
 .padding10{
   padding: 10px !important;
 }
+.padding15{
+  padding: 15px !important;
+}
 .padding20{
   padding: 20px !important;
 }
@@ -44,6 +47,9 @@ input::-webkit-inner-spin-button {
 }
 .padding0{
   padding: 0px !important;
+}
+.paddingLR45{
+  padding: 0px 45px !important;
 }
 .margin0{
   margin: 0px !important;

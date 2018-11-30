@@ -457,13 +457,13 @@ class Question extends Component{
                     <center><hr width="90%" size={2}  color="black"></hr></center>
                     <div className="pagination_content">
                         <div className="pagination_before pagination_all">
-                            <div className="widthPrecent5 margint10">题号:</div>
+                            <div className="widthPrecent5 margint15">题号:</div>
                             <div className="padding0">
                                 <Pagination total={this.state.totalNum} current={this.state.current} onChange={this.onChange}/>
                             </div>
                         </div>
                     </div>
-                    <section className="QtxtContent" style={contH}>
+                    <section className="QtxtContent paddingLR45" style={contH}>
                         <MathJaxEditor position={this.state.position} editorId="practiceContainer" target_id={this.state.target_id} showEditor={this.state.showEditor}/>
                         <div className="QtxtContent_main">
                             <div id="Content_Qtxt">
