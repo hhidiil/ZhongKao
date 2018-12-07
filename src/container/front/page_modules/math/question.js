@@ -747,17 +747,6 @@ class Question extends Component{
             }
             let knowledgelist = content.match(regex);//找出必填空的知识点
             if(knowledgelist && knowledgelist.length>0){
-                //for(let i in knowledgelist){
-                //    content = content.replace(new RegExp(knowledgelist[i],'g'),'<span class="mustText">'+knowledgelist[i]+'</span>')//标记必填空
-                //    //content = content.replace(knowledgelist[i],'<span class="mustText">'+knowledgelist[i]+'</span>')//标记必填空
-                //    let knowname = knowledgelist[i].replace(/\s|{@|@}/g,'');//knowname = "切线的性质", knowledgelist = (2) ["{@切线的性质@}", "{@直线和圆的位置关系@}"],
-                //    let knownamelist = knowname.split('；');//处理一个空有多个知识点的情况
-                //    for(let j in knownamelist){
-                //        content = content.replace(new RegExp(knowledgelist[i],'g'),'<span>'+knownamelist[j]+'</span>')//标记必填空
-                //    }
-                //}
-                //content = content.replace(/{@/g,'[');
-                //content = content.replace(/@}/g,']');
                 for(let i in knowledgelist){
                     content = content.replace(new RegExp(knowledgelist[i],'g'),'<span class="mustText">'+knowledgelist[i]+'</span>')//标记必填空
                     let newlist = knowledgelist[i].replace(/\s|{@|@}/g,'');
@@ -846,13 +835,25 @@ class Question extends Component{
         },this)
     }
     _AnswerFlag(type,data){
+        console.warn("标准答案：：：：：",data,data[0].childs)
         if(data.length<1){return}
-        return (
-            <div>
-                <div>答案为：</div>
-                <div dangerouslySetInnerHTML={{__html:data[0].answer}}></div>
-            </div>
-        )
+        if(data[0].childs.length>0){
+            return data[0].childs.map(function(item,index){
+                return(
+                    <div key={index}>
+                        <div style={{fontSize:'16px'}}><strong>第{index+1}问:</strong></div>
+                        <div style={{padding: '5px 40px'}} dangerouslySetInnerHTML={{__html:item.answer}}></div>
+                    </div>
+                )
+            })
+        }else {
+            return (
+                <div>
+                    <div>答案为：</div>
+                    <div style={{padding: '5px 40px'}} dangerouslySetInnerHTML={{__html:data[0].answer}}></div>
+                </div>
+            )
+        }
     }
     getData(data,page,data2){
         //let olddata =  this.state.sentAllList.ExamResult[page];
