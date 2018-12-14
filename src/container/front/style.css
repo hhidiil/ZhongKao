@@ -90,14 +90,15 @@
 }
 .enterstart{
     font-size: 26px;
-    width: 200px;
-    float: right;
-    border-radius: 5px;
-    box-shadow: 0px 0px 0px 2px #a08a55;
+}
+.enterstart .doorBtn{
+    width: 120px;
+    height: 40px;
+    border-radius: 20px;
+    margin: 0 5px;
 }
 .enterstart:hover{
-    box-shadow: 0px 0px 0px 2px #d0c8b6;
-    cursor: pointer;
+    /*cursor: pointer;*/
 }
 .banner-wapper1{
     position: relative;
@@ -111,9 +112,11 @@
     position: absolute;
     width: 100%;
     padding: 50px;
-    top: 30%;
     color: #fff;
     text-align: center;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
 }
 .banner-wapper1 .content p{
     text-transform: capitalize;

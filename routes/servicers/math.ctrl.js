@@ -487,12 +487,6 @@ module.exports={
         var math = new Math({props:props});
         math.getAllKnowledgeOfChapter(function(err,data){
             if(!err){
-                //let dealData = JSON.stringify(fun1(data));
-                //fs.writeFile('src/data/knowledge.json',dealData,"utf-8",function(err){
-                //    if(!err){
-                //        console.log("write done!!!");
-                //    }
-                //})
                 return res.send({
                     code:200,
                     data:fun1(data)

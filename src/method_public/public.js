@@ -177,8 +177,8 @@ function subset(A,B){
 }
 //比较A和B的值是否相同
 export function compareDifferent(A,B){
-    var A = A.toString();
-    var B = B.toString();
+    var A = A+'';
+    var B = B+'';
     var numA = A ? (A.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>/g,'') : A;
     var numB = B ? (B.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>/g,'') : B;
     try {

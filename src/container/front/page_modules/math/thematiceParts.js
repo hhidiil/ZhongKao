@@ -14,6 +14,9 @@ class Math extends Component{
         super(props)
     }
     goThematicQuestion(flag){
+        if(flag == 'thematic'){
+            return alert("目前还没有开放")
+        }
         this.props.actions.push(`/home/math/thematiceParts/${flag}`);
     }
     render(){
@@ -23,10 +26,10 @@ class Math extends Component{
                     <div className="title" onClick={()=>this.goThematicQuestion('chapters')}>课本复习
                     </div>
                 </div>
-                <div className="examAll-item">
-                    <div className="title" onClick={()=>this.goThematicQuestion('exampoint')}>考点复习
-                    </div>
-                </div>
+                {/*<div className="examAll-item">
+                 <div className="title" onClick={()=>this.goThematicQuestion('exampoint')}>考点复习
+                 </div>
+                 </div>*/}
                 <div className="examAll-item">
                     <div className="title" onClick={()=>this.goThematicQuestion('thematic')}>专题复习
                     </div>

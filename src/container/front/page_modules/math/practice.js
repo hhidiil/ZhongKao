@@ -302,7 +302,7 @@ class Question extends Component{
             }
         }else {//除了选择题，其他的先统一按照简答题来处理
             let _this = this;//全局this赋给新的值
-            if(isobjective == '主观'){//如果是主观题则按照错题来处理
+            if(isobjective != '客观'){//如果是主观题则按照错题来处理
                 AnswerArr = [{
                     "domid":'',
                     "content": '',

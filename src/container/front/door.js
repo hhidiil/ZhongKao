@@ -3,13 +3,13 @@
  */
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { Menu, Dropdown, Icon } from 'antd'
+import { Menu, Dropdown, Icon ,Button} from 'antd'
 import 'antd/dist/antd.css';
 import './style.css'
 import Login from './login'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push,replace } from 'react-router-redux'
 import PureRenderMixin from '../../method_public/pure-render'
 import {handleImg} from '../../method_public/public'
 import { getHomeShowList} from '../../redux/actions/page'
@@ -32,7 +32,7 @@ class Door extends Component {
     };
     enterSystem(){
         if(this.state.loginstatus){
-            this.props.actions.push('home')
+            this.props.actions.replace('home')
         }else {
             window.confirm('请先登录！')
         }
@@ -92,14 +92,19 @@ class Door extends Component {
                 <header id="header" className="mainBackgroundColor header flex-box box-align-center justify-center">
                     <div className="full-width position-relative width-max-xxlarge">
                         <div className="logolay"><a href="http://www.idiil.com.cn/index.html" ><img src="public/images/uu14.png"/></a></div>
-                        {this.state.loginstatus?headerimg:login}
+                        {/*this.state.loginstatus?headerimg:login*/}
                     </div>
                 </header>
                 <div className="mainWapper">
                     <section className="page banner-wapper1">
                         <div className="content">
-                            <p>senior high school entrance examination</p>
-                            <div className="enterstart mainBackgroundColor" onClick={()=>this.enterSystem()}>开始学习</div>
+                            <p style={{fontSize:'24px'}}>IDIIL中考智能系统</p>
+                            <div className="enterstart">
+                                <Button className="doorBtn mainBackgroundColor">
+                                    {this.state.loginstatus?<div onClick={()=>this.enterSystem()}>进入</div>:<Login title="登录" style="color-white" loginHandle={()=>this.setState({loginstatus:true})}></Login>}
+                                </Button>
+                                <Button className="doorBtn"><Link to="/register">注册</Link></Button>
+                            </div>
                         </div>
                     </section>
                     <section className="banner-wapper2 flex-box box-align-center justify-center">
@@ -189,7 +194,7 @@ function mapStateToProps(state,ownProps) {
 }
 //使用bindActionCreators绑定action
 function mapDispatchToProps(dispatch) {
-    return { actions: bindActionCreators({push,getHomeShowList,updateStoreHeadImg}, dispatch) }
+    return { actions: bindActionCreators({push,replace,getHomeShowList,updateStoreHeadImg}, dispatch) }
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(Door)
