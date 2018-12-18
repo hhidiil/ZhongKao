@@ -194,8 +194,18 @@ export function compareDifferent(A,B){
         if(numA == numB){//处理KAS插件无法处理特殊字符的情况，在报错前先普通比较一下
             return true;
         }
-        console.error("function compareDifferent is error: "+e.message+"; the params is : "+numA+" and "+numB);
+        console.warn("function compareDifferent is error: "+e.message+"; the params is : "+numA+" and "+numB);
         return false;
+    }
+
+}
+//JSON解析
+export function toJson(str){
+    if(str && typeof str == 'string'){
+        let str2 = str.replace(/\\/g,"@&@") ;
+        return JSON.parse(str2)
+    }else {
+        return str
     }
 
 }

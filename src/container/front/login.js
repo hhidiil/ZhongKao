@@ -65,7 +65,7 @@ class LoginForm extends Component {
         };
         return (
             <div>
-                <a type="primary" className={this.state.style} onClick={() => this.setModalVisible(true)}>{this.state.title}</a>
+                <div type="primary" className={this.state.style} onClick={() => this.setModalVisible(true)}>{this.state.title}</div>
                 <Modal
                     title="登录"
                     footer=""

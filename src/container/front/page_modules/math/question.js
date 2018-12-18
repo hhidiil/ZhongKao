@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import {getFirstDataOfPaper,getSecendDataOfPaper,getAllChildOfExam,getAllChildOfQuestion,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData} from '../../../../redux/actions/math'
 import {createEditIndex} from '../../../../redux/actions/public'
-import {getCoords,compareDifferent} from '../../../../method_public/public'
+import {getCoords,compareDifferent,toJson} from '../../../../method_public/public'
 import {showConfirm} from '../../../../method_public/antd-modal'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import SelectMenu from '../../../../components/selectMenu/selectMenu'
@@ -68,7 +68,7 @@ class Question extends Component{
             showEditor:false,
             target_id:'',
             position:[],
-            solution:false,
+            solution:false,//每个题的主题重做时给 空 添加事件标志
             DialogMaskFlag:false,
             knowledgeName:'',
             Pending : true,//加载转圈标志
@@ -79,14 +79,15 @@ class Question extends Component{
         this.props.actions.createEditIndex('set')
         //先查看本地缓存
         let paperItems = JSON.parse(Storage_L.getItem(this.state.activeId +"-second"))//缓存中取出做题情况的对应数据
+        console.log("刚进来缓存中的二测信息：：：：：",paperItems)
         if(!paperItems){//没有
             this.props.actions.getSecendDataOfPaper({//再查看数据库中最近二测考试的结果
                 body:[{userid: Storage_S.getItem('userid'), id: this.state.activeId}],
                 success:(datas)=>{
                     console.warn("11111111111111111111111",datas)
                     if((datas[0].data).length>0){//有缓存的数据
-                        let ExamResult = JSON.parse((datas[0].data)[0].ExamResult.replace(/\\/g,"@&@"));
-                        let DoExamInfo = JSON.parse((datas[0].data)[0].DoExamInfo);
+                        let ExamResult = toJson((datas[0].data)[0].ExamResult);
+                        let DoExamInfo = toJson((datas[0].data)[0].DoExamInfo);
                         DoExamInfo_foot = (datas[0].data)[0].DoExamInfo;
                         this.getAllChildOfExamList(ExamResult,DoExamInfo,DoExamInfo.currentquesid,DoExamInfo.errorArray)
                     }else {
@@ -238,9 +239,7 @@ class Question extends Component{
             }
             $(this).attr("id",add_id);
             $(this).on('click',function(event){
-                if(_this.state.solution){
-                    _this.FocusHandle(this,add_id)
-                }
+                _this.FocusHandle(this,add_id)
             })
         });
     }
@@ -339,7 +338,8 @@ class Question extends Component{
         this.setState({solution: true})
     }
     //主试题重新做的提交按钮
-    redoSubmit(data,items,index){
+    redoSubmit(){
+        let index = this.state.current,items = this.state.currentQuesData[0];
         let contents =[],istrue=false,score=0,isOrRight=true;
         if(items.questiontemplate == '选择题'){//选择题
             let answers = $("#mainTopic").find("input:checked");//选项;
@@ -347,9 +347,9 @@ class Question extends Component{
             answers.each(function(ii){
                 answer += $(this).val();//用户填写的答案
             });
-            if(compareDifferent(data[0].answer,answer)){
+            if(compareDifferent(items.answer,answer)){
                 istrue =true;
-                score = data[0].totalpoints;
+                score = items.totalpoints;
             }
             contents[0] ={
                 "content":answer,
@@ -358,7 +358,7 @@ class Question extends Component{
             }
         }else{
             let mysrc = '',myvalue = '';
-            let rightanswer = data[0].answer.trim().split('\|\|')//处理填空题可能有两个答案的情况，每空平分总分,答案之间是用||分开
+            let rightanswer = items.answer.trim().split('\|\|')//处理填空题可能有两个答案的情况，每空平分总分,答案之间是用||分开
             if(items.questiontemplate == '简答题'){
                 mysrc = $("#main-solution").find('img')[0].src;
                 contents[0] = {
@@ -378,7 +378,7 @@ class Question extends Component{
                     }
                     if(compareDifferent(rightanswer[ii],myvalue)){
                         istrue =true;
-                        score += Number(data[0].totalpoints)/len;
+                        score += Number(items.totalpoints)/len;
                     }
                     contents[ii] = {
                         "content":myvalue,
@@ -400,7 +400,7 @@ class Question extends Component{
         (this.state.sentAllList).ExamResult[index-1] = newChildList;
         (this.state.sentAllList).errorArray = this.state.errorArray;//把错误题号也缓存下来
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
-        message.success("提交成功")
+        //message.success("提交成功")
     }
     //获取分析、考点、解答、观察四个部分的数据
     getDateOfAnalysis(data){
@@ -608,15 +608,19 @@ class Question extends Component{
             isOrRight = isRight;
             lastKnowledge = knowledge;
         }else{
-            let knowledge = ((data.knowledge).replace(/["\[\]\s]|\<B\>|\<\/B\>/g,"")).split('；');//知识点
-            //let inputList = $(e.target).parent().parent().find(".div_input");
+            let knowledge = ((data.knowledge).replace(/["\[\]\s]|\<B\>|\<\/B\>/g,"")).split('；');//知识点,包含所有知识点，每一个空的
             let inputList = $("#"+parentID).find(".div_input");
             let endRigth = true;//有多个空的时候 只要错一个就当这道题是错误的。
             inputList.each(function(ii){
                 let value = '',mysrc='', isRight = false, knowledgesCont=[];
                 let rightanswer = (data.answer).trim().replace(/\s/g,"").split("||");//正确答案
                 let everyRightanswer = '';//每一个空的正确答案
-                let knowledges = knowledge[ii] ? knowledge[ii].split('@#'):[];//每一个空所包含的知识点
+                //let knowledges = knowledge[ii] ? knowledge[ii].split('@#'):[];//给出了每个空的知识点 时用这个。
+                let knowledges = [];//没有给出每个空对应的知识点 那么需要自己找
+                let knowledgesss = $(this).parent().find('.inputKnowledges'+ii);//查找出此空对应的知识点
+                knowledgesss.each(function(jj){
+                    knowledges.push($(this)[0].innerText);
+                })
                 let knowledge_new = [];//要存储的知识点
 
                 if($(this).children('img').length>0){//先查找公式编辑器输入的内容，即用编辑器输入的会产生一个img标签，没有则直接查text
@@ -660,7 +664,7 @@ class Question extends Component{
         (this.state.sentAllList).ExamResult[this.state.current-1] = newChildList;
         (this.state.sentAllList).errorArray = this.state.errorArray;//把错误题号也缓存下来
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
-        message.success("提交成功")
+        //message.success("提交成功")
     }
     //点击显示知识点弹框
     getKnowledge(e){
@@ -695,7 +699,7 @@ class Question extends Component{
         console.log("oldanswer=====>>>>>>>>",oldanswer)
         if(content){
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
-                let qqq =  '<span class="div_input"></span>';
+                let qqq =  '<span class="div_input" contentEditable="true"></span>';
                 content = content.replace(/blank|BLANK|#blank#|#BLANK#/g,qqq);
             }
             return (
@@ -704,8 +708,8 @@ class Question extends Component{
                         <div className="QtxtContent_main_title_left" id="aaaaaa">{questiontemplate}：</div>
                         <div className="QtxtContent_main_title_right">
                             <Button onClick={()=>this.doCollection()}>收藏</Button>
-                            <Button onClick={()=>this.redoIt()}>重做</Button>
-                            <button id="redosubimt" type="button" className="btn btn-primary" onClick={()=>this.redoSubmit(data,items,index)}>提交</button>
+                            {/*<Button onClick={()=>this.redoIt()}>重做</Button>*/}
+                            {/*<button id="redosubimt" type="button" className="btn btn-primary" onClick={()=>this.redoSubmit(data,items,index)}>提交</button>*/}
                         </div>
                     </div>
                     <div>
@@ -715,7 +719,7 @@ class Question extends Component{
                             {childs.length<1?"":this._childsList(childs)}
                         </ul>
                         <ul>
-                            {items.isobjective == '主观'?(<div>
+                            {items.questiontype == '简答题'?(<div>
                                 <li id="solition" style={{paddingTop:"5px"}}>解：<span id="main-solution">
                                      <img src={oldanswer[0].url} width="200px" />
                                 </span></li>
@@ -752,7 +756,8 @@ class Question extends Component{
                     let newlist = knowledgelist[i].replace(/\s|{@|@}/g,'');
                     let knownamelist = newlist.split('；')
                         for(let j in knownamelist){
-                            knownamelist[j] = '&nbsp;[<span>'+knownamelist[j]+'</span>]'//标记必填空
+                            //knownamelist[j] = '&nbsp;[<span id='+ i+'-'+ j +'>'+knownamelist[j]+'</span>]'//标记必填空
+                            knownamelist[j] = `&nbsp;[<span class="inputKnowledges${i}">${knownamelist[j]}</span>]`//标记必填空
                         }
                     content = content.replace(knowledgelist[i],knownamelist.join(''))//标记必填空
                 }
@@ -968,6 +973,7 @@ class Question extends Component{
     }
     onChange = (page) => {
         console.log("page--",page)
+        this.redoSubmit();//重新提交一次主题干的答案
         this.updateErrorArray();
         this.getData(this.state.allQuestionetails[page-1],page-1,this.state.allChildQuestionOfExam)
     }
@@ -1104,7 +1110,7 @@ class Question extends Component{
                                         </div>
                                         <div className="content_three_right">
                                             <p style={{fontSize:"16px"}}><b>解析部分：</b>
-                                                <span style={{color:"darkgoldenrod",fontSize:"12px"}}>(标有红色的空必须填写奥！)</span>
+                                                {/*<span style={{color:"darkgoldenrod",fontSize:"12px"}}>(标有红色的空必须填写奥！)</span>*/}
                                             </p>
                                             <div id="analysusQuesCont">
                                                 {(this.state.analysisLeftContent).length>0?this._analysisQtxt(this.state.analysisLeftContent):<NoThisPart/>}
