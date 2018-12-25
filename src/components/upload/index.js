@@ -10,6 +10,7 @@ import {WINDOW_HOST} from '../../config'
 import {beforeUpload} from '../../method_public/public'
 import * as Modals from '../../method_public/antd-modal'
 import {upload} from '../../redux/actions/upload'
+import {Upload, message, Button, Icon,} from 'antd';
 
 
 class UpLoadFile extends Component{
@@ -72,14 +73,15 @@ class UpLoadFile extends Component{
         console.log("this.state.preview====>>>>>>",this.state.preview)
         return(
             <div className="fileupload">
-                <form>
-                    <label htmlFor="exampleInputFile">上传文件：</label>
-                    <input id="exampleInputFile" ref={(ref) => { this.uploadInput = ref; }} type="file" width="200px" onChange={this.preview} /><br/>
-                    {this.state.preview != 'false'?<div id="preview"></div>:''}
-                    <button type="button" className="btn ant-btn-danger btn-sm" onClick={this.deleteSubmit}>删除</button>
-                    <button type="button" className="btn btn-default btn-sm" onClick={this.upLoadSubmit}>开始上传</button>
-                    <br/>
-                </form>
+                <div className="fileBtnCss">
+                    <span className="fileinput-button">
+                        <span><Icon type="upload" /> 添加文件</span>
+                        <input type="file" id="exampleInputFile" ref={(ref) => { this.uploadInput = ref; }} onChange={this.preview}/>
+                    </span>
+                    <span className="shanchuCss" onClick={this.deleteSubmit}>删除</span>
+                    <span className="shangchuanCss" onClick={this.upLoadSubmit}>开始上传</span>
+                </div>
+                {this.state.preview != 'false'?<div id="preview"></div>:''}
             </div>
         )
     }

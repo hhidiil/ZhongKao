@@ -209,3 +209,9 @@ export function toJson(str){
     }
 
 }
+//停止N秒在执行程序
+export function sleep(n){
+    setTimeout(function(){
+        return "延迟了 "+n+"s........";
+    }, n*1000)
+}

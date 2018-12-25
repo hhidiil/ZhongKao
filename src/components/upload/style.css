@@ -4,6 +4,20 @@
 .fileupload button{
     margin: 5px 2px;
 }
+.fileupload .shanchuCss{
+    margin: 6px 5px;
+    cursor: pointer;
+}
+.fileupload .shanchuCss:hover{
+    color: red;
+}
+.fileupload .shangchuanCss{
+    margin: 6px 5px;
+    cursor: pointer;
+}
+.fileupload .shangchuanCss:hover{
+    color: blue;
+}
 .tip_content{
     font-size: 10px;
     color: firebrick;
@@ -17,4 +31,44 @@
     max-width: 400px;
     max-height: 400px;
     background-size:cover ;
+}
+.fileBtnCss{
+    display: inline-flex;
+}
+.fileBtnCss .fileinput-button {
+    position: relative;
+    display: inline-block;
+    overflow: hidden;
+    color: #fff;
+    background-color: #3d87c6;
+    border-color: #2e6da4;
+    padding: 6px 12px;
+    margin-bottom: 0;
+    font-size: 12px;
+    height: 35px;
+    font-weight: normal;
+    line-height: 1.42857143;
+    text-align: center;
+    white-space: nowrap;
+    vertical-align: middle;
+    -ms-touch-action: manipulation;
+    touch-action: manipulation;
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+    background-image: none;
+    border: 1px solid transparent;
+    border-radius: 4px;
+}
+
+.fileBtnCss .fileinput-button input{
+    position:absolute;
+    right: 10px;
+    top: 0px;
+    opacity: 0;
+    -ms-filter: 'alpha(opacity=0)';
+    font-size: 200px;
+    cursor: pointer;
 }

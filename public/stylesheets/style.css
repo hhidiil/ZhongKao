@@ -54,6 +54,18 @@ input::-webkit-inner-spin-button {
 .margin0{
   margin: 0px !important;
 }
+.margin5{
+  margin: 5px !important;
+}
+.margin10{
+  margin: 10px !important;
+}
+.margin15{
+  margin: 15px !important;
+}
+.margin20{
+  margin: 20px !important;
+}
 .margint5{
   margin-top: 5px !important;
 }
@@ -98,4 +110,13 @@ input::-webkit-inner-spin-button {
 }
 .color-red{
   color: red;
+}
+.allHeight{
+  height: 100% !important;
+}
+.W618{
+  width: 61.8%;
+}
+.W382{
+  width: 38.2%;
 }

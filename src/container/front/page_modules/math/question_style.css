@@ -54,15 +54,13 @@
 }
 .math-question-content header .title{
     width: 100%;
-    height: 55px;
-    line-height: 55px;
     font-size: 22px;
     text-align: center;
 }
 .math-question-content header .exit{
     position: absolute;
     right: 10px;
-    top: 10px;
+    top: 0px;
     font-size: 16px;
     cursor: pointer;
 }
@@ -75,6 +73,24 @@
 }
 .math-question-content center hr{
     border: 1px solid gainsboro;
+}
+.math-question-content .sectionHeader{
+    position: relative;
+}
+.showOrHide{
+    position: absolute;
+    font-size: 15px;
+    text-align: center;
+    color: white;
+    top: 0px;
+    font-weight: 600;
+    z-index: 1001;
+    width: 37px;
+    height: 30px;
+    background-color: #337ab7;
+    border-bottom-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+    cursor: pointer;
 }
 .pagination_all{
     display: flex;
@@ -98,16 +114,38 @@
 .pagination_content .pagination_before .pagination{
     margin: 8px 0 !important;
 }
-.btnContainer{
+.daohangside{
     position: absolute;
-    width: 130px;
-    text-align: center;
-    bottom: 30px;
+    right: 0;
+    width: 100px;
+    min-height: 100px;
+    top: 10%;
+}
+.daohangside .daohangCss{
+    position: fixed;
+    height: auto;
+    cursor: pointer;
+    width: 100px;
+}
+.zhankaiIcon{
+    float: right;
+    width: 20px;
+    background-color: #daeaf8;
+    cursor: pointer;
+}
+.shouqiIcon{
+    display: inline-flex;
+    background-color: #daeaf8;
+}
+.btnContainer{
+    position: relative;
+    text-align: right;
     border-radius: 8px;
     font-size: 20px;
-    cursor: pointer;
     line-height: 35px;
+    height: 40px;
     z-index: 100;
+    right: 5px;
 }
 .btnContainer button{
     margin: 1px 2px;
@@ -117,23 +155,22 @@
     /*background-color: coral;*/
 }
 .QtxtContent{
-    padding: 0 15px;
     position: relative;
     border-top: 1px solid gray;
+    border-bottom: 1px solid gray;
+    backgroundColor: 'white',
 }
 .QtxtContent .QtxtContent_main{
     overflow: hidden;
     margin: 0 0 10px 0;
     background-color: white;
-    border-bottom: 1px solid #ddd;
     padding: 10px;
 }
 .QtxtContent_main_title{
     border-bottom: 1px dashed;
-    padding-bottom: 5px;
 }
 .exit button{
-    margin: 5px 10px;
+    margin: 0px 10px;
 }
 .height_none{
     overflow: hidden;
@@ -192,8 +229,7 @@
 }
 .QtxtContent .content_three_right{
     width: 100%;
-    padding: 15px;
-    /*border: 1px solid darkgray;*/
+    padding: 40px 15px 15px 15px;
     border-top: 1px solid #ddd;
     background-color: white;
     overflow-y: auto;
@@ -508,4 +544,7 @@
     color:#337ab7;
     fontSize:16;
     font-weight: 600;
+}
+.mustText{
+    display: none;
 }

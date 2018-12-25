@@ -188,6 +188,8 @@ class Question extends Component{
         let items = item.get('data').get(0);
         let content = items.get('content');
         let questiontype = items.get('questiontemplate');
+        let isobjective = items.get('isobjective');
+        let doAndAnswerFlag = (questiontype == '简答题' || isobjective=='主观') ? true:false;
         let childs = items.get('childs');
         let oldAnwers = this.state.oldAnwers[0] ? this.state.oldAnwers[0].content :'';
         if(content){
@@ -204,7 +206,7 @@ class Question extends Component{
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
                             {questiontype == "选择题" ?<MultipleChoice type={items.get('questiontype')} answer={oldAnwers}  index={index} choiceList={items.get('optionselect')} />:''}
                             {childs.size<1?"":this._childsList(childs)}
-                            {questiontype == '简答题' ? this._doAndAnswer(this.state.oldAnwers) :''}
+                            {doAndAnswerFlag ? this._doAndAnswer(this.state.oldAnwers) :''}
                         </ul>
                     </div>
                 </div>
@@ -220,6 +222,8 @@ class Question extends Component{
         this.setState({ previewVisible: false })
     }
     onChange = (page) => {
+        console.log("current",page)
+        this.nextSubmit(this.state.current,this.props.GetQuestion);
         this.setState({
             current: page,
             oldAnwers:'',
@@ -298,7 +302,7 @@ class Question extends Component{
                 //this.state.AnswerContent = AnswerArr;
             }else {
                 nexflag = false;
-                alert('请选择一个答案！')
+                //alert('请选择一个答案！')
             }
         }else {//除了选择题，其他的先统一按照简答题来处理
             let _this = this;//全局this赋给新的值
@@ -361,27 +365,21 @@ class Question extends Component{
                 "difficulty":difficulty
             }
             Storage_L.setItem(this.state.activeId,JSON.stringify(this.state.sentList))//每做完一个题缓存一个
-            if(nextpage>this.state.totalNum){//最后一个题做完了
-                let _this = this;
-                Modals.showConfirm("已做到最后一题，是否全部提交？", function () {
-                    _this.allSubmit();
-                })
-            }else {
-                this.setState({
-                    current: nextpage,
-                    oldAnwers:'',
-                    img_url:'',
-                    AnswerContent:[],
-                    showEditor:false
-                })
-                this.getData(this.state.all_question[page])
-            }
+            //this.setState({
+            //    //current: nextpage,
+            //    oldAnwers:'',
+            //    img_url:'',
+            //    AnswerContent:[],
+            //    showEditor:false
+            //})
+            //this.getData(this.state.all_question[page])
         }
     }
     allSubmit(){
         let endList = (this.state.sentList).ExamResult;
+        let totalNum = this.state.totalNum;
         let _this = this;
-        for(let i=0;i<endList.length;i++){
+        for(let i=0;i<totalNum;i++){
             if(!endList[i]){
                 Modals.warning("提示","第"+(i+1)+"个题还没有做，请切到第"+(i+1)+"个题提交并点击页面确定按钮")
                 return
@@ -438,7 +436,8 @@ class Question extends Component{
             )
         }
         let objective = ((GetQuestion.get('items')).get(0)).get('data').get(0).get('isobjective');
-        let objectiveFlag = (objective== "主观") ? true:false;
+        let questiontemplate = ((GetQuestion.get('items')).get(0)).get('data').get(0).get('questiontemplate');
+        let objectiveFlag = (objective== "主观" || questiontemplate=='简答题') ? true:false;
         let title = (this.state.dataAll).exampaper;//试卷标题
         let cleartime = this.state.cleartimeflag;
         //获取各部分的高度
@@ -454,7 +453,6 @@ class Question extends Component{
                         <div className="title" id="title">{title}<Timing duration={2*60*60} clearTime={cleartime} endHandle={()=>this.endHandle(this)}></Timing></div>
                         <div className="exit" onClick={()=>this.exitBack(this)}><button type="button" className="btn btn-default">退出</button></div>
                     </header>
-                    <center><hr width="90%" size={2}  color="black"></hr></center>
                     <div className="pagination_content">
                         <div className="pagination_before pagination_all">
                             <div className="widthPrecent5 margint15">题号:</div>
@@ -474,8 +472,8 @@ class Question extends Component{
                             {!objectiveFlag ? '':<UpLoadFile submitHandle={this.getEditContent.bind(this)} />}
                         </div>
                     </section>
-                    <button type="button" className="btn btn-primary next_btn" disabled={(this.state.current==(this.state.totalNum+1))?true:false} onClick={()=>this.nextSubmit(this.state.current,GetQuestion)}>确定</button>
-                    {/*<button type="button" className="btn btn-primary submit_btn" disabled={(this.state.current==(this.state.totalNum+1))?false:true} onClick={()=>this.allSubmit(this)}>全部提交</button>*/}
+                    {/*<button type="button" className="btn btn-primary next_btn" disabled={(this.state.current==(this.state.totalNum+1))?true:false} onClick={()=>this.nextSubmit(this.state.current,GetQuestion)}>确定</button>*/}
+                    <button type="button" className="btn btn-primary submit_btn" onClick={()=>this.allSubmit()}>全部提交</button>
                 </div>
             </div>
         )
