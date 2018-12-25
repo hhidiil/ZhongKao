@@ -655,7 +655,7 @@ class Question extends Component{
                             {this.kaodianQtxt(this.state.analysisLeftContent)}
                         </ul>
                         <ul>
-                            {items.questiontype == '简答题'?(<div>
+                            {items.isobjective != '客观'?(<div>
                                 <li id="solition" style={{paddingTop:"5px"}}>解：<span id="main-solution">
                                      <img src={oldanswer.length>0?oldanswer[0].url:''} width="200px" />
                                 </span></li>
