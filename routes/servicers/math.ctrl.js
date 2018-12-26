@@ -245,6 +245,7 @@ module.exports={
             id:req.body.id
         };
         let math = new Math({props: props});
+        //查询主试题的信息
         math.getQuestionItems(function(err, data) {
             if(!err){
                 if (data.length>0) {
@@ -253,6 +254,7 @@ module.exports={
                         id:data[0].questionid
                     };
                     let math = new Math({props: props});
+                    //查询主试题的小问题
                     math.getQuestionChild(function(err, data){
                         if(!err){
                             olddata[0].childs = data;
@@ -260,7 +262,7 @@ module.exports={
                                 id:olddata[0].questionid
                             };
                             let math = new Math({props: props});
-                            //查出其所有子题，
+                            //查出每个小问题的其所有子题，
                             math.getQuestionChildItems(function(err, data){
                                 olddata[0].childsid = data;
                                 if(!err){

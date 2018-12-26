@@ -17,13 +17,13 @@ class Choice extends Component{
             choiceList:props.choiceList,//选项
             index:props.index,
             radioState:props.answer || '',//答案
-            isCando: props.isCando//是否可以选择答案
+            isCando: props.isCando|| true,//是否可以选择答案,默认true
         }
     }
     radioChange =(e)=>{
         let isCando = this.state.isCando;
         console.log("radioChange===>>>>>",e.target.type,e.target.name)
-        if(isCando != "false"){
+        if(isCando){
             let endstr = '',tar = e.target.value;
             if(e.target.type == 'checkbox'){
                 if((this.state.radioState).split('').indexOf(tar) != -1){

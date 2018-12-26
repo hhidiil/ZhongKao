@@ -1,10 +1,10 @@
 /**
- * 摸底考试试卷屁孩页面
+ * 摸底考试试卷批改页面
  * Created by gaoju on 2018/6/26.
  */
 import React,{Component} from 'react'
 import './style.css'
-import { Menu, Icon,Button,Modal } from 'antd'
+import { Menu, Icon,Button,Modal,message } from 'antd'
 // redux
 import { bindActionCreators } from 'redux'
 import PureRenderMixin from '../../method_public/pure-render'
@@ -101,13 +101,11 @@ class PaperDetail extends Component {
     exitBack(){
         let _this = this;
         ///main/papers/paper/${activeName}/${id}
-        Modals.showConfirm("是否已经全部提交？", function () {
+        Modals.showConfirm("确定退出吗？", function () {
             let url = (_this.props.location.pathname).split('/');
-            //let tar = url.pop();
             url = url.splice(0,url.length-3);
             let endurl = url.join('/');
-            //_this.props.actions.push(endurl);
-            _this.props.actions.goBack()
+            _this.submitAllQuestion('exit');
         })
     }
     onChange = (page) => {
@@ -118,19 +116,23 @@ class PaperDetail extends Component {
         this.getData(this.state.allQuestionetails[page-1],page-1)
     }
     submitMark(data){
+        let questionList = this.state.allQuestionetails[this.state.current-1];
         if(data.length>0){
-            if(this.markscore.value > data[0].totalpoints){
+            if(this.markscore.value > questionList.QuesScore){
                 alert("打分不能超过题目分数！");
                 return
             }
             this.state.allQuestionetails[this.state.current-1].teacherMark = this.textarea.value;
-            this.state.allQuestionetails[this.state.current-1].score = this.markscore.value;
             this.state.allQuestionetails[this.state.current-1].teacherMarkUrl = this.uploadcontent.getAttribute('data-value');
+            if(this.markscore.value){
+                this.state.allQuestionetails[this.state.current-1].score = this.markscore.value;
+            }
             console.log(this.state.allQuestionetails[this.state.current-1])
             console.log(this.uploadcontent.getAttribute('data-value'))
+            message.success('提交成功')
         }
     }
-    submitAllQuestion(){
+    submitAllQuestion(flag){
         let ExamResult = this.state.allQuestionetails;
         console.log("submitAllQuestion---=====---=======>>>>>>",ExamResult)
         let allscore = 0;
@@ -140,27 +142,32 @@ class PaperDetail extends Component {
         let sentList={
             ExamInfoID:this.state.examInfoID,
             ExamResult:ExamResult,
-            markFlag:"已批改",
+            markFlag: (flag=='submit') ? "已批改":"批改中",
             Score:allscore,
             marker:Storage_S.getItem("username")
         }
         console.log(sentList)
+        let _this = this;
+        //更新试卷的批改状态
         this.props.actions.updateMarkExamInfo({
             body:{data:sentList},
             success:(data)=>{
-                alert("提交成功！")
+                //更新试卷的每道试题的批改信息
+                _this.props.actions.updateMarkQuestionInfo({
+                    body:{data:sentList},
+                    success:(data)=>{
+                        if(flag == 'submit'){
+                            alert("提交成功!")
+                        }
+                        _this.props.actions.goBack()
+                    },
+                    error:(message)=>{
+                        alert("更新试卷出错！aaaaaaaaa")
+                    }
+                })
             },
             error:(message)=>{
                 alert("提交出错！")
-            }
-        })
-        this.props.actions.updateMarkQuestionInfo({
-            body:{data:sentList},
-            success:(data)=>{
-                alert("提交成功！aaaaaaaa")
-            },
-            error:(message)=>{
-                alert("提交出错！aaaaaaaaa")
             }
         })
     }
@@ -179,7 +186,7 @@ class PaperDetail extends Component {
                     <span dangerouslySetInnerHTML={{__html:data[0].content}}></span>
                     {!(data[0].url)?"":<div className="studentimg">
                         <img width="260px" src={data[0].url}/>
-                        <div className="chakan" onClick={()=>{this.setState({previewVisible: true})}}>查看</div>
+                        <Button className="chakan" onClick={()=>{this.setState({previewVisible: true})}}>放大查看</Button>
                     </div>}
                     <Modal visible={this.state.previewVisible} footer={null} onCancel={()=>{this.setState({previewVisible: false})}}>
                         <img alt="preview" style={{ width: '100%' }} src={data[0].url} />
@@ -206,7 +213,8 @@ class PaperDetail extends Component {
         if(questiontemplate == '选择题'){
             questionType = true;
         }
-        let oldanswer = this.state.allQuestionetails[index-1].Contents ;//做过一次的数据
+        let allqusetionDatail = this.state.allQuestionetails[index-1];
+        let oldanswer = allqusetionDatail.Contents ;//做过一次的数据
         if(content){
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                 content = content.replace(/\_|\s/g,"");
@@ -216,12 +224,12 @@ class PaperDetail extends Component {
             return (
                 <div>
                     <div className="displayflex QtxtContent_main_title">
-                        <div className="QtxtContent_main_title_left">{questiontemplate}：{"（本题"+items.totalpoints+"分）"}</div>
+                        <div className="QtxtContent_main_title_left">{questiontemplate}：{"（本题"+allqusetionDatail.QuesScore+"分）"}</div>
                     </div>
                     <div>
                         <ul id="mainTopic" style={{padding:"8px 0"}}>
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
-                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer[0].content} isCando="false" index={index} choiceList={items.optionselect} />:''}
+                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer[0].content} isCando={false} index={index} choiceList={items.optionselect} />:''}
                             {childs.length<1?"":this._childsList(childs)}
                             {questionType?"":this._studentAnwser(oldanswer)}
                         </ul>
@@ -241,7 +249,7 @@ class PaperDetail extends Component {
                     <header>
                         <div className="title" id="title">{"2018年中考题"+"（一测试卷）"}</div>
                         <div className="exit" >
-                            <button type="button" className="btn btn-default" onClick={()=>this.submitAllQuestion()}>全部提交</button>
+                            <button type="button" className="btn btn-default" onClick={()=>this.submitAllQuestion('submit')}>全部提交</button>
                             <button type="button" className="btn btn-default" onClick={()=>this.exitBack()}>退出</button>
                         </div>
                     </header>

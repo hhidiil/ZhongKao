@@ -75,10 +75,10 @@ class UpLoadFile extends Component{
             <div className="fileupload">
                 <div className="fileBtnCss">
                     <span className="fileinput-button">
-                        <span><Icon type="upload" /> 添加文件</span>
+                        <span><Icon type="upload" /> 添加答案</span>
                         <input type="file" id="exampleInputFile" ref={(ref) => { this.uploadInput = ref; }} onChange={this.preview}/>
                     </span>
-                    <span className="shanchuCss" onClick={this.deleteSubmit}>删除</span>
+                    {/*<span className="shanchuCss" onClick={this.deleteSubmit}>删除</span>*/}
                     <span className="shangchuanCss" onClick={this.upLoadSubmit}>开始上传</span>
                 </div>
                 {this.state.preview != 'false'?<div id="preview"></div>:''}

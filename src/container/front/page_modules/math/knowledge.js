@@ -238,7 +238,7 @@ class Knowledge extends Component{
             }
             return(
                 <div key={index} className="practice" data={questionanswer}>
-                    <div onClick={(e)=>{this.getTheKnowledge(e)}} className="typeName">{"【"+(item.questiontemplate.replace(/\s/,'').substr(0,1))+"】"}</div>
+                    <div className="typeName">{"【"+(item.questiontemplate.replace(/\s/,'').substr(0,1))+"】"}</div>
                     <ul>
                         <li>
                             <div dangerouslySetInnerHTML={{__html:content}}></div>

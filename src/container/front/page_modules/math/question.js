@@ -52,7 +52,8 @@ class Question extends Component{
             activeId:activeId,//试卷ID
             sentAllList: {},//组装答案列表，用来发送存储源数据
             current: null,//当前是第几题
-            errorArray : [],//一测做错的题
+            errorArray : [],//一测做错的题,
+            scoreArraylist:[],//每道试题的得分情况，包括老师批改的分数
             allQuestionetails:[],//一测所有试题做题结果
             allChildQuestionOfExam:[],//试卷的所有试题（包括所有子试题和相关的试题）
             currentQuesData:[],//当前试题的所有内容
@@ -105,6 +106,7 @@ class Question extends Component{
                         let DoExamInfo = sentJson;
                         console.log("ExamResult--一测试题的信息->>>",ExamResult)
                         let errorArray=[];//错误题号
+                        let scoreArraylist=[];//每题的得分
                         let ii=0;
                         for(let ss in ExamResult){
                             if(ExamResult[ss] && ExamResult[ss]!= "null"){
@@ -119,12 +121,13 @@ class Question extends Component{
                                 errorArray[ii] =  Number(ss)+1;
                                 ii = ii+1;
                             }
+                            scoreArraylist[ss] = ExamResult[ss].score
                         }
                         DoExamInfo.ExamResult = ExamResult;
                         if(errorArray.length>0){
-                            this.getAllChildOfExamList(ExamResult,DoExamInfo,errorArray[0],errorArray)
+                            this.getAllChildOfExamList(ExamResult,DoExamInfo,errorArray[0],errorArray,scoreArraylist)
                         }else {
-                            this.getAllChildOfExamList(ExamResult,DoExamInfo,1,errorArray)
+                            this.getAllChildOfExamList(ExamResult,DoExamInfo,1,errorArray,scoreArraylist)
                         }
                     }
                 },
@@ -134,10 +137,11 @@ class Question extends Component{
             console.warn("33333333333333333333333")
             let currentquesid = paperItems.currentquesid;
             let errorArray = paperItems.errorArray;
+            let scoreArraylist = paperItems.scoreArraylist;
             let ExamResult = paperItems.ExamResult;
             //let DoExamInfo = !paperItems.DoExamInfo ? sentJson : JSON.parse(paperItems.DoExamInfo);
             let DoExamInfo = paperItems;
-            this.getAllChildOfExamList(ExamResult,DoExamInfo,currentquesid,errorArray)
+            this.getAllChildOfExamList(ExamResult,DoExamInfo,currentquesid,errorArray,scoreArraylist)
         }
 
         //离开route的钩子处理事件
@@ -199,11 +203,22 @@ class Question extends Component{
                 let childparts = childsNode[i].childparts;//小问的四个部分
                 for(let j in childparts){//每个部分的所有小题题目
                     let childitems =  childparts[j].childs;
-                    for(let m in childitems){
-                        let minitem = childitems[m];//最小的单位 即最小单位的题，不能再深层遍历了
-                        minitem.parttype = childparts[j].parttype;//属于那一部分的题
-                        minitem.childNum = (Number(i)+1);//属于第几小问的题
-                        minitem.indexNum = m;//某部分题的序列
+                    if(childitems.length>0){//每一部分小题数大于1时
+                        for(let m in childitems){
+                            let minitem = childitems[m];//最小的单位 即最小单位的题，不能再深层遍历了
+                            minitem.parttype = childparts[j].parttype;//属于那一部分的题
+                            minitem.childNum = (Number(i)+1);//属于第几小问的题
+                            minitem.indexNum = m;//某部分题的序列
+                            allChildsItem.push(minitem);
+                        }
+                    }else {//某一部分没有小题的时候，给默认值。
+                        let minitem = {
+                            itemid: childparts[j].partid,
+                            parttype:childparts[j].parttype,
+                            childNum:(Number(i)+1),
+                            indexNum: "0",
+                            id: childparts[j].partid,
+                        };
                         allChildsItem.push(minitem);
                     }
                 }
@@ -228,7 +243,7 @@ class Question extends Component{
             this.props.actions.getAllChildOfQuestion({body:[{id:data.QuesID}],
                 success:(data)=>{
                     if(data[0].code == 200){
-                        console.log("currentQuesData-------===---->>>",(data[0].data));
+                        console.log("currentQuesData-------===---->>>",(data[0].data),(data[0].data)[0].childs);
                         this.setState({
                             current: page+1,
                             analysisLeftContent:[],
@@ -258,7 +273,7 @@ class Question extends Component{
                 }})
         }
     }
-    getAllChildOfExamList(ExamResult,DoExamInfo,currentNum,errorArray){
+    getAllChildOfExamList(ExamResult,DoExamInfo,currentNum,errorArray,scoreArraylist){
         this.props.actions.getAllChildOfExam({
             body:{id : this.state.activeId},
             success:(data)=>{
@@ -270,6 +285,7 @@ class Question extends Component{
                     allQuestionetails:ExamResult,
                     current:currentNum,
                     allChildQuestionOfExam:data,
+                    scoreArraylist:scoreArraylist
                 })
                 this.getData(ExamResult[currentNum-1],currentNum-1,data)
             },
@@ -391,12 +407,19 @@ class Question extends Component{
         if(data.length>0){
             return data.map(function(item,index){
                 let content = item.content;
+                content = content.replace(/&nbsp;/g,'');
                 if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                     content = content.replace(/blank|BLANK|#blank#|#BLANK#/g,'<span class="div_input"></span>');
                 }
-                return <li key={index} dangerouslySetInnerHTML={{__html:content}}></li>
-            })
+                return <li style={{textDecoration: 'underline',padding: '5px 20px'}} onClick={()=>this.handleClickChildContent(index)} key={index}><a dangerouslySetInnerHTML={{__html:content}}></a></li>
+            },this)
         }
+    }
+    handleClickChildContent(index){
+        console.log("点击的::::",index+1);
+        let num = (index+1);
+        $('.childs'+num).show();
+        $('.childs'+num).siblings().hide();
     }
     displayAnwser(){
         this.setState({dispalyAnswerFlag:!this.state.dispalyAnswerFlag})
@@ -571,6 +594,7 @@ class Question extends Component{
         (this.state.sentAllList).ExamResult = endnewlist;
         (this.state.sentAllList).currentquesid = this.state.current;
         (this.state.sentAllList).errorArray = this.state.errorArray;//把错误题号也缓存下来
+        (this.state.sentAllList).scoreArraylist = this.state.scoreArraylist;
         (this.state.sentAllList).Score = allscore;
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
 
@@ -662,6 +686,10 @@ class Question extends Component{
                                 <UpLoadFile id="main-solution" submitHandle={this.getEditContent.bind(this)} />
                             </div>):''}
                         </ul>
+                        <ul className="teacherMarkSection">
+                            {oldcontent.teacherMark ? <li><b>老师批语：</b><p>{oldcontent.teacherMark ? oldcontent.teacherMark:''}</p></li>:''}
+                            {oldcontent.teacherMarkUrl ? <li><b>附件：</b><p>{oldcontent.teacherMarkUrl ? <img style={{width:'200px',height:'200px'}} src={oldcontent.teacherMarkUrl} />:''}</p></li>:''}
+                        </ul>
                     </div>
                 </div>
             )
@@ -687,19 +715,49 @@ class Question extends Component{
                         content = content.replace(knowledgelist[i],knownamelist.join(''))//标记必填空
                     }
                 }
+                let ddd = !childsLen ? '':childsLen.childs[item.childNum-1][item.parttype];//某一部分，是数组形式
+                let ddd_content = [];
+                if(ddd && ddd.length>0){
+                    if(ddd[item.indexNum]){
+                        ddd_content = (ddd && ddd.length>0) ? ddd[item.indexNum].content : [];//解析的某部分的第几个content所有内容（比如考点中的第一个小题全部内容）
+                    }
+                }
                 return (
                     <div style={{padding: "10px"}} id={item.parttype+ "-" + item.childNum+ "-" + item.indexNum} key={index} >
                         <p dangerouslySetInnerHTML={{__html:content}}></p>
+                        {item.questiontemplate == '选择题'?<MultipleChoice template="noRender" type={item.questiontype} answer={ddd_content.length>0?ddd_content[0].answer:''} index={index} choiceList={item.optionselect} />:''}
                     </div>
                 )
             }
         })
     }
-    _analysisQtxt(data){
+    analysisQtxtChilds(data){
+        let num = this.state.current;
+        console.log("看这里！！！！！！！！！！！",this.state.sentAllList.ExamResult[num-1])
+        let haveChilds = this.state.currentQuesData[0].childs;//小问
+        if(haveChilds.length>0){
+            return haveChilds.map((item1,index2)=>{
+                return (
+                    <div className={'childs'+(index2+1)} key={(index2+1)} id={'Childs'+(index2+1)}>
+                        <div><b>想法:</b></div>
+                        {this._analysisQtxt(data,(index2+1))}
+                    </div>
+                )
+            },this)
+        }else {
+            return (
+                <div className={'childs0'} id='Childs1'>
+                    {this._analysisQtxt(data,1)}
+                </div>
+            )
+        }
+    }
+    _analysisQtxt(data,childNum){
         let num = this.state.current;
         let childsLen = this.state.sentAllList.ExamResult[num-1];
+        console.log("看这里！！！！！！！！！！！",this.state.sentAllList.ExamResult[num-1],data)
         return data.map(function(item,index){
-            if(item.parttype != 'Review'){
+            if(item.parttype != 'Review' && item.childNum==childNum){
                 let content = item.content;
                 let knowledge = item.knowledge;
                 let questionType=false;
@@ -735,6 +793,7 @@ class Question extends Component{
                 }
                 return (
                     <div className="analysisContent" style={{padding: "10px",borderBottom: '1px dashed gray'}} id={item.parttype+ "-" + item.childNum+ "-" + item.indexNum} key={index} >
+                        {(item.parttype == 'Explain') ? <strong>解法:</strong>:''}
                         <ul className="main_cont">
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
                             {questionType?<MultipleChoice type="多选题" answer={ddd_content.length>0?ddd_content[0].answer:''} index={index} choiceList={item.optionselect} />:''}
@@ -856,7 +915,7 @@ class Question extends Component{
                 let value = '', isRight = false, knowledgesCont=[],knowledge_new = [];
                 let knowledge = ((data.knowledge).replace(/\<B\>|\<\/B\>/g,"")).split("；");//知识点
                 let rightanswer = (data.answer).trim().replace(/\s|，/g,"");//正确答案
-                let inputList = $("#"+parentID).find(".main_cont input:checked");//选项
+                let inputList = $("#"+parentID).find("input:checked");//选项
                 inputList.each(function(ii){
                     value += $(this).val();//用户填写的答案
                 })
@@ -934,6 +993,7 @@ class Question extends Component{
         (this.state.sentAllList).currentquesid = this.state.current;
         (this.state.sentAllList).ExamResult[this.state.current-1] = newChildList;
         (this.state.sentAllList).errorArray = this.state.errorArray;//把错误题号也缓存下来
+        (this.state.sentAllList).scoreArraylist = this.state.scoreArraylist;
         Storage_L.setItem(this.state.activeId+"-second",JSON.stringify(this.state.sentAllList))//每做完一个题缓存一个
         //message.success("提交成功")
     }
@@ -1016,7 +1076,7 @@ class Question extends Component{
         (this.state.sentAllList).errorArray = errArray;//把错误题号也缓存下来
         this.setState({errorArray:errArray})
     }
-    async exitBack(){
+    exitBack(){
         UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
         this.submitQuestionAllAnswer();//本地缓存一下
         this.submitAllQuestion('cache');//发送数据库缓存
@@ -1033,7 +1093,7 @@ class Question extends Component{
             for(let i=0;i<length;i++){
                 list.push(
                     <Link key={i} href={"javascript:void("+(i+1)+")"} title={'第'+(i+1)+'问'} >
-                        <Link href={"#Objective-"+(i+1)+"-0"} title="想法" />
+                        <Link href={"#Childs"+(i+1)} title="想法" />
                         <Link href={"#Explain-"+(i+1)+"-0"} title="解法" />
                     </Link>
                 )
@@ -1051,7 +1111,7 @@ class Question extends Component{
             return (
                 <Anchor>
                     <Link href="javascript:void(5)" click="alert(123123)"  title="页面导航" >
-                        <Link href="#Objective-1-0" title="想法" />
+                        <Link href="#Childs1" title="想法" />
                         <Link href="#Explain-1-0" title="解法" />
                     </Link>
                 </Anchor>
@@ -1109,7 +1169,7 @@ class Question extends Component{
                                         <div className='margint5'>分数:</div>
                                     </div>
                                     <div style={{width:'100%'}}>
-                                        <Pagination2 total={this.state.total} scoreArraylist={[3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3,3]} errorArray={this.state.errorArray} current={this.state.current}  onChange={this.onChange}/>
+                                        <Pagination2 total={this.state.total} scoreArraylist={this.state.scoreArraylist} errorArray={this.state.errorArray} current={this.state.current}  onChange={this.onChange}/>
                                     </div>
                                 </div>
                             </div>
@@ -1174,7 +1234,7 @@ class Question extends Component{
                                     <div className="content_three_right">
                                         <p style={{fontSize:"16px"}}><b>解析部分：</b></p>
                                         <div id="analysusQuesCont">
-                                            {(this.state.analysisLeftContent).length>0?this._analysisQtxt(this.state.analysisLeftContent):<NoThisPart/>}
+                                            {(this.state.analysisLeftContent).length>0?this.analysisQtxtChilds(this.state.analysisLeftContent):<NoThisPart/>}
                                             {!this.state.DialogMaskFlag?"":<DialogMask id={this.props.ueEditIndex} title={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()}><Knowledge questionId={this.state.allQuestionetails[this.state.current-1].QuesID} examPaperId={this.state.activeId} knowledgeName={this.state.knowledgeName} closeDialog={()=>this.closeKnowledgeBox()} /></DialogMask>}
                                         </div>
                                         <div><Button size="small" style={{fontSize:12}} onClick={()=>this.displayAnwser()}>{this.state.dispalyAnswerFlag?'隐藏答案':'显示答案'}</Button></div>

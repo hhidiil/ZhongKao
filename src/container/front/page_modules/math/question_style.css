@@ -169,6 +169,9 @@
 .QtxtContent_main_title{
     border-bottom: 1px dashed;
 }
+.teacherMarkSection li p{
+    padding: 0 15px;
+}
 .exit button{
     margin: 0px 10px;
 }

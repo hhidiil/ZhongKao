@@ -9,25 +9,33 @@ const confirm = Modal.confirm;
 export function success(title,content){
     Modal.success({
         title: title,
-        content: content
+        content: content,
+        okText:"确认",
+        cancelText:"取消"
     });
 }
 export function error(title,content) {
     Modal.error({
         title: title,
-        content: content
+        content: content,
+        okText:"确认",
+        cancelText:"取消"
     });
 }
 
 export function warning(title,content) {
     Modal.warning({
         title: title,
-        content: content
+        content: content,
+        okText:"确认",
+        cancelText:"取消"
     });
 }
 export function showConfirm(content,callback) {
     confirm({
         content: content,
+        okText:"确认",
+        cancelText:"取消",
         onOk(){
             return callback();
         },

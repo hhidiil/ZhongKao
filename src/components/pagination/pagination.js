@@ -28,12 +28,18 @@ class Pagination extends Component{
     }
     componentDidMount(){
         this.addClassHandle(this.state.current);
+        this.setBackgroudcolor(this.state.errorList);
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps) {
-           this.addClassHandle(nextProps.current)
+        if (nextProps.current != this.state.current) {
+            this.addClassHandle(nextProps.current);
+        }
+        if(nextProps.errorArray != this.state.errorArray){
             this.setBackgroudcolor(nextProps.errorList);
         }
+        this.setState({current:nextProps.current,
+            errorArray:nextProps.errorList,
+        })
     }
     setBackgroudcolor(list){
         if(list){

@@ -15,7 +15,7 @@ import PureRenderMixin from '../../../../method_public/pure-render'
 import {Storage_S,Storage_L,QuestionScore} from '../../../../config'
 import './question_style.css'
 import moment from 'moment'
-import {Modal} from 'antd'
+import {Modal,Button} from 'antd'
 import * as Modals from '../../../../method_public/antd-modal'
 import Pagination from '../../../../components/pagination/pagination'
 import MultipleChoice from '../../../../components/multipleChoice/index'
@@ -174,9 +174,13 @@ class Question extends Component{
         return (
             <div>
                 <div>解：__</div>
-                <div>附件(提交的答案)：
-                    <img className="preview_img" src={imgurl}/><span onClick={()=>this.handlePreview()}>查看</span>
-                    <Modal visible={this.state.previewVisible} footer={null} onCancel={()=>this.handleCancel()}>
+                <div>
+                    <img className="preview_img" src={imgurl}/>{imgurl?<Button onClick={()=>this.handlePreview()}>放大图片</Button>:''}
+                    <Modal visible={this.state.previewVisible}
+                           footer={null}
+                           okText="确认"
+                           cancelText="取消"
+                           onCancel={()=>this.handleCancel()}>
                         <img alt="preview" style={{ width: '100%' }} src={imgurl} />
                     </Modal>
                 </div>
@@ -189,7 +193,7 @@ class Question extends Component{
         let content = items.get('content');
         let questiontype = items.get('questiontemplate');
         let isobjective = items.get('isobjective');
-        let doAndAnswerFlag = (questiontype == '简答题' || isobjective=='主观') ? true:false;
+        let doAndAnswerFlag = (questiontype == '简答题' || isobjective!='客观') ? true:false;
         let childs = items.get('childs');
         let oldAnwers = this.state.oldAnwers[0] ? this.state.oldAnwers[0].content :'';
         if(content){
@@ -260,6 +264,7 @@ class Question extends Component{
         let nexflag = true;
         let quesScore = dataItems.get('totalpoints');
         if(!quesScore){//判断试题是否有分数，如果数据库中的试题没有分数 则为其赋一个分数。
+            quesScore = QuestionScore[0];//默认的分数
             if(type == "选择题"){quesScore = QuestionScore[0]}
             if(type == "填空题"){quesScore = QuestionScore[1]}
             if(type == "简答题"){quesScore = QuestionScore[2]}
@@ -437,7 +442,7 @@ class Question extends Component{
         }
         let objective = ((GetQuestion.get('items')).get(0)).get('data').get(0).get('isobjective');
         let questiontemplate = ((GetQuestion.get('items')).get(0)).get('data').get(0).get('questiontemplate');
-        let objectiveFlag = (objective== "主观" || questiontemplate=='简答题') ? true:false;
+        let objectiveFlag = (objective!= "客观" || questiontemplate=='简答题') ? true:false;
         let title = (this.state.dataAll).exampaper;//试卷标题
         let cleartime = this.state.cleartimeflag;
         //获取各部分的高度

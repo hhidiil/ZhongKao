@@ -300,6 +300,7 @@
     cursor: pointer;
     border: 1px solid;
     border-radius: 2px;
+    bottom: 0;
 }
 .noData{
     font-size: 25px;
