@@ -243,6 +243,9 @@
 .QtxtContent .content_three_right ul li{
     margin: 5px 0;
 }
+.QtxtContent .wentiCss p{
+    padding: 0 10px;
+}
 .input_blank{
     border: 0px;
     border-bottom: 1px solid #333;

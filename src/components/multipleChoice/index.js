@@ -11,13 +11,13 @@ const optionName=['A','B','C','D','E','F','G'];
 class Choice extends Component{
     constructor(props){
         super(props)
-        console.log("radioChange=1111=",props.isCando)
         this.state = {
             type:props.type,//选择类型。单选或者多选
             choiceList:props.choiceList,//选项
             index:props.index,
             radioState:props.answer || '',//答案
             isCando: props.isCando|| true,//是否可以选择答案,默认true
+            name_s:props.name_s || ''
         }
     }
     radioChange =(e)=>{
@@ -58,17 +58,17 @@ class Choice extends Component{
         const optionList = (length)=>{
             const list = [];
             for(let i=0;i<length;i++){
-                list.push(<label className="checkbox-inline optionsCss" key={i}>
+                list.push(<div className="checkbox-inline optionsCss" key={i}>
                     <input type={type == '单选题'?'radio':'checkbox'} checked={(answer.indexOf(optionName[i]) != -1)?true:false}
-                           onChange={this.radioChange} value={optionName[i]} name={"Selects"+this.props.index} />
+                           onChange={this.radioChange} value={optionName[i]} name={this.props.name_s +"Selects"+this.props.index} />
                     <span className="marginl5 marginr5">{optionName[i]+"、"}</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[i])}}></span>
-                    </label>)
+                    </div>)
             }
             return list;
         }
         return(
                 <li>
-                    <p>{optionArray.length>1?optionList(optionArray.length):''}</p>
+                    {optionArray.length>1?optionList(optionArray.length):''}
                 </li>
         )
     }
@@ -77,6 +77,7 @@ Choice.propTypes = {
     type:PropTypes.string,//选择类型。单选或者多选
     choiceList:PropTypes.string,//选项
     index:PropTypes.number,//编号
+    name_s:PropTypes.string,//选项name,区分不同的radio
     radioState:PropTypes.string || '',//答案
     isCando: PropTypes.bool//是否可以选择答案
 }

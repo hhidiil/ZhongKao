@@ -338,6 +338,10 @@ class Question extends Component{
         $('.mustText').on('click',function(e){//为每一个空对应的知识点 添加点击事件
             _this.getKnowledge(e);
         });
+        $('.kaodianSection .optionsCss').children("span:last-child").on('click',function(e){//为每一个空对应的知识点 添加点击事件
+            console.log("555555555555555555555555555555555555555555",e)
+            _this.getKnowledge(e);
+        });
         $("#Analysis_Qtxt").find('.div_input').each(function(i){
             let add_id='';
             add_id = "answer-"+_this.state.current+"-"+i;
@@ -411,7 +415,7 @@ class Question extends Component{
                 if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                     content = content.replace(/blank|BLANK|#blank#|#BLANK#/g,'<span class="div_input"></span>');
                 }
-                return <li style={{textDecoration: 'underline',padding: '5px 20px'}} onClick={()=>this.handleClickChildContent(index)} key={index}><a dangerouslySetInnerHTML={{__html:content}}></a></li>
+                return <li style={{padding: '5px 20px'}} onClick={()=>this.handleClickChildContent(index)} key={index}><a dangerouslySetInnerHTML={{__html:content}}></a></li>
             },this)
         }
     }
@@ -617,7 +621,7 @@ class Question extends Component{
     }
     //点击显示知识点弹框
     getKnowledge(e){
-        let knowledge = $(e.target)[0].innerText;
+        let knowledge = $(e.target)[0].innerText.trim();
         console.log("knowledge----看这里----------->>>>>",knowledge)
         this.setState({DialogMaskFlag:true,knowledgeName:knowledge})
     }
@@ -675,7 +679,6 @@ class Question extends Component{
                             {childs.length<1?"":this._childsList(childs)}
                         </ul>
                         <ul>
-                            <b>考点：</b>
                             {this.kaodianQtxt(this.state.analysisLeftContent)}
                         </ul>
                         <ul>
@@ -723,9 +726,9 @@ class Question extends Component{
                     }
                 }
                 return (
-                    <div style={{padding: "10px"}} id={item.parttype+ "-" + item.childNum+ "-" + item.indexNum} key={index} >
+                    <div style={{padding: "10px"}} id={item.parttype+ "-" + item.childNum+ "-" + item.indexNum} key={index} className="kaodianSection">
                         <p dangerouslySetInnerHTML={{__html:content}}></p>
-                        {item.questiontemplate == '选择题'?<MultipleChoice template="noRender" type={item.questiontype} answer={ddd_content.length>0?ddd_content[0].answer:''} index={index} choiceList={item.optionselect} />:''}
+                        {item.questiontemplate == '选择题'?<MultipleChoice template="noRender" type={item.questiontype} answer={ddd_content.length>0?ddd_content[0].answer:''} index={index} name_s="kaodian" choiceList={item.optionselect} />:''}
                     </div>
                 )
             }
@@ -739,7 +742,7 @@ class Question extends Component{
             return haveChilds.map((item1,index2)=>{
                 return (
                     <div className={'childs'+(index2+1)} key={(index2+1)} id={'Childs'+(index2+1)}>
-                        <div><b>想法:</b></div>
+                        <div className="wentiCss"><strong>{"第"+(index2+1)+"问"}</strong><p><b>想法:</b></p></div>
                         {this._analysisQtxt(data,(index2+1))}
                     </div>
                 )
@@ -747,6 +750,7 @@ class Question extends Component{
         }else {
             return (
                 <div className={'childs0'} id='Childs1'>
+                    <div className="wentiCss"><strong>{"第1问"}</strong><p><b>想法:</b></p></div>
                     {this._analysisQtxt(data,1)}
                 </div>
             )
@@ -769,6 +773,7 @@ class Question extends Component{
                     }
                 }
                 let regex=/{@.+?@}/g;
+                content = content.replace(/【观察】|【思路】|【考点】|【解答】/g,'');
                 if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                     content = content.replace(/blank|BLANK|#blank#|#BLANK#/g,'<span contenteditable="true" class="div_input"></span>')
                 }
@@ -792,7 +797,7 @@ class Question extends Component{
                     knowledge = knowledge.replace(/\|\||；|\@\#|;/g,"@&").split('@&');
                 }
                 return (
-                    <div className="analysisContent" style={{padding: "10px",borderBottom: '1px dashed gray'}} id={item.parttype+ "-" + item.childNum+ "-" + item.indexNum} key={index} >
+                    <div className="analysisContent" style={{margin: "10px",borderBottom: '1px dashed gray'}} id={item.parttype+ "-" + item.childNum+ "-" + item.indexNum} key={index} >
                         {(item.parttype == 'Explain') ? <strong>解法:</strong>:''}
                         <ul className="main_cont">
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
@@ -886,7 +891,7 @@ class Question extends Component{
     }
     onChange = (page) => {
         console.log("page--",page);
-        this.submitQuestionAllAnswer();
+        //this.submitQuestionAllAnswer();
         this.setState({showHeader:false});
         this.getData(this.state.allQuestionetails[page-1],page-1,this.state.allChildQuestionOfExam)
     }
