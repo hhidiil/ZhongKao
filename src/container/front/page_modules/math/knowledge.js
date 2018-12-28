@@ -245,7 +245,7 @@ class Knowledge extends Component{
                         </li>
                         {item.questiontemplate == "选择题" ?<MultipleChoice template="noRender" type={item.questiontype} answer="" changeSave={this.onchangehandle.bind(this)}  index={index} choiceList={item.optionselect} />:''}
                     </ul>
-                    <div style={{marginLeft:42}}>
+                    <div style={{marginLeft:42,display:'none'}}>
                         <span style={{cursor:"pointer",fontSize:12,border:"1px solid",padding:2,borderRadius:12}} onClick={()=>{this.answerHideShow(index)}}>提示</span>
                         <span ref={"answer"+index} style={{marginLeft:20,display:"none"}} dangerouslySetInnerHTML={{__html:(item.answer.replace(/\|\|/g,'；'))}}></span>
                     </div>

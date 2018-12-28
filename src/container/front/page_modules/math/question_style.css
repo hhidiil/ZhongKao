@@ -495,9 +495,12 @@
     right: 20px;
     bottom:0px;
 }
+.knowledgeContent .practice .mustText{
+    display: inline-block;
+}
 .typeName{
     position: absolute;
-    margin-top: 20px;
+    /*margin-top: 20px;*/
 }
 .selectorLine{
     margin: 5px 0;

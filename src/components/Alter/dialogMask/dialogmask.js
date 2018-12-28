@@ -38,7 +38,7 @@ class DialogMask extends React.Component {
                 <div className="Dialog-content" id={"Dialog-content"+this.state.id}>
                     <header>
                         <h3>{title}</h3>
-                        <Button className="exit" onClick={closeDialog}>关闭</Button>
+                        <Button className="exitbtn" onClick={closeDialog}>关闭</Button>
                     </header>
                     <section>
                         {children}
