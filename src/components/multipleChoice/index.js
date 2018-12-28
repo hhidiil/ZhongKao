@@ -17,7 +17,8 @@ class Choice extends Component{
             index:props.index,
             radioState:props.answer || '',//答案
             isCando: props.isCando|| true,//是否可以选择答案,默认true
-            name_s:props.name_s || ''
+            name_s:props.name_s || '',
+            optionNameCancel:props.optionNameCancel || false
         }
     }
     radioChange =(e)=>{
@@ -49,6 +50,7 @@ class Choice extends Component{
     }
     render(){
         let optionArray=[],option = this.props.choiceList,type = this.props.type;
+        let optionNameCancel =  this.props.optionNameCancel;
         let ss = ($.trim(option)).replace(/["\[\]\s]/g,"");
         let answer = this.state.radioState;
         if(answer){//多选题
@@ -61,7 +63,7 @@ class Choice extends Component{
                 list.push(<div className="checkbox-inline optionsCss" key={i}>
                     <input type={type == '单选题'?'radio':'checkbox'} checked={(answer.indexOf(optionName[i]) != -1)?true:false}
                            onChange={this.radioChange} value={optionName[i]} name={this.props.name_s +"Selects"+this.props.index} />
-                    <span className="marginl5 marginr5">{optionName[i]+"、"}</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[i])}}></span>
+                    <span className="marginl5 marginr5">{!optionNameCancel ? (optionName[i]+"、"):""}</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[i])}}></span>
                     </div>)
             }
             return list;
@@ -79,6 +81,7 @@ Choice.propTypes = {
     index:PropTypes.number,//编号
     name_s:PropTypes.string,//选项name,区分不同的radio
     radioState:PropTypes.string || '',//答案
-    isCando: PropTypes.bool//是否可以选择答案
+    isCando: PropTypes.bool,//是否可以选择答案
+    optionNameCancel: PropTypes.bool//选项的名字是否保留（A、C、D...）
 }
 export default Choice

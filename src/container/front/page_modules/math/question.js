@@ -728,7 +728,7 @@ class Question extends Component{
                 return (
                     <div style={{padding: "10px"}} id={item.parttype+ "-" + item.childNum+ "-" + item.indexNum} key={index} className="kaodianSection">
                         <p dangerouslySetInnerHTML={{__html:content}}></p>
-                        {item.questiontemplate == '选择题'?<MultipleChoice template="noRender" type={item.questiontype} answer={ddd_content.length>0?ddd_content[0].answer:''} index={index} name_s="kaodian" choiceList={item.optionselect} />:''}
+                        {item.questiontemplate == '选择题'?<MultipleChoice template="noRender" type={item.questiontype} answer={ddd_content.length>0?ddd_content[0].answer:''} index={index} name_s="kaodian" optionNameCancel={true} choiceList={item.optionselect} />:''}
                     </div>
                 )
             }
@@ -891,7 +891,7 @@ class Question extends Component{
     }
     onChange = (page) => {
         console.log("page--",page);
-        //this.submitQuestionAllAnswer();
+        this.submitQuestionAllAnswer();
         this.setState({showHeader:false});
         this.getData(this.state.allQuestionetails[page-1],page-1,this.state.allChildQuestionOfExam)
     }
