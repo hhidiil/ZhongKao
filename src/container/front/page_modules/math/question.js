@@ -11,7 +11,7 @@ import { bindActionCreators } from 'redux'
 import { push } from 'react-router-redux'
 import {getFirstDataOfPaper,getSecendDataOfPaper,getAllChildOfExam,getAllChildOfQuestion,getContentOfChildItemsForQues,getQuestion,getChildQuestionsForQuestion,doSetCollection,sentUserPaperData} from '../../../../redux/actions/math'
 import {createEditIndex} from '../../../../redux/actions/public'
-import {getCoords,compareDifferent,toJson,sleep} from '../../../../method_public/public'
+import {getCoords,compareDifferent,toJson,sleep,escape1Html} from '../../../../method_public/public'
 import {showConfirm} from '../../../../method_public/antd-modal'
 import PureRenderMixin from '../../../../method_public/pure-render'
 import SelectMenu from '../../../../components/selectMenu/selectMenu'
@@ -238,7 +238,7 @@ class Question extends Component{
                 }
             }
         }
-        console.warn("看这里=====》》》",allChildsItem)
+        console.warn("allChildsItem------看这里=====》》》",allChildsItem)
         if(data){
             this.props.actions.getAllChildOfQuestion({body:[{id:data.QuesID}],
                 success:(data)=>{
@@ -339,7 +339,6 @@ class Question extends Component{
             _this.getKnowledge(e);
         });
         $('.kaodianSection .optionsCss').children("span:last-child").on('click',function(e){//为每一个空对应的知识点 添加点击事件
-            console.log("555555555555555555555555555555555555555555",e)
             _this.getKnowledge(e);
         });
         $("#Analysis_Qtxt").find('.div_input').each(function(i){
@@ -353,15 +352,58 @@ class Question extends Component{
                 //当用户填写的答案错的时候显示答案错误，标红 或者 弹对应知识点的框
                 if(_this.state.current == arry){
                     if(_this.state.target_id != add_id){
-                        if($('#'+_this.state.target_id)[0].innerText == ''){
+                        //当前空没有填则不能换下一题
+                        if(!$('#'+_this.state.target_id).attr('data') && $('#'+_this.state.target_id)[0].innerText == ''){
                             $('#'+_this.state.target_id).focus();
                             return
+                        }else {
+                            let inputAnswer = '',rightanswer='',num;
+                            let parentId = $('#'+_this.state.target_id).parents('.analysisContent').attr('id');
+                            let data = _this.findTargetDat(_this.state.analysisLeftContent,parentId);//在数组中查找对应的数据；
+                            let list = $('#'+parentId).find('.div_input');
+                            num = $('#'+parentId+' .div_input').index($('#'+_this.state.target_id));//当前聚焦的空在是本题的第几个小空
+                            console.log("当前题的信息：：：：",data,num,parentId)
+                            rightanswer = ((data.answer).trim().replace(/\s/g,"").split("||")[num]).trim();//正确答案
+                            if($('#'+_this.state.target_id).attr('data')){
+                                inputAnswer = "$"+$('#'+_this.state.target_id).attr('data')+"$";
+                            }
+                            if($('#'+_this.state.target_id)[0].innerText != ''){
+                                inputAnswer = $('#'+_this.state.target_id)[0].innerText;
+                            }
+                            let isOrRight = compareDifferent(inputAnswer,rightanswer);;//当前题的最终正确与否
+                            let lastKnowledge = [];//当前题的最终自动弹框需要的知识点
+                            if(!isOrRight){//这道题为错
+                                if($('#'+ _this.state.target_id).next().attr('class') == 'mustText'){//有对应的知识点
+                                    $('#'+_this.state.target_id).focus();
+                                    let knowledgesss = $('#'+ _this.state.target_id).next()[0].innerText;//查找出此空对应的知识点
+                                    lastKnowledge = knowledgesss.replace(/\s|{@|@}/g,'').split('；');
+                                    autoKnowledgeList = lastKnowledge;
+                                    console.log("学生的答案：：：：",inputAnswer,rightanswer,isOrRight,autoKnowledgeList)
+                                    if(autoKnowledgeList.length>0){
+                                        _this.autoGetKnowledge()
+                                    }
+                                    return;
+                                }else {
+                                    $('#'+ _this.state.target_id).css('color','red');
+                                }
+                            }
+                            console.log("学生的答案：：：：",inputAnswer,rightanswer,isOrRight,autoKnowledgeList)
                         }
                     }
                 }
                 _this.FocusHandle(this,add_id)
             })
         });
+    }
+    findTargetDat(array,id){
+        let arr =  id.split('-');
+        if(array.length>0){
+            for(let item in array){
+                if(array[item].parttype ==arr[0] && array[item].childNum == arr[1] && array[item].indexNum == arr[2] ){
+                 return array[item];
+                }
+            }
+        }
     }
     addAnswer(){
         let childsDom = this.state.sentAllList.ExamResult[this.state.current-1];
@@ -675,7 +717,7 @@ class Question extends Component{
                     <div>
                         <ul id="mainTopic" style={{padding:"8px 0"}}>
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
-                            {questionType?<MultipleChoice type={items.questiontype} answer={oldanswer.length>0?oldanswer[0].content:""} index={index} choiceList={items.optionselect} />:''}
+                            {questionType?<MultipleChoice template="noRender" type={items.questiontype} answer={oldanswer.length>0?oldanswer[0].content:""} index={index} choiceList={items.optionselect} />:''}
                             {childs.length<1?"":this._childsList(childs)}
                         </ul>
                         <ul>
@@ -736,13 +778,13 @@ class Question extends Component{
     }
     analysisQtxtChilds(data){
         let num = this.state.current;
-        console.log("看这里！！！！！！！！！！！",this.state.sentAllList.ExamResult[num-1])
+        console.log("analysisQtxtChilds----看这里！！！！！！！！！！！",this.state.sentAllList.ExamResult[num-1])
         let haveChilds = this.state.currentQuesData[0].childs;//小问
         if(haveChilds.length>0){
             return haveChilds.map((item1,index2)=>{
                 return (
                     <div className={'childs'+(index2+1)} key={(index2+1)} id={'Childs'+(index2+1)}>
-                        <div className="wentiCss"><strong>{"第"+(index2+1)+"问"}</strong><p><b>想法:</b></p></div>
+                        <div className="wentiCss"><strong style={{fontSize: '16px'}}>{"第"+(index2+1)+"问"}</strong><p><b>想法:</b></p></div>
                         {this._analysisQtxt(data,(index2+1))}
                     </div>
                 )
@@ -759,7 +801,6 @@ class Question extends Component{
     _analysisQtxt(data,childNum){
         let num = this.state.current;
         let childsLen = this.state.sentAllList.ExamResult[num-1];
-        console.log("看这里！！！！！！！！！！！",this.state.sentAllList.ExamResult[num-1],data)
         return data.map(function(item,index){
             if(item.parttype != 'Review' && item.childNum==childNum){
                 let content = item.content;
@@ -798,7 +839,7 @@ class Question extends Component{
                 }
                 return (
                     <div className="analysisContent" style={{margin: "10px",borderBottom: '1px dashed gray'}} id={item.parttype+ "-" + item.childNum+ "-" + item.indexNum} key={index} >
-                        {(item.parttype == 'Explain') ? <strong>解法:</strong>:''}
+                        {(item.parttype == 'Explain' && item.indexNum=='0') ? <strong>解法:</strong>:''}
                         <ul className="main_cont">
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
                             {questionType?<MultipleChoice type="多选题" answer={ddd_content.length>0?ddd_content[0].answer:''} index={index} choiceList={item.optionselect} />:''}
@@ -963,7 +1004,7 @@ class Question extends Component{
                     }else{
                         value = $(this).text();
                     }
-                    everyRightanswer = rightanswer[ii].replace(/$/g,'');//格式化正确答案，去除多余的其他字符
+                    everyRightanswer = rightanswer[ii] ? rightanswer[ii].replace(/$/g,'') : rightanswer[ii];//格式化正确答案，去除多余的其他字符
                     isRight = compareDifferent(everyRightanswer,value);
                     if(!isRight){//有错误的空，则这道题为错
                         endRigth = false;
@@ -986,12 +1027,12 @@ class Question extends Component{
                 });
                 isOrRight = endRigth;
             };
-            if(!isOrRight){//如果做错了 则自动弹框知识点复习
-                autoKnowledgeList = lastKnowledge;
-                if(autoKnowledgeList.length>0){
-                    //this.autoGetKnowledge()
-                }
-            }
+            //if(!isOrRight){//如果做错了 则自动弹框知识点复习
+            //    autoKnowledgeList = lastKnowledge;
+            //    if(autoKnowledgeList.length>0){
+            //        this.autoGetKnowledge()
+            //    }
+            //}
             newChildList.childs[childNum][type][index].itemid = data.itemid ? data.itemid : data.questionid;
         }
         console.log("切换试题的时候存储缓存信息：===222222====》",this.state.current,this.state.errorArray,newChildList);
@@ -1035,6 +1076,7 @@ class Question extends Component{
                 let answers = $("#mainTopic").find(".div_input");//选项;
                 let  len = answers ? answers.length : 1 ;//有几个空，平均每个空的答案得分
                 answers.each(function(ii){
+                    let istrue1 = false;
                     if($(this).children('img').length>0){//先查找公式编辑器输入的内容即用编辑器输入的会产生一个img标签，没有则直接查text
                         mysrc = $(this).find('img')[0].src;
                         myvalue = $(this).find('img')[0].dataset.latex;
@@ -1042,12 +1084,12 @@ class Question extends Component{
                         myvalue = $(this).text();
                     }
                     if(compareDifferent(rightanswer[ii],myvalue)){
-                        istrue =true;
+                        istrue1 =true;
                         score += Number(items.totalpoints)/len;
                     }
                     contents[ii] = {
                         "content":myvalue,
-                        "isTrue":istrue,
+                        "isTrue":istrue1,
                         "url":mysrc
                     };
                 })
@@ -1057,12 +1099,12 @@ class Question extends Component{
             for(let ii in contents){
                 if(!(contents[ii].isTrue)){
                     isOrRight = false;
+                    break;
                 }
             }}
         newChildList.Contents = contents;
         newChildList.score = score;
         newChildList.isOrRight = isOrRight;
-
         this.updateErrorArray(index,isOrRight);
     }
     updateErrorArray(current,isOrRight){

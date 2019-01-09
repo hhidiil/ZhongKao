@@ -179,8 +179,19 @@ function subset(A,B){
 export function compareDifferent(A,B){
     var A = A+'';
     var B = B+'';
-    var numA = A ? (A.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>/g,'') : A;
-    var numB = B ? (B.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>/g,'') : B;
+    var numA = '',numB='';
+    if(A){
+        numA = (A.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|&nbsp;/g,'');
+        numA = escape1Html(numA)
+    }else {
+        numA = A;
+    }
+    if(B){
+        numB = (B.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|&nbsp;/g,'');
+        numB = escape1Html(numB);
+    }else {
+        numB = B;
+    }
     try {
         var expr1 = KAS.parse(numA).expr;
         var expr2 = KAS.parse(numB).expr;
@@ -198,6 +209,15 @@ export function compareDifferent(A,B){
         return false;
     }
 
+}
+//转意符换成普通字符
+export function escape1Html(str) {
+    var arrEntities={'lt':'<','gt':'>','nbsp':' '};
+    return str.replace(/&(lt|gt|nbsp);/ig,function(all,t){return arrEntities[t];});
+}
+////普通字符转换成转意符
+export function escape2Html(sHtml) {
+    return sHtml.replace(/[<>]/g,function(c){return {'<':'&lt;','>':'&gt;'}[c];});
 }
 //JSON解析
 export function toJson(str){

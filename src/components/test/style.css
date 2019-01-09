@@ -12,6 +12,7 @@
     border: none !important;
 }
 .mustText{
-    color: red;
+    color: #167dff;
     cursor:pointer;
+    display: none;
 }
