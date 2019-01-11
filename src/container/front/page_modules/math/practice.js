@@ -43,7 +43,7 @@ class Question extends Component{
             totalNum:0,//试题总数
             all_question:[],//所有题目
             sentList: !paperItems? sentJson : paperItems,//组装答案列表，用来发送存储源数据
-            oldAnwers:'',//答案
+            oldAnwers:[],//答案
             target_id:'',//当前要操作的dom
             img_url:'',
             previewVisible:false,//提交的照片放大查看
@@ -54,6 +54,7 @@ class Question extends Component{
         }
     }
     componentDidMount(){
+        console.log("11111111111111111111111111111111111111--->",this.state.sentList)
         sentJson.ExamInfoID = moment().format('x');//当前时间戳作为此次做题id
         sentJson.UserID =Storage_S.getItem('userid');
         sentJson.ExamPaperID = this.state.activeId;
@@ -69,6 +70,7 @@ class Question extends Component{
                     console.log("getQuestionList-----====--->>>>>",newdata.data)
                     let all_question = newdata.data;//解析JSON
                     let data_len = all_question.length;//本套试题的所有题目数
+                    //this.state.sentList = Storage_L.getItem(this.state.activeId);//获取缓存中的数据
                     this.getData(all_question[this.state.current-1]);
                     this.setState({
                         totalNum:data_len,
@@ -107,11 +109,15 @@ class Question extends Component{
         let _this = this;
         $(".div_input").each(function(i){
             let add_id = "practice"+_this.state.current+i;
-            if(_this.state.oldAnwers[i]){
-                if(_this.state.oldAnwers[i].url){//有图片的话,添加img
-                    $(this).append('<img src='+_this.state.oldAnwers[i].url+' data-latex='+_this.state.oldAnwers[i].content+'/>');
-                }else{
-                    $(this).text(_this.state.oldAnwers[i].content);
+            let oldAnswerList = _this.state.sentList.ExamResult[_this.state.current-1];
+            if(oldAnswerList){
+                let oldList = oldAnswerList.Contents;
+                if(oldList[i]){
+                    if(oldList.url){//有图片的话,添加img
+                        $(this).append('<img src='+oldList[i].url+' data-latex='+oldList[i].content+'/>');
+                    }else{
+                        $(this).text(oldList[i].content);
+                    }
                 }
             }
             $(this).attr("id",add_id);
@@ -147,12 +153,13 @@ class Question extends Component{
                     console.log("getQuestion=======555555=========>",data)
                     if(data[0].code == 200){
                         let isHave = (this.state.sentList).ExamResult[this.state.current-1];//做过了就显示选择的答案
-                        let oldAnwers = '';
-                        if(isHave){
-                            oldAnwers = isHave.Contents;
-                        }
-                        console.log("this.state.sentList=======555555=========>",this.state.sentList)
-                        this.setState({oldAnwers: oldAnwers,questionList:data[0].data})
+                        //let oldAnwers = [];
+                        //if(isHave){
+                        //    oldAnwers = isHave.Contents;
+                        //}
+                        //console.log("this.state.sentList=======555555=========>",this.state.sentList)
+                        //this.setState({oldAnwers: oldAnwers,questionList:data[0].data})
+                        this.setState({questionList:data[0].data})
                     }
                 }})
         }
@@ -175,7 +182,7 @@ class Question extends Component{
             <div>
                 <div>解：__</div>
                 <div>
-                    <img style={{maxWidth: '350px',maxHeight: '400px'}} src={imgurl}/>{imgurl?<Button onClick={()=>this.handlePreview()}>放大图片</Button>:''}
+                    <img id="mainAnswerImg" style={{maxWidth: '350px',maxHeight: '400px'}} src={imgurl}/>{imgurl?<Button onClick={()=>this.handlePreview()}>放大图片</Button>:''}
                     <Modal visible={this.state.previewVisible}
                            footer={null}
                            okText="确认"
@@ -196,7 +203,9 @@ class Question extends Component{
         let isobjective = items.get('isobjective');
         let doAndAnswerFlag = (questiontype == '简答题' || isobjective!='客观') ? true:false;
         let childs = items.get('childs');
-        let oldAnwers = this.state.oldAnwers[0] ? this.state.oldAnwers[0].content :'';
+        //let oldAnwers = this.state.oldAnwers[0] ? this.state.oldAnwers[0].content :'';
+        let oldContent = (this.state.sentList).ExamResult[index-1] ? (this.state.sentList).ExamResult[index-1].Contents : [];
+        let oldAnwers = oldContent[0] ? oldContent[0].content :'';
         if(content){
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                 content = content.replace(/<u>blank<\/u>|blank|BLANK|#blank#|#BLANK#/g,'<span contenteditable="true" class="div_input"></span>')
@@ -211,7 +220,7 @@ class Question extends Component{
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
                             {questiontype == "选择题" ?<MultipleChoice type={items.get('questiontype')} answer={oldAnwers}  index={index} choiceList={items.get('optionselect')} />:''}
                             {childs.size<1?"":this._childsList(childs)}
-                            {doAndAnswerFlag ? this._doAndAnswer(this.state.oldAnwers) :''}
+                            {doAndAnswerFlag ? this._doAndAnswer(oldContent) :''}
                         </ul>
                     </div>
                 </div>
@@ -253,6 +262,7 @@ class Question extends Component{
         var nextpage = page+1;
         var isright = false;
         var targetDom = '';
+        let sentList = this.state.sentList.ExamResult;
         let AnswerArr = [];
         let dataItems = ((GetQuestion.get('items')).get(0)).get('data').get(0);//试题数据
         let answer = $.trim(dataItems.get('answer'));
@@ -305,7 +315,6 @@ class Question extends Component{
                     "url":"",
                     "IsTrue": isright
                 }]
-                //this.state.AnswerContent = AnswerArr;
             }else {
                 nexflag = false;
                 //alert('请选择一个答案！')
@@ -313,12 +322,19 @@ class Question extends Component{
         }else {//除了选择题，其他的先统一按照简答题来处理
             let _this = this;//全局this赋给新的值
             if(isobjective != '客观'){//如果是主观题则按照错题来处理
-                AnswerArr = [{
-                    "domid":'',
-                    "content": '',
-                    "url": _this.state.img_url,
-                    "IsTrue": false
-                }]
+                if(sentList[page-1]){//先判断有没有缓存
+                    AnswerArr = sentList[page-1].Contents;
+                    if(this.state.img_url){
+                        AnswerArr[0].url =this.state.img_url;
+                    }
+                }else {
+                    AnswerArr = [{
+                        "domid":'',
+                        "content": '',
+                        "url": this.state.img_url,
+                        "IsTrue": false
+                    }]
+                }
                 score = 0;
             }else{
                 answer = answer ? answer.split("||") : answer;//处理答案是多的空的情况
@@ -347,8 +363,6 @@ class Question extends Component{
                     }
                 });
             }
-
-            //this.state.AnswerContent = AnswerArr;
         }
         if(nexflag){
             let nowList = (this.state.sentList).ExamResult;
@@ -360,7 +374,7 @@ class Question extends Component{
                         isOrRight = false;
                     }
                 }}
-            nowList[page-1] = {
+            (this.state.sentList).ExamResult[page-1] = {
                 "QuesID": quesId,
                 "QuesType": type,
                 "Contents": AnswerArr,

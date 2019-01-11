@@ -3,7 +3,7 @@
  */
 
 import React,{Component} from 'react'
-import './main.css'
+//import './main.css'
 import './style.css'
 import PropTypes from 'prop-types'
 import { message,Input, Button, Icon,Row,Col} from 'antd';
