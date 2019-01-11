@@ -338,6 +338,7 @@ class Question extends Component{
         $('.mustText').on('click',function(e){//为每一个空对应的知识点 添加点击事件
             _this.getKnowledge(e);
         });
+        $('.kaodianSection .optionsCss').children("span:last-child").css('color','#167dff');
         $('.kaodianSection .optionsCss').children("span:last-child").on('click',function(e){//为每一个空对应的知识点 添加点击事件
             _this.getKnowledge(e);
         });

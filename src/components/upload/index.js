@@ -11,6 +11,8 @@ import {beforeUpload} from '../../method_public/public'
 import * as Modals from '../../method_public/antd-modal'
 import {upload} from '../../redux/actions/upload'
 import {Upload, message, Button, Icon,} from 'antd';
+import DialogMask from '../../components/Alter/dialogMask/dialogmask'
+import ImageCut from '../../components/cutImage'
 
 
 class UpLoadFile extends Component{
@@ -19,7 +21,9 @@ class UpLoadFile extends Component{
         this.state={
             imageURL:"",
             preview:props.preview || 'true',//是否预显示,
-            personFlag:props.personFlag || '1'//谁上传的： 教师、学生、管理员。。。。；教师为0，学生为1;默认为学生上传
+            personFlag:props.personFlag || '1',//谁上传的： 教师、学生、管理员。。。。；教师为0，学生为1;默认为学生上传
+            DialogMaskFlag:false,
+            base64Url:'',//以base64的格式上传文件
         }
     }
     upLoadSubmit = (e) =>{
@@ -35,6 +39,7 @@ class UpLoadFile extends Component{
                 data.append("username", sessionStorage.getItem('username'));
                 //data.append("preurl",_this.state.imageURL);//前一个上传的答案，如果从新上传一张则删除上传的前一张
                 data.append("preurl",'');
+                data.append('base64Url',_this.state.base64Url);
                 _this.props.actions.upload({
                     body:{
                         method: 'POST',
@@ -58,6 +63,9 @@ class UpLoadFile extends Component{
         file.value = '';
         $('#preview').empty()
     }
+    editImgHandle = () =>{
+        this.setState({DialogMaskFlag:true});
+    }
     preview =()=>{
         let file = this.uploadInput.files[0];
         let img = new Image(), url = img.src = URL.createObjectURL(file);
@@ -67,21 +75,39 @@ class UpLoadFile extends Component{
             URL.revokeObjectURL(url);
             $('#preview').empty().append($img);
         }
-        //<input id="exampleInputFile" ref={(ref) => { this.uploadInput = ref; }} type="file" width="200px" onChange={this.preview} /><br/>
+        this.state.base64Url = '';
+    }
+    saveImgUrlHandle (param){
+        console.log("111111111111111111111--->",param)
+        this.state.base64Url = param;
+        $('#preview img').attr('src',param)
+    }
+    _cutSection(){
+        let file = this.uploadInput.files;
+        return (
+            <div className="editImgSection">
+                <section>
+                    <div style={{textAlign: 'right'}}><Button onClick={()=>this.setState({DialogMaskFlag:false})}>关闭</Button></div>
+                    <ImageCut File={file} saveImgUrl={this.saveImgUrlHandle.bind(this)} />
+                </section>
+            </div>
+        )
     }
     render(){
-        console.log("this.state.preview====>>>>>>",this.state.preview)
+        console.log("this.state.preview====>>>>>>",this.state.preview);
         return(
             <div className="fileupload">
                 <div className="fileBtnCss">
                     <span className="fileinput-button">
                         <span><Icon type="upload" /> 添加答案</span>
-                        <input type="file" id="exampleInputFile" ref={(ref) => { this.uploadInput = ref; }} onChange={this.preview}/>
+                        <input type="file" id="exampleInputFile" name="exampleInputFile" ref={(ref) => { this.uploadInput = ref; }} onChange={this.preview}/>
                     </span>
                     {/*<span className="shanchuCss" onClick={this.deleteSubmit}>删除</span>*/}
+                    <span className="shangchuanCss" onClick={this.editImgHandle}>编辑图片</span>
                     <span className="shangchuanCss" onClick={this.upLoadSubmit}>开始上传</span>
                 </div>
                 {this.state.preview != 'false'?<div id="preview"></div>:''}
+                {this.state.DialogMaskFlag ? this._cutSection():''}
             </div>
         )
     }

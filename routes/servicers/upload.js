@@ -2,6 +2,8 @@
  * 文件处理：上传、下载
  * Created by gaoju on 2018/1/16.
  */
+
+var fs = require('fs');
 const CONFIG_MAP = require('../../config')
 const Helper = require('../helper')
 
@@ -13,6 +15,7 @@ module.exports={
     doUpLoadFile: (req, res, next) => {
         let personflag = req.body.personflag;//那个角色上传的，有教师、学生。。教师为0，学生为1
         let imageFile = req.files.file;
+        let imgData = req.body.base64Url;
         let foldername='',preUrl='',dateString='',target_path='';
         let whichfile = '';
         if(personflag == '0'){
@@ -27,12 +30,24 @@ module.exports={
         dateString = Helper.randomString(true,5,16);//产生随机文件名
         target_path = Helper.createFolder(path,foldername);
         //将上传的图片移到指定目录
-        imageFile.mv(`${target_path}/${dateString}.png`, function(err) {
-            if (err) {
-                return res.status(500).send(err);
-            }
-            res.json({file: `${whichfile}/${foldername}/${dateString}.png`});
-        });
+        if(imgData){//使用base64的格式存储文件
+            let base64Data = imgData.replace(/^data:image\/\w+;base64,/, "");
+            let dataBuffer = new Buffer(base64Data, 'base64');
+            fs.writeFile(`${target_path}/${dateString}.png`, dataBuffer, function(err) {
+                if(err){
+                    return res.status(500).send(err);
+                }else{
+                    res.json({file: `${whichfile}/${foldername}/${dateString}.png`});
+                }
+            });
+        }else {
+            imageFile.mv(`${target_path}/${dateString}.png`, function(err) {
+                if (err) {
+                    return res.status(500).send(err);
+                }
+                res.json({file: `${whichfile}/${foldername}/${dateString}.png`});
+            });
+        }
     },
     doDownLoadFile:(req,res,next) =>{
         let file = req.query.name;

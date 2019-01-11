@@ -175,12 +175,13 @@ class Question extends Component{
             <div>
                 <div>解：__</div>
                 <div>
-                    <img className="preview_img" src={imgurl}/>{imgurl?<Button onClick={()=>this.handlePreview()}>放大图片</Button>:''}
+                    <img style={{maxWidth: '350px',maxHeight: '400px'}} src={imgurl}/>{imgurl?<Button onClick={()=>this.handlePreview()}>放大图片</Button>:''}
                     <Modal visible={this.state.previewVisible}
                            footer={null}
                            okText="确认"
                            cancelText="取消"
-                           onCancel={()=>this.handleCancel()}>
+                           onCancel={()=>this.handleCancel()}
+                           width="40%">
                         <img alt="preview" style={{ width: '100%' }} src={imgurl} />
                     </Modal>
                 </div>
