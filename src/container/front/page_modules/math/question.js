@@ -374,6 +374,7 @@ class Question extends Component{
                             let isOrRight = compareDifferent(inputAnswer,rightanswer);;//当前题的最终正确与否
                             let lastKnowledge = [];//当前题的最终自动弹框需要的知识点
                             if(!isOrRight){//这道题为错
+                                $('#'+ _this.state.target_id).css('color','red');
                                 if($('#'+ _this.state.target_id).next().attr('class') == 'mustText'){//有对应的知识点
                                     $('#'+_this.state.target_id).focus();
                                     let knowledgesss = $('#'+ _this.state.target_id).next()[0].innerText;//查找出此空对应的知识点
@@ -384,9 +385,9 @@ class Question extends Component{
                                         _this.autoGetKnowledge()
                                     }
                                     return;
-                                }else {
-                                    $('#'+ _this.state.target_id).css('color','red');
                                 }
+                            }else {
+                                $('#'+ _this.state.target_id).css('color','gray');
                             }
                             console.log("学生的答案：：：：",inputAnswer,rightanswer,isOrRight,autoKnowledgeList)
                         }
@@ -425,6 +426,13 @@ class Question extends Component{
                             $(this).append('<img src='+answers.url+' data-latex='+answers.content+'/>');
                         }else{
                             $(this).text(answers.answer);
+                        }
+                        if(answers.answer){
+                            if(!answers.isRight){
+                                $(this).css('color','red');
+                            }else {
+                                $(this).css('color','none');
+                            }
                         }
                     }
                 }
