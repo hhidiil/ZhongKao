@@ -82,6 +82,7 @@ Choice.propTypes = {
     name_s:PropTypes.string,//选项name,区分不同的radio
     radioState:PropTypes.string || '',//答案
     isCando: PropTypes.bool,//是否可以选择答案
-    optionNameCancel: PropTypes.bool//选项的名字是否保留（A、C、D...）
+    optionNameCancel: PropTypes.bool,//选项的名字是否保留（A、C、D...）
+    template:PropTypes.string,//组件需不需要重新渲染（默认需要，norender为不需要）
 }
 export default Choice

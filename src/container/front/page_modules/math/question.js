@@ -29,6 +29,7 @@ import Loading from '../../../../components/loading'
 import Knowledge from './knowledge.js'
 
 const { Link } = Anchor;
+const base = new Base64();
 var num = 0;
 var everyChildInfo = JSON.stringify(EveryChildInfo);
 var newChildList = JSON.parse(everyChildInfo);
@@ -332,6 +333,15 @@ class Question extends Component{
                 _this.FocusHandle(this,add_id)
             })
         });
+        let currentQuesData = this.state.currentQuesData[0];
+        if(currentQuesData.questiontemplate == '选择题'){
+            $('#mainTopic').find('input').each(function(){
+                let value = $(this).val();
+                if(value == oldanswer[0].content){
+                    $(this)[0].checked = true;
+                }
+            })
+        }
     }
     addEventFuc(type){
         let _this = this;
@@ -710,6 +720,19 @@ class Question extends Component{
         let oldcontent = this.state.sentAllList.ExamResult[index-1];//做过一次的数据
         let oldanswer = (oldcontent && (oldcontent.Contents).length>0) ? oldcontent.Contents: this.state.allQuestionetails[index-1].Contents;
         console.log("oldanswer=====>>>>>>>>",oldanswer)
+
+        let ss = ($.trim(items.optionselect)).replace(/["\[\]\s]/g,"");
+        let optionArray = ss.split(",");
+        let optionList = [];
+        let optionName=['A','B','C','D'];
+        for(let i=0;i<optionArray.length;i++){
+            optionList.push(
+                <div className="checkbox-inline optionsCss" key={i}>
+                    <input type='radio' value={optionName[i]} name={"mainSelects"} />
+                    <span className="marginl5 marginr5">{optionName[i]+"、"}</span><span dangerouslySetInnerHTML={{__html:base.decode(optionArray[i])}}></span>
+                </div>
+            )
+        }
         if(content){
             if (content.indexOf("blank") != -1 || content.indexOf("BLANK") != -1) {//如果有则去掉所有空格和blank
                 let qqq =  '<span class="div_input" contentEditable="true"></span>';
@@ -726,7 +749,8 @@ class Question extends Component{
                     <div>
                         <ul id="mainTopic" style={{padding:"8px 0"}}>
                             <li dangerouslySetInnerHTML={{__html:content}}></li>
-                            {questionType?<MultipleChoice template="noRender" type={items.questiontype} answer={oldanswer.length>0?oldanswer[0].content:""} index={index} choiceList={items.optionselect} />:''}
+                            {/*questionType?<MultipleChoice template="noRender" type={items.questiontype} answer={oldanswer.length>0?oldanswer[0].content:""} index={index} choiceList={items.optionselect} />:''*/}
+                            {questionType?optionList:''}
                             {childs.length<1?"":this._childsList(childs)}
                         </ul>
                         <ul>
