@@ -219,13 +219,13 @@ export function compareDifferent(str1,str2){
         let arry = newArry[i].split('||');
         let A = arry[0],B = arry[1],numA = '',numB='';
         if(A){
-            numA = (A.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|<P>|<\/P>|<p>|<\/p>|&nbsp;/g,'');
+            numA = (A.replace(/\s/g,'')).replace(/<i>|<\/i>|<I>|<\/I>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|<P>|<\/P>|<p>|<\/p>|&nbsp;/g,'');
             numA = escape1Html(numA);//处理特殊字符转换
         }else {
             numA = A;
         }
         if(B){
-            numB = (B.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|<P>|<\/P>|<p>|<\/p>|&nbsp;/g,'');
+            numB = (B.replace(/\s/g,'')).replace(/<i>|<\/i>|<I>|<\/I>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|<P>|<\/P>|<p>|<\/p>|&nbsp;/g,'');
             numB = escape1Html(numB);
         }else {
             numB = B;

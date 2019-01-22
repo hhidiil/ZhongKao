@@ -349,7 +349,7 @@ class Question extends Component{
             let add_id = "question"+_this.state.current+i;
             if(oldanswer[i]){
                 if(oldanswer[i].url){//有图片的话,添加img
-                    $(this).append('<img src='+oldanswer[i].url+' data-latex='+oldanswer[i].content+'/>');
+                    $(this).append(`<img src="${oldanswer[i].url}" data-latex="${oldanswer[i].content}"/>`);
                 }else{
                     $(this).text(oldanswer[i].content);
                 }
@@ -399,11 +399,6 @@ class Question extends Component{
             })
         });
         $("#Analysis_Qtxt").find('.div_input').last().addClass('LastInput');
-        //$("#Analysis_Qtxt").find('.div_input').last().on('blur',function(event){
-        //    console.warn("最后一个空失去焦点：：：：",event)
-        //    console.warn("最后一个空失去焦点2222：：：：",event.relatedTarget)
-        //    //_this.handlePreInputAnswer();
-        //})
     }
     handlePreInputAnswer(){
         let _this = this;
@@ -473,7 +468,7 @@ class Question extends Component{
                     }
                     if(answers){
                         if(answers.url){//有图片的话,添加img
-                            $(this).append('<img src='+answers.url+' data-latex='+answers.content+'/>');
+                            $(this).append(`<img src="${answers.url}" data-latex="${answers.answer}"/>`);
                         }else{
                             $(this).text(answers.answer);
                         }
