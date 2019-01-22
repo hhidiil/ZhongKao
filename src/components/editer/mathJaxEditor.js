@@ -42,6 +42,7 @@ class MathJaxEditor extends Component{
         $("#"+window.nowDom).attr("data",value);
         $("#"+window.nowDom).append(img);
         $("#"+window.nowDom).attr("contenteditable",false);
+        window.lastClickDom = document.getElementById(window.nowDom);//公式编辑器赋值完之后把当前ID元素赋给全局变量lastClickDom
         //MathJax.Hub.Queue(["Typeset", MathJax.Hub]);//重新渲染一遍
     }
     clearLatexValue(){

@@ -176,18 +176,18 @@ function subset(A,B){
     return true;
 }
 //比较A和B的值是否相同
-export function compareDifferent(A,B){
+export function compareDifferentOld(A,B){
     var A = A+'';
     var B = B+'';
     var numA = '',numB='';
     if(A){
-        numA = (A.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|&nbsp;/g,'');
-        numA = escape1Html(numA)
+        numA = (A.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|<P>|<\/P>|<p>|<\/p>|&nbsp;/g,'');
+        numA = escape1Html(numA);//处理特殊字符转换
     }else {
         numA = A;
     }
     if(B){
-        numB = (B.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|&nbsp;/g,'');
+        numB = (B.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|<P>|<\/P>|<p>|<\/p>|&nbsp;/g,'');
         numB = escape1Html(numB);
     }else {
         numB = B;
@@ -195,6 +195,7 @@ export function compareDifferent(A,B){
     try {
         var expr1 = KAS.parse(numA).expr;
         var expr2 = KAS.parse(numB).expr;
+        console.log("function compareDifferent: "+e.message+"; the params is : ("+numA+") and ("+numB+")");
         var end = KAS.compare(expr1, expr2).equal;
         if(end){
             return true;
@@ -205,10 +206,48 @@ export function compareDifferent(A,B){
         if(numA == numB){//处理KAS插件无法处理特殊字符的情况，在报错前先普通比较一下
             return true;
         }
-        console.warn("function compareDifferent is error: "+e.message+"; the params is : "+numA+" and "+numB);
+        console.warn("function compareDifferent is error: "+e.message+"; the params is : ("+numA+") and ("+numB+")");
         return false;
     }
 
+}
+//比较A和B的值是否相同
+export function compareDifferent(str1,str2){
+    var newArry = escapeMultiAnswer(str1+'',str2+'');//处理多个答案的情况，是中文分号‘；’号隔开的。
+    let isEqual = false;
+    for(let i in newArry){
+        let arry = newArry[i].split('||');
+        let A = arry[0],B = arry[1],numA = '',numB='';
+        if(A){
+            numA = (A.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|<P>|<\/P>|<p>|<\/p>|&nbsp;/g,'');
+            numA = escape1Html(numA);//处理特殊字符转换
+        }else {
+            numA = A;
+        }
+        if(B){
+            numB = (B.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|<P>|<\/P>|<p>|<\/p>|&nbsp;/g,'');
+            numB = escape1Html(numB);
+        }else {
+            numB = B;
+        }
+        try {
+            var expr1 = KAS.parse(numA).expr;
+            var expr2 = KAS.parse(numB).expr;
+            console.log("function compareDifferent: "+e.message+"; the params is : ("+numA+") and ("+numB+")");
+            var end = KAS.compare(expr1, expr2).equal;
+            if(end){
+                isEqual = true;
+                break;
+            }
+        }catch (e){
+            if(numA == numB){//处理KAS插件无法处理特殊字符的情况，在报错前先普通比较一下
+                isEqual = true;
+                break;
+            }
+            console.warn("function compareDifferent is error: "+e.message+"; the params is : ("+numA+") and ("+numB+")");
+        }
+    }
+    return isEqual;
 }
 //转意符换成普通字符
 export function escape1Html(str) {
@@ -218,6 +257,27 @@ export function escape1Html(str) {
 ////普通字符转换成转意符
 export function escape2Html(sHtml) {
     return sHtml.replace(/[<>]/g,function(c){return {'<':'&lt;','>':'&gt;'}[c];});
+}
+////普通字符转换成转意符
+export function escapeMultiAnswer(str11,str22) {
+    let str1 = str11,str2 = str22;
+    //if(str1){
+    //    str1 = (str1.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|<P>|<\/P>|<p>|<\/p>|&nbsp;/g,'');
+    //}
+    //if(str2){
+    //    str2 = (str2.replace(/\s/g,'')).replace(/<i>|<\/i>|<br>|<\/br>|<BR>|<\/BR>|<SUB>|<sub>|<sup>|<SUP>|<P>|<\/P>|<p>|<\/p>|&nbsp;/g,'');
+    //}
+    let newarr = [];
+    let arr1 = str1.split('；'),arr2 = str2.split('；');
+    for(let i in arr1){
+        let arr1X = arr1[i].replace(/^\$/,"").replace(/\$$/,"");
+        for(let j  in arr2){
+            let arr1Y = arr2[j].replace(/^\$/,"").replace(/\$$/,"");
+            newarr.push(arr1Y+'||'+arr1X)
+
+        }
+    }
+    return newarr
 }
 //JSON解析
 export function toJson(str){

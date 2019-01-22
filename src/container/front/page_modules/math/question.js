@@ -44,6 +44,7 @@ var sentJson = {
 }
 var allDoneFlag = false;//做完提交标志
 var autoKnowledgeList=[];//每个试题 分析部分 小题或填空题的 相关考点。用来自动弹出知识点复习框的
+window.lastClickDom = null;//这是一个全局变量，用来记录页面中鼠标上次点击的元素
 class Question extends Component{
     constructor(props){
         super(props);
@@ -78,6 +79,7 @@ class Question extends Component{
             showHeader:true,//题号部分区域展开 收起
             showSideMenu:false,//右侧解析部分导航 展开 收起
         }
+        this.addEvent1 = this.addEvent.bind(this);
     }
     componentDidMount(){
         this.props.actions.createEditIndex('set')
@@ -151,12 +153,15 @@ class Question extends Component{
             this.routerWillLeave
         )
         //
-        ////添加点击事件的监听
-        //let state = this.state;
-        //window.addEventListener('blur',function(){
-        //    let focuseEle = $(':focus').attr("id");
-        //    console.log("文档的监听事件！！！！！！",focuseEle,state)
-        //});
+        ////添加点击事件的监听，禁止使用tab切换移动页面焦点
+        document.onkeydown = function (e) {
+            var ev = document.all ? window.event : e;
+            console.log("文档的监听事件！！！！！！",ev.keyCode)
+            if(ev.keyCode == 9){
+                e.preventDefault();
+            }
+        }
+        document.addEventListener('click',this.addEvent1,false);
     }
     shouldComponentUpdate(nextProps,nextState){
         //当切换题的时候如果新的数据还没有加载出来则不需要render
@@ -177,11 +182,32 @@ class Question extends Component{
             this.addOldAnswer();//显示主题干一测试题的答案
         }
     }
+    componentWillUnmount(){
+        console.error("componentWillUnmount----------------componentWillUnmount");
+        document.removeEventListener('click',this.addEvent1,false);
+        UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
+        window.lastClickDom = null;
+    }
     routerWillLeave=(nextLocation)=> {
         // 返回 false 会继续停留当前页面，否则，返回一个字符串，会显示给用户，让其自己决定
         //this.submitAllQuestion('cache');//退出的时候在发送数据库缓存一次
-        UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
+        //UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
         return true;
+    }
+    addEvent(event){
+        var ev = event || window.event;
+        console.log("文档的监听事件444444444444",ev,$(ev.target));
+        console.log("文档的监听事件！！！！！！",$(ev.target).parents('.mathEditorTip').length);
+        console.log("当前targetId！！！！！！",this.state.target_id,$('#'+this.state.target_id).hasClass('LastInput'));
+        if($(window.lastClickDom).hasClass('LastInput')){//上次点击的元素是当前页面最后一个填空，则进入判断最后一空的答案
+            if(this.state.target_id){
+                if($(ev.target).parents('.mathEditorTip').length == 0){//点击公式编辑器的时候不用判断答案
+                    console.log("5555555555555555555555555555555555555555555555555555555555555！！！！！！");
+                    this.handlePreInputAnswer();
+                }
+            }
+        }
+        window.lastClickDom = ev.target;
     }
     getData(data,page,data2){
         let ChildQuestionOfExam = data2[page];//每个试题的所有子试题
@@ -348,14 +374,14 @@ class Question extends Component{
         $('.mustText').on('click',function(e){//为每一个空对应的知识点 添加点击事件
             _this.getKnowledge(e);
         });
-        $('.kaodianSection .optionsCss').children("span:last-child").css('color','#167dff');
+        $('.kaodianSection .optionsCss').children("span:last-child").css('color','#167dff');//给考点部分每一个选项内容添加颜色，表示可以点击
         $('.kaodianSection .optionsCss').children("span:last-child").on('click',function(e){//为每一个空对应的知识点 添加点击事件
             _this.getKnowledge(e);
         });
         $("#Analysis_Qtxt").find('.div_input').each(function(i){
             let add_id='';
             add_id = "answer-"+_this.state.current+"-"+i;
-            $(this).attr("id",add_id);
+            $(this).attr("id",add_id);//为解析部分的每一个空添加id
             $(this).on('click',function(event){
                 let focuseEle = $(':focus').attr("id");
                 let arry = _this.state.target_id.split('-')[1];
@@ -363,49 +389,63 @@ class Question extends Component{
                 //当用户填写的答案错的时候显示答案错误，标红 或者 弹对应知识点的框
                 if(_this.state.current == arry){
                     if(_this.state.target_id != add_id){
-                        //当前空没有填则不能换下一题
-                        if(!$('#'+_this.state.target_id).attr('data') && $('#'+_this.state.target_id)[0].innerText == ''){
-                            $('#'+_this.state.target_id).focus();
-                            return
-                        }else {
-                            let inputAnswer = '',rightanswer='',num;
-                            let parentId = $('#'+_this.state.target_id).parents('.analysisContent').attr('id');
-                            let data = _this.findTargetDat(_this.state.analysisLeftContent,parentId);//在数组中查找对应的数据；
-                            let list = $('#'+parentId).find('.div_input');
-                            num = $('#'+parentId+' .div_input').index($('#'+_this.state.target_id));//当前聚焦的空在是本题的第几个小空
-                            console.log("当前题的信息：：：：",data,num,parentId)
-                            rightanswer = ((data.answer).trim().replace(/\s/g,"").split("||")[num]).trim();//正确答案
-                            if($('#'+_this.state.target_id).attr('data')){
-                                inputAnswer = "$"+$('#'+_this.state.target_id).attr('data')+"$";
-                            }
-                            if($('#'+_this.state.target_id)[0].innerText != ''){
-                                inputAnswer = $('#'+_this.state.target_id)[0].innerText;
-                            }
-                            let isOrRight = compareDifferent(inputAnswer,rightanswer);;//当前题的最终正确与否
-                            let lastKnowledge = [];//当前题的最终自动弹框需要的知识点
-                            if(!isOrRight){//这道题为错
-                                $('#'+ _this.state.target_id).css('color','red');
-                                if($('#'+ _this.state.target_id).next().attr('class') == 'mustText'){//有对应的知识点
-                                    $('#'+_this.state.target_id).focus();
-                                    let knowledgesss = $('#'+ _this.state.target_id).next()[0].innerText;//查找出此空对应的知识点
-                                    lastKnowledge = knowledgesss.replace(/\s|{@|@}/g,'').split('；');
-                                    autoKnowledgeList = lastKnowledge;
-                                    console.log("学生的答案：：：：",inputAnswer,rightanswer,isOrRight,autoKnowledgeList)
-                                    if(autoKnowledgeList.length>0){
-                                        _this.autoGetKnowledge()
-                                    }
-                                    return;
-                                }
-                            }else {
-                                $('#'+ _this.state.target_id).css('color','gray');
-                            }
-                            console.log("学生的答案：：：：",inputAnswer,rightanswer,isOrRight,autoKnowledgeList)
+                        //判断上一空的答案
+                        if(!_this.handlePreInputAnswer()){
+                            return;
                         }
                     }
                 }
                 _this.FocusHandle(this,add_id)
             })
         });
+        $("#Analysis_Qtxt").find('.div_input').last().addClass('LastInput');
+        //$("#Analysis_Qtxt").find('.div_input').last().on('blur',function(event){
+        //    console.warn("最后一个空失去焦点：：：：",event)
+        //    console.warn("最后一个空失去焦点2222：：：：",event.relatedTarget)
+        //    //_this.handlePreInputAnswer();
+        //})
+    }
+    handlePreInputAnswer(){
+        let _this = this;
+        //当前空没有填则不能换下一题
+        if(!$('#'+_this.state.target_id).attr('data') && $('#'+_this.state.target_id)[0].innerText == ''){
+            $('#'+_this.state.target_id).focus();
+            return false;
+        }else {
+            let inputAnswer = '',rightanswer='',num;
+            let parentId = $('#'+_this.state.target_id).parents('.analysisContent').attr('id');
+            let data = _this.findTargetDat(_this.state.analysisLeftContent,parentId);//在数组中查找对应的数据；
+            let list = $('#'+parentId).find('.div_input');
+            num = $('#'+parentId+' .div_input').index($('#'+_this.state.target_id));//当前聚焦的空在是本题的第几个小空
+            console.log("当前题的信息：：：：",data,num,parentId)
+            rightanswer = ((data.answer).trim().replace(/\s/g,"").split("||")[num]).trim();//正确答案
+            if($('#'+_this.state.target_id).attr('data')){
+                inputAnswer = $('#'+_this.state.target_id).attr('data');
+            }
+            if($('#'+_this.state.target_id)[0].innerText != ''){
+                inputAnswer = $('#'+_this.state.target_id)[0].innerText;
+            }
+            let isOrRight = compareDifferent(inputAnswer,rightanswer);;//当前题的最终正确与否
+            let lastKnowledge = [];//当前题的最终自动弹框需要的知识点
+            if(!isOrRight){//这道题为错
+                $('#'+ _this.state.target_id).css('borderBottomColor','red');
+                if($('#'+ _this.state.target_id).next().attr('class') == 'mustText'){//有对应的知识点
+                    $('#'+_this.state.target_id).focus();
+                    let knowledgesss = $('#'+ _this.state.target_id).next()[0].innerText;//查找出此空对应的知识点
+                    lastKnowledge = knowledgesss.replace(/\s|{@|@}/g,'').split('；');
+                    autoKnowledgeList = lastKnowledge;
+                    console.log("学生的答案：：：：",inputAnswer,rightanswer,isOrRight,autoKnowledgeList)
+                    if(autoKnowledgeList.length>0){
+                        _this.autoGetKnowledge()
+                    }
+                    return false;
+                }
+            }else {
+                $('#'+ _this.state.target_id).css('borderBottomColor','gray');
+            }
+            console.log("学生的答案：：：：",inputAnswer,rightanswer,isOrRight,autoKnowledgeList)
+            return true;
+        }
     }
     findTargetDat(array,id){
         let arr =  id.split('-');
@@ -439,7 +479,7 @@ class Question extends Component{
                         }
                         if(answers.answer){
                             if(!answers.isRight){
-                                $(this).css('color','red');
+                                $(this).css('borderBottomColor','red');
                             }else {
                                 $(this).css('color','none');
                             }
@@ -1038,6 +1078,7 @@ class Question extends Component{
                         value = $(this).text();
                     }
                     everyRightanswer = rightanswer[ii] ? rightanswer[ii].replace(/$/g,'') : rightanswer[ii];//格式化正确答案，去除多余的其他字符
+                    console.log('正确答案，输入答案',everyRightanswer,value)
                     isRight = compareDifferent(everyRightanswer,value);
                     if(!isRight){//有错误的空，则这道题为错
                         endRigth = false;
@@ -1157,7 +1198,7 @@ class Question extends Component{
         this.setState({errorArray:errArray})
     }
     exitBack(){
-        UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
+        //UE.delEditor('questionContainer');//退出的时候删除实例化的编辑器
         this.submitQuestionAllAnswer();//本地缓存一下
         this.submitAllQuestion('cache');//发送数据库缓存
         let _this = this;
