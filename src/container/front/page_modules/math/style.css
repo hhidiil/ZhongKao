@@ -206,8 +206,9 @@
     white-space: nowrap;
 }
 .resetCss .ant-modal{
-    width: 1000px !important;
-    height: 800px;
+    width: 75% !important;
+    height: 80%;
+    overflow: hidden;
 }
 .resetCss .ant-modal .ant-modal-content{
     height: 100%;
