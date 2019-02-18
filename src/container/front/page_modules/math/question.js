@@ -1240,14 +1240,15 @@ class Question extends Component{
         let {Pending,currentQuesData} = this.state;
         let title = JSON.parse(Storage_S.getItem(this.state.activeId)).exampaper;
         //获取各部分的高度
-        let hh = ($(window).height()-$('.sectionHeader').height() -130)+'px';
+        let hh = ($(window).height()-$('.sectionHeader').height() -20-30)+'px';
         let minh = (780-$('.sectionHeader').height() -30)+'px';
         let minW = $('.QtxtContent').width();
         console.log("----hh----hh--hh---hh--hh-----hh---hh---->",hh,minW)
         const contH = {
             height:this.state.showHeader ? hh:'100%',
             minWidth: '800px',
-            minHeight:minh,
+            //height:hh,
+            //minHeight:minh,
             //overflowY: 'auto'
         };
         const contW = minW<1130?{width:'510px','position':'relative','overflowY': 'auto',borderLeft: '1px solid gray'}:{'position':'relative','overflowY': 'auto',borderLeft: '1px solid gray'};

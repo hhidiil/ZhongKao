@@ -50,8 +50,8 @@ class Analysis extends Component{
                 }
                 if(questionDetails[i].knowledge){
                     let item = (questionDetails[i].knowledge).split('；');
-                    console.log("questionDetails[i].knowledge====>>>",item)
-                    let istrue = questionDetails[i].Contents[0].IsTrue;//对错
+                    console.warn("questionDetails[i].knowledge====>>>",item,questionDetails[i])
+                    let istrue = questionDetails[i].Contents.length>0 ? questionDetails[i].Contents[0].IsTrue : false;//对错
                     let number = istrue?0:1;
                     for(let j=0;j<item.length;j++){
                         if(knowledge.length>0){//存在

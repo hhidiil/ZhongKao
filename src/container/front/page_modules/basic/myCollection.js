@@ -32,7 +32,10 @@ class Collect extends Component{
             let url = '/home/math/questionDetail/'+item.questionid;
             return(
                 <div key={index} className="collectAll_question">
-                    <Link to={url}><p><span>{index+'、'}</span>{item.content}</p></Link>
+                    <span>{(index+1)+'、'}</span>
+                    <Link to={url}>
+                        <p style={{display: 'inline-flex',whiteSpace: 'nowrap',textOverflow:'ellipsis',overflow: 'hidden'}} dangerouslySetInnerHTML={{__html:item.content}}></p>
+                    </Link>
                 </div>
             )
         })

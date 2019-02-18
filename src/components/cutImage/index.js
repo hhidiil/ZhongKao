@@ -68,6 +68,7 @@ class ImageCut extends Component{
         if(!this.state.urlImg){return alert('剪切内容为空！！')};
         let url = $('#previewEnd img').attr('src');
         this.props.saveImgUrl(url);//传递值给父组件
+        message.success("提交成功");
     }
     drawCanvas(param){
         var _this = this;

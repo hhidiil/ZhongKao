@@ -26,6 +26,10 @@ class UpLoadFile extends Component{
             base64Url:'',//以base64的格式上传文件
         }
     }
+    componentWillReceiveProps(nextProps) {
+        //console.error("componentWillReceiveProps===22222222222222222222222222222222==>>>>>",this.state,nextProps)
+        $('#preview').empty()
+    }
     upLoadSubmit = (e) =>{
         e.preventDefault();
         let _this = this;

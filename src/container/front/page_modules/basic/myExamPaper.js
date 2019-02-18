@@ -89,9 +89,10 @@ class PaperList extends Component {
             return <div className="noDatalist">没找到数据^_^...</div>
         }
        return data.map((item,index)=> {
+           let datenew = new Date(item.FinishDate).Format('yyyy-MM-dd hh:mm:ss');
             return (
                 <div key={index} className="exampaperList">
-                    <div className="itemtitle"><h4>({index+1})、{item.ExamPaperTitle+"("+item.ExamType+")"}</h4></div>
+                    <div className="itemtitle"><strong style={{fontSize: '18px'}}>({index+1})、{item.ExamPaperTitle+"("+item.ExamType+")"}</strong><span style={{fontSize:'14px',marginLeft:'10px'}}>{"["+datenew+"]"}</span></div>
                     <div className="itemstatus">
                         <span className="status-span">完成进度：{item.IsDone=='yes'?"已完成":"未完成"}</span>
                         <span className="status-span">批改状态：{item.markFlag}</span>

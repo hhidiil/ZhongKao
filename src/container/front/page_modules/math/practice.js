@@ -38,7 +38,7 @@ class Question extends Component{
         this.state={
             dataAll:paper,//整套试卷,可取到某套试题的所有数据
             activeId: activeId,
-            cleartimeflag:true,//定时器
+            cleartimeflag:false,//定时器
             current: !paperItems ? 1 : paperItems.currentquesid,//当前题号
             totalNum:0,//试题总数
             all_question:[],//所有题目
@@ -461,7 +461,7 @@ class Question extends Component{
         let title = (this.state.dataAll).exampaper;//试卷标题
         let cleartime = this.state.cleartimeflag;
         //获取各部分的高度
-        let hh = ($(window).height()-$('.pagination_content').height()-$('header').height()-160)+'px';
+        let hh = ($(window).height()-$('.pagination_content').height()-$('header').height()-60)+'px';
         const contH = {
             height:hh,
             overflowY:'auto'

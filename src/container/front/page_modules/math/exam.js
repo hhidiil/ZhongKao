@@ -89,28 +89,25 @@ class Exam extends Component{
                                             {/*doneFlag?<span className="wancheng">总分：{doneDetails.Score}</span>:""*/}
                                             {/*doneFlag?<span className="wancheng">批改状态：{doneDetails.markFlag}</span>:""*/}
                                             {/*<Button type="dashed" className="bttn " onClick={()=>this.preview(item,doneFlag)}>结果预览</Button>*/}
-                                            <Button type="dashed" className="marginr5" onClick={()=>this.dataAnalysis(item)}>数据分析</Button>
+                                            {/*<Button type="dashed" className="marginr5" onClick={()=>this.dataAnalysis(item)}>数据分析</Button>*/}
                                             <Button type="dashed" className="bttn " onClick={()=>this.gotoPractice(item)}>开始</Button>
                                         </div>
                                     </div>
                                     <div className="questionsAll-item-content-child row">
                                         <div className="col-md-4 title">解 析</div>
                                         <div className="col-md-8 btn_list">
-                                            <Button type="dashed" className="marginr5">数据分析</Button>
                                             <Button type="dashed" className="bttn " onClick={()=>this.expand_goto(item,index,doneFlag)}>开始</Button>
                                         </div>
                                     </div>
                                     <div className="questionsAll-item-content-child row">
                                         <div className="col-md-4 title">检 测</div>
                                         <div className="col-md-8 btn_list">
-                                            <Button type="dashed" className="marginr5">数据分析</Button>
                                             <Button type="dashed" className="bttn " onClick={()=>this.practiceAgain(item)}>开始</Button>
                                         </div>
                                     </div>
                                     <div className="questionsAll-item-content-child row">
                                         <div className="col-md-4 title">拓 展</div>
                                         <div className="col-md-8 btn_list">
-                                            <Button type="dashed" className="marginr5">数据分析</Button>
                                             <Button type="dashed" className="bttn" onClick={()=>this.practiceAgain(item)}>开始</Button>
                                         </div>
                                     </div>

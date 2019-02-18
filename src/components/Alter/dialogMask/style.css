@@ -50,12 +50,12 @@
 @media (min-width:800px)and (max-width: 1024px){
     .Dialog-content {
         width: 600px;
-        height: 400px;
+        height: 300px;
         margin-left: -300px;
-        margin-top: -200px;
+        margin-top: -150px;
     }
     .Dialog-content section{
-        height: 350px;
+        height: 250px;
     }
     .Dialog-content section form{
         position: relative;
@@ -65,12 +65,12 @@
 @media (min-width:1024px)and (max-width: 1280px){
     .Dialog-content {
         width: 800px;
-        height: 600px;
+        height: 400px;
         margin-left: -400px;
-        margin-top: -300px;
+        margin-top: -200px;
     }
     .Dialog-content section{
-        height: 550px;
+        height: 350px;
     }
     .Dialog-content section form{
         position: relative;
@@ -80,12 +80,12 @@
 @media (min-width:1280px) and (max-width: 1520px){
     .Dialog-content {
         width: 960px;
-        height: 760px;
+        height: 560px;
         margin-left: -480px;
-        margin-top: -380px;
+        margin-top: -280px;
     }
     .Dialog-content section{
-        height: 710px;
+        height: 510px;
     }
     .Dialog-content section form{
         position: relative;
@@ -95,12 +95,12 @@
 @media (min-width:1520px){
     .Dialog-content {
         width: 1024px;
-        height: 800px;
+        height: 600px;
         margin-left: -512px;
-        margin-top: -400px;
+        margin-top: -300px;
     }
     .Dialog-content section{
-        height: 750px;
+        height: 550px;
     }
     .Dialog-content section form{
         position: relative;
