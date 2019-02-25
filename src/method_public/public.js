@@ -233,7 +233,7 @@ export function compareDifferent(str1,str2){
         try {
             var expr1 = KAS.parse(numA).expr;
             var expr2 = KAS.parse(numB).expr;
-            console.log("function compareDifferent: "+e.message+"; the params is : ("+numA+") and ("+numB+")");
+            console.log("function compareDifferent: the params is : ("+numA+") and ("+numB+")");
             var end = KAS.compare(expr1, expr2).equal;
             if(end){
                 isEqual = true;

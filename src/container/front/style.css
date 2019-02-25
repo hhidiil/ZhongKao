@@ -437,7 +437,7 @@
     min-height: 500px;
 }
 .register footer{
-    position: fixed;
+    position: relative;
     width: 100%;
     bottom: 0;
     min-height: 100px;

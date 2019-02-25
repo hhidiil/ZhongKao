@@ -83,10 +83,10 @@ class Question extends Component{
             }
         })
         //离开route的钩子处理事件
-        //this.props.router.setRouteLeaveHook(
-        //    this.props.route,
-        //    this.routerWillLeave
-        //)
+        this.props.router.setRouteLeaveHook(
+            this.props.route,
+            this.routerWillLeave
+        )
     }
     componentDidUpdate(prevProps,prevState){
         if(prevState.questionList != this.state.questionList){
@@ -94,16 +94,13 @@ class Question extends Component{
         }
     }
     routerWillLeave=(nextLocation)=> {
-        // 返回 false 会继续停留当前页面，否则，返回一个字符串，会显示给用户，让其自己决定
-        if(confirm('确认要离开？')){
-            this.setState({cleartimeflag:true})
-            UE.delEditor('practiceContainer');
-            setTimeout(()=>{
-                return true;
-            },1000)
-        }else {
-            return false;
-        }
+         //返回 false 会继续停留当前页面，否则，返回一个字符串，会显示给用户，让其自己决定
+        console.log("routerWillLeave--routerWillLeave---routerWillLeave----routerWillLeave",nextLocation)
+        this.setState({cleartimeflag:true})
+        UE.delEditor('practiceContainer');
+        setTimeout(()=>{
+            return true;
+        },1000)
     }
     addEventFuc(){
         let _this = this;
@@ -251,12 +248,9 @@ class Question extends Component{
         confirm('时间已到！')
     }
     exitBack(){
-        this.setState({cleartimeflag:true});
-        UE.delEditor('practiceContainer');
-        setTimeout(()=>{
+        if(confirm("您确定退出吗？")){
             this.props.actions.goBack();
-        },500)
-
+        }
     }
     nextSubmit(page,GetQuestion){
         var nextpage = page+1;
