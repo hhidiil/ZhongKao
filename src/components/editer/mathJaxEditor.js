@@ -2,12 +2,12 @@
  * mathjax公式编辑器
  * Created by gaoju on 2018/3/27.
  */
-import React,{Component} from 'react'
+import React,{Component,PureComponent} from 'react'
 import './style.css'
 import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 
-class MathJaxEditor extends Component{
+class MathJaxEditor extends PureComponent{
     constructor(props){
         super(props)
         this.state={
@@ -52,6 +52,7 @@ class MathJaxEditor extends Component{
         //MathJax.Hub.Queue(["Typeset", MathJax.Hub]);//重新渲染一遍
     }
     render(){
+        console.warn("渲染============MathJaxEditor==================");
         const displayCss=[{display:"inline-flex",top:this.props.position[0],left:this.props.position[1]},{display:"none"}];
         //let editorid = this.props.editorId;
         let editorid = this.state.editorId;

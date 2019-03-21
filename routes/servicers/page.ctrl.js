@@ -18,18 +18,12 @@ module.exports={
                 console.log(err)
                 return res.send({
                     code: 501,
-                    message: '出错了0.0'
+                    message: err
                 });
-            }
-            if (data.length>0) {
+            }else {
                 return res.send({
                     code: 200,
                     data: data
-                })
-            } else {
-                return res.send({
-                    code: 500,
-                    message: '出错了'
                 })
             }
         })

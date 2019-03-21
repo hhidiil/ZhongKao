@@ -98,7 +98,7 @@ class UpLoadFile extends Component{
         )
     }
     render(){
-        console.log("this.state.preview====>>>>>>",this.state.preview);
+        console.warn("preview========UpLoadFile============",this.state.preview);
         return(
             <div className="fileupload">
                 <div className="fileBtnCss">

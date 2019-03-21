@@ -6,7 +6,6 @@
 
 var app = require('../app');
 var debug = require('debug')('midexam:server');
-var http = require('http');
 
 /**
  * Get port from environment and store in Express.
@@ -14,11 +13,24 @@ var http = require('http');
 
 var port = 10008;
 app.set('port', port);
+
 /**
  * Create HTTP server.
  */
-
-var server = http.createServer(app);
+if(process.env.NODE_ENV == "development"){
+  var http = require('http');
+  var server = http.createServer(app);
+}else {
+  //Create HTTPS server
+  console.log("进入----https---")
+  var http= require("https");
+  var fs = require("fs");
+  var path = require('path');
+  var privateKey  =  fs.readFileSync('/etc/nginx/ssl/idiil.com.cn.key', '', 'utf8');
+  var certificate =  fs.readFileSync('/etc/nginx/ssl/idiil.com.cn.chained.crt', '', 'utf8');
+  var credentials = {key: privateKey, cert: certificate};
+  var server = http.createServer(credentials,app);
+}
 
 /**
  * Listen on provided port, on all network interfaces.

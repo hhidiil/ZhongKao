@@ -2,13 +2,13 @@
  * 选择题(单选，多选)
  * Created by gaoju on 2018/4/16.
  */
-import React,{Component} from 'react'
+import React,{Component,PureComponent} from 'react'
 import './style.css'
 import PropTypes from 'prop-types'
 
 const base = new Base64();
 const optionName=['A','B','C','D','E','F','G'];
-class Choice extends Component{
+class Choice extends PureComponent{
     constructor(props){
         super(props)
         this.state = {
@@ -39,16 +39,14 @@ class Choice extends Component{
         }
     }
     componentWillReceiveProps(nextProps){
-        if(nextProps.template != 'noRender'){
-            if(nextProps.answer != this.state.radioState){
-                this.setState({radioState: nextProps.answer})
-            }
-        }
-    }
-    shouldComponentUpdate(nextProps,nextState){
-        return true;
+        //if(nextProps.template != 'noRender'){
+        //    if(nextProps.answer != this.state.radioState){
+        //        this.setState({radioState: nextProps.answer})
+        //    }
+        //}
     }
     render(){
+        console.warn("渲染====》Choice-------Choice-----Choice");
         let optionArray=[],option = this.props.choiceList,type = this.props.type;
         let optionNameCancel =  this.props.optionNameCancel;
         let ss = ($.trim(option)).replace(/["\[\]\s]/g,"");

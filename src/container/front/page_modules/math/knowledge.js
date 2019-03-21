@@ -259,7 +259,7 @@ class Knowledge extends Component{
         const displayFlag = {
             display:this.state.DialogMaskFlag2?'block':'none'
         }
-        console.log("进入 knowledge 的编辑器ID ueEditIndex",this.props.ueEditIndex,displayFlag)
+        console.warn("=======knowledge 的编辑器ID ueEditIndex=======",this.props.ueEditIndex,displayFlag)
         return(
             <div className="knowledgeContent">
                 <MathJaxEditor position={this.state.position} editorId={"knowledgeContainer"+ueEditIndex} target_id={this.state.target_id} showEditor={this.state.showEditor}/>

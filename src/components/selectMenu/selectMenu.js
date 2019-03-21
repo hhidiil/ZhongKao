@@ -21,6 +21,7 @@ class SelectMenu extends Component {
         this.setState({visible:true});
     }
     render() {
+        console.warn("===========SelectMenu==========")
         const menu = (
             <Menu>
                 <Menu.Item key="0">

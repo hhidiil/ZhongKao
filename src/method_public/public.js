@@ -283,11 +283,18 @@ export function escapeMultiAnswer(str11,str22) {
 export function toJson(str){
     if(str && typeof str == 'string'){
         let str2 = str.replace(/\\/g,"@&@") ;
-        return JSON.parse(str2)
+        let endStr = [];
+        try {
+            endStr = JSON.parse(str2);
+        }
+        catch(err) {
+            console.log(str2)
+            console.error(err)
+        }
+        return endStr
     }else {
         return str
     }
-
 }
 //停止N秒在执行程序
 export function sleep(n){

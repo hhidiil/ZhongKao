@@ -62,6 +62,7 @@ class FormulaEdit extends Component{
         this.setState({imgUrl:cont})
     }
     render(){
+        console.warn("渲染====》FormulaEdit-------FormulaEdit-----FormulaEdit");
         var icons = this.getIcons();
         return (
             <div id="formulaDialog" className="formDialog">

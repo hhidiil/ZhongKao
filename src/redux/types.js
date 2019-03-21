@@ -11,8 +11,6 @@ export const USERCOLLECTINFO_CLEAN = 'USERCOLLECTINFO_CLEAN'
 export const USERHEADIMG_UPDATA = 'USERHEADIMG_UPDATA'//用户图像
 export const USERHEADIMG_CLEAN = 'USERHEADIMG_CLEAN';
 //首页
-export const HOMESHOW_LIST_UPDATA = 'HOMESHOW_LIST_UPDATA';//首页显示的学生列表信息
-export const HOMESHOW_LIST_CLEAN = 'HOMESHOW_LIST_CLEAN';
 export const Province_LIST_UPDATA = 'Province_LIST_UPDATA';//省份列表
 export const Province_LIST_CLEAN = 'Province_LIST_CLEAN'
 //page

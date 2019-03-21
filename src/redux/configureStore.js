@@ -12,14 +12,17 @@ import { pendingTasksReducer } from 'react-redux-spinner'
 
 export default function configureStore(history, initialState) {
 
+    //将所有的action放在reducer
     const reducer = combineReducers({
         ...rootReducer,
         routing: routerReducer,
         pendingTasks: pendingTasksReducer,
     })
 
-    const loggerMiddleware = createLogger()
+    //加入reducer中间件 打印日志
+    const loggerMiddleware = createLogger();
 
+    //创建全局store，
     const store = createStore(
         reducer,
         initialState,

@@ -103,16 +103,6 @@ export function getCollectInfo(opt) {
                 body: bodyUrlencoded(opt.body) })
     }
 }
-//获取用户收藏的试题
-export function getCollection(opt){
-    return (dispatch) => {
-        const route = '/api/user/getCollection';
-        request(route, {}, dispatch, opt.success, opt.error,
-            { method: 'POST',
-                headers: {"Content-Type": "application/x-www-form-urlencoded"},
-                body: bodyUrlencoded(opt.body) })
-    }
-}
 //更新用户基本信息
 export function updateUserInfo(opt) {
     return (dispatch) => {

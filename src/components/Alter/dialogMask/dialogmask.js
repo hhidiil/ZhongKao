@@ -31,6 +31,7 @@ class DialogMask extends React.Component {
         }
     }
     render() {
+        console.warn("================DialogMask==========");
         let {title,children,closeDialog} = this.props;
         return (
             <div>

@@ -23,11 +23,21 @@ class Door extends Component {
         let status = Storage_S.getItem('loginstatus');
         this.state={
             loginstatus:status?status:false,//登录状态
+            homeShowList: []
         }
     }
     componentDidMount(){
         let headimg = Storage_S.getItem('headimg');
-        this.props.actions.getHomeShowList({});
+        this.props.actions.getHomeShowList({
+            body:{},
+            success:(data)=>{
+                console.log("首页查询列表出错：",data)
+                this.setState({homeShowList:data})
+            },
+            error:(message)=>{
+                console.error("首页查询列表出错：",message)
+            }
+        });
         this.props.actions.updateStoreHeadImg({data:headimg,clear:false})//当页面刷新store会重置，需要重新更新store
     };
     enterSystem(){
@@ -38,19 +48,19 @@ class Door extends Component {
         }
     }
     _showListItem(showList){
-        let pageSize = showList.get('items').size;
+        let pageSize = showList.length;
         if (pageSize > 0) {
-            const showItem = showList.get('items').map((item,index)=>{
+            const showItem = showList.map((item,index)=>{
                let  color = {
                    background:colorList[index]
                }
                 return (
                     <div key={index} className="col-sm-4">
                         <div className="thumbnail">
-                            <img className="door_headimg" src={handleImg(item.get('headimg'))} title="头像" onError={(e)=>{e.target.src = "public/images/user_head.jpg"}}/>
+                            <img className="door_headimg" src={handleImg(item.headimg)} title="头像" onError={(e)=>{e.target.src = "public/images/user_head.jpg"}}/>
                             <div className="caption message" style={color}>
-                                <h3>{item.get('username')}</h3>
-                                <p>{item.get('phone')}</p>
+                                <h3>{item.username}</h3>
+                                <p>{item.phone}</p>
                             </div>
                         </div>
                     </div>
@@ -73,9 +83,9 @@ class Door extends Component {
         return showWapper
     }
     render() {
-        let { homeShowList,userheadimg } = this.props;
-        let error = PureRenderMixin.Compare([homeShowList]);//优化render
-        if (!error) return <div/>
+        let { userheadimg } = this.props;
+        //let error = PureRenderMixin.Compare([homeShowList]);//优化render
+        //if (!error) return <div/>
         const headerimg = (
             <div className="floatR">
                 <img className="door-headerimg" src={handleImg(userheadimg.get('headimg'))} alt="头像"/>
@@ -156,7 +166,7 @@ class Door extends Component {
                         <div className="content">
                             <h2>我们的成效</h2>
                             <div className="student-parts">
-                                {this._showListItem(homeShowList)}
+                                {this._showListItem(this.state.homeShowList)}
                                 <div className="clearfix"></div>
                             </div>
                         </div>
@@ -188,7 +198,6 @@ class Door extends Component {
 //将redux中state的对象与组件绑定起来。一一对应map对象
 function mapStateToProps(state,ownProps) {
     return {
-        homeShowList: state.homeShowList,
         userheadimg: state.userheadimg
     }
 }
@@ -197,4 +206,4 @@ function mapDispatchToProps(dispatch) {
     return { actions: bindActionCreators({push,replace,getHomeShowList,updateStoreHeadImg}, dispatch) }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Door)
+export default connect(mapStateToProps, mapDispatchToProps  )(Door)

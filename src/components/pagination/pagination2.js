@@ -1,11 +1,11 @@
 /**
  * Created by gaoju on 2018/3/6.
  */
-import React,{Component} from 'react'
+import React,{Component,PureComponent } from 'react'
 import './style.css'
 import PropTypes from 'prop-types'
 
-class Pagination2 extends Component{
+class Pagination2 extends PureComponent {
     constructor(props){
         super(props)
         this.state={
@@ -34,15 +34,20 @@ class Pagination2 extends Component{
         this.addColorHandle(this.state.errorArray);
     }
     componentWillReceiveProps(nextProps) {
-        if (nextProps.current != this.state.current) {
-            this.addClassHandle(nextProps.current);
-        }
-        if(nextProps.errorArray != this.state.errorArray){
-            this.addColorHandle(nextProps.errorArray);
-        }
-        this.setState({current:nextProps.current,
-            errorArray:nextProps.errorArray,
-        })
+        //if (nextProps.current != this.state.current) {
+        //    this.setState({current:nextProps.current})
+        //    this.addClassHandle(nextProps.current);
+        //}
+        //if(nextProps.errorArray != this.state.errorArray){
+        //    this.setState({errorArray:nextProps.errorArray})
+        //    this.addColorHandle(nextProps.errorArray);
+        //}
+        this.setState({current:nextProps.current,errorArray:nextProps.errorArray})
+
+    }
+    componentDidUpdate(prevProps,prevState){
+        this.addClassHandle(this.props.current);
+        this.addColorHandle(this.props.errorArray);
     }
     addClassHandle(num){
         let _this = this.refs[num];
@@ -64,6 +69,7 @@ class Pagination2 extends Component{
         this.props.onChange(Number(e.target.text))
     }
     render(){
+        console.warn("渲染====》pagination2-------pagination2-----pagination2");
         if(this.state.arrayList.length<1){
             return <div/>
         }

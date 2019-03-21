@@ -17,6 +17,7 @@ class Loading extends React.Component {
         }
     }
     render() {
+        console.warn("=========Loading============");
         const {size,tip,style} = this.state;
         const css = {
             textAlign:"center"

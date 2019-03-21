@@ -9,6 +9,8 @@ import { bindActionCreators } from 'redux'
 import './question_style.css'
 import {Pagination,Modal,message} from 'antd'
 import {Storage_S} from '../../../../config'
+import {thematicList} from '../../../../method_public/thematic'
+import {getKnowledgeIdList,getEveryQuestion} from '../../../../redux/actions/math'
 
 //修改翻页文字链接
 function itemRender(current, type, originalElement) {
@@ -20,26 +22,75 @@ function itemRender(current, type, originalElement) {
     return originalElement;
 }
 var base = new Base64();//base64对象
-class ThematicQuesList extends Component{
+class ThematicList extends Component{
     constructor(props) {
         super(props)
         this.state={
+            thematicParts:thematicList,//专题模块
+            questionListOfKnowledge:[],
+            Pending:true
         }
     }
     componentDidMount(){
-
+        this.props.actions.getKnowledgeIdList({
+            body:[{knowledgeName:'圆'}],
+            success:(data)=>{
+                if(data[0].code != 200 || data[0].data.length<1){
+                    setTimeout(()=>{
+                        this.setState({
+                            Pending:false
+                        })
+                    },500)
+                    return ;
+                }
+                let newdata=[],alldata = data[0].data;
+                let knowledgeId = alldata[0].knowledgeid;
+                for(let i in alldata){
+                    newdata[i] = {
+                        id:alldata[i].questionid
+                    }
+                }
+                this.props.actions.getEveryQuestion({
+                    body:newdata,
+                    success:(data)=>{
+                        let newData = [];
+                        for(let i in data){
+                            newData.push((data[i].data)[0])
+                        }
+                        console.log("hahahahahhaha---33333333-->>>>",newData)
+                        this.setState({
+                            questionListOfKnowledge:newData,
+                            Pending:false
+                        })
+                    },
+                    error:(message)=>{
+                        console.log(message)
+                    }
+                })
+            },
+            error:(message)=>{
+                console.log(message)
+                this.setState({
+                    questionListOfKnowledge:[],
+                    Pending:false
+                })
+            }
+        })
     };
+    goToPart(data){
+        console.log(data)
+    }
     render(){
         return (
             <div className="mask2" style={{backgroundColor:'rgb(193, 223, 249)'}}>
-                <div className="thematicQues-parts">
-                    <div className="partOne">
-                        这里是每一部分的head内容。可能是表格也可能是其他的东西
-                    </div>
-                    <div className="partTwo">
-                        <div className="pageslist">
-                        </div>
-                    </div>
+                <div className="thematic-parts">
+                    {this.state.thematicParts.map((item,index)=>{
+                        return(
+                            <div className="part" key={index} onClick={()=>this.goToPart('thematic')}>
+                                {item.name}
+                            </div>
+                        )
+                    },this)}
                 </div>
             </div>
         )
@@ -48,11 +99,9 @@ class ThematicQuesList extends Component{
 function mapStateToProps(state) {
     return {}
 }
-
 function mapDispatchToProps(dispatch) {
     return {
-        actions: bindActionCreators({push}, dispatch)
+        actions: bindActionCreators({push,getKnowledgeIdList,getEveryQuestion}, dispatch)
     }
 }
-
-export default connect(mapStateToProps, mapDispatchToProps)(ThematicQuesList)
+export default connect(mapStateToProps, mapDispatchToProps)(ThematicList)

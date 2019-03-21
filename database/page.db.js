@@ -13,7 +13,7 @@ var Page = function(page) {
 
 /*获取首页展示的学生列表信息*/
 Page.prototype.getDoorShowItems = function(callback) {
-    var _sql = "select headimg,username,phone from tblUser limit 3";
+    var _sql = "select headimg,username,phone from tblStudent limit 3";
     helper.db_query({
         connect: con,
         sql: _sql,
