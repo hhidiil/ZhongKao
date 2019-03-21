@@ -5,6 +5,7 @@
 
 var User = require('../../database/user.db');
 var Helper = require('../helper');
+var errorMessage = require('../errorMessageTypes.js');
 //var doGetUserBasicInfo = require('../userModule/getUserInfo')//将处理函数单独放在一个模块文件中来处理。
 
 module.exports = {
@@ -22,34 +23,29 @@ module.exports = {
         app.post('/user/getCollection',this.doGetCollection)
     },
     // 获取所有用户信息
-    doGetUserAllItems: function(req, res) {
+    doGetUserAllItems: function(req, res,next) {
         var props = {};
         var user = new User({props: props});
         user.getUserAllItems(function(err, data) {
             if(!err){
-                if (data.length) {
-                    return res.send({
-                        code: 200,
-                        data: data
-                    })
-                } else {
-                    console.log(data)
-                    return res.send({
-                        code: 500,
-                        message: '查询出错'
+                if (data.length>0) {
+                    //删除所有的密码
+                    data.forEach(function(item){
+                        delete item.pwd;
                     })
                 }
-            }else {
-                console.log(err)
                 return res.send({
-                    code: 501,
-                    message: '报出错了'
+                    code: 200,
+                    data: data
                 })
+            }else {
+                let error = new Error(err.code);
+                return next(error);
             }
         })
     },
     // 用户登录，通过用户名登陆
-    doGetUserItemByUserName: function(req, res) {
+    doGetUserItemByUserName: function(req, res,next) {
         var props = req.body;
         props.password = Helper.getMD5(req.body.password);
         var user = new User({ props: props });
@@ -62,21 +58,19 @@ module.exports = {
                     })
                 } else {
                     return res.send({
-                        code: 500,
+                        code: 400,
                         message: '用户名不存在或密码错误'
                     })
                 }
             }else {
                 console.log(err)
-                return res.send({
-                    code: 501,
-                    message: '报出错了'
-                })
+                let error = new Error(err.code);
+                return next(error);
             }
         })
     },
     // 用户登录，通过手机号登陆
-    doGetUserItemByPhone: function(req, res) {
+    doGetUserItemByPhone: function(req, res,next) {
         var props = req.body;
         props.password = Helper.getMD5(req.body.password);
         var user = new User({ props: props });
@@ -96,16 +90,14 @@ module.exports = {
                 }
             }else {
                 console.log(err)
-                return res.send({
-                    code: 501,
-                    message: '报出错了'
-                })
+                let error = new Error(err.code);
+                return next(error);
             }
         })
     },
 
-    // 重置密码
-    doPutPassword: function(req, res) {
+    // 修改密码
+    doPutPassword: function(req, res,next) {
         var props = {
             id: req.body.id,
             new_password: Helper.getMD5(req.body.new_password),
@@ -124,14 +116,13 @@ module.exports = {
                     })
                 }
             }else {
-                return res.send({
-                    code: 501,
-                    message: '出错了'
-                })
+                let error = new Error(err.code);
+                return next(error);
             }
         })
     },
-    doResetPassword: function (req,res) {
+    // 重置密码
+    doResetPassword: function (req,res,next) {
         let props = req.body;
         let user = new User({props:props});
         user.getUserWithNameAndPwd(function (err,data) {
@@ -171,7 +162,13 @@ module.exports = {
         })
     },
     // 注册
-    doRegister: function(req, res) {
+    doRegister: function(req, res, next) {
+        //检测参数
+        if(!req.body.username || !req.body.password){
+            let err = new Error(errorMessage['400']);
+            err.status = 400;
+            return next(err);
+        }
         const params = {
             username:req.body.username
         };
@@ -179,11 +176,8 @@ module.exports = {
         //判断用户名是否存在
         user.getUserInfo(function(err, data){
             if(err){
-                console.log(err)
-                return res.send({
-                    code: 501,
-                    message: '出错了0.0'
-                });
+                let error = new Error(err.code);
+                return next(error);
             }
             if(data.length<1){
                 const params = {};
@@ -232,7 +226,7 @@ module.exports = {
             }
         })
     },
-    doGetUserBasicInfo: function (req,res) {
+    doGetUserBasicInfo: function (req,res,next) {
         var props = {
             username: req.body.params
         };
@@ -258,7 +252,7 @@ module.exports = {
             }
         })
     },
-    doUpdateBasicInfo: function (req,res){
+    doUpdateBasicInfo: function (req,res,next){
         var props = req.body;
         var user = new User({props:props});
         user.UpdateBasicInfo(function(err,data){
@@ -268,14 +262,12 @@ module.exports = {
                     data:data
                 })
             }else{
-                return res.send({
-                    code: 500,
-                    message: '修改出错'
-                })
+                let error = new Error(err.code);
+                return next(error);
             }
         })
     },
-    doUpdateHeadImg: function (req,res){
+    doUpdateHeadImg: function (req,res,next){
         var props = req.body;
         var user = new User({props:props});
         user.UpdateHeadImg(function(err,data){
@@ -285,14 +277,12 @@ module.exports = {
                     data:data
                 })
             }else{
-                return res.send({
-                    code: 500,
-                    message: '修改出错'
-                })
+                let error = new Error(err.code);
+                return next(error);
             }
         })
     },
-    doGetCollection: function(req,res){
+    doGetCollection: function(req,res,next){
         var props = req.body;
         var user = new User({props:props});
         user.getCollection(function(err,data){
@@ -302,10 +292,8 @@ module.exports = {
                     data:data
                 })
             }else{
-                return res.send({
-                    code:501,
-                    message:'获取数据出错'
-                })
+                let error = new Error(err.code);
+                return next(error);
             }
         })
     }

@@ -62,7 +62,7 @@ User.prototype.getUserWithNameAndPwd = function (callback) {
         callback: callback
     })
 }
-/*修改用户登录密码*/
+/*重置用户密码*/
 User.prototype.putUserPassword = function(callback) {
     var _sql = `update tblStudent set pwd = '${this.props.new_password}' where id = ${this.props.id}`;
     helper.db_query({
