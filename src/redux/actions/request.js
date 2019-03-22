@@ -5,7 +5,6 @@
 
 // fetch 需要使用 Promise 的 polyfill
 import { pendingTask, begin, end } from 'react-redux-spinner'
-import 'babel-polyfill'
 import fetch from 'isomorphic-fetch'
 import * as CONFIG from '../../config'
 import * as TYPES from '../types'

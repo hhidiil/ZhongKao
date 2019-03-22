@@ -97,9 +97,9 @@ class BasicInfo extends Component{
                         <Form onSubmit={this.handleSubmit}>
                             <FormItem style={{visibility:"hidden"}}
                                 {...formItemLayout}>
-                                {getFieldDecorator('userid', {
+                                {getFieldDecorator('userId', {
                                     rules: [{ required: false}],
-                                    initialValue:items.get('userid'),
+                                    initialValue:items.get('userId'),
                                 })(
                                     <Input/>
                                 )}
@@ -108,9 +108,9 @@ class BasicInfo extends Component{
                                 {...formItemLayout}
                                 label="昵称"
                                 extra="修改昵称是需要唯一，请先绑定手机号">
-                                {getFieldDecorator('username', {
+                                {getFieldDecorator('userName', {
                                     rules: [{ required: false}],
-                                    initialValue:items.get('username'),
+                                    initialValue:items.get('userName'),
                                 })(
                                     <Input placeholder="Please input your username" />
                                 )}
@@ -126,9 +126,9 @@ class BasicInfo extends Component{
                                 )}
                             </FormItem>
                             <FormItem {...formItemLayout} label="真实姓名">
-                                {getFieldDecorator('actualname', {
+                                {getFieldDecorator('actualName', {
                                     rules: [{ required: false}],
-                                    initialValue:items.get('actualname')
+                                    initialValue:items.get('actualName')
                                 })(
                                     <Input autoComplete="name" placeholder="Please input your name" />
                                 )}
@@ -172,9 +172,9 @@ class BasicInfo extends Component{
                             </FormItem>
 
                             <FormItem {...formItemLayout} label="现居住地">
-                                {getFieldDecorator('familyaddress', {
+                                {getFieldDecorator('familyAddress', {
                                     rules: [{ required: false}],
-                                    initialValue:items.get('familyaddress')
+                                    initialValue:items.get('familyAddress')
                                 })(
                                     <Input placeholder="Please input your name" />
                                 )}

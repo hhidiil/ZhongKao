@@ -9,7 +9,6 @@ var path = require('path');
 module.exports = {
     entry: {
         front:[
-            'babel-polyfill',//兼容浏览器
             'webpack-hot-middleware/client',
             // 为webpack-dev-server的环境打包好运行代码， 然后连接到指定服务器域名与端口.//不使用node作为服务启动，server.js启动
             //'webpack-dev-server/client?http://localhost:3000',
@@ -19,7 +18,6 @@ module.exports = {
             './src/enter/front.js'
         ],
         teacher:[
-            'babel-polyfill',
             'webpack-hot-middleware/client',
             './src/enter/teacher.js'
         ]

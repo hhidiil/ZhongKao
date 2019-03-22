@@ -94,14 +94,14 @@ User.prototype.getUserBasicInfo = function (callback) {
 User.prototype.UpdateBasicInfo = function (callback) {
     var _sql = `update tblStudent set
                     phone='${this.props.phone}',
-                    actualname='${this.props.actualname}',
-                    username='${this.props.username}',
+                    actualname='${this.props.actualName}',
+                    username='${this.props.userName}',
                     sex='${this.props.sex}',
                     school='${this.props.school}',
                     grade='${this.props.grade}',
-                    familyaddress='${this.props.familyaddress}',
+                    familyaddress='${this.props.familyAddress}',
                     birthday='${this.props.birthday}',
-                    email='${this.props.email}' WHERE userid='${this.props.userid}'`
+                    email='${this.props.email}' WHERE userid='${this.props.userId}'`
     helper.db_query({
         connect: con,
         sql: _sql,

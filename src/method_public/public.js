@@ -2,7 +2,6 @@
  * 前端公用方法
  * Created by gaoju on 2017/11/15.
  */
-import 'babel-polyfill'
 import fetch from 'isomorphic-fetch'
 
 //简单版 fetch数据请求

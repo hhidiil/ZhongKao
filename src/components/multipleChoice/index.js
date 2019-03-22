@@ -39,11 +39,9 @@ class Choice extends PureComponent{
         }
     }
     componentWillReceiveProps(nextProps){
-        //if(nextProps.template != 'noRender'){
-        //    if(nextProps.answer != this.state.radioState){
-        //        this.setState({radioState: nextProps.answer})
-        //    }
-        //}
+            if(nextProps.answer != this.state.radioState){
+                this.setState({radioState: nextProps.answer})
+            }
     }
     render(){
         console.warn("渲染====》Choice-------Choice-----Choice");

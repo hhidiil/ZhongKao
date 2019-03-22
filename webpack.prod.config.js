@@ -7,11 +7,9 @@ var path = require('path');
 module.exports = {
     entry: {
         front:[
-            'babel-polyfill',
             './src/enter/front.js'
         ],
         teacher:[
-            'babel-polyfill',
             './src/enter/teacher.js'
         ]
     },

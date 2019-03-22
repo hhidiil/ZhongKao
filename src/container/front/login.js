@@ -70,11 +70,11 @@ class LoginForm extends Component {
                     title="登录"
                     footer=""
                     maskClosable={false}
-                    wrapClassName="vertical-center-modal"
+                    centered
                     visible={this.state.modalVisible}
                     onCancel={() => this.setModalVisible(false)}
                 >
-                    <Form onSubmit={this.handleSubmit} className="login-form margin-auto">
+                    <Form onSubmit={this.handleSubmit}>
                         <FormItem {...formItemLayout} label="用户名">
                             {getFieldDecorator('userName', {
                                 rules: [{ required: true, message: '请输入用户名!' }]

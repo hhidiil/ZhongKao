@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import {Link} from 'react-router'
 import { push } from 'react-router-redux'
 import {register} from '../../redux/actions/user'
-import { Form, Input, Tooltip, Icon, Cascader, Select, Row, Col, Checkbox, Button, AutoComplete } from 'antd';
+import { Form, Input, Row, Col, Checkbox, Button } from 'antd';
 import './style.css'
 
 const FormItem = Form.Item;
@@ -112,10 +112,9 @@ class RegisterForm extends Component {
                         <FormItem
                             {...formItemLayout}
                             label="用户名"
-                            hasFeedback
                         >
                             {getFieldDecorator('nickname', {
-                                rules: [{ required: true, message: '请输入用户名!', whitespace: true }],
+                                rules: [{ required: true, message: '请输入用户名!'}],
                             })(
                                 <Input autoComplete="text" />
                             )}
@@ -123,7 +122,6 @@ class RegisterForm extends Component {
                         <FormItem
                             {...formItemLayout}
                             label="密码"
-                            hasFeedback
                         >
                             {getFieldDecorator('password', {
                                 rules: [{
@@ -138,7 +136,6 @@ class RegisterForm extends Component {
                         <FormItem
                             {...formItemLayout}
                             label="确认密码"
-                            hasFeedback
                         >
                             {getFieldDecorator('confirm', {
                                 rules: [{
