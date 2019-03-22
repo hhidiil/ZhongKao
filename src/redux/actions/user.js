@@ -35,7 +35,16 @@ export function login(opt) {
                 body: bodyUrlencoded(opt.body) })
     }
 }
-
+//注册
+export function register(opt) {
+    return (dispatch) => {
+        const route = '/api/user/register';
+        request(route, {}, dispatch, opt.success, opt.error,
+            { method: 'POST',
+                headers: {"Content-Type": "application/x-www-form-urlencoded"},
+                body: bodyUrlencoded(opt.body) })
+    }
+}
 //修改密码
 export function changePassword(opt) {
     return (dispatch) => {
