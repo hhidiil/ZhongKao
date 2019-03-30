@@ -4,7 +4,6 @@
 import React, { Component } from 'react'
 import { Link } from 'react-router'
 import { Menu, Dropdown, Icon ,Button} from 'antd'
-import 'antd/dist/antd.css';
 import './style.css'
 import Login from './login'
 import { bindActionCreators } from 'redux'

@@ -693,6 +693,7 @@ class Question extends Component{
         sentJson.errorArray = this.state.errorArray;//把错误题号也缓存下来
         sentJson.scoreArraylist = this.state.scoreArraylist;
         sentJson.Score = allscore;
+        console.log("9999999999999999999999999999999999999----->>>>",allDoneFlag)
         if(!allDoneFlag){
             sentJson.AllDone = "no";
         }else {

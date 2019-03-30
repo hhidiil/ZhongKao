@@ -32,7 +32,7 @@ module.exports = {
         ]
     },
     plugins: [
-        //生产环境下打开
+        //生产环境下打开,压缩js代码
         new webpack.optimize.UglifyJsPlugin(),
         //windows下使用DefinePlugin时，需要安装cross-env来兼容这只环境变量使其可以有效
         new webpack.DefinePlugin({

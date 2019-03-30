@@ -39,9 +39,11 @@ class Choice extends PureComponent{
         }
     }
     componentWillReceiveProps(nextProps){
+        if(nextProps.template != 'noRender'){
             if(nextProps.answer != this.state.radioState){
                 this.setState({radioState: nextProps.answer})
             }
+        }
     }
     render(){
         console.warn("渲染====》Choice-------Choice-----Choice");
@@ -79,6 +81,6 @@ Choice.propTypes = {
     radioState:PropTypes.string || '',//答案
     isCando: PropTypes.bool,//是否可以选择答案
     optionNameCancel: PropTypes.bool,//选项的名字是否保留（A、C、D...）
-    template:PropTypes.string,//组件需不需要重新渲染（默认需要，norender为不需要）
+    template:PropTypes.string,//组件需不需要重新渲染（默认需要，noRender为不需要）
 }
 export default Choice

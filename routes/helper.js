@@ -97,18 +97,17 @@ var helper = {
         }
         return new_dir;
     },
-    //获取当前用户最大的id
+    //获取当前用户最大的id,
     createUserId: function(data){
-        let str1 = data.substr(5);
-        let num = parseInt(str1);
-        let len = 7;//固定八位
-        num = parseInt(num, 10) + 1;
-        num = num.toString();
-        while(num.length < len) {
-            num = '0' + num;
+        let num1 = parseInt(data, 36);
+        let num2 = num1+1;
+        let num3 = num2.toString(36);
+        let len = data.length;
+        while(num3.length < len) {
+            num3 = '0' + num3;
         }
-        console.log("IDIIL"+num)
-        return "IDIIL"+num
+        console.log(num3)
+        return num3
     },
     syncGetData:function(){
         var list = [];

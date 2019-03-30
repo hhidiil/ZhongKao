@@ -32,10 +32,10 @@ module.exports = {
         loaders: [
             {
                 test: /\.js|jsx$/,
-                loaders: 'babel-loader?presets[]=es2015,presets[]=stage-0,presets[]=react',
+                loaders: 'babel-loader',
                 include: path.join(__dirname, 'src'),
                 options:{
-                    "presets": ["react-hmre"]
+                    "presets": ["react-hmre"],//热更新插件
                 }
             },
             {test: /\.css$/, loader: 'style-loader!css-loader'},
@@ -45,6 +45,7 @@ module.exports = {
     },
     devtool: 'cheap-eval-source-map',
     plugins: [
+        //为组件分配ID，通过这个插件webpack可以分析和优先考虑使用最多的模块，并为它们分配最小的ID
         new webpack.optimize.OccurrenceOrderPlugin(),
         // 开启全局的模块热替换（HMR）
         new webpack.HotModuleReplacementPlugin(),
