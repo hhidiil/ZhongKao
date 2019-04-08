@@ -31,6 +31,7 @@
     "prop-types": "^15.6.0",
     "react-umeditor": "^1.0.0-rc11",
     "redux-devtools-extension": "^2.13.2",
+    "request": "^2.88.0",
     "webpack-dev-middleware": "^2.0.4",
     "webpack-hot-middleware": "^2.21.0"
   },

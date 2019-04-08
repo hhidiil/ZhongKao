@@ -131,6 +131,10 @@ var helper = {
             }
             return pro;
         }
+    },
+    appInfo:{
+        AppID : 'wx68bd8e40de0fba53',//网站的 APPID和Secret（目前是测试的）,线上的需要修改为线上的
+        AppSecret : 'c103fc279ba805633f47c66a86c2cb7a'
     }
 
 };

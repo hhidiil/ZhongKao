@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { Menu, Dropdown, Icon ,Button,Row, Col} from 'antd'
+import { Menu, Dropdown, Icon ,Button,Row, Col,Input} from 'antd'
 import './style.css'
 import Login from './login'
 import { bindActionCreators } from 'redux'
@@ -13,7 +13,7 @@ import PureRenderMixin from '../../method_public/pure-render'
 import {handleImg} from '../../method_public/public'
 import { getHomeShowList} from '../../redux/actions/page'
 import {updateStoreHeadImg} from '../../redux/actions/public'
-import {Storage_S} from '../../config'
+import {Storage_S,AppID} from '../../config'
 
 const colorList=["mediumorchid","cornflowerblue","chocolate","yellowgreen","tomato","gold"];
 class Door extends Component {
@@ -22,7 +22,8 @@ class Door extends Component {
         let status = Storage_S.getItem('loginstatus');
         this.state={
             loginstatus:status?status:false,//登录状态
-            homeShowList: []
+            homeShowList: [],
+            loginStatus:false
         }
     }
     componentDidMount(){
@@ -38,6 +39,15 @@ class Door extends Component {
             }
         });
         this.props.actions.updateStoreHeadImg({data:headimg,clear:false})//当页面刷新store会重置，需要重新更新store
+        var obj = new WxLogin({
+            id:"login_container",
+            appid: AppID,
+            scope: "snsapi_login",
+            redirect_uri: encodeURIComponent('https://zhongkao.idiil.com.cn/api/user/get_wx_access_token'),
+            state: "STATE123",
+            style: "",
+            href: ""
+        });
     };
     enterSystem(){
         if(this.state.loginstatus){
@@ -45,6 +55,10 @@ class Door extends Component {
         }else {
             window.confirm('请先登录！')
         }
+    }
+    getWechatlogin(){
+       console.log("getWechatlogin-------")
+        this.setState({loginStatus:!this.state.loginStatus})
     }
     _showListItem(showList){
         let pageSize = showList.length;
@@ -85,7 +99,7 @@ class Door extends Component {
                 content:'查漏补缺，针对性检测'
             },{
                 title:'巩固',
-                content:'加强巩固，趁热大跌'
+                content:'加强巩固，趁热打铁'
             },{
                 title:'拓展',
                 content:'知识拓展，增强知识面'
@@ -100,6 +114,62 @@ class Door extends Component {
                 </div>)
         }
         return showWapper
+    }
+    _showLoginForm(){
+        return (
+            <div className="loginTest" style={this.state.loginStatus ? {display:'block'}:{display:'none'}}>
+                <Row gutter={16}>
+                    <Col className="gutter-row" span={8}>
+                        <div>
+                            code:<Input id="input1"  placeholder="请输入内容" />
+                            state:<Input id="input2" placeholder="请输入内容" />
+                            <Button onClick={()=>{this.loginClick('1')}}>网页扫码</Button>
+                        </div>
+                    </Col>
+                    <Col className="gutter-row" span={8}>
+                        <div>
+                            <div>自定义</div>
+                            <div id="login_container" style={{height: '300px'}}></div>
+                        </div>
+                    </Col>
+                    <Col className="gutter-row" span={8}>
+                        <div>
+                            code:<Input id="input3" placeholder="请输入内容" />
+                            encryptedData:<Input id="input4" placeholder="请输入内容" />
+                            iv:<Input id="input5" placeholder="请输入内容" />
+                            <Button onClick={()=>{this.loginClick('2')}}>微信获取信息</Button>
+                        </div>
+                    </Col>
+                </Row>
+            </div>
+        )
+    }
+    loginClick(param){
+        console.log("参数=======》",param)
+        let input1 =  $('#input1').val();
+        let input2 =  $('#input2').val();
+        let input3 =  $('#input3').val();
+        let input4 =  $('#input4').val();
+        let input5 =  $('#input5').val();
+        let requestConfig = {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        }
+        let url='';
+        if(param == '1'){
+            url = `https://zhongkao.idiil.com.cn/api/user/get_wx_access_token?code=${input1}&state=${input2}`;
+        }else if(param == '2'){
+            url = `/api/user/getUnionId?code=${input3}&encryptedData=${input4}&iv=${input5}`;
+        }
+        fetch(url,requestConfig).then((res)=>{
+            console.log(res);
+            return res.json();
+        }).then((data)=>{
+            console.log(data);
+        })
     }
     render() {
         let { userheadimg } = this.props;
@@ -166,13 +236,14 @@ class Door extends Component {
                                 </div>
                                 <div className="parts three">
                                     <div className="col-md-9">
-                                        <p><span>Part three:</span>一对一，此功能在最后阶段会给每一位学生指定一个老师进行一对一的辅导。给每一位学生指定一个老师进行一对一的辅导。给每一位学生指定一个老师进行一对一的辅导。</p>
+                                        <p><span onClick={()=>this.getWechatlogin()}>Part three:</span>一对一，此功能在最后阶段会给每一位学生指定一个老师进行一对一的辅导。给每一位学生指定一个老师进行一对一的辅导。给每一位学生指定一个老师进行一对一的辅导。</p>
                                     </div>
                                     <div className="col-md-3">
                                         <img src="public/images/special4.png"/>
                                     </div>
                                     <div className="clearfix"></div>
                                 </div>
+                                {this._showLoginForm()}
                             </div>
                         </div>
                     </section>
