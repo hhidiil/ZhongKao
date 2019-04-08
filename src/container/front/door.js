@@ -3,7 +3,7 @@
  */
 import React, { Component } from 'react'
 import { Link } from 'react-router'
-import { Menu, Dropdown, Icon ,Button} from 'antd'
+import { Menu, Dropdown, Icon ,Button,Row, Col} from 'antd'
 import './style.css'
 import Login from './login'
 import { bindActionCreators } from 'redux'
@@ -55,7 +55,7 @@ class Door extends Component {
                }
                 return (
                     <div key={index} className="col-sm-4">
-                        <div className="thumbnail">
+                        <div className="thumbnail" style={{maxWidth: '350px',margin:' 0 auto'}}>
                             <img className="door_headimg" src={handleImg(item.headimg)} title="头像" onError={(e)=>{e.target.src = "public/images/user_head.jpg"}}/>
                             <div className="caption message" style={color}>
                                 <h3>{item.username}</h3>
@@ -70,13 +70,33 @@ class Door extends Component {
     }
     _showWapper4List(){
         const showWapper =[];
-        const showdata=["专题","模考","训练","检测","巩固","拓展"]
+        const showdata=[
+            {
+            title:'专题',
+            content:'专项提升，巩固加强'
+            },{
+            title:'模考',
+            content:'模拟考试，还原真实考试场景'
+            },{
+                title:'训练',
+                content:'优质试题，刷题增强'
+            },{
+                title:'检测',
+                content:'查漏补缺，针对性检测'
+            },{
+                title:'巩固',
+                content:'加强巩固，趁热大跌'
+            },{
+                title:'拓展',
+                content:'知识拓展，增强知识面'
+            },
+        ];
         for(let i=0;i<6;i++){
             showWapper.push(
                 <div className="col-md-4 part" key={i}>
                     <i className={"sev-icon sev-icon"+(i+1)}></i>
-                    <h3>{showdata[i]}</h3>
-                    <p>这是一个很好的东西，你值得拥有。真的不用就会错过很多东西，肯定会帮助到你。</p>
+                    <h3>{showdata[i].title}</h3>
+                    <p>{showdata[i].content}</p>
                 </div>)
         }
         return showWapper
@@ -174,17 +194,15 @@ class Door extends Component {
                 <footer>
                     <div className="container">
                         <div className="footer-grids">
-                            <div className="col-md-4">
-                                <h3>加入我们</h3>
-                                <p>北京爱迪乐教育研究院</p>
+                            <div className="col-md-6">
+                                <h3 style={{color:'white'}}>联系我们</h3>
+                                <p>地址：北京市海淀区信息路28号科实大厦B-07A-1</p>
+                                <p>电话：010-62984888</p>
                             </div>
-                            <div className="col-md-4">
-                                <h3>联系我们</h3>
-                                <p>101101101101</p>
-                            </div>
-                            <div className="col-md-4">
-                                <h3>地址</h3>
-                                <p>北京海淀区上地</p>
+                            <div className="col-md-6">
+                                <h3 style={{color:'white'}}>版权所有</h3>
+                                <p>美国爱迪乐教育研究院爱迪乐学习中心</p>
+                                <p>京ICP备：10015906号</p>
                             </div>
                             <div className="clearfix"></div>
                         </div>
