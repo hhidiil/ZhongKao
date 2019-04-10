@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
 var fs = require('fs');
+var path = require('path');
 
-var FS_PATH_SERVICES = './routes/servicers/';
+var FS_PATH_SERVICES = path.join(__dirname, '/servicers/');
 var REQUIRE_PATH_SERVICES = './servicers/';
 
 router.options('*', function (req, res, next) {

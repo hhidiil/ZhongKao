@@ -25,10 +25,11 @@ app.use(bodyParser.urlencoded({ limit:'100mb',extended: false }));//请求数据
 app.use(cookieParser());
 app.use(fileUpload());
 app.use('/public',express.static(path.join(__dirname, '/public')));//设置虚拟根目录
-app.use(express.static('thirdParty'));
-app.use(express.static('assets'));
-app.use(express.static('uploadImages'));
 app.use('/src',express.static('src'));
+app.use(express.static(__dirname + '/thirdParty'));
+app.use(express.static(__dirname + '/assets'));
+app.use(express.static(__dirname + '/uploadImages'));
+
 
 app.use('/', index);
 app.use('/api', api);
