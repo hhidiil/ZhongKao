@@ -425,7 +425,7 @@ class Question extends Component{
                 if($('#'+ _this.state.target_id).next().attr('class') == 'mustText'){//有对应的知识点
                     $('#'+_this.state.target_id).focus();
                     let knowledgesss = $('#'+ _this.state.target_id).next()[0].innerText;//查找出此空对应的知识点
-                    lastKnowledge = knowledgesss.replace(/\s|{@|@}/g,'').split('；');
+                    lastKnowledge = knowledgesss ? knowledgesss.replace(/\s|{@|@}/g,'').split('；') : [];
                     autoKnowledgeList = lastKnowledge;
                     console.log("学生的答案：：：：",inputAnswer,rightanswer,isOrRight,autoKnowledgeList)
                     if(autoKnowledgeList.length>0){
@@ -761,7 +761,7 @@ class Question extends Component{
         let oldanswer = (oldcontent && (oldcontent.Contents).length>0) ? oldcontent.Contents: this.state.allQuestionetails[index-1].Contents;
         console.log("oldanswer=====>>>>>>>>",oldanswer)
 
-        let ss = ($.trim(items.optionselect)).replace(/["\[\]\s]/g,"");
+        let ss = items.optionselect ? ($.trim(items.optionselect)).replace(/["\[\]\s]/g,"") : "";
         let optionArray = ss.split(",");
         let optionList = [];
         let optionName=['A','B','C','D'];
@@ -1030,8 +1030,8 @@ class Question extends Component{
             console.log("此题的信息：=======",this.state.current,type,index,questionType,parentID,newChildList);
             if(questionType) {//当前题目是选择题
                 let value = '', isRight = false, knowledge_new = [],knowledge=[];
-                let knowledge1 = ((data.knowledge).replace(/\<B\>|\<\/B\>/g,"")).split("；");//已给出知识点
-                let rightanswer = (data.answer).trim().replace(/\s|，/g,"");//正确答案
+                let knowledge1 = data.knowledge ? ((data.knowledge).replace(/\<B\>|\<\/B\>/g,"")).split("；") : [];//已给出知识点
+                let rightanswer = data.answer ? (data.answer).trim().replace(/\s|，/g,"") : "";//正确答案
                 let inputList = $("#"+parentID).find("input:checked");//选项
                 inputList.each(function(ii){
                     value += $(this).val();//用户填写的答案
@@ -1045,7 +1045,9 @@ class Question extends Component{
                     if(rightanswer.length>0){
                         rightanswer.split('').forEach((jj)=>{
                             let OBJ = {'A':0,'B':1,'C':2,'D':3,'E':4,'F':5,'G':6};
-                            knowledge.push(base.decode(JSON.parse(data.optionselect)[OBJ[jj]]))
+                            if(JSON.parse(data.optionselect).length>0){
+                                knowledge.push(base.decode(JSON.parse(data.optionselect)[OBJ[jj]]))
+                            }
                         });
                     }
                 }
