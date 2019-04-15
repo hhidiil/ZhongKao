@@ -18,6 +18,6 @@ npm start
 ## 参照
 "https://github.com/Jafeney/tms" （全栈搭建）
 
+"c:\Program Files\Git\bin\git.exe"  remote show origin
 
-1111
 
